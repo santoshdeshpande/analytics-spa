@@ -1,0 +1,10 @@
+.simple_form {
+  .boolean {
+    label {
+      abbr { display: none; }
+    }
+    &.error {
+      small { margin-top: 0.2em; }
+    }
+  }
+}

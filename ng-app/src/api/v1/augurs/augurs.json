@@ -1,0 +1,47 @@
+[
+  {
+    "id": "augur-17",
+    "name": "Marketing Augur #3",
+    "habitat": "Marketing Team"
+  },
+  {
+    "id": "augur-18",
+    "name": "Fraud Augur #13",
+    "habitat": "Fraud Detection Team"
+  },
+  {
+    "id": "augur-19",
+    "name": "Insurance Augur #113",
+    "habitat": "Insurance Team"
+  },
+  {
+    "id": "augur-20",
+    "name": "Fraud Augur #223",
+    "habitat": "Fraud Detection Team"
+  },
+  {
+    "id": "augur-21",
+    "name": "Insurance Augur #123",
+    "habitat": "Insurance Team"
+  },
+  {
+    "id": "augur-22",
+    "name": "Fraud Augur #1",
+    "habitat": "Fraud Detection Team"
+  },
+  {
+    "id": "augur-23",
+    "name": "Insurance Augur #99",
+    "habitat": "Insurance Team"
+  },
+  {
+    "id": "augur-24",
+    "name": "Marketing Augur #21",
+    "habitat": "Marketing Team"
+  },
+  {
+    "id": "augur-25",
+    "name": "Fraud  Augur #312",
+    "habitat": "Fraud Detection Team"
+  }
+]

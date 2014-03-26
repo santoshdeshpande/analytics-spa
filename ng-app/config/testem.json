@@ -1,0 +1,8 @@
+{
+  "test_page": "../spec/testem.html.mustache",
+  "serve_files": [
+    "spec/unit**/*Spec.js"
+  ],
+  "launch_in_dev": [ "Chrome", "PhantomJS" ]
+}
+

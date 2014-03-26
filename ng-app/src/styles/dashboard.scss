@@ -1,0 +1,332 @@
+@import "vendor/foundation/components/global";
+
+$crumb-bg: scale-color($secondary-color, $lightness: 55%) !default;
+
+.action-bar {
+  margin-top: 2em;
+  margin-bottom: .3em;
+  color: #333;
+  background-color: $crumb-bg;
+
+  ul {
+    display: block;
+    width: auto;
+    overflow: hidden;
+    margin: 0;
+    height: 50px;
+
+    $active-bg: $primary-color !default;
+    $active-bg-hover: scale-color($primary-color, $lightness: -14%) !default;
+
+    .glyphicon {
+      font-size: 140%;
+    }
+
+    &.action-bar-filter {
+      li.active a {
+        @include radius(5px);
+        background: $active-bg;
+        padding: 3px;
+        color: #fff;
+        &:hover {
+          color: #333;
+        }
+      }
+
+      li a {
+        &:hover {
+          @include radius(5px);
+          background: $active-bg;
+          padding: 3px;
+          color: #333;
+        }
+      }
+    }
+
+    li {
+      float: left;
+      display: inline;
+      padding-right: 1em;
+      line-height: 50px;
+
+      &.divider {
+        border-right: 2px solid #FFFFFF;
+        margin-right: 10px;
+        height: 999px;
+      }
+
+      input {
+        margin: 10px 0;
+        height: 30px;
+      }
+
+      a {
+        text-decoration: none;
+        color: #333;
+
+        &:hover {
+          background: #008cba;
+        }
+      }
+    }
+  }
+}
+
+.container {
+  border: 1px dashed #555555;
+  padding-top: .5em;
+  min-height: 600px;
+}
+
+.augur-listing {
+  .th {
+    position: relative;
+  }
+
+  .augur-body {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    padding: 1em;
+    top: 0;
+    left: 0;
+
+    .plus {
+      position: absolute;
+      font-size: 400%;
+      top: 20px;
+      right: 20px;
+    }
+  }
+}
+
+.new-augur-wizard {
+  padding: 0;
+
+  .active {
+    background: #eeeeee;
+    .columns {
+
+      .title {
+        font-size: 1.4375rem;
+        padding-bottom: 0;
+        margin-bottom: 0;
+      }
+
+      .next-button {
+        display: block;
+      }
+    }
+  }
+
+  .next-button {
+    display: none;
+
+    text-align: center;
+    position: relative;
+    .next-button-wrap {
+      width: 100%;
+      position: absolute;
+      top: -20px;
+
+      .button {
+        z-index: 10;
+        border: 3px solid #fff;
+      }
+    }
+  }
+
+  .step {
+    .title {
+      border-bottom: 1px solid #ddd;
+      padding: 0.5em 0;
+    }
+    &.step-last .title {
+      border-bottom: 0;
+    }
+
+    .body {
+      overflow: hidden;
+      border-bottom: 1px solid #ddd;
+    }
+    &.step-last .body {
+      border-bottom: 0;
+    }
+
+    &.step-1 {
+      .body {
+        height: 200px;
+      }
+    }
+
+    &.step-2 {
+      .body {
+        height: 300px;
+      }
+    }
+
+    &.step-3 {
+      .body {
+        height: 400px;
+      }
+    }
+
+    &.step-4 {
+      .body {
+        height: 360px;
+      }
+    }
+
+    .body.ng-hide {
+      height: 0;
+    }
+
+    .body.ng-hide-add, .body.ng-hide-remove {
+      -webkit-transition: all linear 0.5s;
+      -moz-transition: all linear 0.5s;
+      -o-transition: all linear 0.5s;
+      transition: all linear 0.5s;
+      display: block !important;
+    }
+  }
+
+  .error {
+    color: red;
+  }
+
+  .verified {
+    color: forestgreen;
+  }
+
+  .augur-habitat {
+    .active {
+      background: lightblue;
+    }
+  }
+
+  .fact-tables {
+    margin: 0 1em;
+
+    input[type=radio] {
+      display: none;
+    }
+
+
+    .th {
+      position: relative;
+      background: #fff;
+
+      &.selected {
+        background: darkgrey;
+        color: white;
+
+        .fi-checkbox {
+          font-size: 400%;
+          position: absolute;
+          top: -2px;
+          right: 2px;
+        }
+      }
+    }
+
+    .fact-body {
+      font-size: 0.8em;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      padding: 1em;
+      top: 0;
+      left: 0;
+    }
+  }
+
+  .prediction-targets {
+    .input textarea {
+      height: 23em;
+    }
+
+    .validation {
+      height: 20em;
+      background: #fff;
+
+      .subheader {
+        padding: 1em;
+        padding-bottom: 0;
+      }
+
+      .validation-elements {
+        text-align: center;
+      }
+
+      .validation-icon {
+        font-size: 4em;
+      }
+
+      position: relative;
+      .validation-message-show-hide {
+        position: absolute;
+        padding: 0 1em;
+      }
+
+      button {
+        top: 200px;
+      }
+
+      .validation-message-show-hide.ng-hide-add, .validation-message-show-hide.ng-hide-remove {
+        -webkit-transition:all linear 0.3s;
+        -moz-transition:all linear 0.3s;
+        -o-transition:all linear 0.3s;
+        transition:all linear 0.3s;
+        display:block!important;
+      }
+
+      .validation-message-show-hide.ng-hide-add.ng-hide-add-active,
+      .validation-message-show-hide.ng-hide-remove {
+        opacity:0;
+      }
+
+      .validation-message-show-hide.ng-hide-add,
+      .validation-message-show-hide.ng-hide-remove.ng-hide-remove-active {
+        opacity:1;
+
+      }
+    }
+  }
+
+  .schedules {
+    .description {
+      font-size: 80%;
+    }
+
+    .prediction, .evaluation, .learning {
+
+      .title {
+        h6 {
+          padding: .5em;
+          background: #ddd;
+        }
+      }
+      .content {
+        padding: .5em;
+        background: #fff;
+        height: 240px;
+
+        .description {
+          height: 100px;
+        }
+      }
+
+    }
+
+    .learning {
+      #comparator {
+        padding: 0;
+        text-align: center;
+        span {
+          font-size: .9em;
+        }
+      }
+    }
+  }
+
+}

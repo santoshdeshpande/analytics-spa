@@ -1,0 +1,3 @@
+.idea/
+ng-app/node_modules
+ng-app/dist/*

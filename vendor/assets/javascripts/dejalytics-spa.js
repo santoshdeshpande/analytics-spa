@@ -33578,10 +33578,7 @@ define('services/augur',[
   
 
   return ['$resource', function ($resource) {
-//    return $resource('augurs/:augurId.json', {}, {
-//      query: { method: 'GET', params: { augurId: 'augurs' }, isArray: true }
-//    });
-    return $resource('http://dejalytics.dev/api/stuff/:augurId.json', {}, {
+    return $resource('/api/v1/augurs/:augurId.json', {}, {
       query: { method: 'GET', params: { augurId: 'augurs' }, isArray: true }
     });
   }];
@@ -33637,7 +33634,7 @@ define('services/habitat',[
   
 
   return ['$resource', function ($resource) {
-    return $resource('habitats/:habitatId.json', {}, {
+    return $resource('/api/v1/habitats/:habitatId.json', {}, {
       query: { method: 'GET', params: { habitatId: 'habitats' }, isArray: true }
     });
   }];
@@ -40637,63 +40634,6 @@ define('controllers/dashboard',[], function () {
         });
       });
     })();
-
-
-//    (function () {
-//      $q.all([
-//          Augur.query(),
-//          DataSource.query({ habitatId: 1 }),
-//          FactTable.query({ habitatId: 1 }),
-//          Habitat.query()
-//        ]).then(function (results) {
-//        var deferred = $q.deferred();
-//
-//        angular.forEach(results, function (result) {
-//          result.$promise.then(function (data) {
-//            console.log("pushing123", data);
-//            $scope.artifacts.push(data);
-//          });
-//        });
-//
-//        return deferred.promise;
-//      });
-//
-////      $q.all([
-////          Augur.query(),
-////          DataSource.query({ habitatId: 1 }),
-////          FactTable.query({ habitatId: 1 }),
-////          Habitat.query()
-////        ]).then(function (results) {
-////
-////
-////        results[0].then(function(data){
-////          console.log("HERE", data);
-////        });
-////
-////        angular.forEach(results[0], function (augur) {
-////          augur.type = 'Augur';
-////          artifacts.push(augur);
-////        });
-////
-////
-////        angular.forEach(results[1], function (dataSource) {
-////          dataSource.type = 'DataSource';
-////          artifacts.push(dataSource);
-////        });
-////
-////        angular.forEach(results[2], function (factTable) {
-////          factTable.type = 'FactTable';
-////          artifacts.push(factTable);
-////        });
-////
-////        angular.forEach(results[3], function (habitat) {
-////          habitat.type = 'Habitat';
-////          artifacts.push(habitat);
-////        });
-////
-////        deferred.resolve(artifacts);
-////      });
-//    })();
   }
 });
 

@@ -1,0 +1,44 @@
+.row.action-bar
+  .columns.small-12
+    %ul.left.action-bar-breadcrumb
+      %li
+        %a{ href: '#' }
+          %span.glyphicon.glyphicon-th
+          Dashboard
+      %li
+        %a{ href: '#' }
+          %span.glyphicon.glyphicon-picture
+          Habitat
+    %ul.right.action-bar-filter
+      %li.divider
+      %li.active
+        %a{ href: '#' } Augurs
+      %li
+        %a{ href: '#' } Facts
+      %li.divider
+      %li.action-bar-search
+        %input{ placeholder: 'Type to search', type: 'text'}
+
+.row.container.augur-listing
+  .columns.small-12
+    %ul.small-block-grid-2.medium-block-grid-3.large-block-grid-4
+      %li
+        .th
+          %img{ src: '/img/tile_half_bg.gif' }
+          %a{ href: '#/augurs/new' }
+            .augur-body
+              %p
+                Add augur
+              %p.plus
+                %i.fi-plus
+
+      %li{'ng-repeat' => 'augur in augurs'}
+        .th
+          %img{ src: '/img/tile_half_bg.gif' }
+          %a{ href: '#/augurs/{{augur.id}}' }
+            .augur-body
+              %p
+                %span.glyphicon.glyphicon-eye-open
+                {{augur.name}}
+              %p
+                {{augur.habitat}}
