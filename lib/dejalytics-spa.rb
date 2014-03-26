@@ -1,0 +1,1 @@
+require 'dejalytics/spa'
