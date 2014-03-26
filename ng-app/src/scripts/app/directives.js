@@ -6,7 +6,8 @@ define([
   'angular',
   'directives/available-prediction-target',
   'directives/unique-augur-name',
-  'directives/threshold-in-range'
+  'directives/threshold-in-range',
+  'mm-foundation-tpls'
 ], function ( ng, AvailablePredictionTarget, UniqueAugurName, ThresholdInRange) {
   'use strict';
 

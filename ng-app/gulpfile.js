@@ -2,6 +2,8 @@ var gulp = require('gulp'),
   gutil = require('gulp-util'),
   sass = require('gulp-sass'),
   haml = require('gulp-ruby-haml'),
+  ngHtml2Js = require('gulp-ng-html2js'),
+  minifyHtml = require('gulp-minify-html'),
   autoprefixer = require('gulp-autoprefixer'),
   minifycss = require('gulp-minify-css'),
   jshint = require('gulp-jshint'),
@@ -26,7 +28,7 @@ var gulp = require('gulp'),
 //// Settings
 //////////////////////////////
 var livereloadport = 35729,
-    serverport = 4000;
+  serverport = 4000;
 
 
 //////////////////////////////
@@ -37,8 +39,8 @@ gulp.task('default', ['dist', 'watch', 'serve']);
 
 gulp.task('serve', function () {
   var app = express();
-  app.configure(function(){
-    app.use(function(req, res, next) {
+  app.configure(function () {
+    app.use(function (req, res, next) {
       res.setHeader("Access-Control-Allow-Origin", "*");
       return next();
     });
@@ -54,18 +56,21 @@ gulp.task('serve', function () {
   });
 });
 
-gulp.task('dist', ['dist-clean'], function() {
+gulp.task('dist', ['dist-clean'], function () {
   gulp.start('index', 'haml', 'assets', 'styles', 'fonts-foundation', 'glyphicons-bootstrap', 'lib', 'requirejs');
 });
 gulp.task('dist-clean', ['clean-html-assets', 'clean-styles', 'clean-lib']);
 
-gulp.task('watch', function() {
+gulp.task('watch', function () {
   gulp.watch(['src/index-dist.html'], ['index', 'assets']);
   gulp.watch([
     'src/img*/**/*',
     'src/scripts*/**/modernizr*', 'src/scripts*/**/jquery*', 'src/scripts*/**/foundation*'
   ], ['assets']);
+
   gulp.watch(['src/partials*/**/*.haml'], ['haml']);
+  gulp.watch(['src/scripts/app/partials-tpls.min.js'], ['requirejs']);
+
   gulp.watch(['src/styles/**/*'], ['styles']);
   gulp.watch(['src/scripts/main.js', 'src/scripts/app/**/*.js'], ['requirejs']);
 
@@ -100,12 +105,12 @@ gulp.task('scripts-dist-vendor', function () {
 gulp.task('clean-html-assets', function () {
   return gulp
     .src([
-           'dist/**/*.html', 'dist/img/**/*',
-           'dist/api/**/*',
-           'dist/scripts/**/modernizr*',
-           'dist/scripts/**/jquery*',
-           'dist/scripts/**/foundation*'
-         ], { read: false })
+    'dist/**/*.html', 'dist/img/**/*',
+    'dist/api/**/*',
+    'dist/scripts/**/modernizr*',
+    'dist/scripts/**/jquery*',
+    'dist/scripts/**/foundation*'
+  ], { read: false })
     .pipe(clean());
 });
 
@@ -123,8 +128,16 @@ gulp.task('haml', function () {
   return gulp
     .src(['src/partials*/**/*.haml'])
     .pipe(haml())
-    .pipe(gulp.dest('dist/'))
-    .pipe(livereload(lrserver));
+    .pipe(minifyHtml({
+      empty: true,
+      spare: true,
+      quotes: true
+    }))
+    .pipe(ngHtml2Js({
+      moduleName: 'dejalyticsPartials'
+    }))
+    .pipe(concat('partials-tpls.min.js'))
+    .pipe(gulp.dest('src/scripts/app/'));
 });
 
 gulp.task('assets', function () {

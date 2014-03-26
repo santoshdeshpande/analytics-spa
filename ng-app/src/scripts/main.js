@@ -31,24 +31,18 @@ require.config({
       ]
     },
 
-    'mm-foundation' : {
-      deps : [
-        'angular'
-      ]
-    },
-
-    'mm-foundation-tpls' : {
-      deps : [
-        'mm-foundation'
-      ]
-    },
-
     jquery : {
       exports : '$'
     },
 
     lodash : {
       exports : '_'
+    },
+
+    'mm-foundation' : {
+      deps : [
+        'angular'
+      ]
     }
   },
 
@@ -57,7 +51,6 @@ require.config({
     'angular.animate'    : '../lib/angular-1.2.9/angular-animate',
     'angular.resource'   : '../lib/angular-1.2.9/angular-resource',
     'angular.route'      : '../lib/angular-1.2.9/angular-route',
-    'mm-foundation'      : '../lib/angular-foundation-0.1.0/mm-foundation',
     'mm-foundation-tpls' : '../lib/angular-foundation-0.1.0/mm-foundation-tpls',
     'domReady'           : '../lib/domReady-2.0.1/domReady',
     'jquery'             : '../lib/jquery-1.10.2/jquery',
@@ -66,7 +59,7 @@ require.config({
   }
 });
 
-requirejs(['angular', 'app', 'mm-foundation', 'mm-foundation-tpls'], function ( ng, app ) {
+requirejs(['angular', 'app'], function ( ng, app ) {
   'use strict';
 
   require(['domReady!'], function (document) {
