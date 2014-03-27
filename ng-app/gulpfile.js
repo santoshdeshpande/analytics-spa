@@ -3,7 +3,7 @@ var gulp = require('gulp'),
   sass = require('gulp-sass'),
   haml = require('gulp-ruby-haml'),
   ngHtml2Js = require('gulp-ng-html2js'),
-  minifyHtml = require('gulp-minify-html'),
+  cleanhtml = require('gulp-cleanhtml'),
   autoprefixer = require('gulp-autoprefixer'),
   minifycss = require('gulp-minify-css'),
   jshint = require('gulp-jshint'),
@@ -128,11 +128,7 @@ gulp.task('haml', function () {
   return gulp
     .src(['src/partials*/**/*.haml'])
     .pipe(haml())
-    .pipe(minifyHtml({
-      empty: true,
-      spare: true,
-      quotes: true
-    }))
+    .pipe(cleanhtml())
     .pipe(ngHtml2Js({
       moduleName: 'dejalyticsPartials'
     }))

@@ -17,7 +17,7 @@ define([
   return ng
     .module('dejalyticsApp', [
       'ngRoute',
-//      'dejalyticsPartials',
+      'dejalyticsPartials',
       animations.name,
       controllers.name,
       directives.name,
