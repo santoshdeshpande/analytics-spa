@@ -5805,6 +5805,8 @@ th.hide-for-touch {
           top: -2px;
           right: 2px; }
     .new-augur-wizard .fact-tables .fact-body {
+      width: 500px;
+      height: 125px;
       font-size: 0.8em;
       position: absolute;
       width: 100%;
@@ -5856,3 +5858,7 @@ th.hide-for-touch {
     text-align: center; }
     .new-augur-wizard .schedules .learning #comparator span {
       font-size: 0.9em; }
+
+.dashboard .artefact-body {
+  height: 125px;
+  width: 500px; }

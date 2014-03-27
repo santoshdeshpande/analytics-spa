@@ -23,24 +23,22 @@
       %li.action-bar-search
         %input{ placeholder: 'Type to search', type: 'text'}
 
-.row.container.augur-listing
+.row.container.dashboard
   .columns.small-12
     %ul.small-block-grid-2.medium-block-grid-3.large-block-grid-4
       %li
         .th
-          %img{ src: '/img/tile_half_bg.gif' }
           %a{ href: '#/augurs/new' }
-            .augur-body
+            .artefact-body.add-augur
               %p
                 Add augur
               %p.plus
-                %i.fi-plus
+                %span.glyphicon.glyphicon-plus
 
 
 
       %li{'ng-repeat' => 'artifact in artifacts'}
         .th
-          %img{ src: '/img/tile_half_bg.gif' }
           %a{ href: '#/augurs/{{augur.id}}' }
             .artefact-body
               %p
