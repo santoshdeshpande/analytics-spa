@@ -33578,9 +33578,7 @@ define('services/augur',[
   
 
   return ['$resource', function ($resource) {
-    return $resource('/api/v1/augurs/:augurId.json', {}, {
-      query: { method: 'GET', params: { augurId: 'augurs' }, isArray: true }
-    });
+    return $resource('/api/v1/augurs/:augurId')
   }];
 });
 
@@ -33594,13 +33592,7 @@ define('services/datasource',[
   
 
   return ['$resource', function ($resource) {
-    return $resource('habitats/:habitatId/data_sources/:dataSourceId.json', {
-      // defaults for params
-      habitatId: '@habitatId', dataSourceId: '@id'
-    }, {
-      // override actions
-      query: { method: 'GET', params: { dataSourceId: 'data_sources' }, isArray: true }
-    });
+    return $resource('habitats/:habitatId/data_sources/:dataSourceId', { habitatId: '@habitatId', dataSourceId: '@id' });
   }];
 });
 
@@ -33614,13 +33606,7 @@ define('services/facttable',[
   
 
   return ['$resource', function ($resource) {
-    return $resource('habitats/:habitatId/fact_tables/:factTableId.json', {
-      // defaults for params
-      habitatId: '@habitatId', factTableId: '@id'
-    }, {
-      // override actions
-      query: { method: 'GET', params: { factTableId: 'fact_tables' }, isArray: true }
-    });
+    return $resource('api/v1/habitats/:habitatId/fact_tables/:factTableId', { habitatId: '@habitatId', factTableId: '@id' });
   }];
 });
 
@@ -33634,9 +33620,7 @@ define('services/habitat',[
   
 
   return ['$resource', function ($resource) {
-    return $resource('/api/v1/habitats/:habitatId.json', {}, {
-      query: { method: 'GET', params: { habitatId: 'habitats' }, isArray: true }
-    });
+    return $resource('/api/v1/habitats/:habitatId');
   }];
 });
 
@@ -33650,7 +33634,7 @@ define('services',[
   'services/augur',
   'services/datasource',
   'services/facttable',
-  'services/habitat',
+  'services/habitat'
 ], function (ng, ngResource, Augur, DataSource, FactTable, Habitat) {
   
 
@@ -40488,6 +40472,7 @@ define('controllers/augurnew',[
 
     $scope.augur = {};
     $scope.habitats = [];
+    $scope.factTables = [];
 
     $scope.unrecognizedPredictionTargetIds = [];
     $scope.predictionTargetIdsValidated = false;
@@ -40525,6 +40510,7 @@ define('controllers/augurnew',[
       }
     };
 
+
     // Maintain valid states for next button - begin
 
     var validateStepOne = function() {
@@ -40542,6 +40528,17 @@ define('controllers/augurnew',[
       $scope.stepValid.two   = false;
       $scope.stepValid.three = false;
     }
+
+    $scope.$watch(function () {
+      return $scope.augur.habitat;
+    }, function (newVal, _) {
+
+      if (newVal.id) {
+        FactTable.query({ habitatId: newVal.id }, function (factTables) {
+          $scope.factTables = factTables;
+        });
+      }
+    });
 
     $scope.$watch(function(){
       return $scope.augur.name;
@@ -40595,10 +40592,6 @@ define('controllers/augurnew',[
 
     Habitat.query(function(habitats){
       $scope.habitats = habitats;
-    });
-
-    FactTable.query({ habitatId: 1 }, function (factTables) {
-      $scope.factTables = factTables;
     });
 
     $scope.validatePredictionTargetIds = function() {

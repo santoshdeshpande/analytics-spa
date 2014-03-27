@@ -20,7 +20,6 @@ var gulp = require('gulp'),
   fs = require('fs'),
   Q = require('q'),
   requirejs = require('requirejs'),
-  ecstatic = require('ecstatic'),
   http = require('http'),
   express = require('express');
 
@@ -44,6 +43,19 @@ gulp.task('serve', function () {
       res.setHeader("Access-Control-Allow-Origin", "*");
       return next();
     });
+
+    app.use('/api/v1/habitats', function(req, res){
+      res.sendfile(__dirname + '/dist/api/v1/habitats/habitats.json')
+    });
+
+    app.use('/api/v1/augurs', function(req, res){
+      res.sendfile(__dirname + '/dist/api/v1/augurs/augurs.json')
+    });
+
+    app.use('/api/v1/habitats/1/fact_tables', function(req, res){
+      res.sendfile(__dirname + '/dist/api/v1/habitats/1/fact_tables/fact_tables.json')
+    });
+
     app.use(express.static(__dirname + '/dist'));
     app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
   });

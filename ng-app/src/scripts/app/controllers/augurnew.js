@@ -13,6 +13,7 @@ define([
 
     $scope.augur = {};
     $scope.habitats = [];
+    $scope.factTables = [];
 
     $scope.unrecognizedPredictionTargetIds = [];
     $scope.predictionTargetIdsValidated = false;
@@ -50,6 +51,7 @@ define([
       }
     };
 
+
     // Maintain valid states for next button - begin
 
     var validateStepOne = function() {
@@ -67,6 +69,17 @@ define([
       $scope.stepValid.two   = false;
       $scope.stepValid.three = false;
     }
+
+    $scope.$watch(function () {
+      return $scope.augur.habitat;
+    }, function (newVal, _) {
+
+      if (newVal.id) {
+        FactTable.query({ habitatId: newVal.id }, function (factTables) {
+          $scope.factTables = factTables;
+        });
+      }
+    });
 
     $scope.$watch(function(){
       return $scope.augur.name;
@@ -120,10 +133,6 @@ define([
 
     Habitat.query(function(habitats){
       $scope.habitats = habitats;
-    });
-
-    FactTable.query({ habitatId: 1 }, function (factTables) {
-      $scope.factTables = factTables;
     });
 
     $scope.validatePredictionTargetIds = function() {

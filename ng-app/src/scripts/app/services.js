@@ -8,7 +8,7 @@ define([
   'services/augur',
   'services/datasource',
   'services/facttable',
-  'services/habitat',
+  'services/habitat'
 ], function (ng, ngResource, Augur, DataSource, FactTable, Habitat) {
   'use strict';
 
