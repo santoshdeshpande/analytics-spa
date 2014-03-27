@@ -5794,6 +5794,8 @@ th.hide-for-touch {
     .new-augur-wizard .fact-tables input[type=radio] {
       display: none; }
     .new-augur-wizard .fact-tables .th {
+      width: 500px;
+      height: 125px;
       position: relative;
       background: #fff; }
       .new-augur-wizard .fact-tables .th.selected {
@@ -5805,8 +5807,6 @@ th.hide-for-touch {
           top: -2px;
           right: 2px; }
     .new-augur-wizard .fact-tables .fact-body {
-      width: 500px;
-      height: 125px;
       font-size: 0.8em;
       position: absolute;
       width: 100%;

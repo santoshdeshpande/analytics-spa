@@ -213,6 +213,8 @@ $crumb-bg: scale-color($secondary-color, $lightness: 55%) !default;
 
 
     .th {
+      width: 500px;
+      height: 125px;
       position: relative;
       background: #fff;
 
@@ -230,9 +232,6 @@ $crumb-bg: scale-color($secondary-color, $lightness: 55%) !default;
     }
 
     .fact-body {
-      width: 500px;
-      height: 125px;
-
       font-size: 0.8em;
       position: absolute;
       width: 100%;

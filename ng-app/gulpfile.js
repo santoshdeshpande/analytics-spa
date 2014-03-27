@@ -44,16 +44,16 @@ gulp.task('serve', function () {
       return next();
     });
 
+    app.use('/api/v1/habitats/1/fact_tables', function(req, res){
+      res.sendfile(__dirname + '/dist/api/v1/habitats/1/fact_tables/fact_tables.json')
+    });
+
     app.use('/api/v1/habitats', function(req, res){
       res.sendfile(__dirname + '/dist/api/v1/habitats/habitats.json')
     });
 
     app.use('/api/v1/augurs', function(req, res){
       res.sendfile(__dirname + '/dist/api/v1/augurs/augurs.json')
-    });
-
-    app.use('/api/v1/habitats/1/fact_tables', function(req, res){
-      res.sendfile(__dirname + '/dist/api/v1/habitats/1/fact_tables/fact_tables.json')
     });
 
     app.use(express.static(__dirname + '/dist'));
@@ -69,9 +69,9 @@ gulp.task('serve', function () {
 });
 
 gulp.task('dist', ['dist-clean'], function () {
-  gulp.start('index', 'haml', 'assets', 'styles', 'fonts-foundation', 'glyphicons-bootstrap', 'lib', 'requirejs');
+  gulp.start('index', 'haml', 'assets', 'styles', 'glyphicons-bootstrap', 'lib', 'requirejs');
 });
-gulp.task('dist-clean', ['clean-html-assets', 'clean-styles', 'clean-lib']);
+gulp.task('dist-clean', ['clean-assets', 'clean-styles', 'clean-lib']);
 
 gulp.task('watch', function () {
   gulp.watch(['src/index-dist.html'], ['index', 'assets']);
@@ -114,10 +114,9 @@ gulp.task('scripts-dist-vendor', function () {
 //////////////////////////////
 //// Static files
 //////////////////////////////
-gulp.task('clean-html-assets', function () {
+gulp.task('clean-assets', function () {
   return gulp
     .src([
-    'dist/**/*.html', 'dist/img/**/*',
     'dist/api/**/*',
     'dist/scripts/**/modernizr*',
     'dist/scripts/**/jquery*',
@@ -141,9 +140,7 @@ gulp.task('haml', function () {
     .src(['src/partials*/**/*.haml'])
     .pipe(haml())
     .pipe(cleanhtml())
-    .pipe(ngHtml2Js({
-      moduleName: 'dejalyticsPartials'
-    }))
+    .pipe(ngHtml2Js({moduleName: 'dejalyticsPartials'}))
     .pipe(concat('partials-tpls.min.js'))
     .pipe(gulp.dest('src/scripts/app/'));
 });
@@ -170,7 +167,7 @@ gulp.task('clean-styles', function () {
     .pipe(clean());
 });
 
-gulp.task('styles', function () {
+gulp.task('styles', ['glyphicons-bootstrap'], function () {
   return gulp.src(['src/styles/application.scss'])
     .pipe(sass())
     .pipe(concat('main.css'))
@@ -179,17 +176,12 @@ gulp.task('styles', function () {
     .pipe(notify({ message: 'Styles task complete' }));
 });
 
-gulp.task('fonts-foundation', function () {
-  return gulp.src([
-      'src/styles/vendor/foundation-icons/*.eot',
-      'src/styles/vendor/foundation-icons/*.svg',
-      'src/styles/vendor/foundation-icons/*.ttf',
-      'src/styles/vendor/foundation-icons/*.woff'
-    ])
+gulp.task('glyphicons-bootstrap', ['glyphicons-bootstrap-fonts'], function () {
+  return gulp.src(['src/styles/vendor/bootstrap-glyphicons-3.0.0/bootstrap-glyphicons.css'])
     .pipe(gulp.dest('dist/styles/'));
 });
 
-gulp.task('glyphicons-bootstrap', function () {
+gulp.task('glyphicons-bootstrap-fonts', function () {
   return gulp.src([
       'src/styles/vendor/bootstrap-glyphicons-3.0.0/*.eot',
       'src/styles/vendor/bootstrap-glyphicons-3.0.0/*.svg',
