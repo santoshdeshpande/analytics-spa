@@ -18,7 +18,7 @@ define([
           return lodashTokens.uniq().compact();
         }
 
-        scope.$on('validate:predictionTargetIds', function(event, validIds, stepValidThreeCb){
+        scope.$on('validate:predictionTargetIds', function (event, validIds, stepValidThreeCb) {
           scope.predictionTargetIdsValidated = true;
           scope.unrecognizedPredictionTargetIds = [];
           ngModel.$setValidity('present', true);
@@ -33,8 +33,8 @@ define([
             return undefined;
           }
 
-          scope.candidateIds.forEach(function(candidateId) {
-            if (validIds && validIds.indexOf(candidateId) === -1) {
+          scope.candidateIds.forEach(function (candidateId) {
+            if (validIds.indexOf(candidateId) === -1) {
               scope.unrecognizedPredictionTargetIds.push(candidateId);
             }
           });

@@ -13,7 +13,7 @@
 
 .row.container.new-augur-wizard
   .small-12.columns
-    %form{ name: 'form', novalidate: '' }
+    %form{ name: 'form', novalidate: '', ng: { submit: 'form.$valid && submit()' } }
 
       .row.step.step-1{ ng: { class: '(step==1) ? "active" : ""' } }
         .small-12.columns
@@ -36,7 +36,7 @@
                 %input#augur-habitat{ name: 'augurHabitat', placeholder: 'Type to search', type: 'text', ng: { model: 'augur.habitat' }, typeahead: 'habitat as habitat.name for habitat in habitats' }
           .next-button
             .next-button-wrap
-              %a.tiny.button.radius{ href: '', ng: { disabled: '!stepValid.one', click: 'stepValid.one && (step=2)' } } Next step >
+              %a.tiny.button.radius{ href: '', ng: { disabled: '!stepValid.one || form.augurName.$error.uniqueAugurName', click: 'stepValid.one && (step=2)' } } Next step >
 
       .row.step.step-2{ ng: { class: '(step==2) ? "active" : ""' } }
         .small-12.columns
@@ -54,9 +54,9 @@
                       %input{ id: '{{ factTable.id }}', type: 'radio', ng: { model: 'augur.factTable', value: 'factTable' } }
                       .th{ ng: { class: '(augur.factTable==factTable) ? "selected" : ""' } }
                         .fact-body
-                          %i.fi-checkbox{ ng: { show: 'augur.factTable==factTable' } }
                           %h8.subheader
                             {{factTable.name}}
+                            %span.check-status.glyphicon.glyphicon-check{ ng: { show: 'augur.factTable==factTable' } }
                           %p
                             {{factTable.description}}
           .next-button
@@ -92,8 +92,8 @@
                           You need to provide one or more prediction target ids
                         .error.validation-icon
                           %span.glyphicon.glyphicon-remove-circle
-                    .validation-elements
-                      %button.button.small.radius{ ng: { click: 'validatePredictionTargetIds()', show: '!stepValid.three' } }
+                    .validation-elements.validate-action
+                      %a.button.small.radius{ ng: { click: 'validatePredictionTargetIds()', show: '!stepValid.three' } }
                         Validate
 
           .next-button
@@ -123,17 +123,20 @@
                         %label Select schedule type:
                     .row
                       .small-4.columns
-                        %select{ name: 'prediction-schedule-type', ng: { model: 'augur.prediction.schedule.type' } }
+                        %select{ name: 'prediction-schedule-frequency', ng: { model: 'augur.prediction.schedule.frequency' } }
                           %option{ value: 'daily' } daily
                           %option{ value: 'weekly' } weekly
                           %option{ value: 'monthly' } monthly
                       .small-8.columns
-                        .row.daily{ ng: { if: 'augur.prediction.schedule.type == "daily"' } }
-                          .small-6.columns.end
-                            %input{ type: 'text', id: 'prediction-schedule-daily-time', ng: { model: 'augur.prediction.schedule.daily.time' } }
-                        .row.weekly{ ng: { if: 'augur.prediction.schedule.type == "weekly"' } }
+
+                        .row.daily{ ng: { if: 'augur.prediction.schedule.frequency == "daily"' } }
+                          .small-6.columns.end{ ng: { class: '{"error" : form.predictionScheduleDailyTimeOfDay.$error.pattern}' }}
+                            %input{ type: 'text', name: 'predictionScheduleDailyTimeOfDay', id: 'prediction-schedule-daily-time', ng: { model: 'augur.prediction.schedule.timeOfDay', pattern: '/^0?((1[012])|([1-9])):[0-5][0-9](\s)?(am|pm|AM|PM)$/' } }
+                            %small.error{ ng: { show: 'form.predictionScheduleDailyTimeOfDay.$error.pattern' } } Not a valid time
+
+                        .row.weekly{ ng: { if: 'augur.prediction.schedule.frequency == "weekly"' } }
                           .small-6.columns
-                            %select{ name: 'prediction-schedule-weekly-day', ng: { model: 'augur.prediction.schedule.weekly.day' } }
+                            %select{ name: 'prediction-schedule-weekly-day', ng: { model: 'augur.prediction.schedule.dayOfWeek' } }
                               %option{ value: 'monday' }    Mon
                               %option{ value: 'tuesday' }   Tue
                               %option{ value: 'wednesday' } Wed
@@ -141,13 +144,16 @@
                               %option{ value: 'friday' }    Fri
                               %option{ value: 'saturday' }  Sat
                               %option{ value: 'sunday' }    Sun
+                          .small-6.columns{ ng: { class: '{"error" : form.predictionScheduleWeeklyTimeOfDay.$error.pattern}' }}
+                            %input{ type: 'text', name: 'predictionScheduleWeeklyTimeOfDay', id: 'prediction-schedule-weekly-time', ng: { model: 'augur.prediction.schedule.timeOfDay', pattern: '/^0?((1[012])|([1-9])):[0-5][0-9](\s)?(am|pm|AM|PM)$/' } }
+                            %small.error{ ng: { show: 'form.predictionScheduleWeeklyTimeOfDay.$error.pattern' } } Not a valid time
+
+                        .row.monthly{ ng: { if: 'augur.prediction.schedule.frequency == "monthly"' } }
                           .small-6.columns
-                            %input{ type: 'text', id: 'prediction-schedule-weekly-time', ng: { model: 'augur.prediction.schedule.weekly.time' } }
-                        .row.monthly{ ng: { if: 'augur.prediction.schedule.type == "monthly"' } }
-                          .small-6.columns
-                            %select{ name: 'prediction-schedule-monthly-day', ng: { model: 'augur.prediction.schedule.monthly.day', options: 'day.key as day.label for day in DAYS_IN_MONTH' } }
-                          .small-6.columns
-                            %input{ type: 'text', id: 'prediction-schedule-monthly-time', ng: { model: 'augur.prediction.schedule.monthly.time' } }
+                            %select{ name: 'prediction-schedule-monthly-day', ng: { model: 'augur.prediction.schedule.dayOfMonth', options: 'day.key as day.label for day in DAYS_IN_MONTH' } }
+                          .small-6.columns{ ng: { class: '{"error" : form.predictionScheduleMonthlyTimeOfDay.$error.pattern}' }}
+                            %input{ type: 'text', name: 'predictionScheduleMonthlyTimeOfDay', id: 'prediction-schedule-monthly-time', ng: { model: 'augur.prediction.schedule.timeOfDay', pattern: '/^0?((1[012])|([1-9])):[0-5][0-9](\s)?(am|pm|AM|PM)$/' } }
+                            %small.error{ ng: { show: 'form.predictionScheduleMonthlyTimeOfDay.$error.pattern' } } Not a valid time
 
               .small-4.columns
                 .evaluation
@@ -163,17 +169,18 @@
                         %label Select schedule type:
                     .row
                       .small-4.columns
-                        %select{ name: 'evaluation-schedule-type', ng: { model: 'augur.evaluation.schedule.type' } }
+                        %select{ name: 'evaluation-schedule-type', ng: { model: 'augur.evaluation.schedule.frequency' } }
                           %option{ value: 'daily' } daily
                           %option{ value: 'weekly' } weekly
                           %option{ value: 'monthly' } monthly
                       .small-8.columns
-                        .row.daily{ ng: { if: 'augur.evaluation.schedule.type == "daily"' } }
-                          .small-6.columns.end
-                            %input{ type: 'text', id: 'evaluation-schedule-daily-time', ng: { model: 'augur.evaluation.schedule.daily.time' } }
-                        .row.weekly{ ng: { if: 'augur.evaluation.schedule.type == "weekly"' } }
+                        .row.daily{ ng: { if: 'augur.evaluation.schedule.frequency == "daily"' } }
+                          .small-6.columns.end{ ng: { class: '{"error" : form.evaluationScheduleDailyTimeOfDay.$error.pattern}' }}
+                            %input{ type: 'text', name: 'evaluationScheduleDailyTimeOfDay', id: 'evaluation-schedule-daily-time', ng: { model: 'augur.evaluation.schedule.timeOfDay', pattern: '/^0?((1[012])|([1-9])):[0-5][0-9](\s)?(am|pm|AM|PM)$/' } }
+                            %small.error{ ng: { show: 'form.evaluationScheduleDailyTimeOfDay.$error.pattern' } } Not a valid time
+                        .row.weekly{ ng: { if: 'augur.evaluation.schedule.frequency == "weekly"' } }
                           .small-6.columns
-                            %select{ name: 'evaluation-schedule-weekly-day', ng: { model: 'augur.evaluation.schedule.weekly.day' } }
+                            %select{ name: 'evaluation-schedule-weekly-day', ng: { model: 'augur.evaluation.schedule.dayOfWeek' } }
                               %option{ value: 'monday' }    Mon
                               %option{ value: 'tuesday' }   Tue
                               %option{ value: 'wednesday' } Wed
@@ -181,13 +188,15 @@
                               %option{ value: 'friday' }    Fri
                               %option{ value: 'saturday' }  Sat
                               %option{ value: 'sunday' }    Sun
+                          .small-6.columns{ ng: { class: '{"error" : form.evaluationScheduleWeeklyTimeOfDay.$error.pattern}' }}
+                            %input{ type: 'text', name: 'evaluationScheduleWeeklyTimeOfDay', id: 'evaluation-schedule-weekly-time', ng: { model: 'augur.evaluation.schedule.timeOfDay', pattern: '/^0?((1[012])|([1-9])):[0-5][0-9](\s)?(am|pm|AM|PM)$/' } }
+                            %small.error{ ng: { show: 'form.evaluationScheduleWeeklyTimeOfDay.$error.pattern' } } Not a valid time
+                        .row.monthly{ ng: { if: 'augur.evaluation.schedule.frequency == "monthly"' } }
                           .small-6.columns
-                            %input{ type: 'text', id: 'evaluation-schedule-weekly-time', ng: { model: 'augur.evaluation.schedule.weekly.time' } }
-                        .row.monthly{ ng: { if: 'augur.evaluation.schedule.type == "monthly"' } }
-                          .small-6.columns
-                            %select{ name: 'evaluation-schedule-monthly-day', ng: { model: 'augur.evaluation.schedule.monthly.day', options: 'day.key as day.label for day in DAYS_IN_MONTH' } }
-                          .small-6.columns
-                            %input{ type: 'text', id: 'evaluation-schedule-monthly-time', ng: { model: 'augur.evaluation.schedule.monthly.time' } }
+                            %select{ name: 'evaluation-schedule-monthly-day', ng: { model: 'augur.evaluation.schedule.dayOfMonth', options: 'day.key as day.label for day in DAYS_IN_MONTH' } }
+                          .small-6.columns{ ng: { class: '{"error" : form.evaluationScheduleMonthlyTimeOfDay.$error.pattern}' }}
+                            %input{ type: 'text', name: 'evaluationScheduleMonthlyTimeOfDay', id: 'evaluation-schedule-monthly-time', ng: { model: 'augur.evaluation.schedule.timeOfDay', pattern: '/^0?((1[012])|([1-9])):[0-5][0-9](\s)?(am|pm|AM|PM)$/' } }
+                            %small.error{ ng: { show: 'form.evaluationScheduleMonthlyTimeOfDay.$error.pattern' } } Not a valid time
 
               .small-4.columns
                 .learning
@@ -217,4 +226,4 @@
                         %small.error{ ng: { show: 'form.learningThreshold.$error.thresholdInRange' } } Value not in range. Min: {{augur.learning.kpi.min}}, Max: {{augur.learning.kpi.max}}
           .next-button
             .next-button-wrap
-              %a.tiny.button.radius{ href: '#', ng: { disabled: '!stepValid.four' } } Activate Augur >
+              %input.tiny.button.radius{ type: 'submit', value: 'Activate Augur >', ng: { disabled: '!stepValid.four || !form.$valid' } }

@@ -5814,6 +5814,9 @@ th.hide-for-touch {
       padding: 1em;
       top: 0;
       left: 0; }
+      .new-augur-wizard .fact-tables .fact-body .check-status {
+        float: right;
+        font-size: 175%; }
   .new-augur-wizard .prediction-targets .input textarea {
     height: 23em; }
   .new-augur-wizard .prediction-targets .validation {
@@ -5830,8 +5833,12 @@ th.hide-for-touch {
     .new-augur-wizard .prediction-targets .validation .validation-message-show-hide {
       position: absolute;
       padding: 0 1em; }
-    .new-augur-wizard .prediction-targets .validation button {
-      top: 200px; }
+    .new-augur-wizard .prediction-targets .validation .validate-action {
+      position: absolute;
+      top: 200px;
+      width: 100%; }
+      .new-augur-wizard .prediction-targets .validation .validate-action .button {
+        text-align: center; }
     .new-augur-wizard .prediction-targets .validation .validation-message-show-hide.ng-hide-add, .new-augur-wizard .prediction-targets .validation .validation-message-show-hide.ng-hide-remove {
       -webkit-transition: all linear 0.3s;
       -moz-transition: all linear 0.3s;

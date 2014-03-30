@@ -239,6 +239,11 @@ $crumb-bg: scale-color($secondary-color, $lightness: 55%) !default;
       padding: 1em;
       top: 0;
       left: 0;
+
+      .check-status {
+        float: right;
+        font-size: 175%;
+      }
     }
   }
 
@@ -270,8 +275,14 @@ $crumb-bg: scale-color($secondary-color, $lightness: 55%) !default;
         padding: 0 1em;
       }
 
-      button {
+      .validate-action {
+        position: absolute;
         top: 200px;
+        width: 100%;
+
+        .button {
+          text-align: center;
+        }
       }
 
       .validation-message-show-hide.ng-hide-add, .validation-message-show-hide.ng-hide-remove {
