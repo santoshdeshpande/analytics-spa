@@ -33649,17 +33649,6 @@ define('services',[
  define: false,
  console: false
  */
-define('controllers/augurlist',[], function () {
-  
-
-  return function ($scope, Augur) {
-  }
-});
-
-/* global
- define: false,
- console: false
- */
 define('controllers/augurdetail',[], function () {
   
 
@@ -40670,15 +40659,13 @@ define('controllers/dashboard',[], function () {
 define('controllers',[
   'angular',
   'services',
-  'controllers/augurlist',
   'controllers/augurdetail',
   'controllers/augurnew',
   'controllers/dashboard'
-], function (ng, services, AugurListCtrl, AugurDetailCtrl, AugurNewCtrl, DashboardCtrl) {
+], function (ng, services, AugurDetailCtrl, AugurNewCtrl, DashboardCtrl) {
   
 
   return ng.module('MainControllers', [ services.name ])
-      .controller('AugurListCtrl', AugurListCtrl)
       .controller('AugurDetailCtrl', AugurDetailCtrl)
       .controller('AugurNewCtrl', AugurNewCtrl)
       .controller('DashboardCtrl', DashboardCtrl);

@@ -26,21 +26,17 @@ define([
     ])
     .config(['$routeProvider', function ($routeProvider) {
       $routeProvider.
-        when('/augurs', {
-          templateUrl: 'partials/augur-list.html',
-          controller: 'AugurListCtrl'
+        when('/', {
+          templateUrl: 'partials/dashboard.html',
+          controller: 'DashboardCtrl'
         }).
         when('/augurs/new', {
           templateUrl: 'partials/augur-new.html',
           controller: 'AugurNewCtrl'
         }).
-        when('/augurs/:augurId', {
+        when('/habitat/:habitatId/augurs/:augurId', {
           templateUrl: 'partials/augur-detail.html',
           controller: 'AugurDetailCtrl'
-        }).
-        when('/', {
-          templateUrl: 'partials/dashboard.html',
-          controller: 'DashboardCtrl'
         }).
         otherwise({
           redirectTo: '/'
