@@ -40735,7 +40735,7 @@ define('directives/available-prediction-target',[
 define('directives/unique-augur-name',[], function () {
   
 
-  return function (Augur, Habitat) {
+  return ['Augur', 'Habitat', function (Augur, Habitat) {
     return {
       restrict: 'A',
       require: 'ngModel',
@@ -40763,7 +40763,7 @@ define('directives/unique-augur-name',[], function () {
         });
       }
     };
-  }
+  }]
 });
 
 /* global

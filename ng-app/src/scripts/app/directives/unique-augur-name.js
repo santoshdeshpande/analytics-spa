@@ -5,7 +5,7 @@
 define([], function () {
   'use strict';
 
-  return function (Augur, Habitat) {
+  return ['Augur', 'Habitat', function (Augur, Habitat) {
     return {
       restrict: 'A',
       require: 'ngModel',
@@ -33,5 +33,5 @@ define([], function () {
         });
       }
     };
-  }
+  }]
 });
