@@ -5,7 +5,7 @@
 define([], function () {
   'use strict';
 
-  return function ($scope, $q, $timeout, Augur, DataSource, FactTable, Habitat) {
+  return ['$scope', '$q', '$timeout', 'Augur', 'DataSource', 'FactTable', 'Habitat', function ($scope, $q, $timeout, Augur, DataSource, FactTable, Habitat) {
     $scope.artifacts = [];
     $scope.selectedArtifactTypes = { augur: true, habitat: true, factTable: true };
     $scope.artifactsQuery = '';
@@ -47,5 +47,5 @@ define([], function () {
         }
       });
     });
-  }
+  }]
 });
