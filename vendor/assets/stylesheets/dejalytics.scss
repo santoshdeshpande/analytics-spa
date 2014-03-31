@@ -5684,20 +5684,16 @@ th.hide-for-touch {
     height: 50px; }
     .action-bar ul .glyphicon {
       font-size: 140%; }
-    .action-bar ul.action-bar-filter li.active a {
+    .action-bar ul.action-bar-filter li.active label {
       -webkit-border-radius: 5px;
       border-radius: 5px;
       background: #008CBA;
       padding: 3px;
       color: #fff; }
-      .action-bar ul.action-bar-filter li.active a:hover {
+      .action-bar ul.action-bar-filter li.active label:hover {
         color: #333; }
-    .action-bar ul.action-bar-filter li a:hover {
-      -webkit-border-radius: 5px;
-      border-radius: 5px;
-      background: #008CBA;
-      padding: 3px;
-      color: #333; }
+    .action-bar ul.action-bar-filter li input[type=checkbox] {
+      display: none; }
     .action-bar ul li {
       float: left;
       display: inline;
@@ -5721,20 +5717,41 @@ th.hide-for-touch {
   padding-top: 0.5em;
   min-height: 600px; }
 
-.augur-listing .th {
+.dashboard .th {
+  padding: 0 0.3em;
   position: relative; }
-.augur-listing .augur-body {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  padding: 1em;
-  top: 0;
-  left: 0; }
-  .augur-listing .augur-body .plus {
+  .dashboard .th.color-scheme-one {
+    border: 1px solid #5FA4FD;
+    background: #F6FBFF; }
+    .dashboard .th.color-scheme-one .title, .dashboard .th.color-scheme-one .glyphicon {
+      color: #5FA4FD; }
+    .dashboard .th.color-scheme-one.habitat {
+      border-left-width: 16px; }
+  .dashboard .th.color-scheme-two {
+    border: 1px solid #8542CA;
+    background: #F5EEFD; }
+    .dashboard .th.color-scheme-two .title, .dashboard .th.color-scheme-two .glyphicon {
+      color: #8542CA; }
+    .dashboard .th.color-scheme-two.habitat {
+      border-left-width: 16px; }
+  .dashboard .th.color-scheme-three {
+    border: 1px solid #569535;
+    background: #FDFFFA; }
+    .dashboard .th.color-scheme-three .title, .dashboard .th.color-scheme-three .glyphicon {
+      color: #569535; }
+    .dashboard .th.color-scheme-three.habitat {
+      border-left-width: 16px; }
+.dashboard .artefact-body {
+  height: 125px;
+  width: 200px;
+  color: #6f6f6f; }
+  .dashboard .artefact-body .description {
+    font-size: 75%; }
+  .dashboard .artefact-body .glyphicon {
     position: absolute;
-    font-size: 400%;
-    top: 20px;
-    right: 20px; }
+    font-size: 240%;
+    top: 90px;
+    right: 10px; }
 
 .new-augur-wizard {
   padding: 0; }
@@ -5865,7 +5882,3 @@ th.hide-for-touch {
     text-align: center; }
     .new-augur-wizard .schedules .learning #comparator span {
       font-size: 0.9em; }
-
-.dashboard .artefact-body {
-  height: 125px;
-  width: 500px; }

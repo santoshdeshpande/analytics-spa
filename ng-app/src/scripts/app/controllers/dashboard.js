@@ -7,20 +7,43 @@ define([], function () {
 
   return function ($scope, $q, $timeout, Augur, DataSource, FactTable, Habitat) {
     $scope.artifacts = [];
+    $scope.selectedArtifactTypes = { augur: true, habitat: true, factTable: true };
+    $scope.artifactsQuery = '';
+    $scope.artifactsFilter = function (artifact) {
+      var queryMatch = true;
+      if ($scope.artifactsQuery.length > 0) {
+        queryMatch = artifact.name.toLowerCase().indexOf($scope.artifactsQuery.toLowerCase()) > -1;
+      }
+      return $scope.selectedArtifactTypes[artifact.type] && queryMatch;
+    };
 
-    (function() {
+    Habitat.query(function (habitats) {
       $q.all([
-          Augur.query().$promise,
-          Habitat.query().$promise
+          $q.all(habitats.map(function(habitat){return FactTable.query({ habitatId: habitat.id }).$promise})),
+          $q.all(habitats.map(function(habitat){return Augur.query({ habitatId: habitat.id }).$promise}))
         ]).then(function (results) {
-        angular.forEach(results[1], function(habitat){
-          $scope.artifacts.push(habitat);
-        });
+        var factTables = results[0],
+            augurs = results[1];
 
-        angular.forEach(results[0], function(augur){
-          $scope.artifacts.push(augur);
-        });
+        for (var i=0; i < habitats.length; i++) {
+          var habitat = habitats[i];
+
+          habitat.type = 'habitat';
+          habitat.augurCount = augurs[i].length;
+          $scope.artifacts.push(habitat);
+
+          angular.forEach(factTables[i], function(factTable) {
+            factTable.type = 'factTable';
+            factTable.colorScheme = habitat.colorScheme;
+            $scope.artifacts.push(factTable);
+          });
+          angular.forEach(augurs[i], function(augur) {
+            augur.type = 'augur';
+            augur.colorScheme = habitat.colorScheme;
+            $scope.artifacts.push(augur);
+          });
+        }
       });
-    })();
+    });
   }
 });

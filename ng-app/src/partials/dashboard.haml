@@ -11,17 +11,18 @@
           Habitat
     %ul.right.action-bar-filter
       %li.divider
-      %li.active
-        %a{ href: '#/' } Augurs
-      %li
-        %a{ href: '#/' } Data sources
-      %li
-        %a{ href: '#/' } Facts
-      %li
-        %a{ href: '#/' } Habitats
+      %li{ ng: { class: '{"active" : selectedArtifactTypes.augur}' } }
+        %input{ type: 'checkbox', id: 'selected-artifact-types-augur', ng: { model: 'selectedArtifactTypes.augur'} }
+        %label{ for: 'selected-artifact-types-augur' } Augurs
+      %li{ ng: { class: '{"active" : selectedArtifactTypes.factTable}' } }
+        %input{ type: 'checkbox', id: 'selected-artifact-types-fact-table', ng: { model: 'selectedArtifactTypes.factTable'} }
+        %label{ for: 'selected-artifact-types-fact-table' } Fact tables
+      %li{ ng: { class: '{"active" : selectedArtifactTypes.habitat}' } }
+        %input{ type: 'checkbox', id: 'selected-artifact-types-habitat', ng: { model: 'selectedArtifactTypes.habitat'} }
+        %label{ for: 'selected-artifact-types-habitat' } Habitats
       %li.divider
       %li.action-bar-search
-        %input{ placeholder: 'Type to search', type: 'text'}
+        %input{ placeholder: 'Type to search', type: 'text', ng: { model: 'artifactsQuery' }}
 
 .row.container.dashboard
   .columns.small-12
@@ -32,15 +33,36 @@
             .artefact-body.add-augur
               %p
                 Add augur
-              %p.plus
+              %p.icon
                 %span.glyphicon.glyphicon-plus
 
-
-
-      %li{'ng-repeat' => 'artifact in artifacts'}
-        .th
-          %a{ href: '#/augurs/{{augur.id}}' }
+      %li{'ng-repeat' => 'artifact in artifacts | filter: artifactsFilter'}
+        .th.habitat{ ng: { if: 'artifact.type == "habitat"', class: 'artifact.colorScheme' }}
+          %a{ href: '#/habitat/{{habitat.id}}' }
             .artefact-body
-              %p
-                %span.glyphicon.glyphicon-eye-open
+              %span.glyphicon.glyphicon-picture
+              %h5.title
+                {{ artifact.name }}
+              %p{ ng: { if: 'artifact.augurCount < 1' } }
+                No Augurs
+              %p{ ng: { if: 'artifact.augurCount === 1' } }
+                One Augur
+              %p{ ng: { if: 'artifact.augurCount > 1' } }
+                {{ artifact.augurCount }} Augurs
+
+
+        .th.augur{ ng: { if: 'artifact.type == "augur"', class: 'artifact.colorScheme' }}
+          %a{ href: '#/habitat/{{artifact.habitat_id}}/augurs/{{augur.id}}' }
+            .artefact-body
+              %span.glyphicon.glyphicon-eye-open
+              %h5.title
                 {{artifact.name}}
+
+        .th.fact-table{ ng: { if: 'artifact.type == "factTable"', class: 'artifact.colorScheme' }}
+          %a{ href: '#/habitat/{{artifact.habitat_id}}/factTables/{{factTable.id}}' }
+            .artefact-body
+              %span.glyphicon.glyphicon-list-alt
+              %h5.title
+                {{artifact.name}}
+              %p.description
+                {{artifact.description}}

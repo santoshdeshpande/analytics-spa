@@ -33653,7 +33653,6 @@ define('controllers/augurlist',[], function () {
   
 
   return function ($scope, Augur) {
-    $scope.augurs = Augur.query();
   }
 });
 
@@ -40623,21 +40622,44 @@ define('controllers/dashboard',[], function () {
 
   return function ($scope, $q, $timeout, Augur, DataSource, FactTable, Habitat) {
     $scope.artifacts = [];
+    $scope.selectedArtifactTypes = { augur: true, habitat: true, factTable: true };
+    $scope.artifactsQuery = '';
+    $scope.artifactsFilter = function (artifact) {
+      var queryMatch = true;
+      if ($scope.artifactsQuery.length > 0) {
+        queryMatch = artifact.name.toLowerCase().indexOf($scope.artifactsQuery.toLowerCase()) > -1;
+      }
+      return $scope.selectedArtifactTypes[artifact.type] && queryMatch;
+    };
 
-    (function() {
+    Habitat.query(function (habitats) {
       $q.all([
-          Augur.query().$promise,
-          Habitat.query().$promise
+          $q.all(habitats.map(function(habitat){return FactTable.query({ habitatId: habitat.id }).$promise})),
+          $q.all(habitats.map(function(habitat){return Augur.query({ habitatId: habitat.id }).$promise}))
         ]).then(function (results) {
-        angular.forEach(results[1], function(habitat){
-          $scope.artifacts.push(habitat);
-        });
+        var factTables = results[0],
+            augurs = results[1];
 
-        angular.forEach(results[0], function(augur){
-          $scope.artifacts.push(augur);
-        });
+        for (var i=0; i < habitats.length; i++) {
+          var habitat = habitats[i];
+
+          habitat.type = 'habitat';
+          habitat.augurCount = augurs[i].length;
+          $scope.artifacts.push(habitat);
+
+          angular.forEach(factTables[i], function(factTable) {
+            factTable.type = 'factTable';
+            factTable.colorScheme = habitat.colorScheme;
+            $scope.artifacts.push(factTable);
+          });
+          angular.forEach(augurs[i], function(augur) {
+            augur.type = 'augur';
+            augur.colorScheme = habitat.colorScheme;
+            $scope.artifacts.push(augur);
+          });
+        }
       });
-    })();
+    });
   }
 });
 
@@ -43492,7 +43514,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('partials/dashboard.html',
-    '<div class=\'row action-bar\'><div class=\'columns small-12\'><ul class=\'left action-bar-breadcrumb\'><li><a href=\'#\'><span class=\'glyphicon glyphicon-th\'></span> Dashboard</a></li><li><a href=\'#\'><span class=\'glyphicon glyphicon-picture\'></span> Habitat</a></li></ul><ul class=\'right action-bar-filter\'><li class=\'divider\'></li><li class=\'active\'> <a href=\'#/\'>Augurs</a></li><li> <a href=\'#/\'>Data sources</a></li><li> <a href=\'#/\'>Facts</a></li><li> <a href=\'#/\'>Habitats</a></li><li class=\'divider\'></li><li class=\'action-bar-search\'> <input placeholder=\'Type to search\' type=\'text\'></li></ul></div></div><div class=\'row container dashboard\'><div class=\'columns small-12\'><ul class=\'small-block-grid-2 medium-block-grid-3 large-block-grid-4\'><li><div class=\'th\'><a href=\'#/augurs/new\'><div class=\'artefact-body add-augur\'><p> Add augur</p><p class=\'plus\'><span class=\'glyphicon glyphicon-plus\'></span></p></div></a></div></li><li ng-repeat=\'artifact in artifacts\'><div class=\'th\'><a href=\'#/augurs/{{augur.id}}\'><div class=\'artefact-body\'><p><span class=\'glyphicon glyphicon-eye-open\'></span> {{artifact.name}}</p></div></a></div></li></ul></div></div>');
+    '<div class=\'row action-bar\'><div class=\'columns small-12\'><ul class=\'left action-bar-breadcrumb\'><li><a href=\'#\'><span class=\'glyphicon glyphicon-th\'></span> Dashboard</a></li><li><a href=\'#\'><span class=\'glyphicon glyphicon-picture\'></span> Habitat</a></li></ul><ul class=\'right action-bar-filter\'><li class=\'divider\'></li><li ng-class=\'{"active" : selectedArtifactTypes.augur}\'> <input id=\'selected-artifact-types-augur\' ng-model=\'selectedArtifactTypes.augur\' type=\'checkbox\'> <label for=\'selected-artifact-types-augur\'>Augurs</label></li><li ng-class=\'{"active" : selectedArtifactTypes.factTable}\'> <input id=\'selected-artifact-types-fact-table\' ng-model=\'selectedArtifactTypes.factTable\' type=\'checkbox\'> <label for=\'selected-artifact-types-fact-table\'>Fact tables</label></li><li ng-class=\'{"active" : selectedArtifactTypes.habitat}\'> <input id=\'selected-artifact-types-habitat\' ng-model=\'selectedArtifactTypes.habitat\' type=\'checkbox\'> <label for=\'selected-artifact-types-habitat\'>Habitats</label></li><li class=\'divider\'></li><li class=\'action-bar-search\'> <input ng-model=\'artifactsQuery\' placeholder=\'Type to search\' type=\'text\'></li></ul></div></div><div class=\'row container dashboard\'><div class=\'columns small-12\'><ul class=\'small-block-grid-2 medium-block-grid-3 large-block-grid-4\'><li><div class=\'th\'><a href=\'#/augurs/new\'><div class=\'artefact-body add-augur\'><p> Add augur</p><p class=\'icon\'><span class=\'glyphicon glyphicon-plus\'></span></p></div></a></div></li><li ng-repeat=\'artifact in artifacts | filter: artifactsFilter\'><div class=\'th habitat\' ng-class=\'artifact.colorScheme\' ng-if=\'artifact.type == "habitat"\'><a href=\'#/habitat/{{habitat.id}}\'><div class=\'artefact-body\'><span class=\'glyphicon glyphicon-picture\'></span><h5 class=\'title\'> {{ artifact.name }}</h5><p ng-if=\'artifact.augurCount &lt; 1\'> No Augurs</p><p ng-if=\'artifact.augurCount === 1\'> One Augur</p><p ng-if=\'artifact.augurCount &gt; 1\'> {{ artifact.augurCount }} Augurs</p></div></a></div><div class=\'th augur\' ng-class=\'artifact.colorScheme\' ng-if=\'artifact.type == "augur"\'><a href=\'#/habitat/{{artifact.habitat_id}}/augurs/{{augur.id}}\'><div class=\'artefact-body\'><span class=\'glyphicon glyphicon-eye-open\'></span><h5 class=\'title\'> {{artifact.name}}</h5></div></a></div><div class=\'th fact-table\' ng-class=\'artifact.colorScheme\' ng-if=\'artifact.type == "factTable"\'><a href=\'#/habitat/{{artifact.habitat_id}}/factTables/{{factTable.id}}\'><div class=\'artefact-body\'><span class=\'glyphicon glyphicon-list-alt\'></span><h5 class=\'title\'> {{artifact.name}}</h5><p class=\'description\'> {{artifact.description}}</p></div></a></div></li></ul></div></div>');
 }]);
 })();
 

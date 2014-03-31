@@ -2,6 +2,13 @@
 
 $crumb-bg: scale-color($secondary-color, $lightness: 55%) !default;
 
+$color-scheme-one-dark: #5FA4FD;
+$color-scheme-one-light: #F6FBFF;
+$color-scheme-two-dark: #8542CA;
+$color-scheme-two-light: #F5EEFD;
+$color-scheme-three-dark: #569535;
+$color-scheme-three-light: #FDFFFA;
+
 .action-bar {
   margin-top: 2em;
   margin-bottom: .3em;
@@ -22,8 +29,8 @@ $crumb-bg: scale-color($secondary-color, $lightness: 55%) !default;
       font-size: 140%;
     }
 
-    &.action-bar-filter {
-      li.active a {
+    &.action-bar-filter li {
+      &.active label {
         @include radius(5px);
         background: $active-bg;
         padding: 3px;
@@ -33,13 +40,8 @@ $crumb-bg: scale-color($secondary-color, $lightness: 55%) !default;
         }
       }
 
-      li a {
-        &:hover {
-          @include radius(5px);
-          background: $active-bg;
-          padding: 3px;
-          color: #333;
-        }
+      input[type=checkbox] {
+        display: none;
       }
     }
 
@@ -78,24 +80,68 @@ $crumb-bg: scale-color($secondary-color, $lightness: 55%) !default;
   min-height: 600px;
 }
 
-.augur-listing {
+.dashboard {
   .th {
+    padding: 0 0.3em;
     position: relative;
+
+    &.color-scheme-one {
+      border: 1px solid $color-scheme-one-dark;
+      background: $color-scheme-one-light;
+      .title, .glyphicon {
+        color: $color-scheme-one-dark;
+      }
+
+      &.habitat {
+        border-left-width: 16px;
+      }
+    }
+
+    &.color-scheme-two {
+      border: 1px solid $color-scheme-two-dark;
+      background: $color-scheme-two-light;
+      .title, .glyphicon {
+        color: $color-scheme-two-dark;
+      }
+
+      &.habitat {
+        border-left-width: 16px;
+      }
+
+    }
+
+    &.color-scheme-three {
+      border: 1px solid $color-scheme-three-dark;
+      background: $color-scheme-three-light;
+      .title, .glyphicon {
+        color: $color-scheme-three-dark;
+      }
+
+      &.habitat {
+        border-left-width: 16px;
+      }
+
+    }
   }
 
-  .augur-body {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    padding: 1em;
-    top: 0;
-    left: 0;
+  .artefact-body {
+    height: 125px;
+    width: 200px;
+    color: #6f6f6f;
 
-    .plus {
+    .title {
+
+    }
+
+    .description {
+      font-size: 75%;
+    }
+
+    .glyphicon {
       position: absolute;
-      font-size: 400%;
-      top: 20px;
-      right: 20px;
+      font-size: 240%;
+      top: 90px;
+      right: 10px;
     }
   }
 }
@@ -211,7 +257,6 @@ $crumb-bg: scale-color($secondary-color, $lightness: 55%) !default;
       display: none;
     }
 
-
     .th {
       width: 500px;
       height: 125px;
@@ -286,21 +331,21 @@ $crumb-bg: scale-color($secondary-color, $lightness: 55%) !default;
       }
 
       .validation-message-show-hide.ng-hide-add, .validation-message-show-hide.ng-hide-remove {
-        -webkit-transition:all linear 0.3s;
-        -moz-transition:all linear 0.3s;
-        -o-transition:all linear 0.3s;
-        transition:all linear 0.3s;
-        display:block!important;
+        -webkit-transition: all linear 0.3s;
+        -moz-transition: all linear 0.3s;
+        -o-transition: all linear 0.3s;
+        transition: all linear 0.3s;
+        display: block !important;
       }
 
       .validation-message-show-hide.ng-hide-add.ng-hide-add-active,
       .validation-message-show-hide.ng-hide-remove {
-        opacity:0;
+        opacity: 0;
       }
 
       .validation-message-show-hide.ng-hide-add,
       .validation-message-show-hide.ng-hide-remove.ng-hide-remove-active {
-        opacity:1;
+        opacity: 1;
 
       }
     }
@@ -340,12 +385,5 @@ $crumb-bg: scale-color($secondary-color, $lightness: 55%) !default;
         }
       }
     }
-  }
-}
-
-.dashboard {
-  .artefact-body {
-    height: 125px;
-    width: 500px;
   }
 }
