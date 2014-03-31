@@ -40610,7 +40610,7 @@ define('controllers/augurnew',[
 define('controllers/dashboard',[], function () {
   
 
-  return function ($scope, $q, $timeout, Augur, DataSource, FactTable, Habitat) {
+  return ['$scope', '$q', '$timeout', 'Augur', 'DataSource', 'FactTable', 'Habitat', function ($scope, $q, $timeout, Augur, DataSource, FactTable, Habitat) {
     $scope.artifacts = [];
     $scope.selectedArtifactTypes = { augur: true, habitat: true, factTable: true };
     $scope.artifactsQuery = '';
@@ -40652,7 +40652,7 @@ define('controllers/dashboard',[], function () {
         }
       });
     });
-  }
+  }]
 });
 
 /* global
