@@ -42,7 +42,7 @@ define([
           redirectTo: '/'
         });
     }])
-    .run(function ($rootScope) {
+    .run(['$rootScope', function ($rootScope) {
       $rootScope.$on('$routeChangeSuccess', function (to, from) {
         console.log('route change', from, to);
       });
@@ -55,5 +55,5 @@ define([
       $rootScope.alert = function (thing) {
         alert(thing);
       };
-    });
+    }]);
 });
