@@ -5,9 +5,8 @@
 define([], function () {
   'use strict';
 
-  return  ['$scope', '$routeParams', 'Augur', function ($scope, $routeParams, Augur) {
-    $scope.augur = Augur.get({augurId: $routeParams.augurId}, function (augur) {
-      console.log('Got augur with id: ' + augur.id);
-    });
+  return  ['$scope', '$routeParams', 'Augur', 'Habitat', function ($scope, $routeParams, Augur, Habitat) {
+    $scope.augur = Augur.get({ habitatId: $routeParams.habitatId, augurId: $routeParams.augurId });
+    $scope.habitat = Habitat.get({ habitatId: $routeParams.habitatId });
   }];
 });

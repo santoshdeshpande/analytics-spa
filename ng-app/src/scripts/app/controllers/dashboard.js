@@ -34,11 +34,13 @@ define([], function () {
 
           angular.forEach(factTables[i], function(factTable) {
             factTable.type = 'factTable';
+            factTable.habitat_id = habitat.code;
             factTable.colorScheme = habitat.colorScheme;
             $scope.artifacts.push(factTable);
           });
           angular.forEach(augurs[i], function(augur) {
             augur.type = 'augur';
+            augur.habitat_id = habitat.code;
             augur.colorScheme = habitat.colorScheme;
             $scope.artifacts.push(augur);
           });

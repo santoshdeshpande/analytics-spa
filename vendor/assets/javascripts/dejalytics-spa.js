@@ -33652,10 +33652,9 @@ define('services',[
 define('controllers/augurdetail',[], function () {
   
 
-  return  ['$scope', '$routeParams', 'Augur', function ($scope, $routeParams, Augur) {
-    $scope.augur = Augur.get({augurId: $routeParams.augurId}, function (augur) {
-      console.log('Got augur with id: ' + augur.id);
-    });
+  return  ['$scope', '$routeParams', 'Augur', 'Habitat', function ($scope, $routeParams, Augur, Habitat) {
+    $scope.augur = Augur.get({ habitatId: $routeParams.habitatId, augurId: $routeParams.augurId });
+    $scope.habitat = Habitat.get({ habitatId: $routeParams.habitatId });
   }];
 });
 
@@ -40454,7 +40453,7 @@ define('controllers/augurnew',[
 ], function (_) {
   
 
-  return  ['$scope', '$routeParams', 'Augur', 'FactTable', 'Habitat', function ($scope, $routeParams, Augur, FactTable, Habitat) {
+  return  ['$location', '$routeParams', '$scope', 'Augur', 'FactTable', 'Habitat', function ($location, $routeParams, $scope, Augur, FactTable, Habitat) {
     $scope.DAYS_IN_MONTH = [{"key":1,"label":"1st"},{"key":2,"label":"2nd"},{"key":3,"label":"3rd"},{"key":4,"label":"4th"},{"key":5,"label":"5th"},{"key":6,"label":"6th"},{"key":7,"label":"7th"},{"key":8,"label":"8th"},{"key":9,"label":"9th"},{"key":10,"label":"10th"},{"key":11,"label":"11th"},{"key":12,"label":"12th"},{"key":13,"label":"13th"},{"key":14,"label":"14th"},{"key":15,"label":"15th"},{"key":16,"label":"16th"},{"key":17,"label":"17th"},{"key":18,"label":"18th"},{"key":19,"label":"19th"},{"key":20,"label":"20th"},{"key":21,"label":"21st"},{"key":22,"label":"22nd"},{"key":23,"label":"23rd"},{"key":24,"label":"24th"},{"key":25,"label":"25th"},{"key":26,"label":"26th"},{"key":27,"label":"27th"},{"key":28,"label":"28th"}];
     $scope.KEY_PERFORMANCE_INDICATORS = [{"key":"average_squared_error","label":"Average Squared Error","min":0,"max":1,"comparator":"gt"},{"key":"area_under_the_curve","label":"Area Under the Curve","min":0,"max":1,"comparator":"lt"},{"key":"true_positive_rate","label":"True Positive Rate","min":0,"max":1,"comparator":"lt"},{"key":"true_negative_rate","label":"True Negative Rate","min":0,"max":1,"comparator":"lt"},{"key":"false_positive_rate","label":"False Positive Rate","min":0,"max":1,"comparator":"gt"},{"key":"false_negative_rate","label":"False Negative Rate","min":0,"max":1,"comparator":"gt"},{"key":"sensitivity","label":"Sensitivity","min":0,"max":1,"comparator":"lt"},{"key":"specificity","label":"Specificity","min":0,"max":1,"comparator":"lt"},{"key":"accuracy","label":"Accuracy","min":0,"max":1,"comparator":"lt"},{"key":"precision","label":"Precision","min":0,"max":1,"comparator":"lt"},{"key":"negative_predictive_value","label":"Negative Predictive Value","min":0,"max":1,"comparator":"lt"},{"key":"misclassification_rate","label":"Misclassification Rate","min":0,"max":1,"comparator":"gt"},{"key":"cumulative_captured_response_top_10","label":"Cumulative Captured Response Top 10%","min":0,"max":1,"comparator":"lt"},{"key":"cumulative_captured_response_top_25","label":"Cumulative Captured Response Top 25%","min":0,"max":1,"comparator":"lt"},{"key":"cumulative_lift_top_10","label":"Cumulative Lift Top 10%","min":0,"max":1,"comparator":"lt"},{"key":"cumulative_lift_top_25","label":"Cumulative Lift Top 25%","min":0,"max":1,"comparator":"lt"},{"key":"cumulative_response_top_10","label":"Cumulative Response Top 10%","min":0,"max":1,"comparator":"lt"},{"key":"cumulative_response_top_25","label":"Cumulative Response Top 25%","min":0,"max":1,"comparator":"lt"},{"key":"f_score","label":"F-Score","min":0,"max":1,"comparator":"lt"},{"key":"informedness","label":"Informedness","min":-1,"max":1,"comparator":"lt"},{"key":"markedness","label":"Markedness","min":-1,"max":1,"comparator":"lt"},{"key":"root_average_squared_error","label":"Root Average Squared Error","min":0,"max":1,"comparator":"gt"},{"key":"maximum_absolute_error","label":"Maximum Absolute Error","min":0,"max":1,"comparator":"gt"},{"key":"gini_coefficient","label":"Gini Coefficient","min":0,"max":1,"comparator":"lt"}];
 
@@ -40594,9 +40593,11 @@ define('controllers/augurnew',[
 
       Augur.save({ habitatId: $scope.augur.habitatId }, { augur: augurNewAttributes },
         function (augur, responseHeaders) {
-          console.log("Saved the augur successfully:", augur, responseHeaders)
+          console.log('going.to: ', '/habitat/' + $scope.augur.habitatId + '/augurs/' + augur.id);
+          $location.path('/habitat/' + $scope.augur.habitatId + '/augurs/' + augur.id);
         }, function (httpResponse) {
-          console.log("There was an error saving the new Augur:", httpResponse)
+          alert("There was an error saving the new Augur - see console.log");
+          console.log("There was an error saving the new Augur  ", httpResponse);
         });
     }
   }];
@@ -40638,11 +40639,13 @@ define('controllers/dashboard',[], function () {
 
           angular.forEach(factTables[i], function(factTable) {
             factTable.type = 'factTable';
+            factTable.habitat_id = habitat.code;
             factTable.colorScheme = habitat.colorScheme;
             $scope.artifacts.push(factTable);
           });
           angular.forEach(augurs[i], function(augur) {
             augur.type = 'augur';
+            augur.habitat_id = habitat.code;
             augur.colorScheme = habitat.colorScheme;
             $scope.artifacts.push(augur);
           });
@@ -43465,7 +43468,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('partials/augur-detail.html',
-    '<div class=\'row\'><div class=\'small-12 columns\'><h1>Augur detail</h1></div></div><div class=\'row\'><div class=\'small-12 columns\'><p>Name: {{augur.name}}</p><p>Habitat: {{augur.habitat}}</p></div></div>');
+    '<div class=\'row\'><div class=\'small-12 columns\'><h1>Augur detail</h1></div></div><div class=\'row\'><div class=\'small-12 columns\'><p>Name: {{augur.name}}</p><p>Habitat: {{habitat.name}}</p></div></div>');
 }]);
 })();
 
@@ -43501,7 +43504,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('partials/dashboard.html',
-    '<div class=\'row action-bar\'><div class=\'columns small-12\'><ul class=\'left action-bar-breadcrumb\'><li><a href=\'#\'><span class=\'glyphicon glyphicon-th\'></span> Dashboard</a></li><li><a href=\'#\'><span class=\'glyphicon glyphicon-picture\'></span> Habitat</a></li></ul><ul class=\'right action-bar-filter\'><li class=\'divider\'></li><li ng-class=\'{"active" : selectedArtifactTypes.augur}\'> <input id=\'selected-artifact-types-augur\' ng-model=\'selectedArtifactTypes.augur\' type=\'checkbox\'> <label for=\'selected-artifact-types-augur\'>Augurs</label></li><li ng-class=\'{"active" : selectedArtifactTypes.factTable}\'> <input id=\'selected-artifact-types-fact-table\' ng-model=\'selectedArtifactTypes.factTable\' type=\'checkbox\'> <label for=\'selected-artifact-types-fact-table\'>Fact tables</label></li><li ng-class=\'{"active" : selectedArtifactTypes.habitat}\'> <input id=\'selected-artifact-types-habitat\' ng-model=\'selectedArtifactTypes.habitat\' type=\'checkbox\'> <label for=\'selected-artifact-types-habitat\'>Habitats</label></li><li class=\'divider\'></li><li class=\'action-bar-search\'> <input ng-model=\'artifactsQuery\' placeholder=\'Type to search\' type=\'text\'></li></ul></div></div><div class=\'row container dashboard\'><div class=\'columns small-12\'><ul class=\'small-block-grid-2 medium-block-grid-3 large-block-grid-4\'><li><div class=\'th\'><a href=\'#/augurs/new\'><div class=\'artefact-body add-augur\'><p> Add augur</p><p class=\'icon\'><span class=\'glyphicon glyphicon-plus\'></span></p></div></a></div></li><li ng-repeat=\'artifact in artifacts | filter: artifactsFilter\'><div class=\'th habitat\' ng-class=\'artifact.colorScheme\' ng-if=\'artifact.type == "habitat"\'><a href=\'#/habitat/{{habitat.id}}\'><div class=\'artefact-body\'><span class=\'glyphicon glyphicon-picture\'></span><h5 class=\'title\'> {{ artifact.name }}</h5><p ng-if=\'artifact.augurCount &lt; 1\'> No Augurs</p><p ng-if=\'artifact.augurCount === 1\'> One Augur</p><p ng-if=\'artifact.augurCount &gt; 1\'> {{ artifact.augurCount }} Augurs</p></div></a></div><div class=\'th augur\' ng-class=\'artifact.colorScheme\' ng-if=\'artifact.type == "augur"\'><a href=\'#/habitat/{{artifact.habitat_id}}/augurs/{{augur.id}}\'><div class=\'artefact-body\'><span class=\'glyphicon glyphicon-eye-open\'></span><h5 class=\'title\'> {{artifact.name}}</h5></div></a></div><div class=\'th fact-table\' ng-class=\'artifact.colorScheme\' ng-if=\'artifact.type == "factTable"\'><a href=\'#/habitat/{{artifact.habitat_id}}/factTables/{{factTable.id}}\'><div class=\'artefact-body\'><span class=\'glyphicon glyphicon-list-alt\'></span><h5 class=\'title\'> {{artifact.name}}</h5><p class=\'description\'> {{artifact.description}}</p></div></a></div></li></ul></div></div>');
+    '<div class=\'row action-bar\'><div class=\'columns small-12\'><ul class=\'left action-bar-breadcrumb\'><li><a href=\'#\'><span class=\'glyphicon glyphicon-th\'></span> Dashboard</a></li><li><a href=\'#\'><span class=\'glyphicon glyphicon-picture\'></span> Habitat</a></li></ul><ul class=\'right action-bar-filter\'><li class=\'divider\'></li><li ng-class=\'{"active" : selectedArtifactTypes.augur}\'> <input id=\'selected-artifact-types-augur\' ng-model=\'selectedArtifactTypes.augur\' type=\'checkbox\'> <label for=\'selected-artifact-types-augur\'>Augurs</label></li><li ng-class=\'{"active" : selectedArtifactTypes.factTable}\'> <input id=\'selected-artifact-types-fact-table\' ng-model=\'selectedArtifactTypes.factTable\' type=\'checkbox\'> <label for=\'selected-artifact-types-fact-table\'>Fact tables</label></li><li ng-class=\'{"active" : selectedArtifactTypes.habitat}\'> <input id=\'selected-artifact-types-habitat\' ng-model=\'selectedArtifactTypes.habitat\' type=\'checkbox\'> <label for=\'selected-artifact-types-habitat\'>Habitats</label></li><li class=\'divider\'></li><li class=\'action-bar-search\'> <input ng-model=\'artifactsQuery\' placeholder=\'Type to search\' type=\'text\'></li></ul></div></div><div class=\'row container dashboard\'><div class=\'columns small-12\'><ul class=\'small-block-grid-2 medium-block-grid-3 large-block-grid-4\'><li><div class=\'th\'><a href=\'#/augurs/new\'><div class=\'artefact-body add-augur\'><p> Add augur</p><p class=\'icon\'><span class=\'glyphicon glyphicon-plus\'></span></p></div></a></div></li><li ng-repeat=\'artifact in artifacts | filter: artifactsFilter\'><div class=\'th habitat\' ng-class=\'artifact.colorScheme\' ng-if=\'artifact.type == "habitat"\'><a href=\'#/habitat/{{habitat.id}}\'><div class=\'artefact-body\'><span class=\'glyphicon glyphicon-picture\'></span><h5 class=\'title\'> {{ artifact.name }}</h5><p ng-if=\'artifact.augurCount &lt; 1\'> No Augurs</p><p ng-if=\'artifact.augurCount === 1\'> One Augur</p><p ng-if=\'artifact.augurCount &gt; 1\'> {{ artifact.augurCount }} Augurs</p></div></a></div><div class=\'th augur\' ng-class=\'artifact.colorScheme\' ng-if=\'artifact.type == "augur"\'><a href=\'#/habitat/{{artifact.habitat_id}}/augurs/{{artifact.id}}\'><div class=\'artefact-body\'><span class=\'glyphicon glyphicon-eye-open\'></span><h5 class=\'title\'> {{artifact.name}}</h5></div></a></div><div class=\'th fact-table\' ng-class=\'artifact.colorScheme\' ng-if=\'artifact.type == "factTable"\'><a href=\'#/habitat/{{artifact.habitat_id}}/factTables/{{factTable.id}}\'><div class=\'artefact-body\'><span class=\'glyphicon glyphicon-list-alt\'></span><h5 class=\'title\'> {{artifact.name}}</h5><p class=\'description\'> {{artifact.description}}</p></div></a></div></li></ul></div></div>');
 }]);
 })();
 
@@ -43535,21 +43538,17 @@ define('app',[
     ])
     .config(['$routeProvider', function ($routeProvider) {
       $routeProvider.
-        when('/augurs', {
-          templateUrl: 'partials/augur-list.html',
-          controller: 'AugurListCtrl'
+        when('/', {
+          templateUrl: 'partials/dashboard.html',
+          controller: 'DashboardCtrl'
         }).
         when('/augurs/new', {
           templateUrl: 'partials/augur-new.html',
           controller: 'AugurNewCtrl'
         }).
-        when('/augurs/:augurId', {
+        when('/habitat/:habitatId/augurs/:augurId', {
           templateUrl: 'partials/augur-detail.html',
           controller: 'AugurDetailCtrl'
-        }).
-        when('/', {
-          templateUrl: 'partials/dashboard.html',
-          controller: 'DashboardCtrl'
         }).
         otherwise({
           redirectTo: '/'
