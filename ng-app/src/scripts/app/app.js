@@ -4,19 +4,19 @@
  */
 define([
   'angular',
-  'angular.route',
   'animations',
   'controllers',
   'directives',
   'filters',
   'services',
+  'angular.ui.router',
   'partials-tpls.min'
-], function (ng, ngRoute, animations, controllers, directives, filters, services) {
+], function (ng, animations, controllers, directives, filters, services) {
   'use strict';
 
   return ng
     .module('dejalyticsApp', [
-      'ngRoute',
+      'ui.router',
       'dejalyticsPartials',
       animations.name,
       controllers.name,
@@ -24,36 +24,28 @@ define([
       filters.name,
       services.name
     ])
-    .config(['$routeProvider', function ($routeProvider) {
-      $routeProvider.
-        when('/', {
+    .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
+      $urlRouterProvider.otherwise('/dashboard');
+
+      $stateProvider.
+        state('dashboard', {
+          url: '/dashboard',
           templateUrl: 'partials/dashboard.html',
           controller: 'DashboardCtrl'
         }).
-        when('/augurs/new', {
+        state('augur', {
+          abstract: true,
+          template: '<ui-view/>'
+        }).
+        state('augur.new', {
+          url: '/augurs/new',
           templateUrl: 'partials/augur-new.html',
           controller: 'AugurNewCtrl'
         }).
-        when('/habitat/:habitatId/augurs/:augurId', {
+        state('augur.detail', {
+          url: '/habitat/:habitatId/augurs/:augurId',
           templateUrl: 'partials/augur-detail.html',
           controller: 'AugurDetailCtrl'
-        }).
-        otherwise({
-          redirectTo: '/'
         });
-    }])
-    .run(['$rootScope', function ($rootScope) {
-      $rootScope.$on('$routeChangeSuccess', function (to, from) {
-        console.log('route change', from, to);
-      });
-
-      // adds some basic utilities to the $rootScope for debugging purposes
-      $rootScope.log = function (thing) {
-        console.log(thing);
-      };
-
-      $rootScope.alert = function (thing) {
-        alert(thing);
-      };
     }]);
 });
