@@ -1,0 +1,32 @@
+.augur {
+  &.action-bar {
+    margin-top: 2em;
+    margin-bottom: .3em;
+    color: #333;
+    background-color: $crumb-bg;
+  }
+
+  &.container {
+    border: 1px dashed #555555;
+    min-height: 600px;
+
+    .side-nav-container {
+      padding-top: .5em;
+      background: #202020;
+      min-height: 600px;
+
+      li.active {
+        color: #008CBA;
+      }
+
+      a {
+        color: #ddd;
+        font-size: 75%;
+        text-align: center;
+      }
+    }
+    .main {
+      padding-top: .5em;
+    }
+  }
+}

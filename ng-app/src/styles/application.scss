@@ -1,9 +1,15 @@
 @import 'vendor/foundation_and_overrides';
 
+@import 'variables';
 @import 'globals';
 @import 'topbar';
 @import 'footer';
 
-@import 'welcome';
 @import 'dashboard';
+@import 'augur-new';
+@import 'augur';
+@import 'augur-influencers';
+@import 'augur-performance';
+@import 'augur-tree';
+@import 'augur-settings';
 

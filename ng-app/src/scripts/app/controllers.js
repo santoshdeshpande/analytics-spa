@@ -5,14 +5,22 @@
 define([
   'angular',
   'services',
-  'controllers/augurdetail',
-  'controllers/augurnew',
+  'controllers/augur-new',
+  'controllers/augur',
+  'controllers/augur-influencers',
+  'controllers/augur-performance',
+  'controllers/augur-settings',
+  'controllers/augur-tree',
   'controllers/dashboard'
-], function (ng, services, AugurDetailCtrl, AugurNewCtrl, DashboardCtrl) {
+], function (ng, services, AugurNewCtrl, AugurCtrl, AugurInfluencersCtrl, AugurPerformanceCtrl, AugurSettingsCtrl, AugurTreeCtrl, DashboardCtrl) {
   'use strict';
 
   return ng.module('MainControllers', [ services.name ])
-      .controller('AugurDetailCtrl', AugurDetailCtrl)
+      .controller('AugurCtrl', AugurCtrl)
       .controller('AugurNewCtrl', AugurNewCtrl)
+      .controller('AugurInfluencersCtrl', AugurInfluencersCtrl)
+      .controller('AugurPerformanceCtrl', AugurPerformanceCtrl)
+      .controller('AugurSettingsCtrl', AugurSettingsCtrl)
+      .controller('AugurTreeCtrl', AugurTreeCtrl)
       .controller('DashboardCtrl', DashboardCtrl);
 });

@@ -1,388 +1,138 @@
 @import "vendor/foundation/components/global";
 
-$crumb-bg: scale-color($secondary-color, $lightness: 55%) !default;
-
-$color-scheme-one-dark: #5FA4FD;
-$color-scheme-one-light: #F6FBFF;
-$color-scheme-two-dark: #8542CA;
-$color-scheme-two-light: #F5EEFD;
-$color-scheme-three-dark: #569535;
-$color-scheme-three-light: #FDFFFA;
-
-.action-bar {
-  margin-top: 2em;
-  margin-bottom: .3em;
-  color: #333;
-  background-color: $crumb-bg;
-
-  ul {
-    display: block;
-    width: auto;
-    overflow: hidden;
-    margin: 0;
-    height: 50px;
-
-    $active-bg: $primary-color !default;
-    $active-bg-hover: scale-color($primary-color, $lightness: -14%) !default;
-
-    .glyphicon {
-      font-size: 140%;
-    }
-
-    &.action-bar-filter li {
-      &.active label {
-        @include radius(5px);
-        background: $active-bg;
-        padding: 3px;
-        color: #fff;
-        &:hover {
-          color: #333;
-        }
-      }
-
-      input[type=checkbox] {
-        display: none;
-      }
-    }
-
-    li {
-      float: left;
-      display: inline;
-      padding-right: 1em;
-      line-height: 50px;
-
-      &.divider {
-        border-right: 2px solid #FFFFFF;
-        margin-right: 10px;
-        height: 999px;
-      }
-
-      input {
-        margin: 10px 0;
-        height: 30px;
-      }
-
-      a {
-        text-decoration: none;
-        color: #333;
-
-        &:hover {
-          background: #008cba;
-        }
-      }
-    }
-  }
-}
-
-.container {
-  border: 1px dashed #555555;
-  padding-top: .5em;
-  min-height: 600px;
-}
-
 .dashboard {
-  .th {
-    padding: 0 0.3em;
-    position: relative;
 
-    &.color-scheme-one {
-      border: 1px solid $color-scheme-one-dark;
-      background: $color-scheme-one-light;
-      .title, .glyphicon {
-        color: $color-scheme-one-dark;
-      }
+  &.action-bar {
+    margin-top: 2em;
+    margin-bottom: .3em;
+    color: #333;
+    background-color: $crumb-bg;
 
-      &.habitat {
-        border-left-width: 16px;
-      }
-    }
-
-    &.color-scheme-two {
-      border: 1px solid $color-scheme-two-dark;
-      background: $color-scheme-two-light;
-      .title, .glyphicon {
-        color: $color-scheme-two-dark;
-      }
-
-      &.habitat {
-        border-left-width: 16px;
-      }
-
-    }
-
-    &.color-scheme-three {
-      border: 1px solid $color-scheme-three-dark;
-      background: $color-scheme-three-light;
-      .title, .glyphicon {
-        color: $color-scheme-three-dark;
-      }
-
-      &.habitat {
-        border-left-width: 16px;
-      }
-
-    }
-  }
-
-  .artefact-body {
-    height: 125px;
-    width: 200px;
-    color: #6f6f6f;
-
-    .title {
-
-    }
-
-    .description {
-      font-size: 75%;
-    }
-
-    .glyphicon {
-      position: absolute;
-      font-size: 240%;
-      top: 90px;
-      right: 10px;
-    }
-  }
-}
-
-.new-augur-wizard {
-  padding: 0;
-
-  .active {
-    background: #eeeeee;
-    .columns {
-
-      .title {
-        font-size: 1.4375rem;
-        padding-bottom: 0;
-        margin-bottom: 0;
-      }
-
-      .next-button {
-        display: block;
-      }
-    }
-  }
-
-  .next-button {
-    display: none;
-
-    text-align: center;
-    position: relative;
-    .next-button-wrap {
-      width: 100%;
-      position: absolute;
-      top: -20px;
-
-      .button {
-        z-index: 10;
-        border: 3px solid #fff;
-      }
-    }
-  }
-
-  .step {
-    .title {
-      border-bottom: 1px solid #ddd;
-      padding: 0.5em 0;
-    }
-    &.step-last .title {
-      border-bottom: 0;
-    }
-
-    .body {
+    ul {
+      display: block;
+      width: auto;
       overflow: hidden;
-      border-bottom: 1px solid #ddd;
-    }
-    &.step-last .body {
-      border-bottom: 0;
-    }
+      margin: 0;
+      height: 50px;
 
-    &.step-1 {
-      .body {
-        height: 200px;
+      $active-bg: $primary-color !default;
+      $active-bg-hover: scale-color($primary-color, $lightness: -14%) !default;
+
+      .glyphicon {
+        font-size: 140%;
       }
-    }
 
-    &.step-2 {
-      .body {
-        height: 300px;
+      &.action-bar-filter li {
+        &.active label {
+          @include radius(5px);
+          background: $active-bg;
+          padding: 3px;
+          color: #fff;
+          &:hover {
+            color: #333;
+          }
+        }
+
+        input[type=checkbox] {
+          display: none;
+        }
       }
-    }
 
-    &.step-3 {
-      .body {
-        height: 400px;
+      li {
+        float: left;
+        display: inline;
+        padding-right: 1em;
+        line-height: 50px;
+
+        &.divider {
+          border-right: 2px solid #FFFFFF;
+          margin-right: 10px;
+          height: 999px;
+        }
+
+        input {
+          margin: 10px 0;
+          height: 30px;
+        }
+
+        a {
+          text-decoration: none;
+          color: #333;
+
+          &:hover {
+            background: #008cba;
+          }
+        }
       }
-    }
-
-    &.step-4 {
-      .body {
-        height: 360px;
-      }
-    }
-
-    .body.ng-hide {
-      height: 0;
-    }
-
-    .body.ng-hide-add, .body.ng-hide-remove {
-      -webkit-transition: all linear 0.5s;
-      -moz-transition: all linear 0.5s;
-      -o-transition: all linear 0.5s;
-      transition: all linear 0.5s;
-      display: block !important;
     }
   }
 
-  .error {
-    color: red;
-  }
-
-  .verified {
-    color: forestgreen;
-  }
-
-  .augur-habitat {
-    .active {
-      background: lightblue;
-    }
-  }
-
-  .fact-tables {
-    margin: 0 1em;
-
-    input[type=radio] {
-      display: none;
-    }
+  &.container {
+    border: 1px dashed #555555;
+    padding-top: .5em;
+    min-height: 600px;
 
     .th {
-      width: 500px;
+      padding: 0 0.3em;
+      position: relative;
+
+      &.color-scheme-one {
+        border: 1px solid $color-scheme-one-dark;
+        background: $color-scheme-one-light;
+        .title, .glyphicon {
+          color: $color-scheme-one-dark;
+        }
+
+        &.habitat {
+          border-left-width: 16px;
+        }
+      }
+
+      &.color-scheme-two {
+        border: 1px solid $color-scheme-two-dark;
+        background: $color-scheme-two-light;
+        .title, .glyphicon {
+          color: $color-scheme-two-dark;
+        }
+
+        &.habitat {
+          border-left-width: 16px;
+        }
+
+      }
+
+      &.color-scheme-three {
+        border: 1px solid $color-scheme-three-dark;
+        background: $color-scheme-three-light;
+        .title, .glyphicon {
+          color: $color-scheme-three-dark;
+        }
+
+        &.habitat {
+          border-left-width: 16px;
+        }
+
+      }
+    }
+
+    .artefact-body {
       height: 125px;
-      position: relative;
-      background: #fff;
-
-      &.selected {
-        background: darkgrey;
-        color: white;
-
-        .fi-checkbox {
-          font-size: 400%;
-          position: absolute;
-          top: -2px;
-          right: 2px;
-        }
-      }
-    }
-
-    .fact-body {
-      font-size: 0.8em;
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      padding: 1em;
-      top: 0;
-      left: 0;
-
-      .check-status {
-        float: right;
-        font-size: 175%;
-      }
-    }
-  }
-
-  .prediction-targets {
-    .input textarea {
-      height: 23em;
-    }
-
-    .validation {
-      height: 20em;
-      background: #fff;
-
-      .subheader {
-        padding: 1em;
-        padding-bottom: 0;
-      }
-
-      .validation-elements {
-        text-align: center;
-      }
-
-      .validation-icon {
-        font-size: 4em;
-      }
-
-      position: relative;
-      .validation-message-show-hide {
-        position: absolute;
-        padding: 0 1em;
-      }
-
-      .validate-action {
-        position: absolute;
-        top: 200px;
-        width: 100%;
-
-        .button {
-          text-align: center;
-        }
-      }
-
-      .validation-message-show-hide.ng-hide-add, .validation-message-show-hide.ng-hide-remove {
-        -webkit-transition: all linear 0.3s;
-        -moz-transition: all linear 0.3s;
-        -o-transition: all linear 0.3s;
-        transition: all linear 0.3s;
-        display: block !important;
-      }
-
-      .validation-message-show-hide.ng-hide-add.ng-hide-add-active,
-      .validation-message-show-hide.ng-hide-remove {
-        opacity: 0;
-      }
-
-      .validation-message-show-hide.ng-hide-add,
-      .validation-message-show-hide.ng-hide-remove.ng-hide-remove-active {
-        opacity: 1;
-
-      }
-    }
-  }
-
-  .schedules {
-    .description {
-      font-size: 80%;
-    }
-
-    .prediction, .evaluation, .learning {
+      width: 200px;
+      color: #6f6f6f;
 
       .title {
-        h6 {
-          padding: .5em;
-          background: #ddd;
-        }
-      }
-      .content {
-        padding: .5em;
-        background: #fff;
-        height: 240px;
 
-        .description {
-          height: 100px;
-        }
       }
 
-    }
+      .description {
+        font-size: 75%;
+      }
 
-    .learning {
-      #comparator {
-        padding: 0;
-        text-align: center;
-        span {
-          font-size: .9em;
-        }
+      .glyphicon {
+        position: absolute;
+        font-size: 240%;
+        top: 90px;
+        right: 10px;
       }
     }
   }

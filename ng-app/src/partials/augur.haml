@@ -1,0 +1,48 @@
+.row.augur.action-bar
+  .small-6.columns
+    %ul.inline-list
+      %li
+        %a{ ui: { sref: 'dashboard' } }
+          %span.glyphicon.glyphicon-th
+          Dashboard
+      %li
+        %span.glyphicon.glyphicon-picture
+        {{habitat.name}}
+      %li
+        %span.glyphicon.glyphicon-eye-open
+        {{augur.name}}
+  .small-6.columns
+    %ul.inline-list
+      %li
+        %button.button
+          Start prediction
+      %li
+        %button.button
+          Download predictions
+
+.row.augur.container
+  .small-1.columns.side-nav-container
+    %ul.side-nav
+      %li{ ui: { sref: { active: 'active' } } }
+        %a{ ui: { sref: 'augur.tree' } }
+          %span.glyphicon.glyphicon-th
+          %br
+          Decision tree
+      %li{ ui: { sref: { active: 'active' } } }
+        %a{ ui: { sref: 'augur.influencers' } }
+          %span.glyphicon.glyphicon-th
+          %br
+          Influencers
+      %li{ ui: { sref: { active: 'active' } } }
+        %a{ ui: { sref: 'augur.performance' } }
+          %span.glyphicon.glyphicon-th
+          %br
+          Performance drift
+      %li{ ui: { sref: { active: 'active' } } }
+        %a{ ui: { sref: 'augur.settings' } }
+          %span.glyphicon.glyphicon-th
+          %br
+          Settings
+
+  .small-11.columns.main
+    %div{ ui: { view: '' } }

@@ -1,8 +1,8 @@
-.row.action-bar
+.row.dashboard.action-bar
   .columns.small-12
     %ul.left.action-bar-breadcrumb
       %li
-        %a{ href: '#' }
+        %a{ ui: { sref: 'dashboard' } }
           %span.glyphicon.glyphicon-th
           Dashboard
       %li
@@ -24,7 +24,7 @@
       %li.action-bar-search
         %input{ placeholder: 'Type to search', type: 'text', ng: { model: 'artifactsQuery' }}
 
-.row.container.dashboard
+.row.dashboard.container
   .columns.small-12
     %ul.small-block-grid-2.medium-block-grid-3.large-block-grid-4
       %li
@@ -52,7 +52,7 @@
 
 
         .th.augur{ ng: { if: 'artifact.type == "augur"', class: 'artifact.colorScheme' }}
-          %a{ href: '#/habitat/{{artifact.habitat_id}}/augurs/{{artifact.id}}' }
+          %a{ ui: { sref: 'augur.tree({ habitatId: artifact.habitat_id, augurId: artifact.id })' } }
             .artefact-body
               %span.glyphicon.glyphicon-eye-open
               %h5.title

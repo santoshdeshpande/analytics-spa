@@ -33,19 +33,35 @@ define([
           templateUrl: 'partials/dashboard.html',
           controller: 'DashboardCtrl'
         }).
-        state('augur', {
-          abstract: true,
-          template: '<ui-view/>'
-        }).
-        state('augur.new', {
+        state('augur-new', {
           url: '/augurs/new',
           templateUrl: 'partials/augur-new.html',
           controller: 'AugurNewCtrl'
         }).
-        state('augur.detail', {
+        state('augur', {
           url: '/habitat/:habitatId/augurs/:augurId',
-          templateUrl: 'partials/augur-detail.html',
-          controller: 'AugurDetailCtrl'
-        });
+          templateUrl: 'partials/augur.html',
+          controller: 'AugurCtrl'
+        }).
+        state('augur.influencers', {
+          url: '/influencers',
+          templateUrl: 'partials/augur-influencers.html',
+          controller: 'AugurInfluencersCtrl'
+        }).
+        state('augur.performance', {
+          url: '/performance',
+          templateUrl: 'partials/augur-performance.html',
+          controller: 'AugurPerformanceCtrl'
+        }).
+        state('augur.tree', {
+          url: '/tree',
+          templateUrl: 'partials/augur-tree.html',
+          controller: 'AugurTreeCtrl'
+        }).
+        state('augur.settings', {
+          url: '/settings',
+          templateUrl: 'partials/augur-settings.html',
+          controller: 'AugurSettingsCtrl'
+        })
     }]);
 });

@@ -147,7 +147,7 @@ define([
 
       Augur.save({ habitatId: $scope.augur.habitatId }, { augur: augurNewAttributes },
         function (augur, responseHeaders) {
-          $state.transitionTo('augur.detail', { habitatId: $scope.augur.habitatId, augurId: augur.id });
+          $state.transitionTo('augur.tree', { habitatId: $scope.augur.habitatId, augurId: augur.id });
         }, function (httpResponse) {
           alert("There was an error saving the new Augur - see console.log");
           console.log("There was an error saving the new Augur  ", httpResponse);
