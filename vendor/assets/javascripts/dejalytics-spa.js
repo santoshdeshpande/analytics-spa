@@ -45847,7 +45847,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('partials/augur-performance.html',
-    'I am the performance {{ augur.id }} {{ augur }}');
+    '<div class=\'row augur-performance\'><div class=\'columns small-12\'><ul class=\'small-block-grid-2 medium-block-grid-3\'><li><div class=\'th\'><a href=\'\'><h3 class=\'title\'>Lift</h3><div class=\'chart\'></div></a></div></li><li><div class=\'th\'><a href=\'\'><h3 class=\'title\'>Response</h3><div class=\'chart\'></div></a></div></li><li><div class=\'th\'><a href=\'\'><h3 class=\'title\'>Cumulative Response</h3><div class=\'chart\'></div></a></div></li></ul></div></div>');
 }]);
 })();
 
@@ -45871,7 +45871,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('partials/augur-tree.html',
-    'I am the tree {{ augur.id }} {{ augur }}');
+    'I am the tree {{ augur.id }} {{ augur }}<ul><li> <a href=\'http://bl.ocks.org/mbostock/4339184\' target=\'_\'>Reingold–Tilford Tree</a></li><li> <a href=\'http://bl.ocks.org/mbostock/4339083\' target=\'_\'>Collapsible Tree</a></li><li> <a href=\'http://bl.ocks.org/mbostock/3184089\' target=\'_\'>Tree Layout Orientations</a></li><li> <a href=\'http://bl.ocks.org/mbostock/2949981\' target=\'_\'>Tree Layout from CSV</a></li><li> <a href=\'http://bl.ocks.org/mbostock/2966094\' target=\'_\'>Predigree Tree</a></li><li> <a href=\'http://mbostock.github.io/d3/talk/20111018/tree.html\' target=\'_\'>d3.layout.tree</a></li><li> <a href=\'http://bl.ocks.org/robschmuecker/7880033\' target=\'_\'>D3.js Drag and Drop, Zoomable, Panning, Collapsible Tree with auto-sizing</a></li><li> <a href=\'https://github.com/mbostock/d3/wiki/Gallery#tree\' target=\'_\'>Howtos</a></li></ul>');
 }]);
 })();
 
@@ -45883,7 +45883,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('partials/augur.html',
-    '<div class=\'row augur action-bar\'><div class=\'small-6 columns\'><ul class=\'inline-list\'><li><a ui-sref=\'dashboard\'><span class=\'glyphicon glyphicon-th\'></span> Dashboard</a></li><li><span class=\'glyphicon glyphicon-picture\'></span> {{habitat.name}}</li><li><span class=\'glyphicon glyphicon-eye-open\'></span> {{augur.name}}</li></ul></div><div class=\'small-6 columns\'><ul class=\'inline-list\'><li> <button class=\'button\'> Start prediction</button></li><li> <button class=\'button\'> Download predictions</button></li></ul></div></div><div class=\'row augur container\'><div class=\'small-1 columns side-nav-container\'><ul class=\'side-nav\'><li ui-sref-active=\'active\'><a ui-sref=\'augur.tree\'><span class=\'glyphicon glyphicon-th\'></span><br> Decision tree</a></li><li ui-sref-active=\'active\'><a ui-sref=\'augur.influencers\'><span class=\'glyphicon glyphicon-th\'></span><br> Influencers</a></li><li ui-sref-active=\'active\'><a ui-sref=\'augur.performance\'><span class=\'glyphicon glyphicon-th\'></span><br> Performance drift</a></li><li ui-sref-active=\'active\'><a ui-sref=\'augur.settings\'><span class=\'glyphicon glyphicon-th\'></span><br> Settings</a></li></ul></div><div class=\'small-11 columns main\'><div ui-view=\'\'></div></div></div>');
+    '<div class=\'row augur action-bar\'><div class=\'small-6 columns\'><ul class=\'inline-list\'><li><a ui-sref=\'dashboard\'><span class=\'glyphicon glyphicon-th\'></span> Dashboard</a></li><li><span class=\'glyphicon glyphicon-picture\'></span> {{habitat.name}}</li><li><span class=\'glyphicon glyphicon-eye-open\'></span> {{augur.name}}</li></ul></div><div class=\'small-6 columns\'><ul class=\'inline-list\'><li> <button class=\'button\'> Start prediction</button></li><li> <button class=\'button\'> Download predictions</button></li></ul></div></div><div class=\'row augur container\'><div class=\'small-1 columns side-nav-container\'><ul class=\'side-nav\'><li ui-sref-active=\'active\'><a ui-sref=\'augur.tree\'><span class=\'glyphicon glyphicon-th\'></span><br> Decision tree</a></li><li ui-sref-active=\'active\'><a ui-sref=\'augur.influencers\'><span class=\'glyphicon glyphicon-th\'></span><br> Influencers</a></li><li ui-sref-active=\'active\'><a ui-sref=\'augur.performance\'><span class=\'glyphicon glyphicon-th\'></span><br> Perf drift</a></li><li ui-sref-active=\'active\'><a ui-sref=\'augur.settings\'><span class=\'glyphicon glyphicon-th\'></span><br> Settings</a></li></ul></div><div class=\'small-11 columns main\'><div ui-view=\'\'></div></div></div>');
 }]);
 })();
 
