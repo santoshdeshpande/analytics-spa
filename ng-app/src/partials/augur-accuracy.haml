@@ -5,62 +5,62 @@
         .th
           %a{ href: '' }
             %h6.title Lift
-            .chart
+            .chart.line-chart
               %d3-line-chart{ data: 'data.lift' }
 
       %li
         .th
           %a{ href: '' }
             %h6.title Response
-            .chart
+            .chart.line-chart
               %d3-line-chart{ data: 'data.response' }
 
       %li
         .th
           %a{ href: '' }
             %h6.title Cumulative Response
-            .chart
+            .chart.line-chart
               %d3-line-chart{ data: 'data.cumulativeResponse' }
 
       %li
         .th
           %a{ href: '' }
             %h6.title Captured Response
-            .chart
+            .chart.line-chart
               %d3-line-chart{ data: 'data.capturedResponse' }
 
       %li
         .th
           %a{ href: '' }
             %h6.title Cumulative Captured Response
-            .chart
+            .chart.line-chart
               %d3-line-chart{ data: 'data.cumulativeCapturedResponse' }
 
       %li
         .th
           %a{ href: '' }
             %h6.title ROC Chart
-            .chart
+            .chart.line-chart
               %d3-line-chart{ data: 'data.rocChart' }
 
       %li
         .th
           %a{ href: '' }
             %h6.title Classification Matrix
-            .chart
-              %d3-line-chart{ data: 'data.classificationMatrix' }
+            .chart.pie-chart
+              %d3-pie-chart{ data: 'data.classificationMatrix', count: 'count', bucket: 'bucket' }
 
       %li
         .th
           %a{ href: '' }
             %h6.title Model - Posterior probabilities
-            .chart
+            .chart.line-chart
               %d3-line-chart{ data: 'data.modelPosteriorProbabilities' }
 
       %li
         .th
           %a{ href: '' }
             %h6.title Bayes corrected prior probabilities
-            .chart
+            .chart.line-chart
               %d3-line-chart{ data: 'data.bayesCorrectedPriorProbabilities' }
 

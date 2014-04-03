@@ -24,7 +24,12 @@ define([], function () {
       capturedResponse                 : randomData(),
       cumulativeCapturedResponse       : randomData(),
       rocChart                         : randomData(),
-      classificationMatrix             : randomData(),
+      classificationMatrix             : [
+        { bucket: 'TN',  count: 990 },
+        { bucket: 'FP', count: 126 },
+        { bucket: 'FN', count: 266 },
+        { bucket: 'TP',  count: 865 }
+      ],
       modelPosteriorProbabilities      : randomData(),
       bayesCorrectedPriorProbabilities : randomData()
     }

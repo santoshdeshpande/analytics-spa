@@ -49,7 +49,7 @@ define([
           controller: 'AugurInfluencersCtrl'
         }).
         state('augur.accuracy', {
-          url: '/influencers',
+          url: '/accuracy',
           templateUrl: 'partials/augur-accuracy.html',
           controller: 'AugurAccuracyCtrl'
         }).

@@ -5902,6 +5902,31 @@ th.hide-for-touch {
   .augur.container .main {
     padding-top: 0.5em; }
 
+.augur-accuracy .title {
+  padding: 0.3em;
+  color: #000000;
+  background: #00bfff;
+  text-align: center; }
+.augur-accuracy .chart {
+  height: 125px; }
+  .augur-accuracy .chart.line-chart path {
+    stroke: steelblue;
+    stroke-width: 1;
+    fill: none; }
+  .augur-accuracy .chart.line-chart .axis {
+    shape-rendering: crispEdges; }
+  .augur-accuracy .chart.line-chart .x.axis line {
+    stroke: lightgrey; }
+  .augur-accuracy .chart.line-chart .x.axis .minor {
+    stroke-opacity: 0.5; }
+  .augur-accuracy .chart.line-chart .x.axis path {
+    display: none; }
+  .augur-accuracy .chart.line-chart .y.axis line, .augur-accuracy .chart.line-chart .y.axis path {
+    fill: none;
+    stroke: #000; }
+  .augur-accuracy .chart.pie-chart .arc path {
+    stroke: #fff; }
+
 
 
 

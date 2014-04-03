@@ -39705,7 +39705,12 @@ define('controllers/augur-accuracy',[], function () {
       capturedResponse                 : randomData(),
       cumulativeCapturedResponse       : randomData(),
       rocChart                         : randomData(),
-      classificationMatrix             : randomData(),
+      classificationMatrix             : [
+        { bucket: 'TN',  count: 990 },
+        { bucket: 'FP', count: 126 },
+        { bucket: 'FN', count: 266 },
+        { bucket: 'TP',  count: 865 }
+      ],
       modelPosteriorProbabilities      : randomData(),
       bayesCorrectedPriorProbabilities : randomData()
     }
@@ -49284,6 +49289,94 @@ define('directives/d3-line-chart',['d3js'], function (d3) {
  define: false,
  console: false
  */
+define('directives/d3-pie-chart',['d3js'], function (d3) {
+  
+
+  return ['$timeout', function ($timeout) {
+    return {
+      restrict: 'E',
+      scope: {
+        data: '=',
+        label: '@',
+        onClick: '&'
+      },
+      link: function (scope, ele, attrs) {
+        var bucket = attrs.bucket,
+            count = attrs.count;
+
+        var renderTimeout;
+        // define dimensions of graph
+        var width = 200,
+          height = 125,
+          radius = Math.min(width, height) / 2;
+
+        var color = d3.scale.ordinal().range(['#7fc340', '#a90009', '#ee000d', '#1c9f3f']);
+
+        var arc = d3.svg.arc()
+          .outerRadius(radius)
+          .innerRadius(0);
+
+        var pie = d3.layout.pie()
+          .sort(null)
+          .value(function (d) {
+            return d[count];
+          });
+
+        // Add an SVG element with the desired dimensions and margin.
+        var svg = d3.select(ele[0]).append("svg")
+          .attr("width", width)
+          .attr("height", height)
+          .append("g")
+          .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+        scope.$watch('data', function (newData) {
+          scope.render(newData);
+        }, true);
+
+        scope.render = function (data) {
+          svg.selectAll('*').remove();
+
+          if (!data) return;
+          if (renderTimeout) clearTimeout(renderTimeout);
+
+          renderTimeout = $timeout(function () {
+
+            data.forEach(function (d) {
+              d[count] = +d[count];
+            });
+
+            var g = svg.selectAll(".arc")
+              .data(pie(data))
+              .enter().append("g")
+              .attr("class", "arc");
+
+            g.append("path")
+              .attr("d", arc)
+              .style("fill", function (d) {
+                return color(d.data[bucket]);
+              });
+
+            g.append("text")
+              .attr("transform", function (d) {
+                return "translate(" + arc.centroid(d) + ")";
+              })
+              .attr("dy", ".35em")
+              .style("text-anchor", "middle")
+              .text(function (d) {
+                return d.data[bucket];
+              });
+
+          }, 200); // renderTimeout
+        };
+      }
+    };
+  }]
+});
+
+/* global
+ define: false,
+ console: false
+ */
 define('directives/unique-augur-name',[], function () {
   
 
@@ -51973,15 +52066,17 @@ define('directives',[
   'angular',
   'directives/available-prediction-target',
   'directives/d3-line-chart',
+  'directives/d3-pie-chart',
   'directives/unique-augur-name',
   'directives/threshold-in-range',
   'mm-foundation-tpls'
-], function ( ng, AvailablePredictionTarget, D3LineChart, UniqueAugurName, ThresholdInRange) {
+], function ( ng, AvailablePredictionTarget, D3LineChart, D3PieChart, UniqueAugurName, ThresholdInRange) {
   
 
   return ng.module('dejalyticsDirectives', ['mm.foundation'])
     .directive('availablePredictionTarget', AvailablePredictionTarget)
     .directive('d3LineChart', D3LineChart)
+    .directive('d3PieChart', D3PieChart)
     .directive('uniqueAugurName', UniqueAugurName)
     .directive('thresholdInRange', ThresholdInRange);
 });
@@ -55247,7 +55342,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('partials/augur-accuracy.html',
-    '<div class=\'row augur-accuracy\'><div class=\'columns small-12\'><ul class=\'small-block-grid-2 medium-block-grid-3\'><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Lift</h6><div class=\'chart\'><d3-line-chart data=\'data.lift\'></d3-line-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Response</h6><div class=\'chart\'><d3-line-chart data=\'data.response\'></d3-line-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Cumulative Response</h6><div class=\'chart\'><d3-line-chart data=\'data.cumulativeResponse\'></d3-line-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Captured Response</h6><div class=\'chart\'><d3-line-chart data=\'data.capturedResponse\'></d3-line-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Cumulative Captured Response</h6><div class=\'chart\'><d3-line-chart data=\'data.cumulativeCapturedResponse\'></d3-line-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>ROC Chart</h6><div class=\'chart\'><d3-line-chart data=\'data.rocChart\'></d3-line-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Classification Matrix</h6><div class=\'chart\'><d3-line-chart data=\'data.classificationMatrix\'></d3-line-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Model - Posterior probabilities</h6><div class=\'chart\'><d3-line-chart data=\'data.modelPosteriorProbabilities\'></d3-line-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Bayes corrected prior probabilities</h6><div class=\'chart\'><d3-line-chart data=\'data.bayesCorrectedPriorProbabilities\'></d3-line-chart></div></a></div></li></ul></div></div>');
+    '<div class=\'row augur-accuracy\'><div class=\'columns small-12\'><ul class=\'small-block-grid-2 medium-block-grid-3\'><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Lift</h6><div class=\'chart line-chart\'><d3-line-chart data=\'data.lift\'></d3-line-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Response</h6><div class=\'chart line-chart\'><d3-line-chart data=\'data.response\'></d3-line-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Cumulative Response</h6><div class=\'chart line-chart\'><d3-line-chart data=\'data.cumulativeResponse\'></d3-line-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Captured Response</h6><div class=\'chart line-chart\'><d3-line-chart data=\'data.capturedResponse\'></d3-line-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Cumulative Captured Response</h6><div class=\'chart line-chart\'><d3-line-chart data=\'data.cumulativeCapturedResponse\'></d3-line-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>ROC Chart</h6><div class=\'chart line-chart\'><d3-line-chart data=\'data.rocChart\'></d3-line-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Classification Matrix</h6><div class=\'chart pie-chart\'><d3-pie-chart bucket=\'bucket\' count=\'count\' data=\'data.classificationMatrix\'></d3-pie-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Model - Posterior probabilities</h6><div class=\'chart line-chart\'><d3-line-chart data=\'data.modelPosteriorProbabilities\'></d3-line-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Bayes corrected prior probabilities</h6><div class=\'chart line-chart\'><d3-line-chart data=\'data.bayesCorrectedPriorProbabilities\'></d3-line-chart></div></a></div></li></ul></div></div>');
 }]);
 })();
 
@@ -55388,7 +55483,7 @@ define('app',[
           controller: 'AugurInfluencersCtrl'
         }).
         state('augur.accuracy', {
-          url: '/influencers',
+          url: '/accuracy',
           templateUrl: 'partials/augur-accuracy.html',
           controller: 'AugurAccuracyCtrl'
         }).
