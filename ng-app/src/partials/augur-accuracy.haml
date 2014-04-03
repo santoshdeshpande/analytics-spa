@@ -1,0 +1,66 @@
+.row.augur-accuracy
+  .columns.small-12
+    %ul.small-block-grid-2.medium-block-grid-3
+      %li
+        .th
+          %a{ href: '' }
+            %h6.title Lift
+            .chart
+              %d3-line-chart{ data: 'data.lift' }
+
+      %li
+        .th
+          %a{ href: '' }
+            %h6.title Response
+            .chart
+              %d3-line-chart{ data: 'data.response' }
+
+      %li
+        .th
+          %a{ href: '' }
+            %h6.title Cumulative Response
+            .chart
+              %d3-line-chart{ data: 'data.cumulativeResponse' }
+
+      %li
+        .th
+          %a{ href: '' }
+            %h6.title Captured Response
+            .chart
+              %d3-line-chart{ data: 'data.capturedResponse' }
+
+      %li
+        .th
+          %a{ href: '' }
+            %h6.title Cumulative Captured Response
+            .chart
+              %d3-line-chart{ data: 'data.cumulativeCapturedResponse' }
+
+      %li
+        .th
+          %a{ href: '' }
+            %h6.title ROC Chart
+            .chart
+              %d3-line-chart{ data: 'data.rocChart' }
+
+      %li
+        .th
+          %a{ href: '' }
+            %h6.title Classification Matrix
+            .chart
+              %d3-line-chart{ data: 'data.classificationMatrix' }
+
+      %li
+        .th
+          %a{ href: '' }
+            %h6.title Model - Posterior probabilities
+            .chart
+              %d3-line-chart{ data: 'data.modelPosteriorProbabilities' }
+
+      %li
+        .th
+          %a{ href: '' }
+            %h6.title Bayes corrected prior probabilities
+            .chart
+              %d3-line-chart{ data: 'data.bayesCorrectedPriorProbabilities' }
+

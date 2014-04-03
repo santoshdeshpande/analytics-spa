@@ -48,6 +48,11 @@ define([
           templateUrl: 'partials/augur-influencers.html',
           controller: 'AugurInfluencersCtrl'
         }).
+        state('augur.accuracy', {
+          url: '/influencers',
+          templateUrl: 'partials/augur-accuracy.html',
+          controller: 'AugurAccuracyCtrl'
+        }).
         state('augur.performance', {
           url: '/performance',
           templateUrl: 'partials/augur-performance.html',

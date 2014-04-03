@@ -39683,18 +39683,7 @@ define('controllers/augur',[], function () {
  define: false,
  console: false
  */
-define('controllers/augur-influencers',[], function () {
-  
-
-  return  ['$scope', '$stateParams', 'Augur', 'Habitat', function ($scope, $stateParams, Augur, Habitat) {
-  }];
-});
-
-/* global
- define: false,
- console: false
- */
-define('controllers/augur-performance',[], function () {
+define('controllers/augur-accuracy',[], function () {
   
 
   return  ['$scope', '$stateParams', 'Augur', 'Habitat', function ($scope, $stateParams, Augur, Habitat) {
@@ -39720,6 +39709,29 @@ define('controllers/augur-performance',[], function () {
       modelPosteriorProbabilities      : randomData(),
       bayesCorrectedPriorProbabilities : randomData()
     }
+
+  }];
+});
+
+/* global
+ define: false,
+ console: false
+ */
+define('controllers/augur-influencers',[], function () {
+  
+
+  return  ['$scope', '$stateParams', 'Augur', 'Habitat', function ($scope, $stateParams, Augur, Habitat) {
+  }];
+});
+
+/* global
+ define: false,
+ console: false
+ */
+define('controllers/augur-performance',[], function () {
+  
+
+  return  ['$scope', '$stateParams', 'Augur', 'Habitat', function ($scope, $stateParams, Augur, Habitat) {
 
   }];
 });
@@ -39809,17 +39821,19 @@ define('controllers',[
   'services',
   'controllers/augur-new',
   'controllers/augur',
+  'controllers/augur-accuracy',
   'controllers/augur-influencers',
   'controllers/augur-performance',
   'controllers/augur-settings',
   'controllers/augur-tree',
   'controllers/dashboard'
-], function (ng, services, AugurNewCtrl, AugurCtrl, AugurInfluencersCtrl, AugurPerformanceCtrl, AugurSettingsCtrl, AugurTreeCtrl, DashboardCtrl) {
+], function (ng, services, AugurNewCtrl, AugurCtrl, AugurAccuracyCtrl, AugurInfluencersCtrl, AugurPerformanceCtrl, AugurSettingsCtrl, AugurTreeCtrl, DashboardCtrl) {
   
 
   return ng.module('MainControllers', [ services.name ])
       .controller('AugurCtrl', AugurCtrl)
       .controller('AugurNewCtrl', AugurNewCtrl)
+      .controller('AugurAccuracyCtrl', AugurAccuracyCtrl)
       .controller('AugurInfluencersCtrl', AugurInfluencersCtrl)
       .controller('AugurPerformanceCtrl', AugurPerformanceCtrl)
       .controller('AugurSettingsCtrl', AugurSettingsCtrl)
@@ -55232,6 +55246,18 @@ try {
   module = angular.module('dejalyticsPartials', []);
 }
 module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('partials/augur-accuracy.html',
+    '<div class=\'row augur-accuracy\'><div class=\'columns small-12\'><ul class=\'small-block-grid-2 medium-block-grid-3\'><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Lift</h6><div class=\'chart\'><d3-line-chart data=\'data.lift\'></d3-line-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Response</h6><div class=\'chart\'><d3-line-chart data=\'data.response\'></d3-line-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Cumulative Response</h6><div class=\'chart\'><d3-line-chart data=\'data.cumulativeResponse\'></d3-line-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Captured Response</h6><div class=\'chart\'><d3-line-chart data=\'data.capturedResponse\'></d3-line-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Cumulative Captured Response</h6><div class=\'chart\'><d3-line-chart data=\'data.cumulativeCapturedResponse\'></d3-line-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>ROC Chart</h6><div class=\'chart\'><d3-line-chart data=\'data.rocChart\'></d3-line-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Classification Matrix</h6><div class=\'chart\'><d3-line-chart data=\'data.classificationMatrix\'></d3-line-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Model - Posterior probabilities</h6><div class=\'chart\'><d3-line-chart data=\'data.modelPosteriorProbabilities\'></d3-line-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Bayes corrected prior probabilities</h6><div class=\'chart\'><d3-line-chart data=\'data.bayesCorrectedPriorProbabilities\'></d3-line-chart></div></a></div></li></ul></div></div>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('dejalyticsPartials');
+} catch (e) {
+  module = angular.module('dejalyticsPartials', []);
+}
+module.run(['$templateCache', function($templateCache) {
   $templateCache.put('partials/augur-influencers.html',
     'I am the influencers {{ augur.id }} {{ augur }}');
 }]);
@@ -55257,7 +55283,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('partials/augur-performance.html',
-    '<div class=\'row augur-performance\'><div class=\'columns small-12\'><ul class=\'small-block-grid-2 medium-block-grid-3\'><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Lift</h6><div class=\'chart\'><d3-line-chart data=\'data.lift\'></d3-line-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Response</h6><div class=\'chart\'><d3-line-chart data=\'data.response\'></d3-line-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Cumulative Response</h6><div class=\'chart\'><d3-line-chart data=\'data.cumulativeResponse\'></d3-line-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Captured Response</h6><div class=\'chart\'><d3-line-chart data=\'data.capturedResponse\'></d3-line-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Cumulative Captured Response</h6><div class=\'chart\'><d3-line-chart data=\'data.cumulativeCapturedResponse\'></d3-line-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>ROC Chart</h6><div class=\'chart\'><d3-line-chart data=\'data.rocChart\'></d3-line-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Classification Matrix</h6><div class=\'chart\'><d3-line-chart data=\'data.classificationMatrix\'></d3-line-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Model - Posterior probabilities</h6><div class=\'chart\'><d3-line-chart data=\'data.modelPosteriorProbabilities\'></d3-line-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Bayes corrected prior probabilities</h6><div class=\'chart\'><d3-line-chart data=\'data.bayesCorrectedPriorProbabilities\'></d3-line-chart></div></a></div></li></ul></div></div>');
+    '<div class=\'row augur-performance\'><div class=\'columns small-12\'> I am the performance page</div></div>');
 }]);
 })();
 
@@ -55293,7 +55319,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('partials/augur.html',
-    '<div class=\'row augur action-bar\'><div class=\'small-6 columns\'><ul class=\'inline-list\'><li><a ui-sref=\'dashboard\'><span class=\'glyphicon glyphicon-th\'></span> Dashboard</a></li><li><span class=\'glyphicon glyphicon-picture\'></span> {{habitat.name}}</li><li><span class=\'glyphicon glyphicon-eye-open\'></span> {{augur.name}}</li></ul></div><div class=\'small-6 columns\'><ul class=\'inline-list\'><li> <button class=\'button\'> Start prediction</button></li><li> <button class=\'button\'> Download predictions</button></li></ul></div></div><div class=\'row augur container\'><div class=\'small-1 columns side-nav-container\'><ul class=\'side-nav\'><li ui-sref-active=\'active\'><a ui-sref=\'augur.tree\'><span class=\'glyphicon glyphicon-th\'></span><br> Decision tree</a></li><li ui-sref-active=\'active\'><a ui-sref=\'augur.influencers\'><span class=\'glyphicon glyphicon-th\'></span><br> Influencers</a></li><li ui-sref-active=\'active\'><a ui-sref=\'augur.performance\'><span class=\'glyphicon glyphicon-th\'></span><br> Perf drift</a></li><li ui-sref-active=\'active\'><a ui-sref=\'augur.settings\'><span class=\'glyphicon glyphicon-th\'></span><br> Settings</a></li></ul></div><div class=\'small-11 columns main\'><div ui-view=\'\'></div></div></div>');
+    '<div class=\'row augur action-bar\'><div class=\'small-6 columns\'><ul class=\'inline-list\'><li><a ui-sref=\'dashboard\'><span class=\'glyphicon glyphicon-th\'></span> Dashboard</a></li><li><span class=\'glyphicon glyphicon-picture\'></span> {{habitat.name}}</li><li><span class=\'glyphicon glyphicon-eye-open\'></span> {{augur.name}}</li></ul></div><div class=\'small-6 columns\'><ul class=\'inline-list\'><li> <button class=\'button\'> Start prediction</button></li><li> <button class=\'button\'> Download predictions</button></li></ul></div></div><div class=\'row augur container\'><div class=\'small-1 columns side-nav-container\'><ul class=\'side-nav\'><li ui-sref-active=\'active\'><a ui-sref=\'augur.tree\'><span class=\'glyphicon glyphicon-th\'></span><br> Decision tree</a></li><li ui-sref-active=\'active\'><a ui-sref=\'augur.influencers\'><span class=\'glyphicon glyphicon-th\'></span><br> Influencers</a></li><li ui-sref-active=\'active\'><a ui-sref=\'augur.accuracy\'><span class=\'glyphicon glyphicon-th\'></span><br> Accuracy</a></li><li ui-sref-active=\'active\'><a ui-sref=\'augur.performance\'><span class=\'glyphicon glyphicon-th\'></span><br> Perf drift</a></li><li ui-sref-active=\'active\'><a ui-sref=\'augur.settings\'><span class=\'glyphicon glyphicon-th\'></span><br> Settings</a></li></ul></div><div class=\'small-11 columns main\'><div ui-view=\'\'></div></div></div>');
 }]);
 })();
 
@@ -55360,6 +55386,11 @@ define('app',[
           url: '/influencers',
           templateUrl: 'partials/augur-influencers.html',
           controller: 'AugurInfluencersCtrl'
+        }).
+        state('augur.accuracy', {
+          url: '/influencers',
+          templateUrl: 'partials/augur-accuracy.html',
+          controller: 'AugurAccuracyCtrl'
         }).
         state('augur.performance', {
           url: '/performance',

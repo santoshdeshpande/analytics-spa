@@ -5903,28 +5903,5 @@ th.hide-for-touch {
     padding-top: 0.5em; }
 
 
-.augur-performance .title {
-  padding: 0.3em;
-  color: #000000;
-  background: #00bfff;
-  text-align: center; }
-.augur-performance .chart {
-  height: 125px;
-  /* tell the SVG path to be a thin blue line without any area fill */ }
-  .augur-performance .chart path {
-    stroke: steelblue;
-    stroke-width: 1;
-    fill: none; }
-  .augur-performance .chart .axis {
-    shape-rendering: crispEdges; }
-  .augur-performance .chart .x.axis line {
-    stroke: lightgrey; }
-  .augur-performance .chart .x.axis .minor {
-    stroke-opacity: 0.5; }
-  .augur-performance .chart .x.axis path {
-    display: none; }
-  .augur-performance .chart .y.axis line, .augur-performance .chart .y.axis path {
-    fill: none;
-    stroke: #000; }
 
 
