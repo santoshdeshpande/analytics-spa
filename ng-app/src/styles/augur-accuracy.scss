@@ -6,9 +6,10 @@
     text-align: center;
   }
   .chart {
-    height: 125px;
+    height: 175px;
+    width: 260px;
 
-    &.line-chart {
+    &.line-chart, &.roc-chart {
       path {
         stroke: steelblue;
         stroke-width: 1;
@@ -28,7 +29,8 @@
       }
 
       .x.axis path {
-        display: none;
+        fill: none;
+        stroke: #000;
       }
 
       .y.axis line, .y.axis path {

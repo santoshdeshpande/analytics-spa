@@ -6,6 +6,15 @@ define(['d3js'], function (d3) {
   'use strict';
 
   return ['$timeout', function ($timeout) {
+    function relaxedTickValues(values) {
+      var tickValues = [];
+      for (var i = 0; i < values.length; i++) {
+        if ((i === 0) || (i % 3 === 0) || (i == (values.length - 1)))
+          tickValues.push(values[i])
+      }
+      return tickValues;
+    }
+
     return {
       restrict: 'E',
       scope: {
@@ -16,12 +25,12 @@ define(['d3js'], function (d3) {
       link: function (scope, ele, attrs) {
         var renderTimeout;
         // define dimensions of graph
-        var m = [20, 20, 20, 20]; // margins
-        var w = 260 - m[1] - m[3]; // width
-        var h = 120 - m[0] - m[2]; // height
+        var m = [10, 0, 50, 35]; // margins
+        var w = 240 - m[1] - m[3]; // width
+        var h = 150 - m[0] - m[2]; // height
 
         // Add an SVG element with the desired dimensions and margin.
-        var graph = d3.select(ele[0]).append("svg")
+        var svg = d3.select(ele[0]).append("svg")
           .attr("width", w + m[1] + m[3])
           .attr("height", h + m[0] + m[2])
           .append("g")
@@ -32,48 +41,58 @@ define(['d3js'], function (d3) {
         }, true);
 
         scope.render = function (data) {
-          graph.selectAll('*').remove();
+          svg.selectAll('*').remove();
 
           if (!data) return;
           if (renderTimeout) clearTimeout(renderTimeout);
 
           renderTimeout = $timeout(function () {
 
-            var x = d3.scale.linear().domain([0, d3.max(data, function(d){ return d[0]; })]).range([0, w]);
-            // Y scale will fit values from 0-10 within pixels h-0 (Note the inverted domain for the y-scale: bigger is up!)
-//            var y = d3.scale.linear().domain([0, 1]).range([h, 0]);
-            // automatically determining max range can work something like this
-            var y = d3.scale.linear().domain([0, d3.max(data, function(d){ return d[1]; })]).range([h, 0]);
+            var xScale = d3.scale.ordinal().domain(data.map(function (d) {
+              return d[0] + '';
+            })).rangeBands([0, w]);
+            var yScale = d3.scale.linear().domain([0, d3.max(data, function (d) {
+              return d[1];
+            })]).range([h, 0]);
 
             // create a line function that can convert data[] into x and y points
             var line = d3.svg.line()
               // assign the X function to plot our line as we wish
               .x(function (d) {
-                return x(d[0]);
+                return xScale(d[0]);
               })
               .y(function (d) {
-                return y(d[1]);
+                return yScale(d[1]);
               });
 
             // create yAxis
-            var xAxis = d3.svg.axis().scale(x).ticks(5);
+            var xAxis = d3.svg.axis().scale(xScale).ticks(4)
+              .tickValues(relaxedTickValues(data.map(function (d) { return d[0] })))
+              .tickFormat(d3.format('.2f'));
             // Add the x-axis.
-            graph.append("g")
+            svg.append("g")
               .attr("class", "x axis")
               .attr("transform", "translate(0," + h + ")")
-              .call(xAxis);
+              .call(xAxis)
+              .selectAll("text")
+              .style("text-anchor", "end")
+              .attr("dx", "-.8em")
+              .attr("dy", ".15em")
+              .attr("transform", function (d) {
+                return "rotate(-65)"
+              });
 
             // create left yAxis
-            var yAxisLeft = d3.svg.axis().scale(y).ticks(4).orient("left");
+            var yAxisLeft = d3.svg.axis().scale(yScale).ticks(4).orient("left");
             // Add the y-axis to the left
-            graph.append("g")
+            svg.append("g")
               .attr("class", "y axis")
-              .attr("transform", "translate(-25,0)")
+//              .attr("transform", "translate(-25,0)")
               .call(yAxisLeft);
 
             // Add the line by appending an svg:path element with the data line we created above
             // do this AFTER the axes above so that the line is above the tick-lines
-            graph.append("path").attr("d", line(data));
+            svg.append("path").attr("d", line(data));
 
           }, 200); // renderTimeout
         };
