@@ -150,10 +150,10 @@ define([], function () {
         [1.0, 1.0]
       ],
       classificationMatrix             : [
-        { bucket: 'TN',  count: 990 },
-        { bucket: 'FP', count: 126 },
-        { bucket: 'FN', count: 266 },
-        { bucket: 'TP',  count: 865 }
+        { bucket: 'True Negatives',  count: 990 },
+        { bucket: 'False Positives', count: 126 },
+        { bucket: 'False Negatives', count: 266 },
+        { bucket: 'True Positives',  count: 865 }
       ],
       modelPosteriorProbabilities      : [
         [ 0.16828479, 454 ],

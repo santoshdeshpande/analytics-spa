@@ -77,11 +77,8 @@ define(['d3js'], function (d3) {
             // Add the y-axis to the left
             graph.append("g")
               .attr("class", "y axis")
-//              .attr("transform", "translate(-25,0)")
               .call(yAxisLeft);
 
-            // Add the line by appending an svg:path element with the data line we created above
-            // do this AFTER the axes above so that the line is above the tick-lines
             graph.append("path").attr("d", line(data));
 
             if (!!attrs.referenceLine) {
