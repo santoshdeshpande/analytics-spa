@@ -5914,6 +5914,10 @@ th.hide-for-touch {
     stroke: steelblue;
     stroke-width: 1;
     fill: none; }
+  .augur-accuracy .chart.line-chart path.watermark, .augur-accuracy .chart.roc-chart path.watermark {
+    stroke: red;
+    stroke-width: 1;
+    fill: none; }
   .augur-accuracy .chart.line-chart .axis, .augur-accuracy .chart.roc-chart .axis {
     shape-rendering: crispEdges; }
   .augur-accuracy .chart.line-chart .x.axis line, .augur-accuracy .chart.roc-chart .x.axis line {

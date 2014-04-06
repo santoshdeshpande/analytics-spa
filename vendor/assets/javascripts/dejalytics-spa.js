@@ -39699,7 +39699,28 @@ define('controllers/augur-accuracy',[], function () {
     }
 
     $scope.data = {
-      lift                             : randomData(),
+      lift                             : [
+        [ 5, 1.969155654 ],
+        [ 10, 1.898043767 ],
+        [ 15, 1.844827586 ],
+        [ 20, 1.881246919 ],
+        [ 25, 1.543269231 ],
+        [ 30, 1.596485411 ],
+        [ 35, 1.617520715 ],
+        [ 40, 1.561007958 ],
+        [ 45, 1.543269231 ],
+        [ 50, 0.745026525 ],
+        [ 55, 0.632942889 ],
+        [ 60, 0.319297082 ],
+        [ 65, 0.337035809 ],
+        [ 70, 0.439543673 ],
+        [ 75, 0.478945623 ],
+        [ 80, 0.44346817 ],
+        [ 85, 0.386798432 ],
+        [ 90, 0.212864721 ],
+        [ 95, 0.266080902 ],
+        [ 100, 0.281307951 ]
+      ],
       response                         : randomData(),
       cumulativeResponse               : randomData(),
       capturedResponse                 : randomData(),
@@ -49232,7 +49253,8 @@ define('directives/d3-line-chart',['d3js'], function (d3) {
       link: function (scope, ele, attrs) {
         var renderTimeout;
         // define dimensions of graph
-        var m = [20, 20, 20, 20]; // margins
+        //       T   R   B   L
+        var m = [20, 20, 20, 35]; // margins
         var w = 260 - m[1] - m[3]; // width
         var h = 120 - m[0] - m[2]; // height
 
@@ -49255,24 +49277,27 @@ define('directives/d3-line-chart',['d3js'], function (d3) {
 
           renderTimeout = $timeout(function () {
 
-            var x = d3.scale.linear().domain([0, d3.max(data, function(d){ return d[0]; })]).range([0, w]);
-            // Y scale will fit values from 0-10 within pixels h-0 (Note the inverted domain for the y-scale: bigger is up!)
-//            var y = d3.scale.linear().domain([0, 1]).range([h, 0]);
-            // automatically determining max range can work something like this
-            var y = d3.scale.linear().domain([0, d3.max(data, function(d){ return d[1]; })]).range([h, 0]);
+            var xScale = d3.scale.linear().domain([
+              d3.min(data, function(d){ return d[0]; }),
+              d3.max(data, function(d){ return d[0]; })
+            ]).range([0, w]);
+
+            var yScale = d3.scale.linear().domain([
+              d3.min(data, function(d){ return d[1]; }),
+              Math.floor(d3.max(data, function(d){ return d[1]; })) + 1.0
+            ]).range([h, 0]).nice();
 
             // create a line function that can convert data[] into x and y points
             var line = d3.svg.line()
-              // assign the X function to plot our line as we wish
               .x(function (d) {
-                return x(d[0]);
+                return xScale(d[0]);
               })
               .y(function (d) {
-                return y(d[1]);
+                return yScale(d[1]);
               });
 
             // create yAxis
-            var xAxis = d3.svg.axis().scale(x).ticks(5);
+            var xAxis = d3.svg.axis().scale(xScale).ticks(5);
             // Add the x-axis.
             graph.append("g")
               .attr("class", "x axis")
@@ -49280,16 +49305,28 @@ define('directives/d3-line-chart',['d3js'], function (d3) {
               .call(xAxis);
 
             // create left yAxis
-            var yAxisLeft = d3.svg.axis().scale(y).ticks(4).orient("left");
+            var yAxisLeft = d3.svg.axis().scale(yScale).ticks(4).orient("left");
             // Add the y-axis to the left
             graph.append("g")
               .attr("class", "y axis")
-              .attr("transform", "translate(-25,0)")
+//              .attr("transform", "translate(-25,0)")
               .call(yAxisLeft);
 
             // Add the line by appending an svg:path element with the data line we created above
             // do this AFTER the axes above so that the line is above the tick-lines
             graph.append("path").attr("d", line(data));
+
+            var watermark = d3.svg.line()
+                          .x(function (d) {
+                            return xScale(d[0]);
+                          })
+                          .y(function (d) {
+                            return yScale(1.0);
+                          });
+
+            graph.append("path")
+              .attr("d", watermark(data))
+              .attr('class', 'watermark');
 
           }, 200); // renderTimeout
         };
@@ -49472,14 +49509,10 @@ define('directives/d3-roc-chart',['d3js'], function (d3) {
 
             // create left yAxis
             var yAxisLeft = d3.svg.axis().scale(yScale).ticks(4).orient("left");
-            // Add the y-axis to the left
             svg.append("g")
               .attr("class", "y axis")
-//              .attr("transform", "translate(-25,0)")
               .call(yAxisLeft);
 
-            // Add the line by appending an svg:path element with the data line we created above
-            // do this AFTER the axes above so that the line is above the tick-lines
             svg.append("path").attr("d", line(data));
 
           }, 200); // renderTimeout
