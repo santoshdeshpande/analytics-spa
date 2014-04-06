@@ -155,8 +155,28 @@ define([], function () {
         { bucket: 'FN', count: 266 },
         { bucket: 'TP',  count: 865 }
       ],
-      modelPosteriorProbabilities      : randomData(),
-      bayesCorrectedPriorProbabilities : randomData()
+      modelPosteriorProbabilities      : [
+        [ 0.16828479, 454 ],
+        [ 0.180288462, 599 ],
+        [ 0.345454545, 80 ],
+        [ 0.34939759, 123 ],
+        [ 0.825396825, 485 ],
+        [ 0.857142857, 21 ],
+        [ 0.875, 22 ],
+        [ 0.935810811, 388 ],
+        [ 1.0, 75 ]
+      ],
+      bayesCorrectedPriorProbabilities : [
+        [ 0.16828479, 454 ],
+        [ 0.180288462, 599 ],
+        [ 0.345454545, 80 ],
+        [ 0.34939759, 123 ],
+        [ 0.825396825, 485 ],
+        [ 0.857142857, 21 ],
+        [ 0.875, 22 ],
+        [ 0.935810811, 388 ],
+        [ 1.0, 75 ]
+      ]
     }
 
   }];

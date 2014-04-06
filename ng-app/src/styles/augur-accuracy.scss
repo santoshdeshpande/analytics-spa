@@ -10,7 +10,7 @@
     width: 260px;
 
     text {
-      font-size: 0.5em;
+      font-size: 0.7em;
     }
 
     &.line-chart, &.roc-chart {
@@ -50,7 +50,24 @@
     }
 
     &.bar-chart {
+      .bar {
+        fill: steelblue;
+      }
 
+      .bar:hover {
+        fill: brown;
+      }
+
+      .axis path,
+      .axis line {
+        fill: none;
+        stroke: #000;
+        shape-rendering: crispEdges;
+      }
+
+      .x.axis path {
+        display: none;
+      }
     }
 
     &.pie-chart {

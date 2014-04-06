@@ -54,13 +54,13 @@
         .th
           %a{ href: '' }
             %h6.title Model - Posterior probabilities
-            .chart.line-chart
-              %d3-line-chart{ data: 'data.modelPosteriorProbabilities' }
+            .chart.bar-chart
+              %d3-bar-chart{ data: 'data.modelPosteriorProbabilities' }
 
       %li
         .th
           %a{ href: '' }
             %h6.title Bayes corrected prior probabilities
-            .chart.line-chart
-              %d3-line-chart{ data: 'data.bayesCorrectedPriorProbabilities' }
+            .chart.bar-chart
+              %d3-bar-chart{ data: 'data.bayesCorrectedPriorProbabilities' }
 
