@@ -6,21 +6,21 @@
           %a{ href: '' }
             %h6.title Lift
             .chart.line-chart
-              %d3-line-chart{ data: 'data.lift' }
+              %d3-line-chart{ data: 'data.lift', 'reference-line' => 1.0 }
 
       %li
         .th
           %a{ href: '' }
             %h6.title Response
             .chart.line-chart
-              %d3-line-chart{ data: 'data.response' }
+              %d3-line-chart{ data: 'data.response', 'reference-line' => 0.5 }
 
       %li
         .th
           %a{ href: '' }
             %h6.title Cumulative Response
             .chart.line-chart
-              %d3-line-chart{ data: 'data.cumulativeResponse' }
+              %d3-line-chart{ data: 'data.cumulativeResponse', 'reference-line' => 0.5, 'y-scale-min' => 0.4  }
 
       %li
         .th

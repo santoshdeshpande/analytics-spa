@@ -9,6 +9,10 @@
     height: 175px;
     width: 260px;
 
+    text {
+      font-size: 0.5em;
+    }
+
     &.line-chart, &.roc-chart {
       path {
         stroke: steelblue;
@@ -16,7 +20,7 @@
         fill: none;
       }
 
-      path.watermark {
+      path.reference-line {
         stroke: red;
         stroke-width: 1;
         fill: none;

@@ -5910,11 +5910,13 @@ th.hide-for-touch {
 .augur-accuracy .chart {
   height: 175px;
   width: 260px; }
+  .augur-accuracy .chart text {
+    font-size: 0.5em; }
   .augur-accuracy .chart.line-chart path, .augur-accuracy .chart.roc-chart path {
     stroke: steelblue;
     stroke-width: 1;
     fill: none; }
-  .augur-accuracy .chart.line-chart path.watermark, .augur-accuracy .chart.roc-chart path.watermark {
+  .augur-accuracy .chart.line-chart path.reference-line, .augur-accuracy .chart.roc-chart path.reference-line {
     stroke: red;
     stroke-width: 1;
     fill: none; }

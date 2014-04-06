@@ -39721,10 +39721,94 @@ define('controllers/augur-accuracy',[], function () {
         [ 95, 0.266080902 ],
         [ 100, 0.281307951 ]
       ],
-      response                         : randomData(),
-      cumulativeResponse               : randomData(),
-      capturedResponse                 : randomData(),
-      cumulativeCapturedResponse       : randomData(),
+      response                         : [
+        [ 5, 0.991150442 ],
+        [ 10, 0.955357143 ],
+        [ 15, 0.928571429 ],
+        [ 20, 0.946902655 ],
+        [ 25, 0.776785714 ],
+        [ 30, 0.803571429 ],
+        [ 35, 0.814159292 ],
+        [ 40, 0.785714286 ],
+        [ 45, 0.776785714 ],
+        [ 50, 0.375 ],
+        [ 55, 0.318584071 ],
+        [ 60, 0.160714286 ],
+        [ 65, 0.169642857 ],
+        [ 70, 0.221238938 ],
+        [ 75, 0.241071429 ],
+        [ 80, 0.223214286 ],
+        [ 85, 0.194690265 ],
+        [ 90, 0.107142857 ],
+        [ 95, 0.133928571 ],
+        [ 100, 0.14159292 ]
+      ],
+      cumulativeResponse               : [
+        [ 5, 0.991150442 ],
+        [ 10, 0.973333333 ],
+        [ 15, 0.958456973 ],
+        [ 20, 0.955555556 ],
+        [ 25, 0.919928826 ],
+        [ 30, 0.900593472 ],
+        [ 35, 0.888182973 ],
+        [ 40, 0.87541713 ],
+        [ 45, 0.864490603 ],
+        [ 50, 0.815672306 ],
+        [ 55, 0.770226537 ],
+        [ 60, 0.71958457 ],
+        [ 65, 0.67739726 ],
+        [ 70, 0.644628099 ],
+        [ 75, 0.617804154 ],
+        [ 80, 0.593210907 ],
+        [ 85, 0.569633508 ],
+        [ 90, 0.544015826 ],
+        [ 95, 0.522492971 ],
+        [ 100, 0.503337784 ]
+      ],
+      capturedResponse                 : [
+        [ 5, 0.099027409 ],
+        [ 10, 0.094606543 ],
+        [ 15, 0.091954023 ],
+        [ 20, 0.094606543 ],
+        [ 25, 0.076923077 ],
+        [ 30, 0.079575597 ],
+        [ 35, 0.081343943 ],
+        [ 40, 0.07780725 ],
+        [ 45, 0.076923077 ],
+        [ 50, 0.037135279 ],
+        [ 55, 0.031830239 ],
+        [ 60, 0.015915119 ],
+        [ 65, 0.016799293 ],
+        [ 70, 0.022104332 ],
+        [ 75, 0.023872679 ],
+        [ 80, 0.022104332 ],
+        [ 85, 0.019451813 ],
+        [ 90, 0.01061008 ],
+        [ 95, 0.013262599 ],
+        [ 100, 0.014146773 ]
+      ],
+      cumulativeCapturedResponse       : [
+        [ 5, 0.099027409 ],
+        [ 10, 0.193633952 ],
+        [ 15, 0.285587975 ],
+        [ 20, 0.380194518 ],
+        [ 25, 0.457117595 ],
+        [ 30, 0.536693192 ],
+        [ 35, 0.618037135 ],
+        [ 40, 0.695844385 ],
+        [ 45, 0.772767462 ],
+        [ 50, 0.809902741 ],
+        [ 55, 0.84173298 ],
+        [ 60, 0.857648099 ],
+        [ 65, 0.874447392 ],
+        [ 70, 0.896551724 ],
+        [ 75, 0.920424403 ],
+        [ 80, 0.942528736 ],
+        [ 85, 0.961980548 ],
+        [ 90, 0.972590628 ],
+        [ 95, 0.985853227 ],
+        [ 100, 1.0 ]
+      ],
       rocChart                         : [
         [0.0, 0.0],
         [0.01, 0.105943152],
@@ -49243,6 +49327,11 @@ define('directives/d3-line-chart',['d3js'], function (d3) {
   
 
   return ['$timeout', function ($timeout) {
+
+    function scaleMin(defaultMin, min) {
+      return !!min ? 0.0 + min : defaultMin
+    }
+
     return {
       restrict: 'E',
       scope: {
@@ -49254,9 +49343,9 @@ define('directives/d3-line-chart',['d3js'], function (d3) {
         var renderTimeout;
         // define dimensions of graph
         //       T   R   B   L
-        var m = [20, 20, 20, 35]; // margins
+        var m = [10, 20, 20, 35]; // margins
         var w = 260 - m[1] - m[3]; // width
-        var h = 120 - m[0] - m[2]; // height
+        var h = 160 - m[0] - m[2]; // height
 
         // Add an SVG element with the desired dimensions and margin.
         var graph = d3.select(ele[0]).append("svg")
@@ -49283,8 +49372,8 @@ define('directives/d3-line-chart',['d3js'], function (d3) {
             ]).range([0, w]);
 
             var yScale = d3.scale.linear().domain([
-              d3.min(data, function(d){ return d[1]; }),
-              Math.floor(d3.max(data, function(d){ return d[1]; })) + 1.0
+              scaleMin(0, attrs.yScaleMin),
+              d3.max(data, function(d){ return d[1]; })
             ]).range([h, 0]).nice();
 
             // create a line function that can convert data[] into x and y points
@@ -49297,7 +49386,7 @@ define('directives/d3-line-chart',['d3js'], function (d3) {
               });
 
             // create yAxis
-            var xAxis = d3.svg.axis().scale(xScale).ticks(5);
+            var xAxis = d3.svg.axis().scale(xScale).ticks(10);
             // Add the x-axis.
             graph.append("g")
               .attr("class", "x axis")
@@ -49305,7 +49394,7 @@ define('directives/d3-line-chart',['d3js'], function (d3) {
               .call(xAxis);
 
             // create left yAxis
-            var yAxisLeft = d3.svg.axis().scale(yScale).ticks(4).orient("left");
+            var yAxisLeft = d3.svg.axis().scale(yScale).orient("left");
             // Add the y-axis to the left
             graph.append("g")
               .attr("class", "y axis")
@@ -49316,17 +49405,21 @@ define('directives/d3-line-chart',['d3js'], function (d3) {
             // do this AFTER the axes above so that the line is above the tick-lines
             graph.append("path").attr("d", line(data));
 
-            var watermark = d3.svg.line()
-                          .x(function (d) {
-                            return xScale(d[0]);
-                          })
-                          .y(function (d) {
-                            return yScale(1.0);
-                          });
+            if (!!attrs.referenceLine) {
+              var referenceLineValue = +attrs.referenceLine;
 
-            graph.append("path")
-              .attr("d", watermark(data))
-              .attr('class', 'watermark');
+              var referenceLine = d3.svg.line()
+                            .x(function (d) {
+                              return xScale(d[0]);
+                            })
+                            .y(function () {
+                              return yScale(referenceLineValue);
+                            });
+
+              graph.append("path")
+                .attr("d", referenceLine(data))
+                .attr('class', 'reference-line');
+            }
 
           }, 200); // renderTimeout
         };
@@ -49450,9 +49543,9 @@ define('directives/d3-roc-chart',['d3js'], function (d3) {
       link: function (scope, ele, attrs) {
         var renderTimeout;
         // define dimensions of graph
-        var m = [10, 0, 50, 35]; // margins
-        var w = 240 - m[1] - m[3]; // width
-        var h = 150 - m[0] - m[2]; // height
+        var m = [10, 20, 30, 35]; // margins
+        var w = 260 - m[1] - m[3]; // width
+        var h = 160 - m[0] - m[2]; // height
 
         // Add an SVG element with the desired dimensions and margin.
         var svg = d3.select(ele[0]).append("svg")
@@ -49493,7 +49586,7 @@ define('directives/d3-roc-chart',['d3js'], function (d3) {
             // create yAxis
             var xAxis = d3.svg.axis().scale(xScale).ticks(4)
               .tickValues(relaxedTickValues(data.map(function (d) { return d[0] })))
-              .tickFormat(d3.format('.2f'));
+              .tickFormat(d3.format('.3f'));
             // Add the x-axis.
             svg.append("g")
               .attr("class", "x axis")
@@ -49508,7 +49601,7 @@ define('directives/d3-roc-chart',['d3js'], function (d3) {
               });
 
             // create left yAxis
-            var yAxisLeft = d3.svg.axis().scale(yScale).ticks(4).orient("left");
+            var yAxisLeft = d3.svg.axis().scale(yScale).orient("left");
             svg.append("g")
               .attr("class", "y axis")
               .call(yAxisLeft);
@@ -55493,7 +55586,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('partials/augur-accuracy.html',
-    '<div class=\'row augur-accuracy\'><div class=\'columns small-12\'><ul class=\'small-block-grid-2 medium-block-grid-3\'><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Lift</h6><div class=\'chart line-chart\'><d3-line-chart data=\'data.lift\'></d3-line-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Response</h6><div class=\'chart line-chart\'><d3-line-chart data=\'data.response\'></d3-line-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Cumulative Response</h6><div class=\'chart line-chart\'><d3-line-chart data=\'data.cumulativeResponse\'></d3-line-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Captured Response</h6><div class=\'chart line-chart\'><d3-line-chart data=\'data.capturedResponse\'></d3-line-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Cumulative Captured Response</h6><div class=\'chart line-chart\'><d3-line-chart data=\'data.cumulativeCapturedResponse\'></d3-line-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>ROC Chart</h6><div class=\'chart roc-chart\'><d3-roc-chart data=\'data.rocChart\'></d3-roc-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Classification Matrix</h6><div class=\'chart pie-chart\'><d3-pie-chart bucket=\'bucket\' count=\'count\' data=\'data.classificationMatrix\'></d3-pie-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Model - Posterior probabilities</h6><div class=\'chart line-chart\'><d3-line-chart data=\'data.modelPosteriorProbabilities\'></d3-line-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Bayes corrected prior probabilities</h6><div class=\'chart line-chart\'><d3-line-chart data=\'data.bayesCorrectedPriorProbabilities\'></d3-line-chart></div></a></div></li></ul></div></div>');
+    '<div class=\'row augur-accuracy\'><div class=\'columns small-12\'><ul class=\'small-block-grid-2 medium-block-grid-3\'><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Lift</h6><div class=\'chart line-chart\'><d3-line-chart data=\'data.lift\' reference-line=\'1.0\'></d3-line-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Response</h6><div class=\'chart line-chart\'><d3-line-chart data=\'data.response\' reference-line=\'0.5\'></d3-line-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Cumulative Response</h6><div class=\'chart line-chart\'><d3-line-chart data=\'data.cumulativeResponse\' reference-line=\'0.5\' y-scale-min=\'0.4\'></d3-line-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Captured Response</h6><div class=\'chart line-chart\'><d3-line-chart data=\'data.capturedResponse\'></d3-line-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Cumulative Captured Response</h6><div class=\'chart line-chart\'><d3-line-chart data=\'data.cumulativeCapturedResponse\'></d3-line-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>ROC Chart</h6><div class=\'chart roc-chart\'><d3-roc-chart data=\'data.rocChart\'></d3-roc-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Classification Matrix</h6><div class=\'chart pie-chart\'><d3-pie-chart bucket=\'bucket\' count=\'count\' data=\'data.classificationMatrix\'></d3-pie-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Model - Posterior probabilities</h6><div class=\'chart line-chart\'><d3-line-chart data=\'data.modelPosteriorProbabilities\'></d3-line-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Bayes corrected prior probabilities</h6><div class=\'chart line-chart\'><d3-line-chart data=\'data.bayesCorrectedPriorProbabilities\'></d3-line-chart></div></a></div></li></ul></div></div>');
 }]);
 })();
 
