@@ -6,15 +6,6 @@ define(['d3js'], function (d3) {
   'use strict';
 
   return ['$timeout', function ($timeout) {
-    function relaxedTickValues(values) {
-      var tickValues = [];
-      for (var i = 0; i < values.length; i++) {
-        if ((i === 0) || (i % 3 === 0) || (i == (values.length - 1)))
-          tickValues.push(values[i])
-      }
-      return tickValues;
-    }
-
     return {
       restrict: 'E',
       scope: {
@@ -25,7 +16,7 @@ define(['d3js'], function (d3) {
       link: function (scope, ele, attrs) {
         var renderTimeout;
         // define dimensions of graph
-        var margin = { top: 10, right: 20, bottom: 40, left: 40 },
+        var margin = { top: 10, right: 20, bottom: 10, left: 40 },
           width = 260 - margin.left - margin.right,
           height = 160 - margin.top - margin.bottom;
 
@@ -71,14 +62,9 @@ define(['d3js'], function (d3) {
                 .attr('class', 'x axis')
                 .attr('transform', 'translate(0,' + height + ')')
               .call(xAxis)
-                .selectAll('text')
-                .style('text-anchor', 'end')
-                .attr('dx', '-.8em')
-                .attr('dy', '.15em')
-                .attr('transform', function (d) {
-                  return 'rotate(-65)'
-                });
-            
+                .selectAll('.tick')
+                .remove();
+
             svg.append('g')
                   .attr('class', 'y axis')
                   .call(yAxis);

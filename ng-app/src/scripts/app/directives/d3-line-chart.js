@@ -26,7 +26,7 @@ define(['d3js'], function (d3) {
         var renderTimeout;
         // define dimensions of graph
         //       T   R   B   L
-        var m = [10, 20, 20, 35]; // margins
+        var m = [10, 20, 10, 35]; // margins
         var w = 260 - m[1] - m[3]; // width
         var h = 160 - m[0] - m[2]; // height
 
@@ -69,7 +69,7 @@ define(['d3js'], function (d3) {
               });
 
             // create yAxis
-            var xAxis = d3.svg.axis().scale(xScale).ticks(10);
+            var xAxis = d3.svg.axis().scale(xScale).ticks(0);
             // Add the x-axis.
             graph.append('g')
               .attr('class', 'x axis')
@@ -77,7 +77,7 @@ define(['d3js'], function (d3) {
               .call(xAxis);
 
             // create left yAxis
-            var yAxisLeft = d3.svg.axis().scale(yScale).orient('left');
+            var yAxisLeft = d3.svg.axis().scale(yScale).orient('left').ticks(3);
             // Add the y-axis to the left
             graph.append('g')
               .attr('class', 'y axis')
