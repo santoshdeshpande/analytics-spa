@@ -27,6 +27,9 @@ define(['d3js'], function (d3) {
           .append('g')
           .attr('transform', 'translate(' + m[3] + ',' + m[0] + ')');
 
+        var xScale = d3.scale.ordinal().rangeBands([0, w]).rangeBands([0, w]);
+        var yScale = d3.scale.linear().range([h, 0]);
+
         scope.$watch('chart', function (newChart) {
           scope.render(newChart.data);
         }, true);
@@ -38,13 +41,15 @@ define(['d3js'], function (d3) {
           if (renderTimeout) clearTimeout(renderTimeout);
 
           renderTimeout = $timeout(function () {
+            xScale.domain(data.map(function (d) { return d[0] + '' }));
+            yScale.domain([0, d3.max(data, function (d) { return d[1] })]);
 
-            var xScale = d3.scale.ordinal().domain(data.map(function (d) {
-              return d[0] + '';
-            })).rangeBands([0, w]);
-            var yScale = d3.scale.linear().domain([0, d3.max(data, function (d) {
-              return d[1];
-            })]).range([h, 0]);
+            // create left yAxis
+            var yTicks = [0.0, 0.5, 1.0];
+            var yAxisLeft = d3.svg.axis().scale(yScale).orient('left').tickValues(yTicks);
+            svg.append('g')
+              .attr('class', 'y axis')
+              .call(yAxisLeft);
 
             // create a line function that can convert data[] into x and y points
             var line = d3.svg.line()
@@ -56,17 +61,24 @@ define(['d3js'], function (d3) {
                 return yScale(d[1]);
               });
 
-            // create left yAxis
-            var yAxisLeft = d3.svg.axis().scale(yScale).orient('left').ticks(3);
-            svg.append('g')
-              .attr('class', 'y axis')
-              .call(yAxisLeft);
+            // helpline
+            var xValues = data.map(function(d) { return d[0] });
+            angular.forEach(yTicks, function(yValue){
+              svg.append('path')
+                .attr('d', line([
+                  [ xValues[0], yValue ],
+                  [ xValues[xValues.length - 1], yValue ]
+                ]))
+                .attr('class', 'axis helpline');
+            });
 
-            svg.append('path').attr('d', line(data));
-
+            // baseline
             svg.append('path')
               .attr('d', line([[0,0], [1,1]]))
               .attr('class', 'baseline');
+
+            // actual plot
+            svg.append('path').attr('d', line(data));
 
           }, 200); // renderTimeout
         };

@@ -11,6 +11,14 @@
       font-size: 0.7em;
     }
 
+    .axis {
+      shape-rendering: crispEdges;
+
+      &.y path {
+        display: none;
+      }
+    }
+
     &.line-chart, &.roc-chart {
       path {
         stroke: steelblue;
@@ -24,12 +32,10 @@
         fill: none;
       }
 
-      .axis {
-        shape-rendering: crispEdges;
-
-        &.y path {
-          display: none;
-        }
+      path.helpline {
+        stroke: #ddd;
+        stroke-width: 1;
+        fill: none;
       }
     }
 
@@ -42,11 +48,16 @@
         fill: brown;
       }
 
-      .axis path,
-      .axis line {
+      .axis path {
         fill: none;
         stroke: #000;
         shape-rendering: crispEdges;
+      }
+
+      path.helpline {
+        stroke: #ddd;
+        stroke-width: 1;
+        fill: none;
       }
     }
 

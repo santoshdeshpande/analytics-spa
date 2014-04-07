@@ -5896,7 +5896,6 @@ th.hide-for-touch {
       background-color: #6418a2; }
   .augur.container .side-nav-container a {
     color: #000;
-    font-size: 75%;
     text-align: center; }
     .augur.container .side-nav-container a span {
       border-radius: 50%;
@@ -5919,6 +5918,10 @@ th.hide-for-touch {
   width: 260px; }
   .augur-accuracy .chart text {
     font-size: 0.7em; }
+  .augur-accuracy .chart .axis {
+    shape-rendering: crispEdges; }
+    .augur-accuracy .chart .axis.y path {
+      display: none; }
   .augur-accuracy .chart.line-chart path, .augur-accuracy .chart.roc-chart path {
     stroke: steelblue;
     stroke-width: 1;
@@ -5927,18 +5930,22 @@ th.hide-for-touch {
     stroke: red;
     stroke-width: 1;
     fill: none; }
-  .augur-accuracy .chart.line-chart .axis, .augur-accuracy .chart.roc-chart .axis {
-    shape-rendering: crispEdges; }
-    .augur-accuracy .chart.line-chart .axis.y path, .augur-accuracy .chart.roc-chart .axis.y path {
-      display: none; }
+  .augur-accuracy .chart.line-chart path.helpline, .augur-accuracy .chart.roc-chart path.helpline {
+    stroke: #ddd;
+    stroke-width: 1;
+    fill: none; }
   .augur-accuracy .chart.bar-chart .bar {
     fill: steelblue; }
   .augur-accuracy .chart.bar-chart .bar:hover {
     fill: brown; }
-  .augur-accuracy .chart.bar-chart .axis path, .augur-accuracy .chart.bar-chart .axis line {
+  .augur-accuracy .chart.bar-chart .axis path {
     fill: none;
     stroke: #000;
     shape-rendering: crispEdges; }
+  .augur-accuracy .chart.bar-chart path.helpline {
+    stroke: #ddd;
+    stroke-width: 1;
+    fill: none; }
   .augur-accuracy .chart.pie-chart .arc path {
     stroke: #fff; }
 

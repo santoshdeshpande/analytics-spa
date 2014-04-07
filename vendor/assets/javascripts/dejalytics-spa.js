@@ -49407,15 +49407,13 @@ define('directives/d3-bar-chart',['d3js'], function (d3) {
 
         var yAxis = d3.svg.axis()
           .scale(y)
-          .orient('left')
-          .ticks(5);
+          .orient('left');
 
         var svg = d3.select(ele[0]).append('svg')
           .attr('width', width + margin.left + margin.right)
           .attr('height', height + margin.top + margin.bottom)
           .append('g')
           .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
-
 
         scope.$watch('chart', function (newChart) {
           scope.render(newChart.data);
@@ -49431,9 +49429,26 @@ define('directives/d3-bar-chart',['d3js'], function (d3) {
             x.domain(data.map(function (d) { return d[0] }));
             y.domain([0, d3.max(data, function (d) { return d[1] })]);
 
+            var yTicks = [
+              d3.min(y.ticks()),
+              d3.mean(y.ticks()),
+              d3.max(y.ticks())
+            ];
+
+            yAxis.tickValues(yTicks);
             svg.append('g')
                   .attr('class', 'y axis')
                   .call(yAxis);
+
+            // helpline
+            angular.forEach(yTicks, function(yValue){
+              svg.append('path')
+                .attr('d', d3.svg.line()([
+                  [ 0, y(yValue) ],
+                  [ width, y(yValue) ]
+                ]))
+                .attr('class', 'axis helpline');
+            });
 
             svg.selectAll('.bar')
                   .data(data)
@@ -49490,6 +49505,9 @@ define('directives/d3-line-chart',['d3js'], function (d3) {
           .append('g')
           .attr('transform', 'translate(' + m[3] + ',' + m[0] + ')');
 
+        var xScale = d3.scale.linear().range([0, w]);
+        var yScale = d3.scale.linear().range([h, 0]).nice();
+
         scope.$watch('chart', function (newData) {
           scope.render(newData.data, newData.baseline);
         }, true);
@@ -49501,16 +49519,39 @@ define('directives/d3-line-chart',['d3js'], function (d3) {
           if (renderTimeout) clearTimeout(renderTimeout);
 
           renderTimeout = $timeout(function () {
-
-            var xScale = d3.scale.linear().domain([
+            xScale.domain([
               d3.min(data, function(d){ return d[0]; }),
               d3.max(data, function(d){ return d[0]; })
-            ]).range([0, w]);
-
-            var yScale = d3.scale.linear().domain([
+            ]);
+            yScale.domain([
               yScaleMin(d3.min(data, function(d){ return d[1]; }), baseline),
               d3.max(data, function(d){ return d[1]; })
-            ]).range([h, 0]).nice();
+            ]);
+
+            var yTicks = [
+              d3.min(yScale.ticks()),
+              d3.max(yScale.ticks())
+            ];
+
+            if (baseline) {
+              yTicks.push(baseline);
+
+              // only push middle helper line if far enough from baseline - 15%
+              var minDistance = (d3.max(yScale.ticks()) - d3.min(yScale.ticks())) * 0.15;
+              if (Math.abs(baseline - d3.mean(yScale.ticks())) > minDistance) {
+                yTicks.push(d3.mean(yScale.ticks()));
+              }
+            } else {
+              // always push middle helper line if no baseline to overlap
+              yTicks.push(d3.mean(yScale.ticks()));
+            }
+
+            // create left yAxis
+            var yAxisLeft = d3.svg.axis().scale(yScale).orient('left').tickValues(yTicks);
+            // Add the y-axis to the left
+            graph.append('g')
+              .attr('class', 'y axis')
+              .call(yAxisLeft);
 
             // create a line function that can convert data[] into x and y points
             var line = d3.svg.line()
@@ -49521,42 +49562,24 @@ define('directives/d3-line-chart',['d3js'], function (d3) {
                 return yScale(d[1]);
               });
 
-            // create yAxis
-            var xAxis = d3.svg.axis().scale(xScale).ticks(0);
-            // Add the x-axis.
-            graph.append('g')
-              .attr('class', 'x axis')
-              .attr('transform', 'translate(0,' + h + ')')
-              .call(xAxis);
+            // helpline
+            var xValues = data.map(function(d) { return d[0] });
+            angular.forEach(yTicks, function(yValue){
+              var path = graph.append('path')
+                .attr('d', line([
+                  [ xValues[0], yValue ],
+                  [ xValues[xValues.length - 1], yValue ]
+                ]));
 
-            // create left yAxis
-            var yAxisLeft = d3.svg.axis().scale(yScale).orient('left').ticks(3);
+              if (yValue === baseline) {
+                path.attr('class', 'axis baseline');
+              } else {
+                path.attr('class', 'axis helpline');
+              }
+            });
 
-
-            console.log("scale", yScale.domain());
-            window.scale = yScale;
-            window.axis = yAxisLeft;
-
-            // Add the y-axis to the left
-            graph.append('g')
-              .attr('class', 'y axis')
-              .call(yAxisLeft);
-
+            // add actual line at the end in order to overlap all others
             graph.append('path').attr('d', line(data));
-
-            if (baseline) {
-              var baselineFn = d3.svg.line()
-                            .x(function (d) {
-                              return xScale(d[0]);
-                            })
-                            .y(function () {
-                              return yScale(baseline);
-                            });
-
-              graph.append('path')
-                .attr('d', baselineFn(data))
-                .attr('class', 'baseline axis');
-            }
 
           }, 200); // renderTimeout
         };
@@ -49720,6 +49743,9 @@ define('directives/d3-roc-chart',['d3js'], function (d3) {
           .append('g')
           .attr('transform', 'translate(' + m[3] + ',' + m[0] + ')');
 
+        var xScale = d3.scale.ordinal().rangeBands([0, w]).rangeBands([0, w]);
+        var yScale = d3.scale.linear().range([h, 0]);
+
         scope.$watch('chart', function (newChart) {
           scope.render(newChart.data);
         }, true);
@@ -49731,13 +49757,15 @@ define('directives/d3-roc-chart',['d3js'], function (d3) {
           if (renderTimeout) clearTimeout(renderTimeout);
 
           renderTimeout = $timeout(function () {
+            xScale.domain(data.map(function (d) { return d[0] + '' }));
+            yScale.domain([0, d3.max(data, function (d) { return d[1] })]);
 
-            var xScale = d3.scale.ordinal().domain(data.map(function (d) {
-              return d[0] + '';
-            })).rangeBands([0, w]);
-            var yScale = d3.scale.linear().domain([0, d3.max(data, function (d) {
-              return d[1];
-            })]).range([h, 0]);
+            // create left yAxis
+            var yTicks = [0.0, 0.5, 1.0];
+            var yAxisLeft = d3.svg.axis().scale(yScale).orient('left').tickValues(yTicks);
+            svg.append('g')
+              .attr('class', 'y axis')
+              .call(yAxisLeft);
 
             // create a line function that can convert data[] into x and y points
             var line = d3.svg.line()
@@ -49749,17 +49777,24 @@ define('directives/d3-roc-chart',['d3js'], function (d3) {
                 return yScale(d[1]);
               });
 
-            // create left yAxis
-            var yAxisLeft = d3.svg.axis().scale(yScale).orient('left').ticks(3);
-            svg.append('g')
-              .attr('class', 'y axis')
-              .call(yAxisLeft);
+            // helpline
+            var xValues = data.map(function(d) { return d[0] });
+            angular.forEach(yTicks, function(yValue){
+              svg.append('path')
+                .attr('d', line([
+                  [ xValues[0], yValue ],
+                  [ xValues[xValues.length - 1], yValue ]
+                ]))
+                .attr('class', 'axis helpline');
+            });
 
-            svg.append('path').attr('d', line(data));
-
+            // baseline
             svg.append('path')
               .attr('d', line([[0,0], [1,1]]))
               .attr('class', 'baseline');
+
+            // actual plot
+            svg.append('path').attr('d', line(data));
 
           }, 200); // renderTimeout
         };
@@ -55825,7 +55860,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('partials/augur.html',
-    '<div class=\'row augur action-bar\'><div class=\'small-6 columns\'><ul class=\'inline-list\'><li><a ui-sref=\'dashboard\'><span class=\'glyphicon glyphicon-th\'></span> Dashboard</a></li><li><span class=\'glyphicon glyphicon-picture\'></span> {{habitat.name}}</li><li><span class=\'glyphicon glyphicon-eye-open\'></span> {{augur.name}}</li></ul></div><div class=\'small-6 columns\'><ul class=\'inline-list\'><li> <button class=\'button\'> Start prediction</button></li><li> <button class=\'button\'> Download predictions</button></li></ul></div></div><div class=\'row augur container\'><div class=\'small-1 columns side-nav-container\'><ul class=\'side-nav\'><li ui-sref-active=\'active\'><a ui-sref=\'augur.tree\'><span class=\'glyphicon glyphicon-th\'></span><br> Decision tree</a></li><li ui-sref-active=\'active\'><a ui-sref=\'augur.influencers\'><span class=\'glyphicon glyphicon-th\'></span><br> Influencers</a></li><li ui-sref-active=\'active\'><a ui-sref=\'augur.accuracy\'><span class=\'glyphicon glyphicon-th\'></span><br> Accuracy</a></li><li ui-sref-active=\'active\'><a ui-sref=\'augur.performance\'><span class=\'glyphicon glyphicon-th\'></span><br> Perf drift</a></li><li ui-sref-active=\'active\'><a ui-sref=\'augur.settings\'><span class=\'glyphicon glyphicon-th\'></span><br> Settings</a></li></ul></div><div class=\'small-11 columns main\'><div ui-view=\'\'></div></div></div>');
+    '<div class=\'row augur action-bar\'><div class=\'small-6 columns\'><ul class=\'inline-list\'><li><a ui-sref=\'dashboard\'><span class=\'glyphicon glyphicon-th\'></span> Dashboard</a></li><li><span class=\'glyphicon glyphicon-picture\'></span> {{habitat.name}}</li><li><span class=\'glyphicon glyphicon-eye-open\'></span> {{augur.name}}</li></ul></div><div class=\'small-6 columns\'><ul class=\'inline-list\'><li> <button class=\'button\'> Start prediction</button></li><li> <button class=\'button\'> Download predictions</button></li></ul></div></div><div class=\'row augur container\'><div class=\'small-1 columns side-nav-container\'><ul class=\'side-nav\'><li ui-sref-active=\'active\'><a ui-sref=\'augur.tree\'><span class=\'glyphicon glyphicon-th\'></span><br> Decision tree</a></li><li ui-sref-active=\'active\'><a ui-sref=\'augur.influencers\'><span class=\'glyphicon glyphicon-th\'></span><br> Influencers</a></li><li ui-sref-active=\'active\'><a ui-sref=\'augur.accuracy\'><span class=\'glyphicon glyphicon-th\'></span><br> Accuracy</a></li><li ui-sref-active=\'active\'><a ui-sref=\'augur.performance\'><span class=\'glyphicon glyphicon-th\'></span><br> Performance drift</a></li><li ui-sref-active=\'active\'><a ui-sref=\'augur.settings\'><span class=\'glyphicon glyphicon-th\'></span><br> Settings</a></li></ul></div><div class=\'small-11 columns main\'><div ui-view=\'\'></div></div></div>');
 }]);
 })();
 
