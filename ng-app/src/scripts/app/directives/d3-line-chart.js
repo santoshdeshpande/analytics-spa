@@ -7,14 +7,18 @@ define(['d3js'], function (d3) {
 
   return ['$timeout', function ($timeout) {
 
-    function scaleMin(defaultMin, min) {
-      return !!min ? 0.0 + min : defaultMin
+    function yScaleMin(dataMin, baseline) {
+      if (!baseline || dataMin < baseline) {
+        return 0
+      } else {
+        return (Math.round(baseline * 10) - 1) / 10.0
+      }
     }
 
     return {
       restrict: 'E',
       scope: {
-        data: '=',
+        chart: '=',
         label: '@',
         onClick: '&'
       },
@@ -27,17 +31,17 @@ define(['d3js'], function (d3) {
         var h = 160 - m[0] - m[2]; // height
 
         // Add an SVG element with the desired dimensions and margin.
-        var graph = d3.select(ele[0]).append("svg")
-          .attr("width", w + m[1] + m[3])
-          .attr("height", h + m[0] + m[2])
-          .append("g")
-          .attr("transform", "translate(" + m[3] + "," + m[0] + ")");
+        var graph = d3.select(ele[0]).append('svg')
+          .attr('width', w + m[1] + m[3])
+          .attr('height', h + m[0] + m[2])
+          .append('g')
+          .attr('transform', 'translate(' + m[3] + ',' + m[0] + ')');
 
-        scope.$watch('data', function (newData) {
-          scope.render(newData);
+        scope.$watch('chart', function (newData) {
+          scope.render(newData.data, newData.baseline);
         }, true);
 
-        scope.render = function (data) {
+        scope.render = function (data, baseline) {
           graph.selectAll('*').remove();
 
           if (!data) return;
@@ -51,7 +55,7 @@ define(['d3js'], function (d3) {
             ]).range([0, w]);
 
             var yScale = d3.scale.linear().domain([
-              scaleMin(0, attrs.yScaleMin),
+              yScaleMin(d3.min(data, function(d){ return d[1]; }), baseline),
               d3.max(data, function(d){ return d[1]; })
             ]).range([h, 0]).nice();
 
@@ -67,34 +71,32 @@ define(['d3js'], function (d3) {
             // create yAxis
             var xAxis = d3.svg.axis().scale(xScale).ticks(10);
             // Add the x-axis.
-            graph.append("g")
-              .attr("class", "x axis")
-              .attr("transform", "translate(0," + h + ")")
+            graph.append('g')
+              .attr('class', 'x axis')
+              .attr('transform', 'translate(0,' + h + ')')
               .call(xAxis);
 
             // create left yAxis
-            var yAxisLeft = d3.svg.axis().scale(yScale).orient("left");
+            var yAxisLeft = d3.svg.axis().scale(yScale).orient('left');
             // Add the y-axis to the left
-            graph.append("g")
-              .attr("class", "y axis")
+            graph.append('g')
+              .attr('class', 'y axis')
               .call(yAxisLeft);
 
-            graph.append("path").attr("d", line(data));
+            graph.append('path').attr('d', line(data));
 
-            if (!!attrs.referenceLine) {
-              var referenceLineValue = +attrs.referenceLine;
-
-              var referenceLine = d3.svg.line()
+            if (baseline) {
+              var baselineFn = d3.svg.line()
                             .x(function (d) {
                               return xScale(d[0]);
                             })
                             .y(function () {
-                              return yScale(referenceLineValue);
+                              return yScale(baseline);
                             });
 
-              graph.append("path")
-                .attr("d", referenceLine(data))
-                .attr('class', 'reference-line');
+              graph.append('path')
+                .attr('d', baselineFn(data))
+                .attr('class', 'baseline');
             }
 
           }, 200); // renderTimeout

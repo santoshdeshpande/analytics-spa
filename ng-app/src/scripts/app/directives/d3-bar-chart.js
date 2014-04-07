@@ -18,7 +18,7 @@ define(['d3js'], function (d3) {
     return {
       restrict: 'E',
       scope: {
-        data: '=',
+        chart: '=',
         label: '@',
         onClick: '&'
       },
@@ -53,8 +53,8 @@ define(['d3js'], function (d3) {
           .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
 
-        scope.$watch('data', function (newData) {
-          scope.render(newData);
+        scope.$watch('chart', function (newChart) {
+          scope.render(newChart.data);
         }, true);
 
         scope.render = function (data) {

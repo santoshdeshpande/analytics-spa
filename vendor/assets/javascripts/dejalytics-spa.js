@@ -39688,178 +39688,199 @@ define('controllers/augur-accuracy',[], function () {
 
   return  ['$scope', '$stateParams', 'Augur', 'Habitat', function ($scope, $stateParams, Augur, Habitat) {
 
-    function randomData() {
-      var data = [];
-
-      for(var i=0; i < 50; i++) {
-        data.push([Math.random() * 100, Math.random() * 100])
+    $scope.charts = {
+      lift: {
+        baseline: 1.0,
+        data: [
+          [ 5, 1.969155654 ],
+          [ 10, 1.898043767 ],
+          [ 15, 1.844827586 ],
+          [ 20, 1.881246919 ],
+          [ 25, 1.543269231 ],
+          [ 30, 1.596485411 ],
+          [ 35, 1.617520715 ],
+          [ 40, 1.561007958 ],
+          [ 45, 1.543269231 ],
+          [ 50, 0.745026525 ],
+          [ 55, 0.632942889 ],
+          [ 60, 0.319297082 ],
+          [ 65, 0.337035809 ],
+          [ 70, 0.439543673 ],
+          [ 75, 0.478945623 ],
+          [ 80, 0.44346817 ],
+          [ 85, 0.386798432 ],
+          [ 90, 0.212864721 ],
+          [ 95, 0.266080902 ],
+          [ 100, 0.281307951 ]
+        ] },
+      accumulatedLift: {
+        baseline: 1.0,
+        data: [
+          [ 5, 1.654115282 ],
+          [ 10, 1.598938581 ],
+          [ 15, 1.580437194 ],
+          [ 20, 1.594472272 ],
+          [ 25, 1.612877915 ],
+          [ 30, 1.619202635 ],
+          [ 35, 1.601231324 ],
+          [ 40, 1.609659709 ],
+          [ 45, 1.596340965 ],
+          [ 50, 1.574940622 ],
+          [ 55, 1.544779165 ],
+          [ 60, 1.444758152 ],
+          [ 65, 1.369719043 ],
+          [ 70, 1.303264958 ],
+          [ 75, 1.241686883 ],
+          [ 80, 1.179955561 ],
+          [ 85, 1.135401193 ],
+          [ 90, 1.084438352 ],
+          [ 95, 1.038824937 ],
+          [ 100, 1.0 ]
+        ] },
+      response: {
+        baseline: 0.497552292,
+        data: [
+          [ 5, 0.991150442 ],
+          [ 10, 0.955357143 ],
+          [ 15, 0.928571429 ],
+          [ 20, 0.946902655 ],
+          [ 25, 0.776785714 ],
+          [ 30, 0.803571429 ],
+          [ 35, 0.814159292 ],
+          [ 40, 0.785714286 ],
+          [ 45, 0.776785714 ],
+          [ 50, 0.375 ],
+          [ 55, 0.318584071 ],
+          [ 60, 0.160714286 ],
+          [ 65, 0.169642857 ],
+          [ 70, 0.221238938 ],
+          [ 75, 0.241071429 ],
+          [ 80, 0.223214286 ],
+          [ 85, 0.194690265 ],
+          [ 90, 0.107142857 ],
+          [ 95, 0.133928571 ],
+          [ 100, 0.14159292 ]
+        ]
+      },
+      accumulatedResponse: {
+        baseline: 0.497552292,
+        data: [
+          [ 5, 0.991150442 ],
+          [ 10, 0.973333333 ],
+          [ 15, 0.958456973 ],
+          [ 20, 0.955555556 ],
+          [ 25, 0.919928826 ],
+          [ 30, 0.900593472 ],
+          [ 35, 0.888182973 ],
+          [ 40, 0.87541713 ],
+          [ 45, 0.864490603 ],
+          [ 50, 0.815672306 ],
+          [ 55, 0.770226537 ],
+          [ 60, 0.71958457 ],
+          [ 65, 0.67739726 ],
+          [ 70, 0.644628099 ],
+          [ 75, 0.617804154 ],
+          [ 80, 0.593210907 ],
+          [ 85, 0.569633508 ],
+          [ 90, 0.544015826 ],
+          [ 95, 0.522492971 ],
+          [ 100, 0.503337784 ]
+        ],
+        minline: 0.4
+      },
+      capturedResponse: {
+        data: [
+          [ 5, 0.099027409 ],
+          [ 10, 0.094606543 ],
+          [ 15, 0.091954023 ],
+          [ 20, 0.094606543 ],
+          [ 25, 0.076923077 ],
+          [ 30, 0.079575597 ],
+          [ 35, 0.081343943 ],
+          [ 40, 0.07780725 ],
+          [ 45, 0.076923077 ],
+          [ 50, 0.037135279 ],
+          [ 55, 0.031830239 ],
+          [ 60, 0.015915119 ],
+          [ 65, 0.016799293 ],
+          [ 70, 0.022104332 ],
+          [ 75, 0.023872679 ],
+          [ 80, 0.022104332 ],
+          [ 85, 0.019451813 ],
+          [ 90, 0.01061008 ],
+          [ 95, 0.013262599 ],
+          [ 100, 0.014146773 ]
+        ]
+      },
+      accumulatedCapturedResponse: {
+        data: [
+          [ 5, 0.099027409 ],
+          [ 10, 0.193633952 ],
+          [ 15, 0.285587975 ],
+          [ 20, 0.380194518 ],
+          [ 25, 0.457117595 ],
+          [ 30, 0.536693192 ],
+          [ 35, 0.618037135 ],
+          [ 40, 0.695844385 ],
+          [ 45, 0.772767462 ],
+          [ 50, 0.809902741 ],
+          [ 55, 0.84173298 ],
+          [ 60, 0.857648099 ],
+          [ 65, 0.874447392 ],
+          [ 70, 0.896551724 ],
+          [ 75, 0.920424403 ],
+          [ 80, 0.942528736 ],
+          [ 85, 0.961980548 ],
+          [ 90, 0.972590628 ],
+          [ 95, 0.985853227 ],
+          [ 100, 1.0 ]
+        ]
+      },
+      roc: {
+        data: [
+          [0.0, 0.0],
+          [0.01, 0.105943152],
+          [0.00297619, 0.206718346],
+          [0.014880952, 0.299741602],
+          [0.026785714, 0.392764858],
+          [0.044642857, 0.480620155],
+          [0.06547619, 0.565891473],
+          [0.083333333, 0.65374677],
+          [0.116071429, 0.728682171],
+          [0.172619048, 0.782945736],
+          [0.261904762, 0.811369509],
+          [0.345238095, 0.842377261],
+          [0.4375, 0.865633075],
+          [0.523809524, 0.894056848],
+          [0.619047619, 0.914728682],
+          [0.708333333, 0.940568475],
+          [0.806547619, 0.958656331],
+          [0.907738095, 0.974160207],
+          [1.0, 1.0]
+        ]
+      },
+      misclassification: {
+        data: [
+          { bucket: 'True Negatives', count: 990 },
+          { bucket: 'False Positives', count: 126 },
+          { bucket: 'False Negatives', count: 266 },
+          { bucket: 'True Positives', count: 865 }
+        ]
+      },
+      distributionPredictedValues: {
+        data: [
+          [ 0.16828479, 454 ],
+          [ 0.180288462, 599 ],
+          [ 0.345454545, 80 ],
+          [ 0.34939759, 123 ],
+          [ 0.825396825, 485 ],
+          [ 0.857142857, 21 ],
+          [ 0.875, 22 ],
+          [ 0.935810811, 388 ],
+          [ 1.0, 75 ]
+        ]
       }
-
-      return data.sort(function(a, b) { return parseFloat(a[0]) - parseFloat(b[0]) });
     }
-
-    $scope.data = {
-      lift                             : [
-        [ 5, 1.969155654 ],
-        [ 10, 1.898043767 ],
-        [ 15, 1.844827586 ],
-        [ 20, 1.881246919 ],
-        [ 25, 1.543269231 ],
-        [ 30, 1.596485411 ],
-        [ 35, 1.617520715 ],
-        [ 40, 1.561007958 ],
-        [ 45, 1.543269231 ],
-        [ 50, 0.745026525 ],
-        [ 55, 0.632942889 ],
-        [ 60, 0.319297082 ],
-        [ 65, 0.337035809 ],
-        [ 70, 0.439543673 ],
-        [ 75, 0.478945623 ],
-        [ 80, 0.44346817 ],
-        [ 85, 0.386798432 ],
-        [ 90, 0.212864721 ],
-        [ 95, 0.266080902 ],
-        [ 100, 0.281307951 ]
-      ],
-      response                         : [
-        [ 5, 0.991150442 ],
-        [ 10, 0.955357143 ],
-        [ 15, 0.928571429 ],
-        [ 20, 0.946902655 ],
-        [ 25, 0.776785714 ],
-        [ 30, 0.803571429 ],
-        [ 35, 0.814159292 ],
-        [ 40, 0.785714286 ],
-        [ 45, 0.776785714 ],
-        [ 50, 0.375 ],
-        [ 55, 0.318584071 ],
-        [ 60, 0.160714286 ],
-        [ 65, 0.169642857 ],
-        [ 70, 0.221238938 ],
-        [ 75, 0.241071429 ],
-        [ 80, 0.223214286 ],
-        [ 85, 0.194690265 ],
-        [ 90, 0.107142857 ],
-        [ 95, 0.133928571 ],
-        [ 100, 0.14159292 ]
-      ],
-      cumulativeResponse               : [
-        [ 5, 0.991150442 ],
-        [ 10, 0.973333333 ],
-        [ 15, 0.958456973 ],
-        [ 20, 0.955555556 ],
-        [ 25, 0.919928826 ],
-        [ 30, 0.900593472 ],
-        [ 35, 0.888182973 ],
-        [ 40, 0.87541713 ],
-        [ 45, 0.864490603 ],
-        [ 50, 0.815672306 ],
-        [ 55, 0.770226537 ],
-        [ 60, 0.71958457 ],
-        [ 65, 0.67739726 ],
-        [ 70, 0.644628099 ],
-        [ 75, 0.617804154 ],
-        [ 80, 0.593210907 ],
-        [ 85, 0.569633508 ],
-        [ 90, 0.544015826 ],
-        [ 95, 0.522492971 ],
-        [ 100, 0.503337784 ]
-      ],
-      capturedResponse                 : [
-        [ 5, 0.099027409 ],
-        [ 10, 0.094606543 ],
-        [ 15, 0.091954023 ],
-        [ 20, 0.094606543 ],
-        [ 25, 0.076923077 ],
-        [ 30, 0.079575597 ],
-        [ 35, 0.081343943 ],
-        [ 40, 0.07780725 ],
-        [ 45, 0.076923077 ],
-        [ 50, 0.037135279 ],
-        [ 55, 0.031830239 ],
-        [ 60, 0.015915119 ],
-        [ 65, 0.016799293 ],
-        [ 70, 0.022104332 ],
-        [ 75, 0.023872679 ],
-        [ 80, 0.022104332 ],
-        [ 85, 0.019451813 ],
-        [ 90, 0.01061008 ],
-        [ 95, 0.013262599 ],
-        [ 100, 0.014146773 ]
-      ],
-      cumulativeCapturedResponse       : [
-        [ 5, 0.099027409 ],
-        [ 10, 0.193633952 ],
-        [ 15, 0.285587975 ],
-        [ 20, 0.380194518 ],
-        [ 25, 0.457117595 ],
-        [ 30, 0.536693192 ],
-        [ 35, 0.618037135 ],
-        [ 40, 0.695844385 ],
-        [ 45, 0.772767462 ],
-        [ 50, 0.809902741 ],
-        [ 55, 0.84173298 ],
-        [ 60, 0.857648099 ],
-        [ 65, 0.874447392 ],
-        [ 70, 0.896551724 ],
-        [ 75, 0.920424403 ],
-        [ 80, 0.942528736 ],
-        [ 85, 0.961980548 ],
-        [ 90, 0.972590628 ],
-        [ 95, 0.985853227 ],
-        [ 100, 1.0 ]
-      ],
-      rocChart                         : [
-        [0.0, 0.0],
-        [0.01, 0.105943152],
-        [0.00297619, 0.206718346],
-        [0.014880952, 0.299741602],
-        [0.026785714, 0.392764858],
-        [0.044642857, 0.480620155],
-        [0.06547619, 0.565891473],
-        [0.083333333, 0.65374677],
-        [0.116071429, 0.728682171],
-        [0.172619048, 0.782945736],
-        [0.261904762, 0.811369509],
-        [0.345238095, 0.842377261],
-        [0.4375, 0.865633075],
-        [0.523809524, 0.894056848],
-        [0.619047619, 0.914728682],
-        [0.708333333, 0.940568475],
-        [0.806547619, 0.958656331],
-        [0.907738095, 0.974160207],
-        [1.0, 1.0]
-      ],
-      classificationMatrix             : [
-        { bucket: 'True Negatives',  count: 990 },
-        { bucket: 'False Positives', count: 126 },
-        { bucket: 'False Negatives', count: 266 },
-        { bucket: 'True Positives',  count: 865 }
-      ],
-      modelPosteriorProbabilities      : [
-        [ 0.16828479, 454 ],
-        [ 0.180288462, 599 ],
-        [ 0.345454545, 80 ],
-        [ 0.34939759, 123 ],
-        [ 0.825396825, 485 ],
-        [ 0.857142857, 21 ],
-        [ 0.875, 22 ],
-        [ 0.935810811, 388 ],
-        [ 1.0, 75 ]
-      ],
-      bayesCorrectedPriorProbabilities : [
-        [ 0.16828479, 454 ],
-        [ 0.180288462, 599 ],
-        [ 0.345454545, 80 ],
-        [ 0.34939759, 123 ],
-        [ 0.825396825, 485 ],
-        [ 0.857142857, 21 ],
-        [ 0.875, 22 ],
-        [ 0.935810811, 388 ],
-        [ 1.0, 75 ]
-      ]
-    }
-
   }];
 });
 
@@ -49359,7 +49380,7 @@ define('directives/d3-bar-chart',['d3js'], function (d3) {
     return {
       restrict: 'E',
       scope: {
-        data: '=',
+        chart: '=',
         label: '@',
         onClick: '&'
       },
@@ -49394,8 +49415,8 @@ define('directives/d3-bar-chart',['d3js'], function (d3) {
           .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
 
-        scope.$watch('data', function (newData) {
-          scope.render(newData);
+        scope.$watch('chart', function (newChart) {
+          scope.render(newChart.data);
         }, true);
 
         scope.render = function (data) {
@@ -49449,14 +49470,18 @@ define('directives/d3-line-chart',['d3js'], function (d3) {
 
   return ['$timeout', function ($timeout) {
 
-    function scaleMin(defaultMin, min) {
-      return !!min ? 0.0 + min : defaultMin
+    function yScaleMin(dataMin, baseline) {
+      if (!baseline || dataMin < baseline) {
+        return 0
+      } else {
+        return (Math.round(baseline * 10) - 1) / 10.0
+      }
     }
 
     return {
       restrict: 'E',
       scope: {
-        data: '=',
+        chart: '=',
         label: '@',
         onClick: '&'
       },
@@ -49469,17 +49494,17 @@ define('directives/d3-line-chart',['d3js'], function (d3) {
         var h = 160 - m[0] - m[2]; // height
 
         // Add an SVG element with the desired dimensions and margin.
-        var graph = d3.select(ele[0]).append("svg")
-          .attr("width", w + m[1] + m[3])
-          .attr("height", h + m[0] + m[2])
-          .append("g")
-          .attr("transform", "translate(" + m[3] + "," + m[0] + ")");
+        var graph = d3.select(ele[0]).append('svg')
+          .attr('width', w + m[1] + m[3])
+          .attr('height', h + m[0] + m[2])
+          .append('g')
+          .attr('transform', 'translate(' + m[3] + ',' + m[0] + ')');
 
-        scope.$watch('data', function (newData) {
-          scope.render(newData);
+        scope.$watch('chart', function (newData) {
+          scope.render(newData.data, newData.baseline);
         }, true);
 
-        scope.render = function (data) {
+        scope.render = function (data, baseline) {
           graph.selectAll('*').remove();
 
           if (!data) return;
@@ -49493,7 +49518,7 @@ define('directives/d3-line-chart',['d3js'], function (d3) {
             ]).range([0, w]);
 
             var yScale = d3.scale.linear().domain([
-              scaleMin(0, attrs.yScaleMin),
+              yScaleMin(d3.min(data, function(d){ return d[1]; }), baseline),
               d3.max(data, function(d){ return d[1]; })
             ]).range([h, 0]).nice();
 
@@ -49509,34 +49534,32 @@ define('directives/d3-line-chart',['d3js'], function (d3) {
             // create yAxis
             var xAxis = d3.svg.axis().scale(xScale).ticks(10);
             // Add the x-axis.
-            graph.append("g")
-              .attr("class", "x axis")
-              .attr("transform", "translate(0," + h + ")")
+            graph.append('g')
+              .attr('class', 'x axis')
+              .attr('transform', 'translate(0,' + h + ')')
               .call(xAxis);
 
             // create left yAxis
-            var yAxisLeft = d3.svg.axis().scale(yScale).orient("left");
+            var yAxisLeft = d3.svg.axis().scale(yScale).orient('left');
             // Add the y-axis to the left
-            graph.append("g")
-              .attr("class", "y axis")
+            graph.append('g')
+              .attr('class', 'y axis')
               .call(yAxisLeft);
 
-            graph.append("path").attr("d", line(data));
+            graph.append('path').attr('d', line(data));
 
-            if (!!attrs.referenceLine) {
-              var referenceLineValue = +attrs.referenceLine;
-
-              var referenceLine = d3.svg.line()
+            if (baseline) {
+              var baselineFn = d3.svg.line()
                             .x(function (d) {
                               return xScale(d[0]);
                             })
                             .y(function () {
-                              return yScale(referenceLineValue);
+                              return yScale(baseline);
                             });
 
-              graph.append("path")
-                .attr("d", referenceLine(data))
-                .attr('class', 'reference-line');
+              graph.append('path')
+                .attr('d', baselineFn(data))
+                .attr('class', 'baseline');
             }
 
           }, 200); // renderTimeout
@@ -49557,7 +49580,7 @@ define('directives/d3-pie-chart',['d3js'], function (d3) {
     return {
       restrict: 'E',
       scope: {
-        data: '=',
+        chart: '=',
         label: '@',
         onClick: '&'
       },
@@ -49593,8 +49616,8 @@ define('directives/d3-pie-chart',['d3js'], function (d3) {
           .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')');
 
 
-        scope.$watch('data', function (newData) {
-          scope.render(newData);
+        scope.$watch('chart', function (newChart) {
+          scope.render(newChart.data);
         }, true);
 
         scope.render = function (data) {
@@ -49692,26 +49715,26 @@ define('directives/d3-roc-chart',['d3js'], function (d3) {
     return {
       restrict: 'E',
       scope: {
-        data: '=',
+        chart: '=',
         label: '@',
         onClick: '&'
       },
       link: function (scope, ele, attrs) {
         var renderTimeout;
         // define dimensions of graph
-        var m = [10, 20, 30, 35]; // margins
+        var m = [10, 20, 45, 35]; // margins
         var w = 260 - m[1] - m[3]; // width
         var h = 160 - m[0] - m[2]; // height
 
         // Add an SVG element with the desired dimensions and margin.
-        var svg = d3.select(ele[0]).append("svg")
-          .attr("width", w + m[1] + m[3])
-          .attr("height", h + m[0] + m[2])
-          .append("g")
-          .attr("transform", "translate(" + m[3] + "," + m[0] + ")");
+        var svg = d3.select(ele[0]).append('svg')
+          .attr('width', w + m[1] + m[3])
+          .attr('height', h + m[0] + m[2])
+          .append('g')
+          .attr('transform', 'translate(' + m[3] + ',' + m[0] + ')');
 
-        scope.$watch('data', function (newData) {
-          scope.render(newData);
+        scope.$watch('chart', function (newChart) {
+          scope.render(newChart.data);
         }, true);
 
         scope.render = function (data) {
@@ -49744,25 +49767,29 @@ define('directives/d3-roc-chart',['d3js'], function (d3) {
               .tickValues(relaxedTickValues(data.map(function (d) { return d[0] })))
               .tickFormat(d3.format('.3f'));
             // Add the x-axis.
-            svg.append("g")
-              .attr("class", "x axis")
-              .attr("transform", "translate(0," + h + ")")
+            svg.append('g')
+              .attr('class', 'x axis')
+              .attr('transform', 'translate(0,' + h + ')')
               .call(xAxis)
-              .selectAll("text")
-              .style("text-anchor", "end")
-              .attr("dx", "-.8em")
-              .attr("dy", ".15em")
-              .attr("transform", function (d) {
-                return "rotate(-65)"
+              .selectAll('text')
+              .style('text-anchor', 'end')
+              .attr('dx', '-.8em')
+              .attr('dy', '.15em')
+              .attr('transform', function (d) {
+                return 'rotate(-65)'
               });
 
             // create left yAxis
-            var yAxisLeft = d3.svg.axis().scale(yScale).orient("left");
-            svg.append("g")
-              .attr("class", "y axis")
+            var yAxisLeft = d3.svg.axis().scale(yScale).orient('left');
+            svg.append('g')
+              .attr('class', 'y axis')
               .call(yAxisLeft);
 
-            svg.append("path").attr("d", line(data));
+            svg.append('path').attr('d', line(data));
+
+            svg.append('path')
+              .attr('d', line([[0,0], [1,1]]))
+              .attr('class', 'baseline');
 
           }, 200); // renderTimeout
         };
@@ -55744,7 +55771,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('partials/augur-accuracy.html',
-    '<div class=\'row augur-accuracy\'><div class=\'columns small-12\'><ul class=\'small-block-grid-2 medium-block-grid-3\'><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Lift</h6><div class=\'chart line-chart\'><d3-line-chart data=\'data.lift\' reference-line=\'1.0\'></d3-line-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Response</h6><div class=\'chart line-chart\'><d3-line-chart data=\'data.response\' reference-line=\'0.5\'></d3-line-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Cumulative Response</h6><div class=\'chart line-chart\'><d3-line-chart data=\'data.cumulativeResponse\' reference-line=\'0.5\' y-scale-min=\'0.4\'></d3-line-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Captured Response</h6><div class=\'chart line-chart\'><d3-line-chart data=\'data.capturedResponse\'></d3-line-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Cumulative Captured Response</h6><div class=\'chart line-chart\'><d3-line-chart data=\'data.cumulativeCapturedResponse\'></d3-line-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>ROC Chart</h6><div class=\'chart roc-chart\'><d3-roc-chart data=\'data.rocChart\'></d3-roc-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Classification Matrix</h6><div class=\'chart pie-chart\'><d3-pie-chart bucket=\'bucket\' count=\'count\' data=\'data.classificationMatrix\'></d3-pie-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Model - Posterior probabilities</h6><div class=\'chart bar-chart\'><d3-bar-chart data=\'data.modelPosteriorProbabilities\'></d3-bar-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Bayes corrected prior probabilities</h6><div class=\'chart bar-chart\'><d3-bar-chart data=\'data.bayesCorrectedPriorProbabilities\'></d3-bar-chart></div></a></div></li></ul></div></div>');
+    '<div class=\'row augur-accuracy\'><div class=\'columns small-12\'><ul class=\'small-block-grid-2 medium-block-grid-3\'><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Lift</h6><div class=\'chart line-chart\'><d3-line-chart chart=\'charts.lift\'></d3-line-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Accumulated Lift</h6><div class=\'chart line-chart\'><d3-line-chart chart=\'charts.accumulatedLift\'></d3-line-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Response</h6><div class=\'chart line-chart\'><d3-line-chart chart=\'charts.response\'></d3-line-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Accumulated Response</h6><div class=\'chart line-chart\'><d3-line-chart chart=\'charts.accumulatedResponse\' y-scale-min=\'0.4\'></d3-line-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Captured Response</h6><div class=\'chart line-chart\'><d3-line-chart chart=\'charts.capturedResponse\'></d3-line-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Accumulated Captured Response</h6><div class=\'chart line-chart\'><d3-line-chart chart=\'charts.accumulatedCapturedResponse\'></d3-line-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>ROC</h6><div class=\'chart roc-chart\'><d3-roc-chart chart=\'charts.roc\'></d3-roc-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Misclassification</h6><div class=\'chart pie-chart\'><d3-pie-chart bucket=\'bucket\' chart=\'charts.misclassification\' count=\'count\'></d3-pie-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Distribution of Predicted Values</h6><div class=\'chart bar-chart\'><d3-bar-chart chart=\'charts.distributionPredictedValues\'></d3-bar-chart></div></a></div></li></ul></div></div>');
 }]);
 })();
 

@@ -18,26 +18,26 @@ define(['d3js'], function (d3) {
     return {
       restrict: 'E',
       scope: {
-        data: '=',
+        chart: '=',
         label: '@',
         onClick: '&'
       },
       link: function (scope, ele, attrs) {
         var renderTimeout;
         // define dimensions of graph
-        var m = [10, 20, 30, 35]; // margins
+        var m = [10, 20, 45, 35]; // margins
         var w = 260 - m[1] - m[3]; // width
         var h = 160 - m[0] - m[2]; // height
 
         // Add an SVG element with the desired dimensions and margin.
-        var svg = d3.select(ele[0]).append("svg")
-          .attr("width", w + m[1] + m[3])
-          .attr("height", h + m[0] + m[2])
-          .append("g")
-          .attr("transform", "translate(" + m[3] + "," + m[0] + ")");
+        var svg = d3.select(ele[0]).append('svg')
+          .attr('width', w + m[1] + m[3])
+          .attr('height', h + m[0] + m[2])
+          .append('g')
+          .attr('transform', 'translate(' + m[3] + ',' + m[0] + ')');
 
-        scope.$watch('data', function (newData) {
-          scope.render(newData);
+        scope.$watch('chart', function (newChart) {
+          scope.render(newChart.data);
         }, true);
 
         scope.render = function (data) {
@@ -70,25 +70,29 @@ define(['d3js'], function (d3) {
               .tickValues(relaxedTickValues(data.map(function (d) { return d[0] })))
               .tickFormat(d3.format('.3f'));
             // Add the x-axis.
-            svg.append("g")
-              .attr("class", "x axis")
-              .attr("transform", "translate(0," + h + ")")
+            svg.append('g')
+              .attr('class', 'x axis')
+              .attr('transform', 'translate(0,' + h + ')')
               .call(xAxis)
-              .selectAll("text")
-              .style("text-anchor", "end")
-              .attr("dx", "-.8em")
-              .attr("dy", ".15em")
-              .attr("transform", function (d) {
-                return "rotate(-65)"
+              .selectAll('text')
+              .style('text-anchor', 'end')
+              .attr('dx', '-.8em')
+              .attr('dy', '.15em')
+              .attr('transform', function (d) {
+                return 'rotate(-65)'
               });
 
             // create left yAxis
-            var yAxisLeft = d3.svg.axis().scale(yScale).orient("left");
-            svg.append("g")
-              .attr("class", "y axis")
+            var yAxisLeft = d3.svg.axis().scale(yScale).orient('left');
+            svg.append('g')
+              .attr('class', 'y axis')
               .call(yAxisLeft);
 
-            svg.append("path").attr("d", line(data));
+            svg.append('path').attr('d', line(data));
+
+            svg.append('path')
+              .attr('d', line([[0,0], [1,1]]))
+              .attr('class', 'baseline');
 
           }, 200); // renderTimeout
         };

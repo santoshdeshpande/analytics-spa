@@ -6,61 +6,60 @@
           %a{ href: '' }
             %h6.title Lift
             .chart.line-chart
-              %d3-line-chart{ data: 'data.lift', 'reference-line' => 1.0 }
+              %d3-line-chart{ chart: 'charts.lift' }
+
+      %li
+        .th
+          %a{ href: '' }
+            %h6.title Accumulated Lift
+            .chart.line-chart
+              %d3-line-chart{ chart: 'charts.accumulatedLift' }
 
       %li
         .th
           %a{ href: '' }
             %h6.title Response
             .chart.line-chart
-              %d3-line-chart{ data: 'data.response', 'reference-line' => 0.5 }
+              %d3-line-chart{ chart: 'charts.response' }
 
       %li
         .th
           %a{ href: '' }
-            %h6.title Cumulative Response
+            %h6.title Accumulated Response
             .chart.line-chart
-              %d3-line-chart{ data: 'data.cumulativeResponse', 'reference-line' => 0.5, 'y-scale-min' => 0.4  }
+              %d3-line-chart{ chart: 'charts.accumulatedResponse', 'y-scale-min' => 0.4  }
 
       %li
         .th
           %a{ href: '' }
             %h6.title Captured Response
             .chart.line-chart
-              %d3-line-chart{ data: 'data.capturedResponse' }
+              %d3-line-chart{ chart: 'charts.capturedResponse' }
 
       %li
         .th
           %a{ href: '' }
-            %h6.title Cumulative Captured Response
+            %h6.title Accumulated Captured Response
             .chart.line-chart
-              %d3-line-chart{ data: 'data.cumulativeCapturedResponse' }
+              %d3-line-chart{ chart: 'charts.accumulatedCapturedResponse' }
 
       %li
         .th
           %a{ href: '' }
-            %h6.title ROC Chart
+            %h6.title ROC
             .chart.roc-chart
-              %d3-roc-chart{ data: 'data.rocChart' }
+              %d3-roc-chart{ chart: 'charts.roc' }
 
       %li
         .th
           %a{ href: '' }
-            %h6.title Classification Matrix
+            %h6.title Misclassification
             .chart.pie-chart
-              %d3-pie-chart{ data: 'data.classificationMatrix', count: 'count', bucket: 'bucket' }
+              %d3-pie-chart{ chart: 'charts.misclassification', count: 'count', bucket: 'bucket' }
 
       %li
         .th
           %a{ href: '' }
-            %h6.title Model - Posterior probabilities
+            %h6.title Distribution of Predicted Values
             .chart.bar-chart
-              %d3-bar-chart{ data: 'data.modelPosteriorProbabilities' }
-
-      %li
-        .th
-          %a{ href: '' }
-            %h6.title Bayes corrected prior probabilities
-            .chart.bar-chart
-              %d3-bar-chart{ data: 'data.bayesCorrectedPriorProbabilities' }
-
+              %d3-bar-chart{ chart: 'charts.distributionPredictedValues' }
