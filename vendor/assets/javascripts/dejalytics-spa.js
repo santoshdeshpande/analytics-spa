@@ -49405,11 +49405,6 @@ define('directives/d3-bar-chart',['d3js'], function (d3) {
           .linear()
           .range([height, 0]);
 
-        var xAxis = d3.svg.axis()
-          .scale(x)
-          .tickFormat(d3.format('.3f'))
-          .orient('bottom');
-
         var yAxis = d3.svg.axis()
           .scale(y)
           .orient('left')
@@ -49435,13 +49430,6 @@ define('directives/d3-bar-chart',['d3js'], function (d3) {
           renderTimeout = $timeout(function () {
             x.domain(data.map(function (d) { return d[0] }));
             y.domain([0, d3.max(data, function (d) { return d[1] })]);
-
-            svg.append('g')
-                .attr('class', 'x axis')
-                .attr('transform', 'translate(0,' + height + ')')
-              .call(xAxis)
-                .selectAll('.tick')
-                .remove();
 
             svg.append('g')
                   .attr('class', 'y axis')
@@ -49543,6 +49531,12 @@ define('directives/d3-line-chart',['d3js'], function (d3) {
 
             // create left yAxis
             var yAxisLeft = d3.svg.axis().scale(yScale).orient('left').ticks(3);
+
+
+            console.log("scale", yScale.domain());
+            window.scale = yScale;
+            window.axis = yAxisLeft;
+
             // Add the y-axis to the left
             graph.append('g')
               .attr('class', 'y axis')
@@ -49561,7 +49555,7 @@ define('directives/d3-line-chart',['d3js'], function (d3) {
 
               graph.append('path')
                 .attr('d', baselineFn(data))
-                .attr('class', 'baseline');
+                .attr('class', 'baseline axis');
             }
 
           }, 200); // renderTimeout
@@ -49754,16 +49748,6 @@ define('directives/d3-roc-chart',['d3js'], function (d3) {
               .y(function (d) {
                 return yScale(d[1]);
               });
-
-            // create yAxis
-            var xAxis = d3.svg.axis().scale(xScale);
-            // Add the x-axis.
-            svg.append('g')
-              .attr('class', 'x axis')
-              .attr('transform', 'translate(0,' + h + ')')
-              .call(xAxis)
-              .selectAll('.tick')
-              .remove();
 
             // create left yAxis
             var yAxisLeft = d3.svg.axis().scale(yScale).orient('left').ticks(3);
@@ -55841,7 +55825,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('partials/augur.html',
-    '<div class=\'row augur action-bar\'><div class=\'small-6 columns\'><ul class=\'inline-list\'><li><a ui-sref=\'dashboard\'><span class=\'glyphicon glyphicon-th\'></span> Dashboard</a></li><li><span class=\'glyphicon glyphicon-picture\'></span> {{habitat.name}}</li><li><span class=\'glyphicon glyphicon-eye-open\'></span> {{augur.name}}</li></ul></div><div class=\'small-6 columns\'><ul class=\'inline-list\'><li> <button class=\'button\'> Start prediction</button></li><li> <button class=\'button\'> Download predictions</button></li></ul></div></div><div class=\'row augur dotted\'><div class=\'small-12 columns\'><div class=\'row augur container\'><div class=\'small-1 columns side-nav-container\'><ul class=\'side-nav\'><li ui-sref-active=\'active\'><a ui-sref=\'augur.tree\'><span class=\'glyphicon glyphicon-th\'></span><br> Decision tree</a></li><li ui-sref-active=\'active\'><a ui-sref=\'augur.influencers\'><span class=\'glyphicon glyphicon-th\'></span><br> Influencers</a></li><li ui-sref-active=\'active\'><a ui-sref=\'augur.accuracy\'><span class=\'glyphicon glyphicon-th\'></span><br> Accuracy</a></li><li ui-sref-active=\'active\'><a ui-sref=\'augur.performance\'><span class=\'glyphicon glyphicon-th\'></span><br> Perf drift</a></li><li ui-sref-active=\'active\'><a ui-sref=\'augur.settings\'><span class=\'glyphicon glyphicon-th\'></span><br> Settings</a></li></ul></div><div class=\'small-11 columns main\'><div ui-view=\'\'></div></div></div></div></div>');
+    '<div class=\'row augur action-bar\'><div class=\'small-6 columns\'><ul class=\'inline-list\'><li><a ui-sref=\'dashboard\'><span class=\'glyphicon glyphicon-th\'></span> Dashboard</a></li><li><span class=\'glyphicon glyphicon-picture\'></span> {{habitat.name}}</li><li><span class=\'glyphicon glyphicon-eye-open\'></span> {{augur.name}}</li></ul></div><div class=\'small-6 columns\'><ul class=\'inline-list\'><li> <button class=\'button\'> Start prediction</button></li><li> <button class=\'button\'> Download predictions</button></li></ul></div></div><div class=\'row augur container\'><div class=\'small-1 columns side-nav-container\'><ul class=\'side-nav\'><li ui-sref-active=\'active\'><a ui-sref=\'augur.tree\'><span class=\'glyphicon glyphicon-th\'></span><br> Decision tree</a></li><li ui-sref-active=\'active\'><a ui-sref=\'augur.influencers\'><span class=\'glyphicon glyphicon-th\'></span><br> Influencers</a></li><li ui-sref-active=\'active\'><a ui-sref=\'augur.accuracy\'><span class=\'glyphicon glyphicon-th\'></span><br> Accuracy</a></li><li ui-sref-active=\'active\'><a ui-sref=\'augur.performance\'><span class=\'glyphicon glyphicon-th\'></span><br> Perf drift</a></li><li ui-sref-active=\'active\'><a ui-sref=\'augur.settings\'><span class=\'glyphicon glyphicon-th\'></span><br> Settings</a></li></ul></div><div class=\'small-11 columns main\'><div ui-view=\'\'></div></div></div>');
 }]);
 })();
 

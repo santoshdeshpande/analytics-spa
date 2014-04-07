@@ -56,16 +56,6 @@ define(['d3js'], function (d3) {
                 return yScale(d[1]);
               });
 
-            // create yAxis
-            var xAxis = d3.svg.axis().scale(xScale);
-            // Add the x-axis.
-            svg.append('g')
-              .attr('class', 'x axis')
-              .attr('transform', 'translate(0,' + h + ')')
-              .call(xAxis)
-              .selectAll('.tick')
-              .remove();
-
             // create left yAxis
             var yAxisLeft = d3.svg.axis().scale(yScale).orient('left').ticks(3);
             svg.append('g')

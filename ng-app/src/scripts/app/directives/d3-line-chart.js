@@ -78,6 +78,12 @@ define(['d3js'], function (d3) {
 
             // create left yAxis
             var yAxisLeft = d3.svg.axis().scale(yScale).orient('left').ticks(3);
+
+
+            console.log("scale", yScale.domain());
+            window.scale = yScale;
+            window.axis = yAxisLeft;
+
             // Add the y-axis to the left
             graph.append('g')
               .attr('class', 'y axis')
@@ -96,7 +102,7 @@ define(['d3js'], function (d3) {
 
               graph.append('path')
                 .attr('d', baselineFn(data))
-                .attr('class', 'baseline');
+                .attr('class', 'baseline axis');
             }
 
           }, 200); // renderTimeout

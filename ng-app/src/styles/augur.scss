@@ -6,32 +6,43 @@
     background-color: $crumb-bg;
   }
 
-  &.dotted {
-    border: 1px dashed #555555;
-    padding: 1px;
-  }
-
   &.container {
-    background: #202020;
+    padding-top: 1em;
+
+    ul {
+      padding-top: 0;
+    }
 
     .side-nav-container {
-      padding-top: .5em;
-      min-height: 600px;
 
       li.active {
         color: #008CBA;
+
+        a span {
+          background-color: #6418a2;
+        }
       }
 
       a {
-        color: #ddd;
+        color: #000;
         font-size: 75%;
         text-align: center;
+
+        span {
+          border-radius: 50%;
+          width: 50px;
+          height: 50px;
+          background-color: #000;
+          color: #fff;
+          line-height: 50px;
+          text-align: center;
+          font-weight: bold;
+        }
       }
     }
     .main {
-      padding-top: .5em;
-      background: #ffffff;
-      min-height: 600px;
+      min-height: 400px;
+      border-left: 1px solid #6418a2;
     }
   }
 }

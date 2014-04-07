@@ -27,11 +27,6 @@ define(['d3js'], function (d3) {
           .linear()
           .range([height, 0]);
 
-        var xAxis = d3.svg.axis()
-          .scale(x)
-          .tickFormat(d3.format('.3f'))
-          .orient('bottom');
-
         var yAxis = d3.svg.axis()
           .scale(y)
           .orient('left')
@@ -57,13 +52,6 @@ define(['d3js'], function (d3) {
           renderTimeout = $timeout(function () {
             x.domain(data.map(function (d) { return d[0] }));
             y.domain([0, d3.max(data, function (d) { return d[1] })]);
-
-            svg.append('g')
-                .attr('class', 'x axis')
-                .attr('transform', 'translate(0,' + height + ')')
-              .call(xAxis)
-                .selectAll('.tick')
-                .remove();
 
             svg.append('g')
                   .attr('class', 'y axis')
