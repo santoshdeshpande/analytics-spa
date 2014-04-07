@@ -5886,12 +5886,13 @@ th.hide-for-touch {
   margin-bottom: 0.3em;
   color: #333;
   background-color: #f4f4f4; }
-.augur.container {
+.augur.dotted {
   border: 1px dashed #555555;
-  min-height: 600px; }
+  padding: 1px; }
+.augur.container {
+  background: #202020; }
   .augur.container .side-nav-container {
     padding-top: 0.5em;
-    background: #202020;
     min-height: 600px; }
     .augur.container .side-nav-container li.active {
       color: #008CBA; }
@@ -5900,7 +5901,9 @@ th.hide-for-touch {
       font-size: 75%;
       text-align: center; }
   .augur.container .main {
-    padding-top: 0.5em; }
+    padding-top: 0.5em;
+    background: #ffffff;
+    min-height: 600px; }
 
 .augur-accuracy .title {
   padding: 0.3em;

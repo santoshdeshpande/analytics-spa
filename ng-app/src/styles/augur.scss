@@ -6,13 +6,16 @@
     background-color: $crumb-bg;
   }
 
-  &.container {
+  &.dotted {
     border: 1px dashed #555555;
-    min-height: 600px;
+    padding: 1px;
+  }
+
+  &.container {
+    background: #202020;
 
     .side-nav-container {
       padding-top: .5em;
-      background: #202020;
       min-height: 600px;
 
       li.active {
@@ -27,6 +30,8 @@
     }
     .main {
       padding-top: .5em;
+      background: #ffffff;
+      min-height: 600px;
     }
   }
 }
