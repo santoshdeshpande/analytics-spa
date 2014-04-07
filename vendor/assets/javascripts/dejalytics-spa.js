@@ -39891,7 +39891,10 @@ define('controllers/augur-accuracy-detail',[], function () {
   
 
   return  ['$scope', '$stateParams', function ($scope, $stateParams) {
+    console.log("AugurAccuracyDetail", $stateParams.chartType);
+
     $scope.chartType = $stateParams.chartType;
+
   }];
 });
 
