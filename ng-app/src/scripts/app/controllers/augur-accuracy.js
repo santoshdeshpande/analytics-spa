@@ -5,8 +5,7 @@
 define([], function () {
   'use strict';
 
-  return  ['$scope', '$stateParams', 'Augur', 'Habitat', function ($scope, $stateParams, Augur, Habitat) {
-
+  return  ['$scope', '$stateParams', function ($scope, $stateParams) {
     $scope.charts = {
       lift: {
         baseline: 1.0,

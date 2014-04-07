@@ -1,16 +1,16 @@
-.row.augur-accuracy
+.row.augur-accuracy{ ng: { show: '!chartType' } }
   .columns.small-12
     %ul.small-block-grid-2.medium-block-grid-3
       %li
         .th
-          %a{ href: '' }
+          %a{ ui: { sref: 'augur.accuracy-detail({ chartType: "lift" })' } }
             %h6.title Lift
             .chart.line-chart
               %d3-line-chart{ chart: 'charts.lift' }
 
       %li
         .th
-          %a{ href: '' }
+          %a{ ui: { sref: 'dashboard' } }
             %h6.title Accumulated Lift
             .chart.line-chart
               %d3-line-chart{ chart: 'charts.accumulatedLift' }
@@ -27,7 +27,7 @@
           %a{ href: '' }
             %h6.title Accumulated Response
             .chart.line-chart
-              %d3-line-chart{ chart: 'charts.accumulatedResponse', 'y-scale-min' => 0.4  }
+              %d3-line-chart{ chart: 'charts.accumulatedResponse' }
 
       %li
         .th

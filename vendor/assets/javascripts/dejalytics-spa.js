@@ -39686,8 +39686,7 @@ define('controllers/augur',[], function () {
 define('controllers/augur-accuracy',[], function () {
   
 
-  return  ['$scope', '$stateParams', 'Augur', 'Habitat', function ($scope, $stateParams, Augur, Habitat) {
-
+  return  ['$scope', '$stateParams', function ($scope, $stateParams) {
     $scope.charts = {
       lift: {
         baseline: 1.0,
@@ -39888,6 +39887,18 @@ define('controllers/augur-accuracy',[], function () {
  define: false,
  console: false
  */
+define('controllers/augur-accuracy-detail',[], function () {
+  
+
+  return  ['$scope', '$stateParams', function ($scope, $stateParams) {
+    $scope.chartType = $stateParams.chartType;
+  }];
+});
+
+/* global
+ define: false,
+ console: false
+ */
 define('controllers/augur-influencers',[], function () {
   
 
@@ -39993,18 +40004,20 @@ define('controllers',[
   'controllers/augur-new',
   'controllers/augur',
   'controllers/augur-accuracy',
+  'controllers/augur-accuracy-detail',
   'controllers/augur-influencers',
   'controllers/augur-performance',
   'controllers/augur-settings',
   'controllers/augur-tree',
   'controllers/dashboard'
-], function (ng, services, AugurNewCtrl, AugurCtrl, AugurAccuracyCtrl, AugurInfluencersCtrl, AugurPerformanceCtrl, AugurSettingsCtrl, AugurTreeCtrl, DashboardCtrl) {
+], function (ng, services, AugurNewCtrl, AugurCtrl, AugurAccuracyCtrl, AugurAccuracyDetailCtrl, AugurInfluencersCtrl, AugurPerformanceCtrl, AugurSettingsCtrl, AugurTreeCtrl, DashboardCtrl) {
   
 
   return ng.module('MainControllers', [ services.name ])
       .controller('AugurCtrl', AugurCtrl)
       .controller('AugurNewCtrl', AugurNewCtrl)
       .controller('AugurAccuracyCtrl', AugurAccuracyCtrl)
+      .controller('AugurAccuracyDetailCtrl', AugurAccuracyDetailCtrl)
       .controller('AugurInfluencersCtrl', AugurInfluencersCtrl)
       .controller('AugurPerformanceCtrl', AugurPerformanceCtrl)
       .controller('AugurSettingsCtrl', AugurSettingsCtrl)
@@ -55770,8 +55783,20 @@ try {
   module = angular.module('dejalyticsPartials', []);
 }
 module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('partials/augur-accuracy-detail.html',
+    '<div class=\'row augur-accuracy\'><div class=\'columns small-12\'> Detail<p> Chart time from controller: {{ chartType }}</p><p> Baseline for lift chart {{ charts.lift.baseline }}</p></div></div>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('dejalyticsPartials');
+} catch (e) {
+  module = angular.module('dejalyticsPartials', []);
+}
+module.run(['$templateCache', function($templateCache) {
   $templateCache.put('partials/augur-accuracy.html',
-    '<div class=\'row augur-accuracy\'><div class=\'columns small-12\'><ul class=\'small-block-grid-2 medium-block-grid-3\'><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Lift</h6><div class=\'chart line-chart\'><d3-line-chart chart=\'charts.lift\'></d3-line-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Accumulated Lift</h6><div class=\'chart line-chart\'><d3-line-chart chart=\'charts.accumulatedLift\'></d3-line-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Response</h6><div class=\'chart line-chart\'><d3-line-chart chart=\'charts.response\'></d3-line-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Accumulated Response</h6><div class=\'chart line-chart\'><d3-line-chart chart=\'charts.accumulatedResponse\' y-scale-min=\'0.4\'></d3-line-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Captured Response</h6><div class=\'chart line-chart\'><d3-line-chart chart=\'charts.capturedResponse\'></d3-line-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Accumulated Captured Response</h6><div class=\'chart line-chart\'><d3-line-chart chart=\'charts.accumulatedCapturedResponse\'></d3-line-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>ROC</h6><div class=\'chart roc-chart\'><d3-roc-chart chart=\'charts.roc\'></d3-roc-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Misclassification</h6><div class=\'chart pie-chart\'><d3-pie-chart bucket=\'bucket\' chart=\'charts.misclassification\' count=\'count\'></d3-pie-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Distribution of Predicted Values</h6><div class=\'chart bar-chart\'><d3-bar-chart chart=\'charts.distributionPredictedValues\'></d3-bar-chart></div></a></div></li></ul></div></div>');
+    '<div class=\'row augur-accuracy\' ng-show=\'!chartType\'><div class=\'columns small-12\'><ul class=\'small-block-grid-2 medium-block-grid-3\'><li><div class=\'th\'><a ui-sref=\'augur.accuracy-detail({ chartType: "lift" })\'><h6 class=\'title\'>Lift</h6><div class=\'chart line-chart\'><d3-line-chart chart=\'charts.lift\'></d3-line-chart></div></a></div></li><li><div class=\'th\'><a ui-sref=\'dashboard\'><h6 class=\'title\'>Accumulated Lift</h6><div class=\'chart line-chart\'><d3-line-chart chart=\'charts.accumulatedLift\'></d3-line-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Response</h6><div class=\'chart line-chart\'><d3-line-chart chart=\'charts.response\'></d3-line-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Accumulated Response</h6><div class=\'chart line-chart\'><d3-line-chart chart=\'charts.accumulatedResponse\'></d3-line-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Captured Response</h6><div class=\'chart line-chart\'><d3-line-chart chart=\'charts.capturedResponse\'></d3-line-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Accumulated Captured Response</h6><div class=\'chart line-chart\'><d3-line-chart chart=\'charts.accumulatedCapturedResponse\'></d3-line-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>ROC</h6><div class=\'chart roc-chart\'><d3-roc-chart chart=\'charts.roc\'></d3-roc-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Misclassification</h6><div class=\'chart pie-chart\'><d3-pie-chart bucket=\'bucket\' chart=\'charts.misclassification\' count=\'count\'></d3-pie-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Distribution of Predicted Values</h6><div class=\'chart bar-chart\'><d3-bar-chart chart=\'charts.distributionPredictedValues\'></d3-bar-chart></div></a></div></li></ul></div></div>');
 }]);
 })();
 
@@ -55915,6 +55940,11 @@ define('app',[
           url: '/accuracy',
           templateUrl: 'partials/augur-accuracy.html',
           controller: 'AugurAccuracyCtrl'
+        }).
+        state('augur.accuracy-detail', {
+          url: '/detail/:chartType',
+          templateUrl: 'partials/augur-accuracy-detail.html',
+          controller: 'AugurAccuracyDetailCtrl'
         }).
         state('augur.performance', {
           url: '/performance',

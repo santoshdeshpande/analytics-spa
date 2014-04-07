@@ -53,6 +53,11 @@ define([
           templateUrl: 'partials/augur-accuracy.html',
           controller: 'AugurAccuracyCtrl'
         }).
+        state('augur.accuracy-detail', {
+          url: '/detail/:chartType',
+          templateUrl: 'partials/augur-accuracy-detail.html',
+          controller: 'AugurAccuracyDetailCtrl'
+        }).
         state('augur.performance', {
           url: '/performance',
           templateUrl: 'partials/augur-performance.html',
