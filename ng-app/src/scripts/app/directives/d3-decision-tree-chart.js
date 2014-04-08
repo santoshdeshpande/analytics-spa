@@ -5,20 +5,60 @@
 define(['d3js'], function (d3) {
   'use strict';
 
+  function parentNodes(node, arr) {
+    arr ? arr.push(node) : arr = [node];
+
+    if (node.parent) {
+      parentNodes(node.parent, arr)
+    }
+
+    return arr
+  }
+
+  function buildPath(nodes) {
+    var pathElements = [];
+    var newPathElement = {};
+    var newOperation = {};
+    var predicate, confidence = null;
+
+    nodes.map(function (node) {
+      if (node.children) {
+        predicate = node.children[0].simplePredicate || node.children[0].simpleSetPredicate;
+        newPathElement = { type: 'node', label: predicate.field };
+      } else {
+        confidence = node.scoreDistribution && +node.scoreDistribution[1].confidence;
+        newPathElement = { type: 'leaf ' + ((confidence > 0.5) ? 'happy' : 'sad'), label: node.score };
+      }
+
+      if (node.simplePredicate) {
+        newOperation = { type: 'operation', label: ((node.simplePredicate.operator == 'lessThan') ? '<' : '>=') + node.simplePredicate.value }
+      }
+
+      if (node.simpleSetPredicate) {
+        newOperation = { type: 'operation', label: node.simpleSetPredicate.booleanOperator + '(' + node.simpleSetPredicate.array + ')' }
+      }
+
+      pathElements.push(newPathElement);
+      pathElements.push(newOperation);
+    });
+    pathElements.pop();
+
+    return pathElements.reverse();
+  }
+
   return ['$timeout', function ($timeout) {
     return {
       restrict: 'E',
       scope: {
         data: '=',
-        label: '@',
-        onClick: '&'
+        treePathElements: '='
       },
       link: function (scope, ele, attrs) {
         var renderTimeout;
 
         // define dimensions of graph
         var margin = {top: 20, right: 20, bottom: 20, left: 20},
-          width = 900 - margin.left - margin.right,
+          width = 700 - margin.left - margin.right,
           height = 700 - margin.top - margin.bottom;
 
         var tree = d3.layout.tree().size([width, height]);
@@ -43,10 +83,8 @@ define(['d3js'], function (d3) {
               var nodes = tree.nodes(root),
                   links = tree.links(nodes);
 
-              window.d3 = d3;
-
               // Create the link lines.
-              svg.selectAll(".link")
+              var paths = svg.selectAll(".link")
                 .data(links)
                 .enter().append("path")
                 .attr("class", "link")
@@ -60,21 +98,42 @@ define(['d3js'], function (d3) {
                 .enter().append("circle")
                 .attr("class", function(d) {
                   if (d.children && d.children.length > 0) {
-                    console.log("has children", d);
-                    return 'node';
+                    return 'node'
                   } else {
                     var confidence = d.scoreDistribution && +d.scoreDistribution[1].confidence;
-                    console.log("has no children", d, confidence);
-
-                    if (confidence >  0.5)
-                      return 'leaf happy';
-                    else
-                      return 'leaf sad';
+                    return (confidence >  0.5) ? 'leaf happy' : 'leaf sad'
                   }
                 })
                 .attr("r", 12)
-                .attr("cx", function(d) { return d.x })
-                .attr("cy", function(d) { return d.y });
+                .attr("cx", function (d) { return d.x })
+                .attr("cy", function (d) { return d.y })
+                .on('mouseover', function (d) {
+                  var pNodes = parentNodes(d);
+
+                  scope.$apply(function(){
+                    scope.treePathElements = buildPath(pNodes);
+                  });
+
+                  nodes.map(function(node) {
+                    node.highlight = false;
+                  });
+
+                  pNodes.map(function(node) {
+                    node.highlight = true;
+                  });
+
+                  paths.attr('class', function(d) {
+                    if (d.target.highlight && d.source.highlight) {
+                      return 'link fat';
+                    } else {
+                      return 'link';
+                    }
+                  });
+
+
+//                  d3.select(this)
+//                    .style({opacity:'0.1'});
+                });
 
           }, 200); // renderTimeout
         };

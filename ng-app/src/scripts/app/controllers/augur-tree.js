@@ -7,6 +7,8 @@ define([], function () {
 
   return  ['$scope', '$stateParams', function ($scope, $stateParams) {
 
+    $scope.treePathElements = ['smile'];
+
     $scope.data = {
       "root": {
         "id": "1",
@@ -285,10 +287,10 @@ define([], function () {
                             "id": "34",
                             "score": "0",
                             "recordCount": "106",
-                            "SimpleSetPredicate": {
+                            "simpleSetPredicate": {
                               "field": "job",
                               "booleanOperator": "isIn",
-                              "Array": "\"Office\""
+                              "array": "\"Office\""
                             },
                             "scoreDistribution": [
                               {
@@ -307,10 +309,10 @@ define([], function () {
                             "id": "35",
                             "score": "1",
                             "recordCount": "414",
-                            "SimpleSetPredicate": {
+                            "simpleSetPredicate": {
                               "field": "job",
                               "booleanOperator": "isIn",
-                              "Array": "\"Mgr\" \"Other\" \"ProfExe\" \"Sales\" \"Self\""
+                              "array": "\"Mgr\" \"Other\" \"ProfExe\" \"Sales\" \"Self\""
                             },
                             "scoreDistribution": [
                               {

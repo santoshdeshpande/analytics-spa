@@ -5951,13 +5951,33 @@ th.hide-for-touch {
 
 
 
+.augur-decision-tree .element-path {
+  text-align: center; }
+  .augur-decision-tree .element-path span {
+    display: block;
+    padding: 0.3em 0.5em;
+    font-size: 0.8em; }
+  .augur-decision-tree .element-path .node {
+    background-color: #1f18ff;
+    color: #fff; }
+  .augur-decision-tree .element-path .leaf.happy {
+    color: #fff;
+    background-color: #1c9f3f; }
+  .augur-decision-tree .element-path .leaf.sad {
+    color: #fff;
+    background-color: #ff7500; }
 .augur-decision-tree .link {
   fill: none;
   stroke: #000; }
+  .augur-decision-tree .link.fat {
+    stroke: #ee000d;
+    stroke-width: 3px; }
 .augur-decision-tree .border {
   fill: none;
   shape-rendering: crispEdges;
   stroke: #aaa; }
+.augur-decision-tree text {
+  font: 10px sans-serif; }
 .augur-decision-tree .node {
   stroke: none;
   fill: #1f18ff; }
