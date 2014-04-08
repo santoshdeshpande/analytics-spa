@@ -40034,7 +40034,163 @@ define('controllers/augur-tree',[], function () {
                         "score": "0",
                         "recordCount": "1142",
                         "defaultChild": "32",
-                        "text": "..."
+                        "simplePredicate": {
+                          "field": "yoj",
+                          "operator": "greaterOrEqual",
+                          "value": "4.8"
+                        },
+                        "scoreDistribution": [
+                          {
+                            "value": "0",
+                            "recordCount": "725",
+                            "confidence": "0.634851138353765"
+                          },
+                          {
+                            "value": "1",
+                            "recordCount": "417",
+                            "confidence": "0.365148861646235"
+                          }
+                        ],
+                        "children": [
+                          {
+                            "id": "32",
+                            "score": "0",
+                            "recordCount": "1130",
+                            "defaultChild": "64",
+                            "simplePredicate": {
+                              "field": "clno",
+                              "operator": "lessThan",
+                              "value": "56.5"
+                            },
+                            "scoreDistribution": [
+                              {
+                                "value": "0",
+                                "recordCount": "725",
+                                "confidence": "0.641592920353982"
+                              },
+                              {
+                                "value": "1",
+                                "recordCount": "405",
+                                "confidence": "0.358407079646018"
+                              }
+                            ],
+                            "children": [
+                              {
+                                "id": "64",
+                                "score": "0",
+                                "recordCount": "687",
+                                "simplePredicate": {
+                                  "field": "loan",
+                                  "operator": "greaterOrEqual",
+                                  "value": "15050"
+                                },
+                                "scoreDistribution": [
+                                  {
+                                    "value": "0",
+                                    "recordCount": "477",
+                                    "confidence": "0.694323144104803"
+                                  },
+                                  {
+                                    "value": "1",
+                                    "recordCount": "210",
+                                    "confidence": "0.305676855895196"
+                                  }
+                                ]
+                              },
+                              {
+                                "id": "65",
+                                "score": "0",
+                                "recordCount": "443",
+                                "defaultChild": "130",
+                                "simplePredicate": {
+                                  "field": "loan",
+                                  "operator": "lessThan",
+                                  "value": "15050"
+                                },
+                                "scoreDistribution": [
+                                  {
+                                    "value": "0",
+                                    "recordCount": "248",
+                                    "confidence": "0.559819413092551"
+                                  },
+                                  {
+                                    "value": "1",
+                                    "recordCount": "195",
+                                    "confidence": "0.440180586907449"
+                                  }
+                                ],
+                                "children": [
+                                  {
+                                    "id": "130",
+                                    "score": "0",
+                                    "recordCount": "409",
+                                    "simplePredicate": {
+                                      "field": "loan",
+                                      "operator": "lessThan",
+                                      "value": "14950"
+                                    },
+                                    "scoreDistribution": [
+                                      {
+                                        "value": "0",
+                                        "recordCount": "245",
+                                        "confidence": "0.599022004889976"
+                                      },
+                                      {
+                                        "value": "1",
+                                        "recordCount": "164",
+                                        "confidence": "0.400977995110024"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "id": "131",
+                                    "score": "1",
+                                    "recordCount": "34",
+                                    "simplePredicate": {
+                                      "field": "loan",
+                                      "operator": "greaterOrEqual",
+                                      "value": "14950"
+                                    },
+                                    "scoreDistribution": [
+                                      {
+                                        "value": "0",
+                                        "recordCount": "3",
+                                        "confidence": "0.0882352941176471"
+                                      },
+                                      {
+                                        "value": "1",
+                                        "recordCount": "31",
+                                        "confidence": "0.911764705882353"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "id": "33",
+                            "score": "1",
+                            "recordCount": "12",
+                            "simplePredicate": {
+                              "field": "clno",
+                              "operator": "greaterOrEqual",
+                              "value": "56.5"
+                            },
+                            "scoreDistribution": [
+                              {
+                                "value": "0",
+                                "recordCount": "0",
+                                "confidence": "0"
+                              },
+                              {
+                                "value": "1",
+                                "recordCount": "12",
+                                "confidence": "1"
+                              }
+                            ]
+                          }
+                        ]
                       },
                       {
                         "id": "17",
@@ -40066,10 +40222,7 @@ define('controllers/augur-tree',[], function () {
                             "SimpleSetPredicate": {
                               "field": "job",
                               "booleanOperator": "isIn",
-                              "Array": {
-                                "n": "1",
-                                "text": "\"Office\""
-                              }
+                              "Array": "\"Office\""
                             },
                             "scoreDistribution": [
                               {
@@ -40091,7 +40244,7 @@ define('controllers/augur-tree',[], function () {
                             "SimpleSetPredicate": {
                               "field": "job",
                               "booleanOperator": "isIn",
-                              "text": "..."
+                              "Array": "\"Mgr\" \"Other\" \"ProfExe\" \"Sales\" \"Self\""
                             },
                             "scoreDistribution": [
                               {
@@ -40114,7 +40267,23 @@ define('controllers/augur-tree',[], function () {
                     "id": "9",
                     "score": "1",
                     "recordCount": "37",
-                    "text": "..."
+                    "simplePredicate": {
+                      "field": "clno",
+                      "operator": "lessThan",
+                      "value": "2.5"
+                    },
+                    "scoreDistribution": [
+                      {
+                        "value": "0",
+                        "recordCount": "1",
+                        "confidence": "0.027027027027027"
+                      },
+                      {
+                        "value": "1",
+                        "recordCount": "36",
+                        "confidence": "0.972972972972973"
+                      }
+                    ]
                   }
                 ]
               },
@@ -40122,7 +40291,23 @@ define('controllers/augur-tree',[], function () {
                 "id": "5",
                 "score": "1",
                 "recordCount": "366",
-                "text": "..."
+                "simplePredicate": {
+                  "field": "inquiries",
+                  "operator": "greaterOrEqual",
+                  "value": "2.5"
+                },
+                "scoreDistribution": [
+                  {
+                    "value": "0",
+                    "recordCount": "120",
+                    "confidence": "0.327868852459016"
+                  },
+                  {
+                    "value": "1",
+                    "recordCount": "246",
+                    "confidence": "0.672131147540984"
+                  }
+                ]
               }
             ]
           },
@@ -40130,72 +40315,27 @@ define('controllers/augur-tree',[], function () {
             "id": "3",
             "score": "1",
             "recordCount": "313",
-            "text": "..."
+            "simplePredicate": {
+              "field": "loan",
+              "operator": "lessThan",
+              "value": "7550"
+            },
+            "scoreDistribution": [
+              {
+                "value": "0",
+                "recordCount": "84",
+                "confidence": "0.268370607028754"
+              },
+              {
+                "value": "1",
+                "recordCount": "229",
+                "confidence": "0.731629392971246"
+              }
+            ]
           }
         ]
       }
     };
-
-
-    $scope.data_other = {
-      "root": {
-        "name": "loan",
-        "info": "hello1",
-        "recordCount": "2378",
-        "scoreDistribution": [
-          {
-            "recordCount": 1189,
-            "confidence": 0.5
-          },
-          {
-            "recordCount": 1189,
-            "confidence": 0.5
-          }
-        ]
-      },
-      "children": [
-
-        {
-          "name": "child a",
-          "info": "hello2",
-          "confidence": 0.5,
-          "children": [
-            {
-              "name": "child aa",
-              "confidence": 0.535108958837772,
-              "info": "hello3",
-              "children": {}
-            },
-            {
-              "name": "child ab",
-              "info": "hello4",
-              "confidence": 0.535108958837772,
-              "children": {}
-            }
-          ]
-        },
-        {
-          "name": "child b",
-          "info": "hello5",
-          "confidence": 0.5,
-          "children": [
-            {
-              "name": "child ba",
-              "info": "hello6",
-              "confidence": 0.535108958837772,
-              "children": {}
-            },
-            {
-              "name": "child bb",
-              "info": "hello7",
-              "confidence": 0.535108958837772,
-              "children": {}
-            }
-          ]
-        }
-
-      ]
-    }; // data
 
   }];
 });
