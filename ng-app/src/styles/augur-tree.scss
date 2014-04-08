@@ -1,3 +1,28 @@
-.augur-detail {
+.augur-decision-tree {
+  .link {
+    fill: none;
+    stroke: #000;
+  }
 
+  .border {
+    fill: none;
+    shape-rendering: crispEdges;
+    stroke: #aaa;
+  }
+
+  .node {
+    stroke: none;
+    fill: #1f18ff;
+  }
+
+  .leaf {
+    stroke: none;
+
+    &.happy {
+      fill: #1c9f3f;
+    }
+    &.sad {
+      fill: #ff7500;
+    }
+  }
 }

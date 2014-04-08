@@ -5951,4 +5951,20 @@ th.hide-for-touch {
 
 
 
+.augur-decision-tree .link {
+  fill: none;
+  stroke: #000; }
+.augur-decision-tree .border {
+  fill: none;
+  shape-rendering: crispEdges;
+  stroke: #aaa; }
+.augur-decision-tree .node {
+  stroke: none;
+  fill: #1f18ff; }
+.augur-decision-tree .leaf {
+  stroke: none; }
+  .augur-decision-tree .leaf.happy {
+    fill: #1c9f3f; }
+  .augur-decision-tree .leaf.sad {
+    fill: #ff7500; }
 

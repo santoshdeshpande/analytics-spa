@@ -39939,9 +39939,264 @@ define('controllers/augur-settings',[], function () {
 define('controllers/augur-tree',[], function () {
   
 
-  return  ['$scope', '$stateParams', 'Augur', 'Habitat', function ($scope, $stateParams, Augur, Habitat) {
-    $scope.augur = Augur.get({ habitatId: $stateParams.habitatId, augurId: $stateParams.augurId });
-    $scope.habitat = Habitat.get({ habitatId: $stateParams.habitatId });
+  return  ['$scope', '$stateParams', function ($scope, $stateParams) {
+
+    $scope.data = {
+      "root": {
+        "id": "1",
+        "score": "0",
+        "recordCount": "2378",
+        "defaultChild": "2",
+        "scoreDistribution": [
+          {
+            "value": "0",
+            "recordCount": "1189",
+            "confidence": "0.5"
+          },
+          {
+            "value": "1",
+            "recordCount": "1189",
+            "confidence": "0.5"
+          }
+        ],
+        "children": [
+          {
+            "id": "2",
+            "score": "0",
+            "recordCount": "2065",
+            "defaultChild": "4",
+            "simplePredicate": {
+              "field": "loan",
+              "operator": "greaterOrEqual",
+              "value": "7550"
+            },
+            "scoreDistribution": [
+              {
+                "value": "0",
+                "recordCount": "1105",
+                "confidence": "0.535108958837772"
+              },
+              {
+                "value": "1",
+                "recordCount": "960",
+                "confidence": "0.464891041162228"
+              }
+            ],
+            "children": [
+              {
+                "id": "4",
+                "score": "0",
+                "recordCount": "1699",
+                "defaultChild": "8",
+                "simplePredicate": {
+                  "field": "inquiries",
+                  "operator": "lessThan",
+                  "value": "2.5"
+                },
+                "scoreDistribution": [
+                  {
+                    "value": "0",
+                    "recordCount": "985",
+                    "confidence": "0.579752795762213"
+                  },
+                  {
+                    "value": "1",
+                    "recordCount": "714",
+                    "confidence": "0.420247204237787"
+                  }
+                ],
+                "children": [
+                  {
+                    "id": "8",
+                    "score": "0",
+                    "recordCount": "1662",
+                    "defaultChild": "16",
+                    "simplePredicate": {
+                      "field": "clno",
+                      "operator": "greaterOrEqual",
+                      "value": "2.5"
+                    },
+                    "scoreDistribution": [
+                      {
+                        "value": "0",
+                        "recordCount": "984",
+                        "confidence": "0.592057761732852"
+                      },
+                      {
+                        "value": "1",
+                        "recordCount": "678",
+                        "confidence": "0.407942238267148"
+                      }
+                    ],
+                    "children": [
+                      {
+                        "id": "16",
+                        "score": "0",
+                        "recordCount": "1142",
+                        "defaultChild": "32",
+                        "text": "..."
+                      },
+                      {
+                        "id": "17",
+                        "score": "1",
+                        "recordCount": "520",
+                        "defaultChild": "34",
+                        "simplePredicate": {
+                          "field": "yoj",
+                          "operator": "lessThan",
+                          "value": "4.8"
+                        },
+                        "scoreDistribution": [
+                          {
+                            "value": "0",
+                            "recordCount": "259",
+                            "confidence": "0.498076923076923"
+                          },
+                          {
+                            "value": "1",
+                            "recordCount": "261",
+                            "confidence": "0.501923076923077"
+                          }
+                        ],
+                        "children": [
+                          {
+                            "id": "34",
+                            "score": "0",
+                            "recordCount": "106",
+                            "SimpleSetPredicate": {
+                              "field": "job",
+                              "booleanOperator": "isIn",
+                              "Array": {
+                                "n": "1",
+                                "text": "\"Office\""
+                              }
+                            },
+                            "scoreDistribution": [
+                              {
+                                "value": "0",
+                                "recordCount": "69",
+                                "confidence": "0.650943396226415"
+                              },
+                              {
+                                "value": "1",
+                                "recordCount": "37",
+                                "confidence": "0.349056603773585"
+                              }
+                            ]
+                          },
+                          {
+                            "id": "35",
+                            "score": "1",
+                            "recordCount": "414",
+                            "SimpleSetPredicate": {
+                              "field": "job",
+                              "booleanOperator": "isIn",
+                              "text": "..."
+                            },
+                            "scoreDistribution": [
+                              {
+                                "value": "0",
+                                "recordCount": "190",
+                                "confidence": "0.458937198067633"
+                              },
+                              {
+                                "value": "1",
+                                "recordCount": "224",
+                                "confidence": "0.541062801932367"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "id": "9",
+                    "score": "1",
+                    "recordCount": "37",
+                    "text": "..."
+                  }
+                ]
+              },
+              {
+                "id": "5",
+                "score": "1",
+                "recordCount": "366",
+                "text": "..."
+              }
+            ]
+          },
+          {
+            "id": "3",
+            "score": "1",
+            "recordCount": "313",
+            "text": "..."
+          }
+        ]
+      }
+    };
+
+
+    $scope.data_other = {
+      "root": {
+        "name": "loan",
+        "info": "hello1",
+        "recordCount": "2378",
+        "scoreDistribution": [
+          {
+            "recordCount": 1189,
+            "confidence": 0.5
+          },
+          {
+            "recordCount": 1189,
+            "confidence": 0.5
+          }
+        ]
+      },
+      "children": [
+
+        {
+          "name": "child a",
+          "info": "hello2",
+          "confidence": 0.5,
+          "children": [
+            {
+              "name": "child aa",
+              "confidence": 0.535108958837772,
+              "info": "hello3",
+              "children": {}
+            },
+            {
+              "name": "child ab",
+              "info": "hello4",
+              "confidence": 0.535108958837772,
+              "children": {}
+            }
+          ]
+        },
+        {
+          "name": "child b",
+          "info": "hello5",
+          "confidence": 0.5,
+          "children": [
+            {
+              "name": "child ba",
+              "info": "hello6",
+              "confidence": 0.535108958837772,
+              "children": {}
+            },
+            {
+              "name": "child bb",
+              "info": "hello7",
+              "confidence": 0.535108958837772,
+              "children": {}
+            }
+          ]
+        }
+
+      ]
+    }; // data
+
   }];
 });
 
@@ -49470,6 +49725,91 @@ define('directives/d3-bar-chart',['d3js'], function (d3) {
  define: false,
  console: false
  */
+define('directives/d3-decision-tree-chart',['d3js'], function (d3) {
+  
+
+  return ['$timeout', function ($timeout) {
+    return {
+      restrict: 'E',
+      scope: {
+        data: '=',
+        label: '@',
+        onClick: '&'
+      },
+      link: function (scope, ele, attrs) {
+        var renderTimeout;
+
+        // define dimensions of graph
+        var margin = {top: 20, right: 20, bottom: 20, left: 20},
+          width = 900 - margin.left - margin.right,
+          height = 700 - margin.top - margin.bottom;
+
+        var tree = d3.layout.tree().size([width, height]);
+
+        var svg = d3.select(ele[0]).append('svg')
+          .attr("width", width + margin.left + margin.right)
+          .attr("height", height + margin.top + margin.bottom)
+          .append("g")
+          .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+        scope.$watch('data', function (newData) {
+          scope.render(angular.copy(newData.root));
+        }, true);
+
+        scope.render = function (root) {
+
+          if (!root) return;
+          if (renderTimeout) clearTimeout(renderTimeout);
+
+          renderTimeout = $timeout(function () {
+
+              var nodes = tree.nodes(root),
+                  links = tree.links(nodes);
+
+              window.d3 = d3;
+
+              // Create the link lines.
+              svg.selectAll(".link")
+                .data(links)
+                .enter().append("path")
+                .attr("class", "link")
+                .attr("d", d3.svg.diagonal().projection(function (d) {
+                  return [d.x, d.y];
+                }));
+
+              // Create the node circles.
+              svg.selectAll(".node")
+                .data(nodes)
+                .enter().append("circle")
+                .attr("class", function(d) {
+                  if (d.children && d.children.length > 0) {
+                    console.log("has children", d);
+                    return 'node';
+                  } else {
+                    var confidence = d.scoreDistribution && +d.scoreDistribution[1].confidence;
+                    console.log("has no children", d, confidence);
+
+                    if (confidence >  0.5)
+                      return 'leaf happy';
+                    else
+                      return 'leaf sad';
+                  }
+                })
+                .attr("r", 12)
+                .attr("cx", function(d) { return d.x })
+                .attr("cy", function(d) { return d.y });
+
+          }, 200); // renderTimeout
+        };
+      }
+    };
+  }]
+});
+
+/* global
+ define: false,
+ console: false
+ */
 define('directives/d3-line-chart',['d3js'], function (d3) {
   
 
@@ -52496,18 +52836,20 @@ define('directives',[
   'angular',
   'directives/available-prediction-target',
   'directives/d3-bar-chart',
+  'directives/d3-decision-tree-chart',
   'directives/d3-line-chart',
   'directives/d3-pie-chart',
   'directives/d3-roc-chart',
   'directives/unique-augur-name',
   'directives/threshold-in-range',
   'mm-foundation-tpls'
-], function ( ng, AvailablePredictionTarget, D3BarChart, D3LineChart, D3PieChart, D3RocChart, UniqueAugurName, ThresholdInRange) {
+], function ( ng, AvailablePredictionTarget, D3BarChart, D3DecisionTreeChart, D3LineChart, D3PieChart, D3RocChart, UniqueAugurName, ThresholdInRange) {
   
 
   return ng.module('dejalyticsDirectives', ['mm.foundation'])
     .directive('availablePredictionTarget', AvailablePredictionTarget)
     .directive('d3BarChart', D3BarChart)
+    .directive('d3DecisionTreeChart', D3DecisionTreeChart)
     .directive('d3LineChart', D3LineChart)
     .directive('d3PieChart', D3PieChart)
     .directive('d3RocChart', D3RocChart)
@@ -55788,7 +56130,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('partials/augur-accuracy.html',
-    '<div class=\'row augur-accuracy\' ng-show=\'!chartType\'><div class=\'columns small-12\'><ul class=\'small-block-grid-2 medium-block-grid-3\'><li><div class=\'th\'><a ui-sref=\'augur.accuracy-detail({ chartType: "lift" })\'><h6 class=\'title\'>Lift</h6><div class=\'chart line-chart\'><d3-line-chart chart=\'charts.lift\'></d3-line-chart></div></a></div></li><li><div class=\'th\'><a ui-sref=\'dashboard\'><h6 class=\'title\'>Accumulated Lift</h6><div class=\'chart line-chart\'><d3-line-chart chart=\'charts.accumulatedLift\'></d3-line-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Response</h6><div class=\'chart line-chart\'><d3-line-chart chart=\'charts.response\'></d3-line-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Accumulated Response</h6><div class=\'chart line-chart\'><d3-line-chart chart=\'charts.accumulatedResponse\'></d3-line-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Captured Response</h6><div class=\'chart line-chart\'><d3-line-chart chart=\'charts.capturedResponse\'></d3-line-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Accumulated Captured Response</h6><div class=\'chart line-chart\'><d3-line-chart chart=\'charts.accumulatedCapturedResponse\'></d3-line-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>ROC</h6><div class=\'chart roc-chart\'><d3-roc-chart chart=\'charts.roc\'></d3-roc-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Misclassification</h6><div class=\'chart pie-chart\'><d3-pie-chart bucket=\'bucket\' chart=\'charts.misclassification\' count=\'count\'></d3-pie-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Distribution of Predicted Values</h6><div class=\'chart bar-chart\'><d3-bar-chart chart=\'charts.distributionPredictedValues\'></d3-bar-chart></div></a></div></li></ul></div></div>');
+    '<div class=\'row augur-accuracy\'><div class=\'columns small-12\'><ul class=\'small-block-grid-2 medium-block-grid-3\'><li><div class=\'th\'><a ui-sref=\'augur.accuracy-detail({ chartType: "lift" })\'><h6 class=\'title\'>Lift</h6><div class=\'chart line-chart\'><d3-line-chart chart=\'charts.lift\'></d3-line-chart></div></a></div></li><li><div class=\'th\'><a ui-sref=\'dashboard\'><h6 class=\'title\'>Accumulated Lift</h6><div class=\'chart line-chart\'><d3-line-chart chart=\'charts.accumulatedLift\'></d3-line-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Response</h6><div class=\'chart line-chart\'><d3-line-chart chart=\'charts.response\'></d3-line-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Accumulated Response</h6><div class=\'chart line-chart\'><d3-line-chart chart=\'charts.accumulatedResponse\'></d3-line-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Captured Response</h6><div class=\'chart line-chart\'><d3-line-chart chart=\'charts.capturedResponse\'></d3-line-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Accumulated Captured Response</h6><div class=\'chart line-chart\'><d3-line-chart chart=\'charts.accumulatedCapturedResponse\'></d3-line-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>ROC</h6><div class=\'chart roc-chart\'><d3-roc-chart chart=\'charts.roc\'></d3-roc-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Misclassification</h6><div class=\'chart pie-chart\'><d3-pie-chart bucket=\'bucket\' chart=\'charts.misclassification\' count=\'count\'></d3-pie-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Distribution of Predicted Values</h6><div class=\'chart bar-chart\'><d3-bar-chart chart=\'charts.distributionPredictedValues\'></d3-bar-chart></div></a></div></li></ul></div></div>');
 }]);
 })();
 
@@ -55800,7 +56142,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('partials/augur-influencers.html',
-    'I am the influencers {{ augur.id }} {{ augur }}');
+    'I am the influencers {{ augur.id }} {{ augur }}<ul><li> <a href=\'http://bl.ocks.org/mbostock/4339184\' target=\'_\'>Reingold–Tilford Tree</a></li><li> <a href=\'http://bl.ocks.org/mbostock/4339083\' target=\'_\'>Collapsible Tree</a></li><li> <a href=\'http://bl.ocks.org/mbostock/3184089\' target=\'_\'>Tree Layout Orientations</a></li><li> <a href=\'http://bl.ocks.org/mbostock/2949981\' target=\'_\'>Tree Layout from CSV</a></li><li> <a href=\'http://bl.ocks.org/mbostock/2966094\' target=\'_\'>Predigree Tree</a></li><li> <a href=\'http://mbostock.github.io/d3/talk/20111018/tree.html\' target=\'_\'>d3.layout.tree</a></li><li> <a href=\'http://bl.ocks.org/robschmuecker/7880033\' target=\'_\'>D3.js Drag and Drop, Zoomable, Panning, Collapsible Tree with auto-sizing</a></li><li> <a href=\'https://github.com/mbostock/d3/wiki/Gallery#tree\' target=\'_\'>Howtos</a></li></ul>');
 }]);
 })();
 
@@ -55848,7 +56190,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('partials/augur-tree.html',
-    'I am the tree {{ augur.id }} {{ augur }}<ul><li> <a href=\'http://bl.ocks.org/mbostock/4339184\' target=\'_\'>Reingold–Tilford Tree</a></li><li> <a href=\'http://bl.ocks.org/mbostock/4339083\' target=\'_\'>Collapsible Tree</a></li><li> <a href=\'http://bl.ocks.org/mbostock/3184089\' target=\'_\'>Tree Layout Orientations</a></li><li> <a href=\'http://bl.ocks.org/mbostock/2949981\' target=\'_\'>Tree Layout from CSV</a></li><li> <a href=\'http://bl.ocks.org/mbostock/2966094\' target=\'_\'>Predigree Tree</a></li><li> <a href=\'http://mbostock.github.io/d3/talk/20111018/tree.html\' target=\'_\'>d3.layout.tree</a></li><li> <a href=\'http://bl.ocks.org/robschmuecker/7880033\' target=\'_\'>D3.js Drag and Drop, Zoomable, Panning, Collapsible Tree with auto-sizing</a></li><li> <a href=\'https://github.com/mbostock/d3/wiki/Gallery#tree\' target=\'_\'>Howtos</a></li></ul>');
+    '<div class=\'row augur-decision-tree\'><div class=\'columns small-12\'><d3-decision-tree-chart data=\'data\'></d3-decision-tree-chart></div></div>');
 }]);
 })();
 

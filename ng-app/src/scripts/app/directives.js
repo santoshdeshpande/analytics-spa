@@ -6,18 +6,20 @@ define([
   'angular',
   'directives/available-prediction-target',
   'directives/d3-bar-chart',
+  'directives/d3-decision-tree-chart',
   'directives/d3-line-chart',
   'directives/d3-pie-chart',
   'directives/d3-roc-chart',
   'directives/unique-augur-name',
   'directives/threshold-in-range',
   'mm-foundation-tpls'
-], function ( ng, AvailablePredictionTarget, D3BarChart, D3LineChart, D3PieChart, D3RocChart, UniqueAugurName, ThresholdInRange) {
+], function ( ng, AvailablePredictionTarget, D3BarChart, D3DecisionTreeChart, D3LineChart, D3PieChart, D3RocChart, UniqueAugurName, ThresholdInRange) {
   'use strict';
 
   return ng.module('dejalyticsDirectives', ['mm.foundation'])
     .directive('availablePredictionTarget', AvailablePredictionTarget)
     .directive('d3BarChart', D3BarChart)
+    .directive('d3DecisionTreeChart', D3DecisionTreeChart)
     .directive('d3LineChart', D3LineChart)
     .directive('d3PieChart', D3PieChart)
     .directive('d3RocChart', D3RocChart)
