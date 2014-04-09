@@ -18,7 +18,6 @@ define(['d3js'], function (d3) {
   function buildPath(nodes) {
     var pathElements = [];
     var newPathElement = {};
-    var newOperation = {};
     var predicate, confidence = null;
 
     nodes.map(function (node) {
@@ -31,17 +30,15 @@ define(['d3js'], function (d3) {
       }
 
       if (node.simplePredicate) {
-        newOperation = { type: 'operation', label: ((node.simplePredicate.operator == 'lessThan') ? '<' : '>=') + node.simplePredicate.value }
+        newPathElement.operation = ((node.simplePredicate.operator == 'lessThan') ? '<' : '>=') + node.simplePredicate.value;
       }
 
       if (node.simpleSetPredicate) {
-        newOperation = { type: 'operation', label: node.simpleSetPredicate.booleanOperator + '(' + node.simpleSetPredicate.array + ')' }
+        newPathElement.operation = node.simpleSetPredicate.booleanOperator + '(' + node.simpleSetPredicate.array + ')'
       }
 
       pathElements.push(newPathElement);
-      pathElements.push(newOperation);
     });
-    pathElements.pop();
 
     return pathElements.reverse();
   }

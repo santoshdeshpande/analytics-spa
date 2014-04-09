@@ -49883,7 +49883,6 @@ define('directives/d3-decision-tree-chart',['d3js'], function (d3) {
   function buildPath(nodes) {
     var pathElements = [];
     var newPathElement = {};
-    var newOperation = {};
     var predicate, confidence = null;
 
     nodes.map(function (node) {
@@ -49896,17 +49895,15 @@ define('directives/d3-decision-tree-chart',['d3js'], function (d3) {
       }
 
       if (node.simplePredicate) {
-        newOperation = { type: 'operation', label: ((node.simplePredicate.operator == 'lessThan') ? '<' : '>=') + node.simplePredicate.value }
+        newPathElement.operation = ((node.simplePredicate.operator == 'lessThan') ? '<' : '>=') + node.simplePredicate.value;
       }
 
       if (node.simpleSetPredicate) {
-        newOperation = { type: 'operation', label: node.simpleSetPredicate.booleanOperator + '(' + node.simpleSetPredicate.array + ')' }
+        newPathElement.operation = node.simpleSetPredicate.booleanOperator + '(' + node.simpleSetPredicate.array + ')'
       }
 
       pathElements.push(newPathElement);
-      pathElements.push(newOperation);
     });
-    pathElements.pop();
 
     return pathElements.reverse();
   }
@@ -56430,7 +56427,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('partials/augur-tree.html',
-    '<div class=\'row augur-decision-tree\'><div class=\'columns small-2 element-path\'><dl><dt ng-repeat-start=\'pathElement in treePathElements track by $index\'> {{ pathElement.label }}</dt><dd ng-repeat-end=\'\'> description</dd></dl></div><div class=\'columns small-10 tree\'><d3-decision-tree-chart data=\'data\' tree-path-elements=\'treePathElements\'></d3-decision-tree-chart></div></div>');
+    '<div class=\'row augur-decision-tree\'><div class=\'columns small-2 element-path\'><dl><dt ng-repeat-start=\'pathElement in treePathElements track by $index\'> {{ pathElement.operation }}</dt><dd ng-repeat-end=\'\'> <span ng-class=\'pathElement.type\'>{{ pathElement.label }}</span></dd></dl></div><div class=\'columns small-10 tree\'><d3-decision-tree-chart data=\'data\' tree-path-elements=\'treePathElements\'></d3-decision-tree-chart></div></div>');
 }]);
 })();
 

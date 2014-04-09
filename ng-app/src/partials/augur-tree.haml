@@ -1,15 +1,11 @@
 .row.augur-decision-tree
   .columns.small-2.element-path
-    -#%ul.no-bullet
-    -#  %li{ ng: { repeat: 'pathElement in treePathElements track by $index' } }
-    -#    %span{ ng: { class: 'pathElement.type' }}
-    -#      {{ pathElement.label }}
-
     %dl
       %dt{ ng: { repeat: { start: 'pathElement in treePathElements track by $index' } } }
-        {{ pathElement.label }}
+        {{ pathElement.operation }}
       %dd{ ng: { repeat: { end: '' } } }
-        description
+        %span{ ng: { class: 'pathElement.type' }}
+          {{ pathElement.label }}
 
   .columns.small-10.tree
     %d3-decision-tree-chart{ data: 'data', 'tree-path-elements' => 'treePathElements' }
