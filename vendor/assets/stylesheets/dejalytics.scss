@@ -5966,25 +5966,59 @@ th.hide-for-touch {
   .augur-decision-tree .element-path .leaf.sad {
     color: #fff;
     background-color: #ff7500; }
-.augur-decision-tree .link {
+.augur-decision-tree .tree-tooltip {
+  position: absolute;
+  text-align: center;
+  padding: 0.5em;
+  border: 0px;
+  border-radius: 5px;
+  color: #fff;
+  pointer-events: none; }
+  .augur-decision-tree .tree-tooltip dl {
+    *zoom: 1;
+    margin-bottom: 0.5em;
+    width: 180px; }
+    .augur-decision-tree .tree-tooltip dl:before, .augur-decision-tree .tree-tooltip dl:after {
+      content: " ";
+      display: table; }
+    .augur-decision-tree .tree-tooltip dl:after {
+      clear: both; }
+  .augur-decision-tree .tree-tooltip dt, .augur-decision-tree .tree-tooltip dd {
+    font-size: 80%;
+    float: left;
+    margin: -0.1em 0.1em; }
+  .augur-decision-tree .tree-tooltip dt {
+    clear: both;
+    text-align: right;
+    width: 50%; }
+  .augur-decision-tree .tree-tooltip dt:after {
+    content: ':'; }
+  .augur-decision-tree .tree-tooltip .summary {
+    font-size: 80%;
+    border-top: 1px solid #fff;
+    padding-top: 0.5em; }
+    .augur-decision-tree .tree-tooltip .summary span {
+      display: block;
+      margin: -0.3em 0; }
+.augur-decision-tree .tree .link {
   fill: none;
   stroke: #000; }
-  .augur-decision-tree .link.fat {
+  .augur-decision-tree .tree .link.fat {
     stroke: #ee000d;
     stroke-width: 3px; }
-.augur-decision-tree .border {
+.augur-decision-tree .tree .border {
   fill: none;
   shape-rendering: crispEdges;
   stroke: #aaa; }
-.augur-decision-tree text {
+.augur-decision-tree .tree text {
   font: 10px sans-serif; }
-.augur-decision-tree .node {
+.augur-decision-tree .tree .node {
   stroke: none;
   fill: #1f18ff; }
-.augur-decision-tree .leaf {
+.augur-decision-tree .tree .leaf {
   stroke: none; }
-  .augur-decision-tree .leaf.happy {
+  .augur-decision-tree .tree .leaf.happy {
     fill: #1c9f3f; }
-  .augur-decision-tree .leaf.sad {
+  .augur-decision-tree .tree .leaf.sad {
     fill: #ff7500; }
 

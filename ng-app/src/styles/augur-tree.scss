@@ -25,39 +25,81 @@
     }
   }
 
-  .link {
-    fill: none;
-    stroke: #000;
+  .tree-tooltip {
+    position: absolute;
+    text-align: center;
+    padding: .5em;
+    border: 0px;
+    border-radius: 5px;
+    color: #fff;
+    pointer-events: none;
 
-    &.fat {
-      stroke: #ee000d;
-      stroke-width: 3px;
+    dl {
+      @include clearfix();
+      margin-bottom: .5em;
+      width: 180px;
+    }
+    dt, dd {
+      font-size: 80%;
+      float: left;
+      margin: -.1em .1em;
+    }
+    dt {
+      clear: both;
+      text-align: right;
+      width: 50%;
+    }
+    dt:after {
+      content: ':'
+    }
+
+    .summary {
+      font-size: 80%;
+      border-top: 1px solid #fff;
+      padding-top: .5em;
+
+      span {
+        display: block;
+        margin: -.3em 0;
+      }
     }
   }
 
-  .border {
-    fill: none;
-    shape-rendering: crispEdges;
-    stroke: #aaa;
-  }
+  .tree {
+    .link {
+      fill: none;
+      stroke: #000;
 
-  text {
-    font: 10px sans-serif;
-  }
-
-  .node {
-    stroke: none;
-    fill: #1f18ff;
-  }
-
-  .leaf {
-    stroke: none;
-
-    &.happy {
-      fill: #1c9f3f;
+      &.fat {
+        stroke: #ee000d;
+        stroke-width: 3px;
+      }
     }
-    &.sad {
-      fill: #ff7500;
+
+    .border {
+      fill: none;
+      shape-rendering: crispEdges;
+      stroke: #aaa;
+    }
+
+    text {
+      font: 10px sans-serif;
+    }
+
+    .node {
+      stroke: none;
+      fill: #1f18ff;
+    }
+
+    .leaf {
+      stroke: none;
+
+      &.happy {
+        fill: #1c9f3f;
+      }
+      &.sad {
+        fill: #ff7500;
+      }
     }
   }
 }
