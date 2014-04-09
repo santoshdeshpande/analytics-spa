@@ -5,7 +5,7 @@
 define([], function () {
   'use strict';
 
-  return  ['$scope', '$stateParams', 'Augur', 'Habitat', function ($scope, $stateParams, Augur, Habitat) {
-
+  return  ['$state', '$scope', '$stateParams', 'Augur', 'Habitat', function ($state, $scope, $stateParams, Augur, Habitat) {
+    $scope.trackCurrentState($state.current.name); // inherited from parent augur.js
   }];
 });

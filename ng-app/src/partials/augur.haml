@@ -21,7 +21,7 @@
           Download predictions
 
 .row.augur.container
-  .small-1.columns.side-nav-container
+  .small-2.columns.side-nav-container
     %ul.side-nav
       %li{ ui: { sref: { active: 'active' } } }
         %a{ ui: { sref: 'augur.tree' } }
@@ -39,15 +39,30 @@
           %br
           Accuracy
       %li{ ui: { sref: { active: 'active' } } }
-        %a{ ui: { sref: 'augur.performance' } }
+        %a{ ui: { sref: 'augur.performance' }, style: 'display:none;', fyi: 'only to get sref-active working' }
+
+        %a{ ng: { click: 'activatePerformanceState()' } }
           %span.glyphicon.glyphicon-th
-          %br
-          Performance drift
+          %div.label-main
+            Performance drift
+
+        .side-nav-sub
+          %ul.no-bullet.inline-list
+            %li.first{ ui: { sref: { active: 'active' } } }
+              %a{ ui: { sref: 'augur.performance.learning' } }
+                %span.glyphicon.glyphicon-tower
+            %li{ ui: { sref: { active: 'active' } } }
+              %a{ ui: { sref: 'augur.performance.evaluation' } }
+                %span.glyphicon.glyphicon-briefcase
+
+          %div.label-sub
+            Performance drift
+
       %li{ ui: { sref: { active: 'active' } } }
         %a{ ui: { sref: 'augur.settings' } }
           %span.glyphicon.glyphicon-th
           %br
           Settings
 
-  .small-11.columns.main
+  .small-10.columns.main
     %div{ ui: { view: '' } }

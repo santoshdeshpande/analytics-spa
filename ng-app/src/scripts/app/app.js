@@ -59,8 +59,18 @@ define([
           controller: 'AugurAccuracyDetailCtrl'
         }).
         state('augur.performance', {
+          abstract: true,
           url: '/performance',
-          templateUrl: 'partials/augur-performance.html',
+          template: '<ui-view/>'
+        }).
+        state('augur.performance.learning', {
+          url: '/learning',
+          templateUrl: 'partials/augur-performance-learning.html',
+          controller: 'AugurPerformanceCtrl'
+        }).
+        state('augur.performance.evaluation', {
+          url: '/evaluation',
+          templateUrl: 'partials/augur-performance-evaluation.html',
           controller: 'AugurPerformanceCtrl'
         }).
         state('augur.tree', {
