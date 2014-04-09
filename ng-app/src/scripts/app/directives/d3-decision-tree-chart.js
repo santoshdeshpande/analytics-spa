@@ -112,7 +112,7 @@ define(['d3js'], function (d3) {
                 .on('mouseover', function (d) {
                   var pNodes = parentNodes(d);
                   var tooltipHTML;
-                  var tooltipFormatPercent = d3.format('%');
+                  var tooltipFormatPercent = d3.format('.1%');
 
                   scope.$apply(function(){
                     scope.treePathElements = buildPath(pNodes);
