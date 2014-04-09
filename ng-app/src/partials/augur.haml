@@ -1,27 +1,28 @@
 .row.augur.action-bar
-  .small-6.columns
-    %ul.inline-list
-      %li
+  .small-12.columns
+    .row
+      .small-11.columns
+        .row
+          .small-4.columns.habitat-name
+            {{augur.name}}
+          .small-4.columns.info
+            %dl
+              %dt Type
+              %dd Logistical Regression
+              %dt KPI
+              %dd Accumulated Lift Top 10% (0.4/0.2)
+          .small-4.columns.actions
+            %ul.no-bullet
+              %li.action
+                Calculate new prediction
+              %li.action
+                Download latest prediction
+      .small-1.columns.back
         %a{ ui: { sref: 'dashboard' } }
-          %span.glyphicon.glyphicon-th
-          Dashboard
-      %li
-        %span.glyphicon.glyphicon-picture
-        {{habitat.name}}
-      %li
-        %span.glyphicon.glyphicon-eye-open
-        {{augur.name}}
-  .small-6.columns
-    %ul.inline-list
-      %li
-        %button.button
-          Start prediction
-      %li
-        %button.button
-          Download predictions
+          %span.glyphicon.glyphicon-log-out
 
 .row.augur.container
-  .small-2.columns.side-nav-container
+  .side-nav-container
     %ul.side-nav
       %li{ ui: { sref: { active: 'active' } } }
         %a{ ui: { sref: 'augur.tree' } }
@@ -35,7 +36,7 @@
           Influencers
       %li{ ui: { sref: { active: 'active' } } }
         %a{ ui: { sref: 'augur.accuracy' } }
-          %span.glyphicon.glyphicon-th
+          %span.glyphicon.glyphicon-record
           %br
           Accuracy
       %li{ ui: { sref: { active: 'active' } } }
@@ -60,9 +61,9 @@
 
       %li{ ui: { sref: { active: 'active' } } }
         %a{ ui: { sref: 'augur.settings' } }
-          %span.glyphicon.glyphicon-th
+          %span.glyphicon.glyphicon-wrench
           %br
           Settings
 
-  .small-10.columns.main
+  .main
     %div{ ui: { view: '' } }

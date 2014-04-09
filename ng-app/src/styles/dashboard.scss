@@ -1,13 +1,7 @@
 @import "vendor/foundation/components/global";
 
 .dashboard {
-
   &.action-bar {
-    margin-top: 2em;
-    margin-bottom: .3em;
-    color: #333;
-    background-color: $crumb-bg;
-
     ul {
       display: block;
       width: auto;
@@ -68,10 +62,6 @@
   }
 
   &.container {
-    border: 1px dashed #555555;
-    padding-top: .5em;
-    min-height: 600px;
-
     .th {
       padding: 0 0.3em;
       position: relative;

@@ -1,8 +1,41 @@
 .top-bar {
   .title-area {
     .logo img {
-      background: white;
-      height: 30px;
+      height: 40px;
     }
   }
+}
+
+.app-nav-bar {
+  background: #333;
+  padding: 1em 0 2em 0;
+
+  li:first-child {
+    margin-left: 0;
+  }
+
+  li {
+    background: #3a87ad;
+    width: 8em;
+    line-height: $h1-font-size;
+    border-radius: $global-radius;
+
+    .item-label, .glyphicon {
+      display: block;
+      text-align: center;
+      font-size: $h5-font-size;
+      color: #fff;
+    }
+
+    .glyphicon {
+      margin-top: .5em;
+    }
+  }
+}
+
+.action-bar {
+  margin-top: -2.4em;
+  margin-bottom: 1em;
+  color: #333;
+  background-color: $crumb-bg;
 }

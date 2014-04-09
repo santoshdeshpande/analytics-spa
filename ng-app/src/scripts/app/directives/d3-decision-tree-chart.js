@@ -60,7 +60,7 @@ define(['d3js'], function (d3) {
 
         // define dimensions of graph
         var margin = {top: 20, right: 20, bottom: 20, left: 20},
-          width = 700 - margin.left - margin.right,
+          width = 800 - margin.left - margin.right,
           height = 700 - margin.top - margin.bottom;
 
         var tree = d3.layout.tree().size([width, height]);
