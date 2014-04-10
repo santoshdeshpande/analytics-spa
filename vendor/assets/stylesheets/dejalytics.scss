@@ -6033,6 +6033,15 @@ th.hide-for-touch {
   .augur-accuracy .chart.pie-chart .arc path {
     stroke: #fff; }
 
+.augur-influencers {
+  position: relative; }
+  .augur-influencers .heading {
+    position: absolute;
+    top: 0; }
+    .augur-influencers .heading h1 {
+      color: #6418a2; }
+    .augur-influencers .heading .subheader {
+      margin-top: -1rem; }
 
 
 .augur-decision-tree .element-path {

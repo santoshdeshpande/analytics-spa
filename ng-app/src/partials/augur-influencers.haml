@@ -1,31 +1,6 @@
-I am the influencers
-
-{{ augur.id }}
-{{ augur }}
-
-%ul
-  %li
-    %a{ target: '_', href:'http://bl.ocks.org/mbostock/4339184' }
-      Reingold–Tilford Tree
-  %li
-    %a{ target: '_', href:'http://bl.ocks.org/mbostock/4339083' }
-      Collapsible Tree
-  %li
-    %a{ target: '_', href:'http://bl.ocks.org/mbostock/3184089' }
-      Tree Layout Orientations
-  %li
-    %a{ target: '_', href:'http://bl.ocks.org/mbostock/2949981' }
-      Tree Layout from CSV
-  %li
-    %a{ target: '_', href:'http://bl.ocks.org/mbostock/2966094' }
-      Predigree Tree
-  %li
-    %a{ target: '_', href:'http://mbostock.github.io/d3/talk/20111018/tree.html' }
-      d3.layout.tree
-  %li
-    %a{ target: '_', href:'http://bl.ocks.org/robschmuecker/7880033' }
-      D3.js Drag and Drop, Zoomable, Panning, Collapsible Tree with auto-sizing
-  %li
-    %a{ target: '_', href:'https://github.com/mbostock/d3/wiki/Gallery#tree' }
-      Howtos
-
+.row.augur-influencers
+  .columns.small-12
+    .heading
+      %h1 Influencers
+      %h6.subheader Shows up to 40 most important influencers
+    %d3-influencer-chart{ data: 'data' }

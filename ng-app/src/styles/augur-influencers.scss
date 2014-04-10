@@ -1,3 +1,15 @@
-.augur-detail {
+.augur-influencers {
+  position: relative;
+  .heading {
+    position: absolute;
+    top: 0;
 
+    h1 {
+      color: #6418a2;
+    }
+
+    .subheader {
+      margin-top: -1rem;
+    }
+  }
 }

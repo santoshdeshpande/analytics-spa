@@ -39913,7 +39913,44 @@ define('controllers/augur-accuracy-detail',[], function () {
 define('controllers/augur-influencers',[], function () {
   
 
+  var nodes = [
+    { name: "delinquencies", value: 0.0786171428571429 },
+    { name: "debtinc", value: 0.0658285714285714 },
+    { name: "clage", value: 0.0587657142857143 },
+    { name: "derogatories", value: 0.0221828571428571 },
+    { name: "job", value: 0.02024 },
+    { name: "inquiries", value: 0.0145028571428571 },
+    { name: "loan", value: 0.0131085714285714 },
+    { name: "clno", value: 0.0116571428571429 },
+    { name: "yoj", value: 0.0108228571428571 },
+    { name: "value", value: 0.00955428571428571 },
+    { name: "mortgage", value: 0.00954285714285714 },
+    { name: "reason", value: 0.00635428571428571 }
+  ];
+
   return  ['$scope', '$stateParams', 'Augur', 'Habitat', function ($scope, $stateParams, Augur, Habitat) {
+    $scope.data = { nodes: [] };
+
+    Augur.get({ habitatId: $stateParams.habitatId, augurId: $stateParams.augurId }, function (augur) {
+      if (augur.name[0] === 'a' || augur.name[0] === 'A') {
+        angular.forEach(nodes, function (node) {
+          $scope.data.nodes.push(node);
+        });
+      } else {
+        angular.forEach(nodes, function (node) {
+          $scope.data.nodes.push(node);
+        });
+        angular.forEach(nodes, function (node) {
+          $scope.data.nodes.push(node);
+        });
+        angular.forEach(nodes, function (node) {
+          $scope.data.nodes.push(node);
+        });
+        angular.forEach(nodes, function (node) {
+          $scope.data.nodes.push(node);
+        });
+      }
+    });
   }];
 });
 
@@ -50055,6 +50092,116 @@ define('directives/d3-decision-tree-chart',['d3js'], function (d3) {
  define: false,
  console: false
  */
+define('directives/d3-influencer-chart',['d3js'], function (d3) {
+  
+
+  function nodeValues (nodes) {
+    return nodes.map(function (node) { return node.value })
+  }
+  
+  return ['$timeout', function ($timeout) {
+    return {
+      restrict: 'E',
+      scope: {
+        data: '=',
+        label: '@',
+        onClick: '&'
+      },
+      link: function (scope, ele, attrs) {
+        var renderTimeout;
+        // define dimensions of graph
+        var  width = 800,
+          height = 600;
+
+        var maxNodes = 40,
+            radiusMin = 20,
+            radiusMax = d3.scale.linear().domain([3, maxNodes]).range([140, 60]).nice(),
+            variableLengthMin = 3,
+            variableLengthMax = 12;
+
+        var color = d3.scale.category10();
+        var format = d3.format('.2%');
+        var fontSize = d3.scale.linear().range([60, 240]).nice();
+
+        window.fontSize = fontSize;
+
+        var radius = d3.scale.linear();
+
+        var pack = d3.layout.pack()
+            .value(function(d) { return d.value })
+            .radius(radius)
+            .padding(20)
+            .sort(function(a, b) { return Math.log(a.value * b.value) })
+            .size([width + 120, height]);
+
+        var svg = d3.select(ele[0]).append('svg')
+            .attr('width', width)
+            .attr('height', height);
+
+        scope.$watch('data', function (newData) {
+          scope.render(angular.copy(newData));
+        }, true);
+
+        scope.render = function (data) {
+          svg.selectAll('*').remove();
+
+          if (!data) return;
+          if (renderTimeout) clearTimeout(renderTimeout);
+
+          renderTimeout = $timeout(function () {
+            var dataNodes = data.nodes.sort(function(a, b) { return a.value - b.value}).reverse().slice(0, maxNodes - 1);
+
+            var rMax = radiusMax(dataNodes.length);
+
+            fontSize.domain([
+              Math.round(radiusMin / Math.log(variableLengthMax)),
+              Math.round(rMax / Math.log(variableLengthMin))
+            ]);
+
+            radius
+              .domain([
+                d3.min(nodeValues(dataNodes)),
+                d3.max(nodeValues(dataNodes))
+              ])
+              .range([radiusMin, rMax]);
+
+            var nodes = pack.nodes({
+              value: 0,
+              children: dataNodes
+            });
+            
+            var nodeEnter = svg.selectAll('.node')
+                 .data(nodes.filter(function(d) { return !!d.name }))
+               .enter().append('g')
+                 .attr('class', 'node')
+                 .attr('transform', function(d) { return 'translate(' + d.x + ',' + d.y + ')'; })
+                 .style('font-size', function(d) { return fontSize(d.r/Math.log(Math.max(Math.min(d.name.length, variableLengthMax), variableLengthMin))) + '%' });
+
+            nodeEnter.append('circle')
+                .attr('r', function(d) { return d.r; })
+                .style('fill', function(d, i) { return color(i % 3); });
+
+            nodeEnter.append('text')
+              .style('text-anchor', 'middle')
+              .attr('dy', '-.2em')
+              .text(function(d) { return d.name });
+
+            nodeEnter.append('text')
+              .attr('dy', '.8em')
+              .style('text-anchor', 'middle')
+              .text(function(d) { return format(d.value) });
+
+          }, 200); // renderTimeout
+        };
+      }
+    };
+  }]
+});
+
+/* global
+ define: false,
+ console: false
+ */
 define('directives/d3-line-chart',['d3js'], function (d3) {
   
 
@@ -53082,19 +53229,30 @@ define('directives',[
   'directives/available-prediction-target',
   'directives/d3-bar-chart',
   'directives/d3-decision-tree-chart',
+  'directives/d3-influencer-chart',
   'directives/d3-line-chart',
   'directives/d3-pie-chart',
   'directives/d3-roc-chart',
   'directives/unique-augur-name',
   'directives/threshold-in-range',
   'mm-foundation-tpls'
-], function ( ng, AvailablePredictionTarget, D3BarChart, D3DecisionTreeChart, D3LineChart, D3PieChart, D3RocChart, UniqueAugurName, ThresholdInRange) {
+], function ( ng,
+              AvailablePredictionTarget,
+              D3BarChart,
+              D3DecisionTreeChart,
+              D3InfluencerChart,
+              D3LineChart,
+              D3PieChart,
+              D3RocChart,
+              UniqueAugurName,
+              ThresholdInRange) {
   
 
   return ng.module('dejalyticsDirectives', ['mm.foundation'])
     .directive('availablePredictionTarget', AvailablePredictionTarget)
     .directive('d3BarChart', D3BarChart)
     .directive('d3DecisionTreeChart', D3DecisionTreeChart)
+    .directive('d3InfluencerChart', D3InfluencerChart)
     .directive('d3LineChart', D3LineChart)
     .directive('d3PieChart', D3PieChart)
     .directive('d3RocChart', D3RocChart)
@@ -56479,7 +56637,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('partials/augur-influencers.html',
-    'I am the influencers {{ augur.id }} {{ augur }}<ul><li> <a href=\'http://bl.ocks.org/mbostock/4339184\' target=\'_\'>Reingold–Tilford Tree</a></li><li> <a href=\'http://bl.ocks.org/mbostock/4339083\' target=\'_\'>Collapsible Tree</a></li><li> <a href=\'http://bl.ocks.org/mbostock/3184089\' target=\'_\'>Tree Layout Orientations</a></li><li> <a href=\'http://bl.ocks.org/mbostock/2949981\' target=\'_\'>Tree Layout from CSV</a></li><li> <a href=\'http://bl.ocks.org/mbostock/2966094\' target=\'_\'>Predigree Tree</a></li><li> <a href=\'http://mbostock.github.io/d3/talk/20111018/tree.html\' target=\'_\'>d3.layout.tree</a></li><li> <a href=\'http://bl.ocks.org/robschmuecker/7880033\' target=\'_\'>D3.js Drag and Drop, Zoomable, Panning, Collapsible Tree with auto-sizing</a></li><li> <a href=\'https://github.com/mbostock/d3/wiki/Gallery#tree\' target=\'_\'>Howtos</a></li></ul>');
+    '<div class=\'row augur-influencers\'><div class=\'columns small-12\'><div class=\'heading\'><h1>Influencers</h1><h6 class=\'subheader\'>Shows up to 40 most important influencers</h6></div><d3-influencer-chart data=\'data\'></d3-influencer-chart></div></div>');
 }]);
 })();
 
