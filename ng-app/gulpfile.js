@@ -68,7 +68,7 @@ gulp.task('serve', function () {
       }
 
       console.log('-API- %s %s %s', req.method, req.url, json);
-      res.sendfile(__dirname + '/dist/' + req.url + json)
+      res.sendfile(__dirname + '/src/' + req.url + json)
     });
 
     app.use('/scripts', express.static(__dirname + '/src/scripts'));
@@ -85,22 +85,16 @@ gulp.task('serve', function () {
   });
 });
 
-gulp.task('build', ['dist'], function () {
-  gulp.start('partials', 'requirejs', 'styles-dist-vendor', 'scripts-dist-vendor');
+gulp.task('build', ['styles', 'requirejs'], function () {
+  gulp.start('styles-dist-vendor', 'scripts-dist-vendor');
 });
 
-gulp.task('dist', ['dist-clean'], function () {
-  gulp.start('index', 'haml', 'assets', 'styles', 'glyphicons-bootstrap', 'lib');
+gulp.task('dist', ['clean-styles'], function () {
+  gulp.start('index', 'haml', 'styles');
 });
-gulp.task('dist-clean', ['clean-assets', 'clean-styles', 'clean-lib']);
 
 gulp.task('watch', function () {
-  gulp.watch(['src/index-dist.html'], ['index', 'assets']);
-  gulp.watch([
-    'src/img*/**/*', 'src/api*/**/*',
-    'src/scripts*/**/modernizr*', 'src/scripts*/**/jquery*', 'src/scripts*/**/foundation*'
-  ], ['assets']);
-
+  gulp.watch(['src/index-dist.html'], ['index']);
   gulp.watch(['src/partials*/**/*.haml'], ['haml']);
 
   gulp.watch(['src/styles/**/*'], ['styles']);
@@ -110,8 +104,7 @@ gulp.task('watch', function () {
 });
 
 gulp.task('watch-rails', function () {
-  gulp.watch(['src/partials*/**/*.haml'], ['partials']);
-  gulp.watch(['src/scripts/main.js', 'src/scripts/app/**/*.js'], ['requirejs']);
+  gulp.watch(['src/scripts/main.js', 'src/scripts/app/**/*.js', 'src/partials*/**/*.haml'], ['requirejs']);
   gulp.watch(['dist/scripts/main.js'], ['scripts-dist-vendor']);
 
   gulp.watch(['src/styles/**/*'], ['styles']);
@@ -141,17 +134,6 @@ gulp.task('scripts-dist-vendor', function () {
 //////////////////////////////
 //// Static files
 //////////////////////////////
-gulp.task('clean-assets', function () {
-  return gulp
-    .src([
-    'dist/api/**/*',
-    'dist/scripts/**/modernizr*',
-    'dist/scripts/**/jquery*',
-    'dist/scripts/**/foundation*'
-  ], { read: false })
-    .pipe(clean());
-});
-
 gulp.task('index', function () {
   return gulp
     .src(['src/index-dist.html'])
@@ -171,27 +153,14 @@ gulp.task('haml', function () {
     .pipe(notify({ message: 'Haml task complete' }));
 });
 
-gulp.task('partials', function () {
+gulp.task('templates', ['haml'], function () {
   return gulp
-    .src(['src/partials*/**/*.haml'])
-    .pipe(haml())
+    .src(['dist/partials*/**/*.html'])
     .pipe(cleanhtml())
     .pipe(ngHtml2Js({moduleName: 'dejalyticsPartials'}))
     .pipe(concat('partials-tpls.min.js'))
-    .pipe(gulp.dest('src/scripts/app/'));
-});
-
-gulp.task('assets', function () {
-  return gulp
-    .src([
-      'src/img*/**/*',
-      'src/api*/**/*',
-      'src/scripts*/**/modernizr*',
-      'src/scripts*/**/jquery*',
-      'src/scripts*/**/foundation*'
-    ])
-    .pipe(gulp.dest('dist/'))
-    .pipe(livereload(lrserver));
+    .pipe(gulp.dest('src/scripts/app/'))
+    .pipe(notify({ message: 'Templates task complete' }));
 });
 
 //////////////////////////////
@@ -232,21 +201,7 @@ gulp.task('glyphicons-bootstrap-fonts', function () {
 //// Add current requirejs lib to distribution
 //// Package scripts for main.js (requirejs)
 ///////////////////////////////////////////////////
-gulp.task('clean-lib', function () {
-  return gulp
-    .src(['dist/scripts/lib/requirejs*'], { read: false })
-    .pipe(clean());
-});
-
-gulp.task('lib', function () {
-  return gulp.src('src/scripts/lib/requirejs-*/require.js')
-    .pipe(uglify())
-    .pipe(gulp.dest('dist/scripts/lib'))
-    .pipe(livereload(lrserver))
-    .pipe(notify({ message: 'Lib task complete' }));
-});
-
-gulp.task('requirejs', function () {
+gulp.task('requirejs', ['templates'], function () {
   var deferred = Q.defer();
   var config = {};
 

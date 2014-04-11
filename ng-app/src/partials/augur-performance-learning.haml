@@ -1,6 +1,7 @@
 .row.augur-performance
   .columns.small-12
     .heading
-      %h1 Performance drift (Learning)
+      %h1 Performance drift (Learning) AA
       %h6.subheader Changes in the learning data runs over the last 30 days
-    %d3-performance-chart{ data: 'data' }
+    .chart
+      %d3-performance-chart{ data: 'data' }

@@ -39964,7 +39964,7 @@ define('controllers/augur-performance',[], function () {
   function randomData() {
     var arr = [];
     var kpi = Math.random() * 0.3 + 0.3;
-    var days = 30; //(Math.round(Math.random() * 15) + 15);
+    var days = (Math.round(Math.random() * 15) + 15);
 
     for (var i = 0; i < days; i++) {
       var dateOffset = (24*60*60*1000) * (days - i);
@@ -56786,7 +56786,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('partials/augur-performance-evaluation.html',
-    '<div class=\'row augur-performance\'><div class=\'columns small-12\'> I am the performance evaluation page</div></div>');
+    '<div class=\'row augur-performance\'><div class=\'columns small-12\'><div class=\'heading\'><h1>Performance drift (Evaluation)</h1><h6 class=\'subheader\'>Changes in the evaluation data runs over the last 30 days</h6></div><div class=\'chart\'><d3-performance-chart data=\'data\'></d3-performance-chart></div></div></div>');
 }]);
 })();
 
@@ -56798,7 +56798,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('partials/augur-performance-learning.html',
-    '<div class=\'row augur-performance\'><div class=\'columns small-12\'> I am the performance learning page</div></div>');
+    '<div class=\'row augur-performance\'><div class=\'columns small-12\'><div class=\'heading\'><h1>Performance drift (Learning) AA</h1><h6 class=\'subheader\'>Changes in the learning data runs over the last 30 days</h6></div><div class=\'chart\'><d3-performance-chart data=\'data\'></d3-performance-chart></div></div></div>');
 }]);
 })();
 

@@ -8,7 +8,7 @@ define([], function () {
   function randomData() {
     var arr = [];
     var kpi = Math.random() * 0.3 + 0.3;
-    var days = 30; //(Math.round(Math.random() * 15) + 15);
+    var days = (Math.round(Math.random() * 15) + 15);
 
     for (var i = 0; i < days; i++) {
       var dateOffset = (24*60*60*1000) * (days - i);
