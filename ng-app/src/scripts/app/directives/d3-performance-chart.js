@@ -29,9 +29,10 @@ define([
         var y = d3.scale.linear().range([height, 0]);
         var svg = d3.select(ele[0]).append('svg')
           .attr('width', width + margin.left + margin.right)
-          .attr('height', height + margin.top + margin.bottom)
-          .append('g')
-          .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+          .attr('height', height + margin.top + margin.bottom);
+
+        var graph = svg.append('g')
+            .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
         var defs = svg.append('defs');
         var gradientForegroundPurple = defs.append('linearGradient')
@@ -53,6 +54,8 @@ define([
           if (renderTimeout) clearTimeout(renderTimeout);
 
           renderTimeout = $timeout(function () {
+            graph.selectAll('*').remove();
+
             y.domain([0, d3.max(data, function (d) { return d.drift })]);
 
             // helplines
@@ -63,7 +66,7 @@ define([
               .y(function (d) { return y(d[1]) });
 
             angular.forEach(yHelplineTicks, function(yValue){
-              var path = svg.append('path')
+              var path = graph.append('path')
                 .attr('d', helpline([
                   [ 0, yValue ],
                   [ 31, yValue ]
@@ -73,13 +76,13 @@ define([
 
             // create left yAxis
             var yAxisLeft = d3.svg.axis().scale(y).orient('left');
-            svg.append('g')
+            graph.append('g')
               .attr('transform', 'translate(5,0)')
               .attr('class', 'y axis')
               .call(yAxisLeft);
 
             // bars
-            svg.selectAll('.bar')
+            graph.selectAll('.bar')
               .data(data)
               .enter().append('rect')
               .attr('class', function(d) { return d.drift > d.kpi ? 'bar' : 'bar solid' })
@@ -111,12 +114,12 @@ define([
               .x(function (d) { return x(d[0]) - x.rangeBand()})
               .y(function (d) { return y(d[1]) });
 
-            var path = svg.append('path')
+            var path = graph.append('path')
               .attr('d', thresholdLine(thresholdLineData))
               .attr('stroke-dasharray', '5 , 5')
               .attr('class', 'threshold-line');
 
-            var labelEnter = svg.selectAll('.threshold-label')
+            var labelEnter = graph.selectAll('.threshold-label')
               .data(data.filter(function(d, i) { return thresholdChangeIndexes.indexOf(i) > -1 }))
               .enter().append('g')
               .attr('class', 'threshold-label')
@@ -136,7 +139,7 @@ define([
               .style('text-anchor', 'middle')
               .text(function(d){ return format(d.kpi) });
 
-            var legend = svg.append('g')
+            var legend = graph.append('g')
                 .attr('transform', 'translate(' + (x(29)) + ',' + (y(0) - 15) + ')');
 
             legend.append('rect')
