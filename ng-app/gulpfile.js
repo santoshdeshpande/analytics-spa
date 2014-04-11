@@ -41,10 +41,10 @@ gulp.task('serve', function () {
       return next();
     });
 
-    app.use(function(req, res, next){
-      console.log('%s %s', req.method, req.url);
-      next();
-    });
+//    app.use(function(req, res, next){
+//      console.log('%s %s', req.method, req.url);
+//      next();
+//    });
 
     app.get('/api/v1/*', function (req, res) {
 
@@ -67,7 +67,7 @@ gulp.task('serve', function () {
           break;
       }
 
-      console.log('-API- %s %s', json);
+      console.log('-API- %s %s %s', req.method, req.url, json);
       res.sendfile(__dirname + '/dist/' + req.url + json)
     });
 
@@ -105,7 +105,7 @@ gulp.task('watch', function () {
 
   gulp.watch(['src/styles/**/*'], ['styles']);
   gulp.watch(['src/scripts/main.js', 'src/scripts/app/**/*.js'], function(){
-    livereload(lrserver).changed('dummy')
+    livereload(lrserver).changed('from-js-watch-task')
   });
 });
 
@@ -166,7 +166,9 @@ gulp.task('haml', function () {
   return gulp
     .src(['src/partials*/**/*.haml'])
     .pipe(haml())
-    .pipe(gulp.dest('dist/'));
+    .pipe(gulp.dest('dist/'))
+    .pipe(livereload(lrserver))
+    .pipe(notify({ message: 'Haml task complete' }));
 });
 
 gulp.task('partials', function () {

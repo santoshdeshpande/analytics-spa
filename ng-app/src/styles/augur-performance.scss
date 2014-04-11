@@ -1,3 +1,42 @@
 .augur-performance {
+  position: relative;
+  .heading {
+    position: absolute;
+    top: 0;
 
+    h1 {
+      color: #6418a2;
+    }
+
+    .subheader {
+      margin-top: -1rem;
+    }
+  }
+
+  .chart {
+//    $c-purpleBright: #a8aff1;
+//    .purpleForegroundStop1 { stop-color: adjust-lightness( $c-purpleBright, 17 ); }
+//    .purpleForegroundStop2 { stop-color: adjust-lightness( $c-purpleBright, 8 ); }
+
+    .bar {
+      fill: url(#gradientForegroundPurple);
+      &.solid {
+        fill: #482092;
+      }
+    }
+
+    .y.axis {
+      path {
+        stroke: #ddd;
+        stroke-width: 1;
+        fill: none;
+      }
+    }
+
+    .helpline {
+      stroke: #ddd;
+      stroke-width: 1;
+      fill: none;
+    }
+  }
 }

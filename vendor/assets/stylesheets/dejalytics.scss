@@ -6043,6 +6043,27 @@ th.hide-for-touch {
     .augur-influencers .heading .subheader {
       margin-top: -1rem; }
 
+.augur-performance {
+  position: relative; }
+  .augur-performance .heading {
+    position: absolute;
+    top: 0; }
+    .augur-performance .heading h1 {
+      color: #6418a2; }
+    .augur-performance .heading .subheader {
+      margin-top: -1rem; }
+  .augur-performance .chart .bar {
+    fill: url(#gradientForegroundPurple); }
+    .augur-performance .chart .bar.solid {
+      fill: #482092; }
+  .augur-performance .chart .y.axis path {
+    stroke: #ddd;
+    stroke-width: 1;
+    fill: none; }
+  .augur-performance .chart .helpline {
+    stroke: #ddd;
+    stroke-width: 1;
+    fill: none; }
 
 .augur-decision-tree .element-path {
   text-align: center; }
