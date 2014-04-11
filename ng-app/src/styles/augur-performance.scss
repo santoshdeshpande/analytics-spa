@@ -14,11 +14,10 @@
   }
 
   .chart {
+    .bar {
 //    $c-purpleBright: #a8aff1;
 //    .purpleForegroundStop1 { stop-color: adjust-lightness( $c-purpleBright, 17 ); }
 //    .purpleForegroundStop2 { stop-color: adjust-lightness( $c-purpleBright, 8 ); }
-
-    .bar {
       fill: url(#gradientForegroundPurple);
       &.solid {
         fill: #482092;
@@ -37,6 +36,26 @@
       stroke: #ddd;
       stroke-width: 1;
       fill: none;
+    }
+
+    .threshold-line {
+      stroke: #6418a2;
+      stroke-width: 3;
+      fill: none;
+    }
+
+    .threshold-label {
+      rect {
+        stroke: #6418a2;
+        stroke-width: 3;
+        fill: white;
+      }
+    }
+
+    .legend {
+        stroke: #6418a2;
+        stroke-width: 3;
+        fill: white;
     }
   }
 }

@@ -7,7 +7,16 @@ define([], function () {
 
   function randomData() {
     var arr = [];
-    var kpi = Math.random() * 0.3 + 0.3;
+    var kpi = [
+        Math.random() * 0.4 + 0.2,
+        Math.random() * 0.4 + 0.2,
+        Math.random() * 0.4 + 0.2,
+        Math.random() * 0.4 + 0.2,
+        Math.random() * 0.4 + 0.2,
+        Math.random() * 0.4 + 0.2,
+        Math.random() * 0.4 + 0.2,
+        Math.random() * 0.4 + 0.2
+    ];
     var days = (Math.round(Math.random() * 15) + 15);
 
     for (var i = 0; i < days; i++) {
@@ -15,7 +24,7 @@ define([], function () {
       var myDate = new Date();
       myDate.setTime(myDate.getTime() - dateOffset);
 
-      arr.push({drift: Math.random() * 0.8 + 0.2, kpi: kpi, date: myDate})
+      arr.push({drift: Math.random() * 0.8 + 0.2, kpi: kpi[Math.floor(i/7)], date: myDate})
     }
 
     return arr

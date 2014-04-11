@@ -6064,6 +6064,18 @@ th.hide-for-touch {
     stroke: #ddd;
     stroke-width: 1;
     fill: none; }
+  .augur-performance .chart .threshold-line {
+    stroke: #6418a2;
+    stroke-width: 3;
+    fill: none; }
+  .augur-performance .chart .threshold-label rect {
+    stroke: #6418a2;
+    stroke-width: 3;
+    fill: white; }
+  .augur-performance .chart .legend {
+    stroke: #6418a2;
+    stroke-width: 3;
+    fill: white; }
 
 .augur-decision-tree .element-path {
   text-align: center; }
