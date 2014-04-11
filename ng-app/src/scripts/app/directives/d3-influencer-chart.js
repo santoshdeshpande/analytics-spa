@@ -33,8 +33,6 @@ define(['d3js'], function (d3) {
         var format = d3.format('.2%');
         var fontSize = d3.scale.linear().range([60, 240]).nice();
 
-        window.fontSize = fontSize;
-
         var radius = d3.scale.linear();
 
         var pack = d3.layout.pack()

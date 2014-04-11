@@ -50123,8 +50123,6 @@ define('directives/d3-influencer-chart',['d3js'], function (d3) {
         var format = d3.format('.2%');
         var fontSize = d3.scale.linear().range([60, 240]).nice();
 
-        window.fontSize = fontSize;
-
         var radius = d3.scale.linear();
 
         var pack = d3.layout.pack()
@@ -53218,7 +53216,7 @@ angular.module("template/typeahead/typeahead-popup.html", []).run(["$templateCac
     "");
 }]);
 
-define("mm-foundation-tpls", function(){});
+define("mm-foundation-tpls", ["angular"], function(){});
 
 /* global
  define: false,
@@ -56860,7 +56858,7 @@ require.config({
       exports : '_'
     },
 
-    'mm-foundation' : {
+    'mm-foundation-tpls' : {
       deps : [
         'angular'
       ]

@@ -10,10 +10,14 @@
      <link rel="stylesheet" href="styles/main.css">
      <script>
        var require = {
-           urlArgs : 'nocache=' + ( new Date() ).getTime()
+           urlArgs : 'nocache=' + ( new Date() ).getTime(),
+           baseUrl : 'scripts/app',
+           paths   : {
+               'partials-tpls.min' : './partials-tpls.min.dev'
+           }
        }
      </script>
-     <script data-main="scripts/main.js" src="scripts/lib/requirejs-2.1.10/require.js"></script>
+     <script data-main="../main.js" src="scripts/lib/requirejs-2.1.10/require.js"></script>
 
      <script src="scripts/lib/foundation-5.2.2/vendor/modernizr.js?body=1"></script>
      <script src="scripts/lib/foundation-5.2.2/vendor/jquery.js?body=1"></script>

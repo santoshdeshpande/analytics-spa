@@ -43,7 +43,7 @@ require.config({
       exports : '_'
     },
 
-    'mm-foundation' : {
+    'mm-foundation-tpls' : {
       deps : [
         'angular'
       ]
