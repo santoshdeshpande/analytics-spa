@@ -1,89 +1,95 @@
 <!DOCTYPE html>
 <html lang='en'>
   <head>
-    <meta content="authenticity_token" name="csrf-param" />
-    <meta content="I2pkr8OdwCbtg3bx7R/J3OgVuaP9DuCNmJveCr8F58c=" name="csrf-token" />
-
     <meta charset='utf-8'>
     <meta content='width=device-width, initial-scale=1.0' name='viewport'>
+    <meta content="authenticity_token" name="csrf-param" />
+    <meta content="hW4a2sijv3XgZxbMzMQV/+FXYx2daKnh2ejvgc1b+RI=" name="csrf-token" />
     <title>Dejalytics - NG</title>
-    <link rel="stylesheet" href="styles/bootstrap-glyphicons.css">
-    <link rel="stylesheet" href="styles/main.css">
+     <link rel="stylesheet" href="styles/bootstrap-glyphicons.css">
+     <link rel="stylesheet" href="styles/main.css">
+     <script>
+       var require = {
+           urlArgs : 'nocache=' + ( new Date() ).getTime()
+       }
+     </script>
+     <script data-main="scripts/main.js" src="scripts/lib/requirejs-2.1.10/require.js"></script>
 
+     <script src="scripts/lib/foundation-5.2.2/vendor/modernizr.js?body=1"></script>
+     <script src="scripts/lib/foundation-5.2.2/vendor/jquery.js?body=1"></script>
     <script>
-      var require = {
-          urlArgs : 'nocache=' + ( new Date() ).getTime()
-      }
-    </script>
-    <script data-main="scripts/main.js" src="scripts/lib/requirejs-2.1.10/require.js"></script>
-
-    <script src="scripts/lib/foundation-5.2.2/vendor/modernizr.js?body=1"></script>
-    <script src="scripts/lib/foundation-5.2.2/vendor/jquery.js?body=1"></script>
-    <script src="scripts/lib/foundation-5.2.2/foundation.min.js?body=1"></script>
-    <script>
-        $(document).foundation();
+      WebFontConfig = {
+        google: { families: ['Dosis'] }
+      };
+      (function() {
+        var wf = document.createElement('script');
+        wf.src = ('https:' == document.location.protocol ? 'https' : 'http') + '://ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js';
+        wf.type = 'text/javascript';
+        wf.async = 'true';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(wf, s);
+      })();
     </script>
   </head>
-  <body class='welcome index'>
+  <body class='dashboard index'>
     <div class='contain-to-grid'>
       <nav class='top-bar' data-topbar=''>
         <ul class='title-area'>
           <li class='name'>
             <h1>
-              <a href="#">Dejalytics</a>
+              <a href="/"><span class='logo'>
+                <img alt="Logo" src="//winegarden.juwalter.de/assets/logo-45f6d00a7481222bad6c7ee9f884c528.png" title="Dejalytics" />
+              </span>
+              </a>
             </h1>
           </li>
         </ul>
         <section class='top-bar-section'>
           <ul class='right'>
             <li>
-              <a href="#">Sign in and out</a>
+              <a data-method="delete" href="/users/sign_out" rel="nofollow">juwalter@gmail.com
+              (Sign out)
+              </a>
             </li>
           </ul>
         </section>
       </nav>
     </div>
-
-
-    <div class="view-container">
-      <div ui-view class="view-frame"></div>
+    <div class='app-nav-bar'>
+      <div class='row'>
+        <ul class='no-bullet inline-list'>
+          <li>
+            <a href="/"><span class='glyphicon glyphicon-dashboard'></span>
+            <span class='item-label'>
+              Dashboard
+            </span>
+            </a>
+          </li>
+          <li>
+            <span class='glyphicon glyphicon-headphones'></span>
+            <span class='item-label'>
+              Support
+            </span>
+          </li>
+          <li>
+            <span class='glyphicon glyphicon-user'></span>
+            <span class='item-label'>
+              Account
+            </span>
+          </li>
+        </ul>
+      </div>
     </div>
-
-
+    <div class='view-container'>
+      <div class='view-frame' ui-view=''></div>
+    </div>
     <footer>
       <div class='row'>
-        <div class='columns small-12'>
-          <hr>
-        </div>
-        <div class='columns small-6'>
+        <div class='columns small-6 end'>
           <p>© 2014 Dejalytics</p>
-        </div>
-        <div class='columns small-6'>
-          <ul class='small-block-grid-1 medium-block-grid-2 large-block-grid-3'>
-            <li>
-              <h6 class='subheader'>Community - TODO</h6>
-              <ul class='no-bullet'>
-                <li><a href="#">Support</a></li>
-                <li><a href="#">Forums</a></li>
-              </ul>
-            </li>
-            <li>
-              <h6 class='subheader'>Company - TODO</h6>
-              <ul class='no-bullet'>
-                <li><a href="#">Contact</a></li>
-                <li><a href="/terms_of_service">Terms of Service</a></li>
-              </ul>
-            </li>
-            <li>
-              <h6 class='subheader'>Engage - TODO</h6>
-              <ul class='no-bullet'>
-                <li><a href="#">Twitter</a></li>
-                <li><a href="#">Facebook</a></li>
-              </ul>
-            </li>
-          </ul>
         </div>
       </div>
     </footer>
   </body>
 </html>
+

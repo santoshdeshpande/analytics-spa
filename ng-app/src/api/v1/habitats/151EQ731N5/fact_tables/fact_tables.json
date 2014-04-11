@@ -1,0 +1,18 @@
+[
+  {
+    "id": "15418Q31N9",
+    "name": "EcommercePurchaes",
+    "description": "Some facts for the ecommerce purchase",
+    "code": "15418Q31N9",
+    "predictionTargetIds": ["var_1", "var_3", "var_5", "var_7", "var_9", "var_11", "var_13", "var_15", "var_17", "var_19", "var_21", "var_23", "var_25", "var_27", "var_29", "var_31", "var_33", "var_35", "var_37", "var_39", "var_41", "var_43", "var_45", "var_47", "var_49", "var_51", "var_53", "var_55", "var_57", "var_59", "var_61", "var_63", "var_65", "var_67", "var_69", "var_71", "var_73", "var_75", "var_77", "var_79", "var_81", "var_83", "var_85", "var_87", "var_89", "var_91", "var_93", "var_95", "var_97", "var_99"],
+    "habitatId": 1
+  },
+  {
+    "id": "15419J31NA",
+    "name": "ProfileChurn",
+    "description": "Some facts for the churn issues",
+    "code": "15419J31NA",
+    "predictionTargetIds": ["var_1", "var_3", "var_5", "var_7", "var_9", "var_11", "var_13", "var_15", "var_17", "var_19", "var_21", "var_23", "var_25", "var_27", "var_29", "var_31", "var_33", "var_35", "var_37", "var_39", "var_41", "var_43", "var_45", "var_47", "var_49", "var_51", "var_53", "var_55", "var_57", "var_59", "var_61", "var_63", "var_65", "var_67", "var_69", "var_71", "var_73", "var_75", "var_77", "var_79", "var_81", "var_83", "var_85", "var_87", "var_89", "var_91", "var_93", "var_95", "var_97", "var_99"],
+    "habitatId": 1
+  }
+]

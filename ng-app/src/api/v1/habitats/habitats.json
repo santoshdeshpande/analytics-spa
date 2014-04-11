@@ -1,12 +1,23 @@
 [
   {
-    "id": "1",
-    "name": "Habitat #1",
-    "description": "Habitat One"
+    "id": "151EQ731N5",
+    "name": "ThreeHabitat",
+    "description": "This is the third habitat",
+    "code": "151EQ731N5",
+    "colorScheme": "color-scheme-one"
   },
   {
-    "id": "2",
-    "name": "Habitat #2",
-    "description": "Habitat Two"
+    "id": "151ER431N7",
+    "name": "OneHabitat",
+    "description": "This is the first habitat",
+    "code": "151ER431N7",
+    "colorScheme": "color-scheme-three"
+  },
+  {
+    "id": "151ER431N6",
+    "name": "TwoHabitat",
+    "description": "This is the second habitat",
+    "code": "151ER431N6",
+    "colorScheme": "color-scheme-two"
   }
 ]

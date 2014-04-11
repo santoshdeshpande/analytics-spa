@@ -44,16 +44,34 @@ gulp.task('serve', function () {
       return next();
     });
 
-    app.use('/api/v1/habitats/1/fact_tables', function(req, res){
-      res.sendfile(__dirname + '/dist/api/v1/habitats/1/fact_tables/fact_tables.json')
+    app.use(function(req, res, next){
+      console.log('%s %s', req.method, req.url);
+      next();
     });
 
-    app.use('/api/v1/habitats', function(req, res){
-      res.sendfile(__dirname + '/dist/api/v1/habitats/habitats.json')
-    });
+    app.get('/api/v1/*', function (req, res) {
 
-    app.use('/api/v1/augurs', function(req, res){
-      res.sendfile(__dirname + '/dist/api/v1/augurs/augurs.json')
+      var json = '';
+      switch (true) {
+        case (!!req.url.match(/fact_tables$/)):
+          json = '/fact_tables.json';
+          break;
+        case (!!req.url.match(/augurs$/)):
+          json = '/augurs.json';
+          break;
+        case (!!req.url.match(/augurs\/.+$/)):
+          json = '/augur.json';
+          break;
+        case (!!req.url.match(/habitats$/)):
+          json = '/habitats.json';
+          break;
+        case (!!req.url.match(/habitats\/.+$/)):
+          json = '/habitat.json';
+          break;
+      }
+
+      console.log('-API- %s %s', json);
+      res.sendfile(__dirname + '/dist/' + req.url + json)
     });
 
     app.use(express.static(__dirname + '/dist'));
