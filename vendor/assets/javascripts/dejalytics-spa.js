@@ -39512,14 +39512,85 @@ define('services',[
  define: false,
  console: false
  */
+define('constants',[], function () {
+  
+
+  return {
+    KEY_PERFORMANCE_INDICATORS: [
+      {"key": "average_squared_error", "label": "Average Squared Error", "min": 0, "max": 1, "comparator": "gt"},
+      {"key": "area_under_the_curve", "label": "Area Under the Curve", "min": 0, "max": 1, "comparator": "lt"},
+      {"key": "true_positive_rate", "label": "True Positive Rate", "min": 0, "max": 1, "comparator": "lt"},
+      {"key": "true_negative_rate", "label": "True Negative Rate", "min": 0, "max": 1, "comparator": "lt"},
+      {"key": "false_positive_rate", "label": "False Positive Rate", "min": 0, "max": 1, "comparator": "gt"},
+      {"key": "false_negative_rate", "label": "False Negative Rate", "min": 0, "max": 1, "comparator": "gt"},
+      {"key": "sensitivity", "label": "Sensitivity", "min": 0, "max": 1, "comparator": "lt"},
+      {"key": "specificity", "label": "Specificity", "min": 0, "max": 1, "comparator": "lt"},
+      {"key": "accuracy", "label": "Accuracy", "min": 0, "max": 1, "comparator": "lt"},
+      {"key": "precision", "label": "Precision", "min": 0, "max": 1, "comparator": "lt"},
+      {"key": "negative_predictive_value", "label": "Negative Predictive Value", "min": 0, "max": 1, "comparator": "lt"},
+      {"key": "misclassification_rate", "label": "Misclassification Rate", "min": 0, "max": 1, "comparator": "gt"},
+      {"key": "cumulative_captured_response_top_10", "label": "Cumulative Captured Response Top 10%", "min": 0, "max": 1, "comparator": "lt"},
+      {"key": "cumulative_captured_response_top_25", "label": "Cumulative Captured Response Top 25%", "min": 0, "max": 1, "comparator": "lt"},
+      {"key": "cumulative_lift_top_10", "label": "Cumulative Lift Top 10%", "min": 0, "max": 1, "comparator": "lt"},
+      {"key": "cumulative_lift_top_25", "label": "Cumulative Lift Top 25%", "min": 0, "max": 1, "comparator": "lt"},
+      {"key": "cumulative_response_top_10", "label": "Cumulative Response Top 10%", "min": 0, "max": 1, "comparator": "lt"},
+      {"key": "cumulative_response_top_25", "label": "Cumulative Response Top 25%", "min": 0, "max": 1, "comparator": "lt"},
+      {"key": "f_score", "label": "F-Score", "min": 0, "max": 1, "comparator": "lt"},
+      {"key": "informedness", "label": "Informedness", "min": -1, "max": 1, "comparator": "lt"},
+      {"key": "markedness", "label": "Markedness", "min": -1, "max": 1, "comparator": "lt"},
+      {"key": "root_average_squared_error", "label": "Root Average Squared Error", "min": 0, "max": 1, "comparator": "gt"},
+      {"key": "maximum_absolute_error", "label": "Maximum Absolute Error", "min": 0, "max": 1, "comparator": "gt"},
+      {"key": "gini_coefficient", "label": "Gini Coefficient", "min": 0, "max": 1, "comparator": "lt"}
+    ],
+    DAYS_IN_MONTH: [
+      {"key": 1, "label": "1st"},
+      {"key": 2, "label": "2nd"},
+      {"key": 3, "label": "3rd"},
+      {"key": 4, "label": "4th"},
+      {"key": 5, "label": "5th"},
+      {"key": 6, "label": "6th"},
+      {"key": 7, "label": "7th"},
+      {"key": 8, "label": "8th"},
+      {"key": 9, "label": "9th"},
+      {"key": 10, "label": "10th"},
+      {"key": 11, "label": "11th"},
+      {"key": 12, "label": "12th"},
+      {"key": 13, "label": "13th"},
+      {"key": 14, "label": "14th"},
+      {"key": 15, "label": "15th"},
+      {"key": 16, "label": "16th"},
+      {"key": 17, "label": "17th"},
+      {"key": 18, "label": "18th"},
+      {"key": 19, "label": "19th"},
+      {"key": 20, "label": "20th"},
+      {"key": 21, "label": "21st"},
+      {"key": 22, "label": "22nd"},
+      {"key": 23, "label": "23rd"},
+      {"key": 24, "label": "24th"},
+      {"key": 25, "label": "25th"},
+      {"key": 26, "label": "26th"},
+      {"key": 27, "label": "27th"},
+      {"key": 28, "label": "28th"}
+    ]
+  }
+
+});
+
+/* global
+ define: false,
+ console: false
+ */
 define('controllers/augur-new',[
-  'lodash'
-], function (_) {
+  'lodash',
+  '../constants'
+], function (_, Constants) {
   
 
   return  ['$state', '$scope', 'Augur', 'FactTable', 'Habitat', function ($state, $scope, Augur, FactTable, Habitat) {
-    $scope.DAYS_IN_MONTH = [{"key":1,"label":"1st"},{"key":2,"label":"2nd"},{"key":3,"label":"3rd"},{"key":4,"label":"4th"},{"key":5,"label":"5th"},{"key":6,"label":"6th"},{"key":7,"label":"7th"},{"key":8,"label":"8th"},{"key":9,"label":"9th"},{"key":10,"label":"10th"},{"key":11,"label":"11th"},{"key":12,"label":"12th"},{"key":13,"label":"13th"},{"key":14,"label":"14th"},{"key":15,"label":"15th"},{"key":16,"label":"16th"},{"key":17,"label":"17th"},{"key":18,"label":"18th"},{"key":19,"label":"19th"},{"key":20,"label":"20th"},{"key":21,"label":"21st"},{"key":22,"label":"22nd"},{"key":23,"label":"23rd"},{"key":24,"label":"24th"},{"key":25,"label":"25th"},{"key":26,"label":"26th"},{"key":27,"label":"27th"},{"key":28,"label":"28th"}];
-    $scope.KEY_PERFORMANCE_INDICATORS = [{"key":"average_squared_error","label":"Average Squared Error","min":0,"max":1,"comparator":"gt"},{"key":"area_under_the_curve","label":"Area Under the Curve","min":0,"max":1,"comparator":"lt"},{"key":"true_positive_rate","label":"True Positive Rate","min":0,"max":1,"comparator":"lt"},{"key":"true_negative_rate","label":"True Negative Rate","min":0,"max":1,"comparator":"lt"},{"key":"false_positive_rate","label":"False Positive Rate","min":0,"max":1,"comparator":"gt"},{"key":"false_negative_rate","label":"False Negative Rate","min":0,"max":1,"comparator":"gt"},{"key":"sensitivity","label":"Sensitivity","min":0,"max":1,"comparator":"lt"},{"key":"specificity","label":"Specificity","min":0,"max":1,"comparator":"lt"},{"key":"accuracy","label":"Accuracy","min":0,"max":1,"comparator":"lt"},{"key":"precision","label":"Precision","min":0,"max":1,"comparator":"lt"},{"key":"negative_predictive_value","label":"Negative Predictive Value","min":0,"max":1,"comparator":"lt"},{"key":"misclassification_rate","label":"Misclassification Rate","min":0,"max":1,"comparator":"gt"},{"key":"cumulative_captured_response_top_10","label":"Cumulative Captured Response Top 10%","min":0,"max":1,"comparator":"lt"},{"key":"cumulative_captured_response_top_25","label":"Cumulative Captured Response Top 25%","min":0,"max":1,"comparator":"lt"},{"key":"cumulative_lift_top_10","label":"Cumulative Lift Top 10%","min":0,"max":1,"comparator":"lt"},{"key":"cumulative_lift_top_25","label":"Cumulative Lift Top 25%","min":0,"max":1,"comparator":"lt"},{"key":"cumulative_response_top_10","label":"Cumulative Response Top 10%","min":0,"max":1,"comparator":"lt"},{"key":"cumulative_response_top_25","label":"Cumulative Response Top 25%","min":0,"max":1,"comparator":"lt"},{"key":"f_score","label":"F-Score","min":0,"max":1,"comparator":"lt"},{"key":"informedness","label":"Informedness","min":-1,"max":1,"comparator":"lt"},{"key":"markedness","label":"Markedness","min":-1,"max":1,"comparator":"lt"},{"key":"root_average_squared_error","label":"Root Average Squared Error","min":0,"max":1,"comparator":"gt"},{"key":"maximum_absolute_error","label":"Maximum Absolute Error","min":0,"max":1,"comparator":"gt"},{"key":"gini_coefficient","label":"Gini Coefficient","min":0,"max":1,"comparator":"lt"}];
+    $scope.DAYS_IN_MONTH = Constants.DAYS_IN_MONTH;
+    $scope.KEY_PERFORMANCE_INDICATORS = Constants.KEY_PERFORMANCE_INDICATORS;
+
+    console.log(Constants)
 
     $scope.habitats = [];
     $scope.factTables = [];
@@ -39958,38 +40029,73 @@ define('controllers/augur-influencers',[], function () {
  define: false,
  console: false
  */
-define('controllers/augur-performance',[], function () {
+define('controllers/augur-performance',[
+  '../constants'
+], function (Constants) {
   
 
-  function randomData() {
-    var arr = [];
-    var kpi = [
-        Math.random() * 0.4 + 0.2,
-        Math.random() * 0.4 + 0.2,
-        Math.random() * 0.4 + 0.2,
-        Math.random() * 0.4 + 0.2,
-        Math.random() * 0.4 + 0.2,
-        Math.random() * 0.4 + 0.2,
-        Math.random() * 0.4 + 0.2,
-        Math.random() * 0.4 + 0.2
-    ];
-    var days = (Math.round(Math.random() * 15) + 15);
-
-    for (var i = 0; i < days; i++) {
-      var dateOffset = (24*60*60*1000) * (days - i);
-      var myDate = new Date();
-      myDate.setTime(myDate.getTime() - dateOffset);
-
-      arr.push({drift: Math.random() * 0.8 + 0.2, kpi: kpi[Math.floor(i/7)], date: myDate})
-    }
-
-    return arr
-  }
-
-  return  ['$state', '$scope', '$stateParams', 'Augur', 'Habitat', function ($state, $scope, $stateParams, Augur, Habitat) {
+  return  ['$state', '$scope', '$stateParams', '$q', '$timeout', 'Augur', 'Habitat', function ($state, $scope, $stateParams, $q, $timeout, Augur, Habitat) {
     $scope.trackCurrentState($state.current.name); // inherited from parent augur.js
 
-    $scope.data = randomData();
+    $scope.evaluation = {
+      activeIndicator: { },
+      data: {}
+    };
+
+    $scope.learning = {
+      activeIndicator: { },
+      data: {}
+    };
+
+    $scope.indicators = [
+      Constants.KEY_PERFORMANCE_INDICATORS.slice(0, Constants.KEY_PERFORMANCE_INDICATORS.length/3),
+      Constants.KEY_PERFORMANCE_INDICATORS.slice(Constants.KEY_PERFORMANCE_INDICATORS.length/3, 2 * Constants.KEY_PERFORMANCE_INDICATORS.length/3),
+      Constants.KEY_PERFORMANCE_INDICATORS.slice(2 * Constants.KEY_PERFORMANCE_INDICATORS.length/3, Constants.KEY_PERFORMANCE_INDICATORS.length)
+    ];
+
+    $scope.$watch('learning.activeIndicator', function(value){
+      $scope.learning.data = $scope.allData[value.key];
+    });
+
+    $scope.$watch('evaluation.activeIndicator', function(value){
+      $scope.evaluation.data = $scope.allData[value.key];
+    });
+
+    randomData().then(function(data){
+      $scope.allData = data;
+      $scope.learning.activeIndicator   = { key: 'misclassification_rate', label: 'Misclassification Rate' };
+      $scope.evaluation.activeIndicator = { key: 'false_positive_rate',    label: 'False Positive Rate'    };
+    });
+
+    function randomData() {
+      var deferred = $q.defer();
+
+      var data = {};
+      var thresholds = [
+          Math.random() * 0.4 + 0.2, Math.random() * 0.4 + 0.2, Math.random() * 0.4 + 0.2, Math.random() * 0.4 + 0.2,
+          Math.random() * 0.4 + 0.2, Math.random() * 0.4 + 0.2, Math.random() * 0.4 + 0.2, Math.random() * 0.4 + 0.2
+      ];
+      var days = (Math.round(Math.random() * 15) + 15);
+
+      angular.forEach(Constants.KEY_PERFORMANCE_INDICATORS, function ( indicator ) {
+        var arr = [];
+
+        for ( var i = 0; i < days; i++ ) {
+          var dateOffset = (24 * 60 * 60 * 1000) * (days - i);
+          var myDate = new Date();
+          myDate.setTime(myDate.getTime() - dateOffset);
+
+          arr.push({drift: Math.random() * 0.8 + 0.2, threshold: thresholds[Math.floor(i / 7)], date: myDate})
+        }
+        data[indicator.key] = arr;
+
+        if ( Constants.KEY_PERFORMANCE_INDICATORS.indexOf(indicator) === Constants.KEY_PERFORMANCE_INDICATORS.length - 1 ) {
+          deferred.resolve(data)
+        }
+      });
+
+      return deferred.promise;
+    }
   }];
 });
 
@@ -50359,15 +50465,13 @@ define('directives/d3-performance-chart',[
     return {
       restrict: 'E',
       scope: {
-        data: '=',
-        label: '@',
-        onClick: '&'
+        data: '='
       },
       link: function (scope, ele, attrs) {
         var renderTimeout;
         // define dimensions of graph
 
-        var margin = { top: 100, right: 10, bottom: 20, left: 30 },
+        var margin = { top: 10, right: 10, bottom: 20, left: 30 },
             width  = 840 - margin.left - margin.right,
             height = 600 - margin.top - margin.bottom;
 
@@ -50376,9 +50480,10 @@ define('directives/d3-performance-chart',[
         var y = d3.scale.linear().range([height, 0]);
         var svg = d3.select(ele[0]).append('svg')
           .attr('width', width + margin.left + margin.right)
-          .attr('height', height + margin.top + margin.bottom)
-          .append('g')
-          .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+          .attr('height', height + margin.top + margin.bottom);
+
+        var graph = svg.append('g')
+            .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
         var defs = svg.append('defs');
         var gradientForegroundPurple = defs.append('linearGradient')
@@ -50396,10 +50501,13 @@ define('directives/d3-performance-chart',[
         }, true);
 
         scope.render = function (data) {
+          graph.selectAll('*').remove();
+
           if (!data) return;
           if (renderTimeout) clearTimeout(renderTimeout);
 
           renderTimeout = $timeout(function () {
+
             y.domain([0, d3.max(data, function (d) { return d.drift })]);
 
             // helplines
@@ -50410,7 +50518,7 @@ define('directives/d3-performance-chart',[
               .y(function (d) { return y(d[1]) });
 
             angular.forEach(yHelplineTicks, function(yValue){
-              var path = svg.append('path')
+              var path = graph.append('path')
                 .attr('d', helpline([
                   [ 0, yValue ],
                   [ 31, yValue ]
@@ -50420,16 +50528,16 @@ define('directives/d3-performance-chart',[
 
             // create left yAxis
             var yAxisLeft = d3.svg.axis().scale(y).orient('left');
-            svg.append('g')
+            graph.append('g')
               .attr('transform', 'translate(5,0)')
               .attr('class', 'y axis')
               .call(yAxisLeft);
 
             // bars
-            svg.selectAll('.bar')
+            graph.selectAll('.bar')
               .data(data)
               .enter().append('rect')
-              .attr('class', function(d) { return d.drift > d.kpi ? 'bar' : 'bar solid' })
+              .attr('class', function(d) { return d.drift > d.threshold ? 'bar' : 'bar solid' })
               .attr('x', function (d, i) { return x(i) })
               .attr('width', x.rangeBand())
               .attr('y', function (d) { return y(d.drift) })
@@ -50444,7 +50552,7 @@ define('directives/d3-performance-chart',[
             }
 
             // threshold line
-            var thresholds = data.map(function(d) { return d.kpi });
+            var thresholds = data.map(function(d) { return d.threshold });
             var thresholdChangeIndexes = [];
             var thresholdLineData = [];
             for (var i = 0; i < thresholds.length; i++) {
@@ -50458,17 +50566,17 @@ define('directives/d3-performance-chart',[
               .x(function (d) { return x(d[0]) - x.rangeBand()})
               .y(function (d) { return y(d[1]) });
 
-            var path = svg.append('path')
+            var path = graph.append('path')
               .attr('d', thresholdLine(thresholdLineData))
               .attr('stroke-dasharray', '5 , 5')
               .attr('class', 'threshold-line');
 
-            var labelEnter = svg.selectAll('.threshold-label')
+            var labelEnter = graph.selectAll('.threshold-label')
               .data(data.filter(function(d, i) { return thresholdChangeIndexes.indexOf(i) > -1 }))
               .enter().append('g')
               .attr('class', 'threshold-label')
               .attr('transform', function(d) {
-                return 'translate(' + (x(data.indexOf(d)) - 28) + ',' + (y(d.kpi) - 40) + ')';
+                return 'translate(' + (x(data.indexOf(d)) - 28) + ',' + (y(d.threshold) - 40) + ')';
               });
 
             labelEnter.append('rect')
@@ -50481,9 +50589,9 @@ define('directives/d3-performance-chart',[
               .attr('dx', '2.1em')
               .attr('dy', '1.3em')
               .style('text-anchor', 'middle')
-              .text(function(d){ return format(d.kpi) });
+              .text(function(d){ return format(d.threshold) });
 
-            var legend = svg.append('g')
+            var legend = graph.append('g')
                 .attr('transform', 'translate(' + (x(29)) + ',' + (y(0) - 15) + ')');
 
             legend.append('rect')
@@ -56850,7 +56958,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('partials/augur-performance-evaluation.html',
-    '<div class=\'row augur-performance\'><div class=\'columns small-12\'><div class=\'heading\'><h1>Performance drift (Evaluation)</h1><h6 class=\'subheader\'>Changes in the evaluation data runs over the last 30 days</h6></div><div class=\'chart\'><d3-performance-chart data=\'data\' mode=\'evaluation\'></d3-performance-chart></div></div></div>');
+    '<div class=\'augur-performance\'><div class=\'row\'><div class=\'columns small-12\'><div class=\'heading\'><h3 class=\'title\'> Performance drift (Evaluation) — <span class=\'dropdown\'><a dropdown-toggle=\'#options\'>{{ evaluation.activeIndicator.label }}</a></span></h3><h6 class=\'subheader\'>Changes in the evaluation data runs over the last 30 days</h6></div></div></div><div class=\'row selection\' id=\'selection\'><div class=\'columns small-12\'><div class=\'options\' id=\'options\'><ul class=\'no-bullet inline-list\'><li class=\'left\'><ul class=\'no-bullet indicators\'><li ng-class=\'{active: evaluation.activeIndicator.key===indicator.key}\' ng-repeat=\'indicator in indicators[0]\'> <label><input ng-model=\'$parent.evaluation.activeIndicator\' ng-value=\'indicator\' type=\'radio\'> {{ indicator.label }}<span class=\'glyphicon glyphicon-ok-circle\'></span></label></li></ul></li><li class=\'middle\'><ul class=\'no-bullet indicators\'><li ng-class=\'{active: evaluation.activeIndicator.key===indicator.key}\' ng-repeat=\'indicator in indicators[1]\'> <label><input ng-model=\'$parent.evaluation.activeIndicator\' ng-value=\'indicator\' type=\'radio\'> {{ indicator.label }}<span class=\'glyphicon glyphicon-ok-circle\'></span></label></li></ul></li><li class=\'right\'><ul class=\'no-bullet indicators\'><li ng-class=\'{active: evaluation.activeIndicator.key===indicator.key}\' ng-repeat=\'indicator in indicators[2]\'> <label><input ng-model=\'$parent.evaluation.activeIndicator\' ng-value=\'indicator\' type=\'radio\'> {{ indicator.label }}<span class=\'glyphicon glyphicon-ok-circle\'></span></label></li></ul></li></ul></div></div></div><div class=\'row\'><div class=\'columns small-12\'><div class=\'chart\'><d3-performance-chart data=\'evaluation.data\' mode=\'evaluation\'></d3-performance-chart></div></div></div></div>');
 }]);
 })();
 
@@ -56862,7 +56970,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('partials/augur-performance-learning.html',
-    '<div class=\'row augur-performance\'><div class=\'columns small-12\'><div class=\'heading\'><h1>Performance drift (Learning)</h1><h6 class=\'subheader\'>Changes in the learning data runs over the last 30 days</h6></div><div class=\'chart\'><d3-performance-chart data=\'data\' mode=\'learning\'></d3-performance-chart></div></div></div>');
+    '<div class=\'augur-performance\'><div class=\'row\'><div class=\'columns small-12\'><div class=\'heading\'><h3 class=\'title\'> Performance drift (learning) — <span class=\'dropdown\'><a dropdown-toggle=\'#options\'>{{ learning.activeIndicator.label }}</a></span></h3><h6 class=\'subheader\'>Changes in the learning data runs over the last 30 days</h6></div></div></div><div class=\'row selection\' id=\'selection\'><div class=\'columns small-12\'><div class=\'options\' id=\'options\'><ul class=\'no-bullet inline-list\'><li class=\'left\'><ul class=\'no-bullet indicators\'><li ng-class=\'{active: learning.activeIndicator.key===indicator.key}\' ng-repeat=\'indicator in indicators[0]\'> <label><input ng-model=\'$parent.learning.activeIndicator\' ng-value=\'indicator\' type=\'radio\'> {{ indicator.label }}<span class=\'glyphicon glyphicon-ok-circle\'></span></label></li></ul></li><li class=\'middle\'><ul class=\'no-bullet indicators\'><li ng-class=\'{active: learning.activeIndicator.key===indicator.key}\' ng-repeat=\'indicator in indicators[1]\'> <label><input ng-model=\'$parent.learning.activeIndicator\' ng-value=\'indicator\' type=\'radio\'> {{ indicator.label }}<span class=\'glyphicon glyphicon-ok-circle\'></span></label></li></ul></li><li class=\'right\'><ul class=\'no-bullet indicators\'><li ng-class=\'{active: learning.activeIndicator.key===indicator.key}\' ng-repeat=\'indicator in indicators[2]\'> <label><input ng-model=\'$parent.learning.activeIndicator\' ng-value=\'indicator\' type=\'radio\'> {{ indicator.label }}<span class=\'glyphicon glyphicon-ok-circle\'></span></label></li></ul></li></ul></div></div></div><div class=\'row\'><div class=\'columns small-12\'><div class=\'chart\'><d3-performance-chart data=\'learning.data\' mode=\'learning\'></d3-performance-chart></div></div></div></div>');
 }]);
 })();
 

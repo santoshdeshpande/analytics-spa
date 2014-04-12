@@ -1,7 +1,44 @@
-.row.augur-performance
-  .columns.small-12
-    .heading
-      %h1 Performance drift (Learning)
-      %h6.subheader Changes in the learning data runs over the last 30 days
-    .chart
-      %d3-performance-chart{ data: 'data', mode: 'learning' }
+.augur-performance
+  .row
+    .columns.small-12
+      .heading
+        %h3.title
+          Performance drift (learning)
+          —
+          %span.dropdown
+            %a{ dropdown: { toggle: '#options' }}
+              {{ learning.activeIndicator.label }}
+        %h6.subheader Changes in the learning data runs over the last 30 days
+
+  .row.selection#selection
+    .columns.small-12
+      .options#options
+        %ul.no-bullet.inline-list
+          %li.left
+            %ul.no-bullet.indicators
+              %li{ ng: { repeat: 'indicator in indicators[0]', class: '{active: learning.activeIndicator.key===indicator.key}' } }
+                %label
+                  %input{ type: 'radio', ng: { model: '$parent.learning.activeIndicator', value: 'indicator' } }
+                  {{ indicator.label }}
+                  %span.glyphicon.glyphicon-ok-circle
+
+          %li.middle
+            %ul.no-bullet.indicators
+              %li{ ng: { repeat: 'indicator in indicators[1]', class: '{active: learning.activeIndicator.key===indicator.key}' } }
+                %label
+                  %input{ type: 'radio', ng: { model: '$parent.learning.activeIndicator', value: 'indicator' } }
+                  {{ indicator.label }}
+                  %span.glyphicon.glyphicon-ok-circle
+
+          %li.right
+            %ul.no-bullet.indicators
+              %li{ ng: { repeat: 'indicator in indicators[2]', class: '{active: learning.activeIndicator.key===indicator.key}' } }
+                %label
+                  %input{ type: 'radio', ng: { model: '$parent.learning.activeIndicator', value: 'indicator' } }
+                  {{ indicator.label }}
+                  %span.glyphicon.glyphicon-ok-circle
+
+  .row
+    .columns.small-12
+      .chart
+        %d3-performance-chart{ data: 'learning.data', mode: 'learning' }

@@ -12,15 +12,13 @@ define([
     return {
       restrict: 'E',
       scope: {
-        data: '=',
-        label: '@',
-        onClick: '&'
+        data: '='
       },
       link: function (scope, ele, attrs) {
         var renderTimeout;
         // define dimensions of graph
 
-        var margin = { top: 100, right: 10, bottom: 20, left: 30 },
+        var margin = { top: 10, right: 10, bottom: 20, left: 30 },
             width  = 840 - margin.left - margin.right,
             height = 600 - margin.top - margin.bottom;
 
@@ -50,11 +48,12 @@ define([
         }, true);
 
         scope.render = function (data) {
+          graph.selectAll('*').remove();
+
           if (!data) return;
           if (renderTimeout) clearTimeout(renderTimeout);
 
           renderTimeout = $timeout(function () {
-            graph.selectAll('*').remove();
 
             y.domain([0, d3.max(data, function (d) { return d.drift })]);
 
@@ -85,7 +84,7 @@ define([
             graph.selectAll('.bar')
               .data(data)
               .enter().append('rect')
-              .attr('class', function(d) { return d.drift > d.kpi ? 'bar' : 'bar solid' })
+              .attr('class', function(d) { return d.drift > d.threshold ? 'bar' : 'bar solid' })
               .attr('x', function (d, i) { return x(i) })
               .attr('width', x.rangeBand())
               .attr('y', function (d) { return y(d.drift) })
@@ -100,7 +99,7 @@ define([
             }
 
             // threshold line
-            var thresholds = data.map(function(d) { return d.kpi });
+            var thresholds = data.map(function(d) { return d.threshold });
             var thresholdChangeIndexes = [];
             var thresholdLineData = [];
             for (var i = 0; i < thresholds.length; i++) {
@@ -124,7 +123,7 @@ define([
               .enter().append('g')
               .attr('class', 'threshold-label')
               .attr('transform', function(d) {
-                return 'translate(' + (x(data.indexOf(d)) - 28) + ',' + (y(d.kpi) - 40) + ')';
+                return 'translate(' + (x(data.indexOf(d)) - 28) + ',' + (y(d.threshold) - 40) + ')';
               });
 
             labelEnter.append('rect')
@@ -137,7 +136,7 @@ define([
               .attr('dx', '2.1em')
               .attr('dy', '1.3em')
               .style('text-anchor', 'middle')
-              .text(function(d){ return format(d.kpi) });
+              .text(function(d){ return format(d.threshold) });
 
             var legend = graph.append('g')
                 .attr('transform', 'translate(' + (x(29)) + ',' + (y(0) - 15) + ')');

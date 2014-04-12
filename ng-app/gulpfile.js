@@ -149,7 +149,6 @@ gulp.task('haml', function () {
     .src(['src/partials*/**/*.haml'])
     .pipe(haml())
     .pipe(gulp.dest('dist/'))
-    .pipe(livereload(lrserver))
     .pipe(notify({ message: 'Haml task complete' }));
 });
 
