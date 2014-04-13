@@ -6,3 +6,107 @@ $color-scheme-two-dark: #8542CA;
 $color-scheme-two-light: #F5EEFD;
 $color-scheme-three-dark: #569535;
 $color-scheme-three-light: #FDFFFA;
+
+
+
+$blue   : #009fde;
+$teal   : #00daae;
+$green  : #48aa06;
+$orange : #ff8f00;
+$pink   : #ff3a5f;
+$purple : #902cba;
+$red    : #FF4136;
+
+//$dark-blue   : darken( $blue, 10 );
+//$dark-teal   : darken( $teal, 10 );
+//$dark-green  : darken( $green, 10 );
+//$dark-orange : darken( $orange, 10 );
+//$dark-pink   : darken( $pink, 15 );
+//$dark-purple : darken( $purple, 10 );
+//$dark-red    : darken( $red, 20 );
+//
+//@mixin themes( $primaryProp: false, $secondaryProp: false ) {
+//  .theme\:blue & {
+//    @if $primaryProp {
+//      #{$primaryProp} : $blue;
+//    }
+//    @if $secondaryProp {
+//      #{$secondaryProp} : $dark-blue;
+//    }
+//  }
+//
+//  .theme\:teal & {
+//    @if $primaryProp {
+//      #{$primaryProp} : $teal;
+//    }
+//    @if $secondaryProp {
+//      #{$secondaryProp} : $dark-teal;
+//    }
+//  }
+//
+//  .theme\:green & {
+//    @if $primaryProp {
+//      #{$primaryProp} : $green;
+//    }
+//    @if $secondaryProp {
+//      #{$secondaryProp} : $dark-green;
+//    }
+//  }
+//
+//  .theme\:orange & {
+//    @if $primaryProp {
+//      #{$primaryProp} : $orange;
+//    }
+//    @if $secondaryProp {
+//      #{$secondaryProp} : $dark-orange;
+//    }
+//  }
+//
+//  .theme\:pink & {
+//    @if $primaryProp {
+//      #{$primaryProp} : $pink;
+//    }
+//    @if $secondaryProp {
+//      #{$secondaryProp} : $dark-pink;
+//    }
+//  }
+//
+//  .theme\:purple & {
+//    @if $primaryProp {
+//      #{$primaryProp} : $purple;
+//    }
+//    @if $secondaryProp {
+//      #{$secondaryProp} : $dark-purple;
+//    }
+//  }
+//
+//  .theme\:red & {
+//    @if $primaryProp {
+//      #{$primaryProp} : $red;
+//    }
+//    @if $secondaryProp {
+//      #{$secondaryProp} : $dark-red;
+//    }
+//  }
+//}
+//
+//button {
+//  @include themes( border-color, color );
+//
+//  background: none;
+//
+//  padding: 1rem;
+//  border: 1px solid black;
+//  border-radius: 1rem;
+//  font-size: 1rem;
+//}
+//
+//span {
+//  @include themes( background );
+//  padding: .25rem;
+//  color: #fff;
+//}
+//
+//b {
+//  @include themes( $secondaryProp : color );
+//}

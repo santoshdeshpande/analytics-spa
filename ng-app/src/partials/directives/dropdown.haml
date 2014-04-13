@@ -1,0 +1,5 @@
+.dropdown
+  %a.dropdown-trigger{ ng: { click: 'toggle()', data: { count: '{{ counter }}' }, class: '{active: toggled }' }}
+    %span
+      {{ label }}
+  .dropdown-content{ ng: { transclude: '', if: 'toggled' } }

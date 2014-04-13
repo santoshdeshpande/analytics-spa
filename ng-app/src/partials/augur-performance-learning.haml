@@ -5,39 +5,36 @@
         %h3.title
           Performance drift (learning)
           —
-          %span.dropdown
-            %a{ dropdown: { toggle: '#options' }}
-              {{ learning.activeIndicator.label }}
+          %dropdown{ label: 'learning.activeIndicator.label' }
+            .row.selection#selection
+              .columns.small-12
+                .options#options
+                  %ul.no-bullet.inline-list
+                    %li.left
+                      %ul.no-bullet.indicators
+                        %li{ ng: { repeat: 'indicator in indicators[0]', class: '{active: learning.activeIndicator.key===indicator.key}' } }
+                          %label
+                            %input{ type: 'radio', ng: { model: '$parent.learning.activeIndicator', value: 'indicator' } }
+                            {{ indicator.label }}
+                            %span.glyphicon.glyphicon-ok-circle
+
+                    %li.middle
+                      %ul.no-bullet.indicators
+                        %li{ ng: { repeat: 'indicator in indicators[1]', class: '{active: learning.activeIndicator.key===indicator.key}' } }
+                          %label
+                            %input{ type: 'radio', ng: { model: '$parent.learning.activeIndicator', value: 'indicator' } }
+                            {{ indicator.label }}
+                            %span.glyphicon.glyphicon-ok-circle
+
+                    %li.right
+                      %ul.no-bullet.indicators
+                        %li{ ng: { repeat: 'indicator in indicators[2]', class: '{active: learning.activeIndicator.key===indicator.key}' } }
+                          %label
+                            %input{ type: 'radio', ng: { model: '$parent.learning.activeIndicator', value: 'indicator' } }
+                            {{ indicator.label }}
+                            %span.glyphicon.glyphicon-ok-circle
+
         %h6.subheader Changes in the learning data runs over the last 30 days
-
-  .row.selection#selection
-    .columns.small-12
-      .options#options
-        %ul.no-bullet.inline-list
-          %li.left
-            %ul.no-bullet.indicators
-              %li{ ng: { repeat: 'indicator in indicators[0]', class: '{active: learning.activeIndicator.key===indicator.key}' } }
-                %label
-                  %input{ type: 'radio', ng: { model: '$parent.learning.activeIndicator', value: 'indicator' } }
-                  {{ indicator.label }}
-                  %span.glyphicon.glyphicon-ok-circle
-
-          %li.middle
-            %ul.no-bullet.indicators
-              %li{ ng: { repeat: 'indicator in indicators[1]', class: '{active: learning.activeIndicator.key===indicator.key}' } }
-                %label
-                  %input{ type: 'radio', ng: { model: '$parent.learning.activeIndicator', value: 'indicator' } }
-                  {{ indicator.label }}
-                  %span.glyphicon.glyphicon-ok-circle
-
-          %li.right
-            %ul.no-bullet.indicators
-              %li{ ng: { repeat: 'indicator in indicators[2]', class: '{active: learning.activeIndicator.key===indicator.key}' } }
-                %label
-                  %input{ type: 'radio', ng: { model: '$parent.learning.activeIndicator', value: 'indicator' } }
-                  {{ indicator.label }}
-                  %span.glyphicon.glyphicon-ok-circle
-
   .row
     .columns.small-12
       .chart

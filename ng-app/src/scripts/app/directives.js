@@ -12,6 +12,7 @@ define([
   'directives/d3-performance-chart',
   'directives/d3-pie-chart',
   'directives/d3-roc-chart',
+  'directives/dropdown',
   'directives/unique-augur-name',
   'directives/threshold-in-range',
   'mm-foundation-tpls'
@@ -24,6 +25,7 @@ define([
               D3PerformanceChart,
               D3PieChart,
               D3RocChart,
+              Dropdown,
               UniqueAugurName,
               ThresholdInRange) {
   'use strict';
@@ -37,6 +39,7 @@ define([
     .directive('d3PerformanceChart', D3PerformanceChart)
     .directive('d3PieChart', D3PieChart)
     .directive('d3RocChart', D3RocChart)
+    .directive('dropdown', Dropdown)
     .directive('uniqueAugurName', UniqueAugurName)
     .directive('thresholdInRange', ThresholdInRange);
 });
