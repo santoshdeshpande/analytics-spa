@@ -159,7 +159,15 @@ gulp.task('haml', function () {
     .pipe(notify({ message: 'Haml task complete' }));
 });
 
-gulp.task('templates', ['haml'], function () {
+gulp.task('haml-build', function () {
+  return gulp
+    .src(['src/partials*/**/*.haml'])
+    .pipe(haml())
+    .pipe(gulp.dest('dist/'))
+    .pipe(notify({ message: 'Haml task complete' }));
+});
+
+gulp.task('templates', ['haml-build'], function () {
   return gulp
     .src(['dist/partials*/**/*.html'])
     .pipe(cleanhtml())

@@ -11,7 +11,7 @@ define([
   function directive() {
     return {
       restrict: 'E',
-      templateUrl: '/partials/directives/dropdown.html',
+      templateUrl: 'partials/directives/dropdown.html',
       controller: controller,
       transclude: true,
       replace: true,

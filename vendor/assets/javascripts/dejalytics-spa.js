@@ -39744,18 +39744,38 @@ define('controllers/augur-new',[
 define('controllers/augur',[], function () {
   
 
-  return  ['$state', '$scope', '$stateParams', 'Augur', 'Habitat', function ($state, $scope, $stateParams, Augur, Habitat) {
-    $scope.augur = Augur.get({ habitatId: $stateParams.habitatId, augurId: $stateParams.augurId });
-    $scope.habitat = Habitat.get({ habitatId: $stateParams.habitatId });
+  function controller($state, $scope, $stateParams, $rootScope, Augur, Habitat) {
+    $scope.statePerformance = 'augur.performance.learning'; // start state for first visit
 
-    $scope.statePerformance = 'augur.performance.learning';
-    $scope.trackCurrentState = function (currentChildState) {
+    $scope.augur = Augur.get({
+      habitatId: $stateParams.habitatId,
+      augurId: $stateParams.augurId
+    });
+    $scope.habitat = Habitat.get({
+      habitatId: $stateParams.habitatId
+    })
+      .$promise
+        .then( function ( habitat ) {
+          if ( habitat.colorScheme ) {
+            $rootScope.$broadcast( 'theme', habitat.colorScheme );
+          }
+        });
+
+    function trackCurrentState(currentChildState) {
       $scope.statePerformance = currentChildState;
-    };
-    $scope.activatePerformanceState = function () {
-      $state.transitionTo($scope.statePerformance, { habitatId: $stateParams.habitatId, augurId: $stateParams.augurId });
     }
-  }];
+    function activatePerformanceState() {
+      $state.go($scope.statePerformance, {
+        habitatId: $stateParams.habitatId,
+        augurId: $stateParams.augurId
+      });
+    }
+
+    $scope.trackCurrentState = trackCurrentState;
+    $scope.activatePerformanceState = activatePerformanceState;
+  }
+
+  return  ['$state', '$scope', '$stateParams', '$rootScope', 'Augur', 'Habitat', controller];
 });
 
 /* global
@@ -40531,6 +40551,30 @@ define('controllers/dashboard',[], function () {
     $scope.artifacts = [];
     $scope.selectedArtifactTypes = { augur: true, habitat: true, factTable: true };
     $scope.artifactsQuery = '';
+
+    $scope.data = [
+      [0, 0.2892958817017044],
+      [1, 0.9705644082535015],
+      [2, 0.6097862345277262],
+      [3, 0.8966801796251629],
+      [4, 0.00019735550531585488],
+      [5, 0.2470780754027736],
+      [6, 0.7253772773508671],
+      [7, 0.7278165663342049],
+      [8, 0.6231532520527285],
+      [9, 0.6993395531264461],
+      [10, 0.5220973708243581],
+      [11, 0.5824288436936865],
+      [12, 0.9900381661155967],
+      [13, 0.10729151217775779],
+      [14, 0.3638878959880296],
+      [15, 0.40645286501580546],
+      [16, 0.4358252721341106],
+      [17, 0.9085642535212296],
+      [18, 0.27239086306996496],
+      [19, 0.8039054748253558]
+    ];
+
     $scope.artifactsFilter = function (artifact) {
       var queryMatch = true;
       if ($scope.artifactsQuery.length > 0) {
@@ -49998,7 +50042,7 @@ define('directives/d3-bar-chart',['d3js'], function (d3) {
           svg.selectAll('*').remove();
 
           if (!data) return;
-          if (renderTimeout) clearTimeout(renderTimeout);
+          if (renderTimeout) $timeout.cancel(renderTimeout);
 
           renderTimeout = $timeout(function () {
             x.domain(data.map(function (d) { return d[0] }));
@@ -50121,7 +50165,7 @@ define('directives/d3-decision-tree-chart',['d3js'], function (d3) {
         scope.render = function (root) {
 
           if (!root) return;
-          if (renderTimeout) clearTimeout(renderTimeout);
+          if (renderTimeout) $timeout.cancel(renderTimeout);
 
           renderTimeout = $timeout(function () {
 
@@ -50277,7 +50321,7 @@ define('directives/d3-influencer-chart',['d3js'], function (d3) {
           svg.selectAll('*').remove();
 
           if (!data) return;
-          if (renderTimeout) clearTimeout(renderTimeout);
+          if (renderTimeout) $timeout.cancel(renderTimeout);
 
           renderTimeout = $timeout(function () {
             var dataNodes = data.nodes.sort(function(a, b) { return a.value - b.value}).reverse().slice(0, maxNodes - 1);
@@ -50379,7 +50423,7 @@ define('directives/d3-line-chart',['d3js'], function (d3) {
           graph.selectAll('*').remove();
 
           if (!data) return;
-          if (renderTimeout) clearTimeout(renderTimeout);
+          if (renderTimeout) $timeout.cancel(renderTimeout);
 
           renderTimeout = $timeout(function () {
             xScale.domain([
@@ -50455,13 +50499,123 @@ define('directives/d3-line-chart',['d3js'], function (d3) {
  define: false,
  console: false
  */
+define('directives/d3-line-chart-dashboard',['d3js'], function (d3) {
+  
+
+  return ['$timeout', function ($timeout) {
+
+    return {
+      restrict: 'E',
+      replace: true,
+      scope: {
+        data: '='
+      },
+      link: function (scope, element, attrs) {
+        var renderTimeout;
+        var margin = {
+          top: 0, right: 0, bottom: 0, left: 0
+        };
+
+        // Add an SVG element with the desired dimensions and margin.
+        var svg = d3.select(element[0]).append('svg');
+        var graph = svg
+          .append('g')
+          .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+
+        svg.attr( 'height', attrs.height );
+
+        var xScale = d3.scale.linear();
+        var yScale = d3.scale.linear();
+
+        window.onresize = function () {
+          if (watchTimeout) {
+            clearTimeout(watchTimeout);
+          }
+
+          watchTimeout = setTimeout(function () {
+            scope.$apply();
+          }, 75);
+        };
+
+        scope.$watch(function () {
+          return element[ 0 ].offsetWidth;
+        }, function () {
+          scope.render(scope.data);
+        });
+
+        scope.$watch('data', function (newData) {
+          scope.render(newData);
+        }, true);
+
+        scope.render = function (data) {
+          var width = element[ 0 ].offsetWidth - margin.left - margin.right;
+          var height = element[ 0 ].offsetHeight - margin.top - margin.bottom;
+
+          svg
+            .attr('width', width + margin.left + margin.right)
+            .attr('height', height + margin.top + margin.bottom);
+
+          graph.selectAll('*').remove();
+
+          if (!data) return;
+          if (renderTimeout) ($timeout.cancel(renderTimeout));
+
+          renderTimeout = $timeout(function () {
+            xScale.domain([
+              d3.min(data, function(d){ return d[0]; }),
+              d3.max(data, function(d){ return d[0]; })
+            ]).range([0, width]);
+            yScale.domain([
+              d3.min(data, function(d){ return d[1]; }),
+              d3.max(data, function(d){ return d[1]; })
+            ]).range([height, 0]).nice();
+
+            // create a line function that can convert data[] into x and y points
+            var line = d3.svg.line()
+              .x(function (d) {
+                return xScale(d[0]);
+              })
+              .y(function (d) {
+                return yScale(d[1]);
+              });
+
+            // add actual line at the end in order to overlap all others
+            graph.append('path')
+              .attr('class', 'line')
+              .attr('d', line(data));
+
+            var area = d3.svg.area()
+              .x(function (d) {
+                return xScale(d[0]);
+              })
+              .y0(function (d) {
+                return yScale(d[1]);
+              })
+              .y1(height);
+
+            graph.append('path')
+              .attr('class', 'area')
+              .attr('d', area(data));
+
+
+          }, 200); // renderTimeout
+        };
+      }
+    };
+  }]
+});
+
+/* global
+ define: false,
+ console: false
+ */
 define('directives/d3-performance-chart',[
   'd3js',
   'lodash'
 ], function (d3, _) {
   
 
-  return ['$timeout', function ($timeout) {
+  return ['$rootScope', '$timeout', function ($rootScope, $timeout) {
     return {
       restrict: 'E',
       scope: {
@@ -50471,9 +50625,12 @@ define('directives/d3-performance-chart',[
         var renderTimeout;
         // define dimensions of graph
 
+        var $element = angular.element( ele[0] );
         var margin = { top: 10, right: 10, bottom: 20, left: 30 },
             width  = 840 - margin.left - margin.right,
             height = 600 - margin.top - margin.bottom;
+
+        console.log("css('border-top-color')", $element.css('border-top-color'));
 
         var format = d3.format('.4f');
         var x = d3.scale.ordinal().domain(d3.range(0,32)).rangeRoundBands([0, width], .35);
@@ -50482,29 +50639,40 @@ define('directives/d3-performance-chart',[
           .attr('width', width + margin.left + margin.right)
           .attr('height', height + margin.top + margin.bottom);
 
-        var graph = svg.append('g')
-            .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+
+        var gradId = 'gradientForegroundPurple' + Math.round( 999999 * Math.random() );
 
         var defs = svg.append('defs');
         var gradientForegroundPurple = defs.append('linearGradient')
-          .attr('id', 'gradientForegroundPurple')
+          .attr('id', gradId)
           .attr('x1', '0').attr('x2', '0').attr('y1', '0').attr('y2', '1');
-        gradientForegroundPurple.append('stop')
-          .attr('stop-color', '#E3D6F6')
+        var stop1 = gradientForegroundPurple.append('stop')
+          .attr('stop-color', $element.css('border-top-color'))
           .attr('offset', '0%');
-        gradientForegroundPurple.append('stop')
-          .attr('stop-color', '#6418A2')
+        var stop2 = gradientForegroundPurple.append('stop')
+          .attr('stop-color', $element.css('border-bottom-color'))
           .attr('offset', '100%');
+
+        var graph = svg.append('g')
+            .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
         scope.$watch('data', function (newData) {
           scope.render(angular.copy(newData));
         }, true);
 
+        $rootScope.$on('themeChanged', function () {
+          console.log("$element.css('border-top-color')", $element.css('border-top-color'), " $element.css('border-right-color')",  $element.css('border-right-color'))
+          stop1.attr('stop-color', $element.css('border-top-color'))
+          stop2.attr('stop-color', $element.css('border-right-color'))
+        });
+
         scope.render = function (data) {
+
+
           graph.selectAll('*').remove();
 
           if (!data) return;
-          if (renderTimeout) clearTimeout(renderTimeout);
+          if (renderTimeout) $timeout.cancel(renderTimeout);
 
           renderTimeout = $timeout(function () {
 
@@ -50534,16 +50702,26 @@ define('directives/d3-performance-chart',[
               .call(yAxisLeft);
 
             // bars
-            graph.selectAll('.bar')
+            var bars = graph.selectAll('.bar')
               .data(data)
-              .enter().append('rect')
-              .attr('class', function(d) { return d.drift > d.threshold ? 'bar' : 'bar solid' })
-              .attr('x', function (d, i) { return x(i) })
-              .attr('width', x.rangeBand())
-              .attr('y', function (d) { return y(d.drift) })
-              .attr('height', function (d) {
-                return height - y(d.drift);
-              });
+              .enter()
+                .append('rect')
+                  .attr('fill', 'url(#' + gradId + ')')
+                  .attr('height', 0 )
+                  .attr('y', height )
+                  .attr('class', function(d) { return d.drift > d.threshold ? 'bar' : 'bar solid' })
+
+            bars.transition()
+              .duration( 500 )
+                .delay( function ( d, i ) {
+                  return i * 20;
+                })
+                .attr('x', function (d, i) { return x(i) })
+                  .attr('width', x.rangeBand())
+                  .attr('y', function (d) { return y(d.drift) })
+                  .attr('height', function (d) {
+                    return height - y(d.drift);
+                  })
 
             //////////////////////////////////
 
@@ -50669,7 +50847,7 @@ define('directives/d3-pie-chart',['d3js'], function (d3) {
           svg.selectAll('*').remove();
 
           if (!data) return;
-          if (renderTimeout) clearTimeout(renderTimeout);
+          if (renderTimeout) $timeout.cancel(renderTimeout);
           // convert all to numbers
           data.forEach(function (d) {
             d[count] = +d[count];
@@ -50780,7 +50958,7 @@ define('directives/d3-roc-chart',['d3js'], function (d3) {
           svg.selectAll('*').remove();
 
           if (!data) return;
-          if (renderTimeout) clearTimeout(renderTimeout);
+          if (renderTimeout) $timeout.cancel(renderTimeout);
 
           renderTimeout = $timeout(function () {
             xScale.domain(data.map(function (d) { return d[0] + '' }));
@@ -50828,6 +51006,107 @@ define('directives/d3-roc-chart',['d3js'], function (d3) {
     };
   }]
 });
+
+/* global
+ define: false,
+ console: false
+ */
+
+define('directives/controllers/dropdown-controller',[
+], function () {
+  
+
+  function controller($document, $scope, $timeout, $attrs, $element) {
+    var dontHide;
+
+    function close(ev) {
+      var dropdownContentElement = $element[ 0 ].children[ 1 ];
+
+      if (dontHide) {
+        var t = ev.target;
+
+        while (( t = t.parentNode )) {
+          if (t === dropdownContentElement) {
+            return false;
+          }
+        }
+      }
+
+      $scope.toggle(false);
+    }
+
+    function escapeKey(ev) {
+      if (ev.which !== 27) {
+        return false;
+      }
+
+      $scope.toggle(false);
+    }
+
+    function toggle(bool) {
+      if (Boolean(bool) === bool) {
+        $scope.toggled = bool;
+      } else {
+        $scope.toggled = !$scope.toggled;
+      }
+
+      if ($scope.toggled) {
+        $timeout(function () {
+          $document.bind('click', close);
+          $document.bind('keydown', escapeKey);
+        });
+      } else {
+        $timeout(function () {
+          $document.unbind('click', close);
+          $document.unbind('keydown', escapeKey);
+        });
+      }
+    }
+
+    $scope.toggled = false;
+    $scope.toggle = toggle;
+
+    $scope.label = $scope.$eval($attrs.label);
+
+    if ($attrs.counter) {
+      $scope.$watch($attrs.counter, function (counter) {
+        $scope.counter = counter;
+      });
+    }
+
+    if ('dontHide' in $attrs) {
+      dontHide = true;
+    }
+  }
+
+  return [ '$document', '$scope', '$timeout', '$attrs', '$element', controller ];
+});
+
+/* global
+ define: false,
+ console: false
+ */
+
+define('directives/dropdown',[
+  './controllers/dropdown-controller'
+], function (controller) {
+  
+
+  function directive() {
+    return {
+      restrict: 'E',
+      templateUrl: 'partials/directives/dropdown.html',
+      controller: controller,
+      transclude: true,
+      replace: true,
+      scope: true
+    };
+  }
+
+  return directive;
+});
+
+
 
 /* global
  define: false,
@@ -53525,9 +53804,11 @@ define('directives',[
   'directives/d3-decision-tree-chart',
   'directives/d3-influencer-chart',
   'directives/d3-line-chart',
+  'directives/d3-line-chart-dashboard',
   'directives/d3-performance-chart',
   'directives/d3-pie-chart',
   'directives/d3-roc-chart',
+  'directives/dropdown',
   'directives/unique-augur-name',
   'directives/threshold-in-range',
   'mm-foundation-tpls'
@@ -53537,9 +53818,11 @@ define('directives',[
               D3DecisionTreeChart,
               D3InfluencerChart,
               D3LineChart,
+              D3LineChartDashboard,
               D3PerformanceChart,
               D3PieChart,
               D3RocChart,
+              Dropdown,
               UniqueAugurName,
               ThresholdInRange) {
   
@@ -53550,9 +53833,11 @@ define('directives',[
     .directive('d3DecisionTreeChart', D3DecisionTreeChart)
     .directive('d3InfluencerChart', D3InfluencerChart)
     .directive('d3LineChart', D3LineChart)
+    .directive('d3LineChartDashboard', D3LineChartDashboard)
     .directive('d3PerformanceChart', D3PerformanceChart)
     .directive('d3PieChart', D3PieChart)
     .directive('d3RocChart', D3RocChart)
+    .directive('dropdown', Dropdown)
     .directive('uniqueAugurName', UniqueAugurName)
     .directive('thresholdInRange', ThresholdInRange);
 });
@@ -56958,7 +57243,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('partials/augur-performance-evaluation.html',
-    '<div class=\'augur-performance\'><div class=\'row\'><div class=\'columns small-12\'><div class=\'heading\'><h3 class=\'title\'> Performance drift (Evaluation) — <span class=\'dropdown\'><a dropdown-toggle=\'#options\'>{{ evaluation.activeIndicator.label }}</a></span></h3><h6 class=\'subheader\'>Changes in the evaluation data runs over the last 30 days</h6></div></div></div><div class=\'row selection\' id=\'selection\'><div class=\'columns small-12\'><div class=\'options\' id=\'options\'><ul class=\'no-bullet inline-list\'><li class=\'left\'><ul class=\'no-bullet indicators\'><li ng-class=\'{active: evaluation.activeIndicator.key===indicator.key}\' ng-repeat=\'indicator in indicators[0]\'> <label><input ng-model=\'$parent.evaluation.activeIndicator\' ng-value=\'indicator\' type=\'radio\'> {{ indicator.label }}<span class=\'glyphicon glyphicon-ok-circle\'></span></label></li></ul></li><li class=\'middle\'><ul class=\'no-bullet indicators\'><li ng-class=\'{active: evaluation.activeIndicator.key===indicator.key}\' ng-repeat=\'indicator in indicators[1]\'> <label><input ng-model=\'$parent.evaluation.activeIndicator\' ng-value=\'indicator\' type=\'radio\'> {{ indicator.label }}<span class=\'glyphicon glyphicon-ok-circle\'></span></label></li></ul></li><li class=\'right\'><ul class=\'no-bullet indicators\'><li ng-class=\'{active: evaluation.activeIndicator.key===indicator.key}\' ng-repeat=\'indicator in indicators[2]\'> <label><input ng-model=\'$parent.evaluation.activeIndicator\' ng-value=\'indicator\' type=\'radio\'> {{ indicator.label }}<span class=\'glyphicon glyphicon-ok-circle\'></span></label></li></ul></li></ul></div></div></div><div class=\'row\'><div class=\'columns small-12\'><div class=\'chart\'><d3-performance-chart data=\'evaluation.data\' mode=\'evaluation\'></d3-performance-chart></div></div></div></div>');
+    '<div class=\'augur-performance\'><div class=\'row\'><div class=\'columns small-12\'><div class=\'heading\'><h3 class=\'title\'> Performance drift (Evaluation) —<dropdown label=\'learning.activeIndicator.label\'><div class=\'row selection\' id=\'selection\'><div class=\'columns small-12\'><div class=\'options\' id=\'options\'><ul class=\'no-bullet inline-list\'><li class=\'left\'><ul class=\'no-bullet indicators\'><li ng-class=\'{active: evaluation.activeIndicator.key===indicator.key}\' ng-repeat=\'indicator in indicators[0]\'> <label><input ng-model=\'$parent.evaluation.activeIndicator\' ng-value=\'indicator\' type=\'radio\'> {{ indicator.label }}<span class=\'glyphicon glyphicon-ok-circle\'></span></label></li></ul></li><li class=\'middle\'><ul class=\'no-bullet indicators\'><li ng-class=\'{active: evaluation.activeIndicator.key===indicator.key}\' ng-repeat=\'indicator in indicators[1]\'> <label><input ng-model=\'$parent.evaluation.activeIndicator\' ng-value=\'indicator\' type=\'radio\'> {{ indicator.label }}<span class=\'glyphicon glyphicon-ok-circle\'></span></label></li></ul></li><li class=\'right\'><ul class=\'no-bullet indicators\'><li ng-class=\'{active: evaluation.activeIndicator.key===indicator.key}\' ng-repeat=\'indicator in indicators[2]\'> <label><input ng-model=\'$parent.evaluation.activeIndicator\' ng-value=\'indicator\' type=\'radio\'> {{ indicator.label }}<span class=\'glyphicon glyphicon-ok-circle\'></span></label></li></ul></li></ul></div></div></div></dropdown></h3><h6 class=\'subheader\'>Changes in the evaluation data runs over the last 30 days</h6></div></div></div><div class=\'row\'><div class=\'columns small-12\'><div class=\'chart\'><d3-performance-chart data=\'evaluation.data\' mode=\'evaluation\'></d3-performance-chart></div></div></div></div>');
 }]);
 })();
 
@@ -56970,7 +57255,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('partials/augur-performance-learning.html',
-    '<div class=\'augur-performance\'><div class=\'row\'><div class=\'columns small-12\'><div class=\'heading\'><h3 class=\'title\'> Performance drift (learning) — <span class=\'dropdown\'><a dropdown-toggle=\'#options\'>{{ learning.activeIndicator.label }}</a></span></h3><h6 class=\'subheader\'>Changes in the learning data runs over the last 30 days</h6></div></div></div><div class=\'row selection\' id=\'selection\'><div class=\'columns small-12\'><div class=\'options\' id=\'options\'><ul class=\'no-bullet inline-list\'><li class=\'left\'><ul class=\'no-bullet indicators\'><li ng-class=\'{active: learning.activeIndicator.key===indicator.key}\' ng-repeat=\'indicator in indicators[0]\'> <label><input ng-model=\'$parent.learning.activeIndicator\' ng-value=\'indicator\' type=\'radio\'> {{ indicator.label }}<span class=\'glyphicon glyphicon-ok-circle\'></span></label></li></ul></li><li class=\'middle\'><ul class=\'no-bullet indicators\'><li ng-class=\'{active: learning.activeIndicator.key===indicator.key}\' ng-repeat=\'indicator in indicators[1]\'> <label><input ng-model=\'$parent.learning.activeIndicator\' ng-value=\'indicator\' type=\'radio\'> {{ indicator.label }}<span class=\'glyphicon glyphicon-ok-circle\'></span></label></li></ul></li><li class=\'right\'><ul class=\'no-bullet indicators\'><li ng-class=\'{active: learning.activeIndicator.key===indicator.key}\' ng-repeat=\'indicator in indicators[2]\'> <label><input ng-model=\'$parent.learning.activeIndicator\' ng-value=\'indicator\' type=\'radio\'> {{ indicator.label }}<span class=\'glyphicon glyphicon-ok-circle\'></span></label></li></ul></li></ul></div></div></div><div class=\'row\'><div class=\'columns small-12\'><div class=\'chart\'><d3-performance-chart data=\'learning.data\' mode=\'learning\'></d3-performance-chart></div></div></div></div>');
+    '<div class=\'augur-performance\'><div class=\'row\'><div class=\'columns small-12\'><div class=\'heading\'><h3 class=\'title\'> Performance drift (learning) —<dropdown label=\'learning.activeIndicator.label\'><div class=\'row selection\' id=\'selection\'><div class=\'columns small-12\'><div class=\'options\' id=\'options\'><ul class=\'no-bullet inline-list\'><li class=\'left\'><ul class=\'no-bullet indicators\'><li ng-class=\'{active: learning.activeIndicator.key===indicator.key}\' ng-repeat=\'indicator in indicators[0]\'> <label><input ng-model=\'$parent.learning.activeIndicator\' ng-value=\'indicator\' type=\'radio\'> {{ indicator.label }}<span class=\'glyphicon glyphicon-ok-circle\'></span></label></li></ul></li><li class=\'middle\'><ul class=\'no-bullet indicators\'><li ng-class=\'{active: learning.activeIndicator.key===indicator.key}\' ng-repeat=\'indicator in indicators[1]\'> <label><input ng-model=\'$parent.learning.activeIndicator\' ng-value=\'indicator\' type=\'radio\'> {{ indicator.label }}<span class=\'glyphicon glyphicon-ok-circle\'></span></label></li></ul></li><li class=\'right\'><ul class=\'no-bullet indicators\'><li ng-class=\'{active: learning.activeIndicator.key===indicator.key}\' ng-repeat=\'indicator in indicators[2]\'> <label><input ng-model=\'$parent.learning.activeIndicator\' ng-value=\'indicator\' type=\'radio\'> {{ indicator.label }}<span class=\'glyphicon glyphicon-ok-circle\'></span></label></li></ul></li></ul></div></div></div></dropdown></h3><h6 class=\'subheader\'>Changes in the learning data runs over the last 30 days</h6></div></div></div><div class=\'row\'><div class=\'columns small-12\'><div class=\'chart\'><d3-performance-chart data=\'learning.data\' mode=\'learning\'></d3-performance-chart></div></div></div></div>');
 }]);
 })();
 
@@ -57006,7 +57291,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('partials/augur.html',
-    '<div class=\'row augur action-bar\'><div class=\'small-12 columns\'><div class=\'row\'><div class=\'small-11 columns\'><div class=\'row\'><div class=\'small-4 columns habitat-name\'> {{augur.name}}</div><div class=\'small-4 columns info\'><dl><dt>Type</dt><dd>Logistical Regression</dd><dt>KPI</dt><dd>Accumulated Lift Top 10% (0.4/0.2)</dd></dl></div><div class=\'small-4 columns actions\'><ul class=\'no-bullet\'><li class=\'action\'> Calculate new prediction</li><li class=\'action\'> Download latest prediction</li></ul></div></div></div><div class=\'small-1 columns back\'><a ui-sref=\'dashboard\'><span class=\'glyphicon glyphicon-log-out\'></span></a></div></div></div></div><div class=\'row augur container\'><div class=\'side-nav-container\'><ul class=\'side-nav\'><li ui-sref-active=\'active\'><a ui-sref=\'augur.tree\'><span class=\'glyphicon glyphicon-th\'></span><br> Decision tree</a></li><li ui-sref-active=\'active\'><a ui-sref=\'augur.influencers\'><span class=\'glyphicon glyphicon-th\'></span><br> Influencers</a></li><li ui-sref-active=\'active\'><a ui-sref=\'augur.accuracy\'><span class=\'glyphicon glyphicon-record\'></span><br> Accuracy</a></li><li ui-sref-active=\'active\'><a fyi=\'only to get sref-active working\' style=\'display:none;\' ui-sref=\'augur.performance\'></a><a ng-click=\'activatePerformanceState()\'><span class=\'glyphicon glyphicon-th\'></span><div class=\'label-main\'> Performance drift</div></a><div class=\'side-nav-sub\'><ul class=\'no-bullet inline-list\'><li class=\'first\' ui-sref-active=\'active\'><a ui-sref=\'augur.performance.learning\'><span class=\'glyphicon glyphicon-tower\'></span></a></li><li ui-sref-active=\'active\'><a ui-sref=\'augur.performance.evaluation\'><span class=\'glyphicon glyphicon-briefcase\'></span></a></li></ul><div class=\'label-sub\'> Performance drift</div></div></li><li ui-sref-active=\'active\'><a ui-sref=\'augur.settings\'><span class=\'glyphicon glyphicon-wrench\'></span><br> Settings</a></li></ul></div><div class=\'main\'><div ui-view=\'\'></div></div></div>');
+    '<div class=\'row augur action-bar\' ng-attr-data-theme=\'{{ habitat.colorScheme }}\'><div class=\'small-12 columns\'><div class=\'row\'><div class=\'small-11 columns\'><div class=\'row\'><div class=\'small-3 columns habitat-name\'> {{augur.name}}</div><div class=\'small-4 columns info\'><dl><dt>Type</dt><dd>Logistical Regression</dd><dt>KPI</dt><dd>Accumulated Lift Top 10% (0.4/0.2)</dd></dl></div><div class=\'small-5 columns actions\'><ul class=\'no-bullet\'><li class=\'action\'><a class=\'action-button\'><span class=\'glyphicon glyphicon-tower\'></span> Calculate new prediction</a></li><li class=\'action\'><a class=\'action-button\'><span class=\'glyphicon glyphicon-tower\'></span> Download latest prediction</a></li></ul></div></div></div><div class=\'small-1 columns back\'><a ui-sref=\'dashboard\'><span class=\'glyphicon glyphicon-log-out\'></span></a></div></div></div></div><div class=\'row augur container\'><div class=\'side-nav-container\'><ul class=\'side-nav\'><li ui-sref-active=\'active\'><a ui-sref=\'augur.tree\'><span class=\'glyphicon glyphicon-th\'></span><br> Decision tree</a></li><li ui-sref-active=\'active\'><a ui-sref=\'augur.influencers\'><span class=\'glyphicon glyphicon-th\'></span><br> Influencers</a></li><li ui-sref-active=\'active\'><a ui-sref=\'augur.accuracy\'><span class=\'glyphicon glyphicon-record\'></span><br> Accuracy</a></li><li ui-sref-active=\'active\'><a fyi=\'only to get sref-active working\' style=\'display:none;\' ui-sref=\'augur.performance\'></a><a ng-click=\'activatePerformanceState()\'><span class=\'glyphicon glyphicon-th\'></span><div class=\'label-main\'> Performance drift</div></a><div class=\'side-nav-sub\'><ul class=\'no-bullet inline-list\'><li class=\'first\' ui-sref-active=\'active\'><a ui-sref=\'augur.performance.learning\'><span class=\'glyphicon glyphicon-tower\'></span></a></li><li ui-sref-active=\'active\'><a ui-sref=\'augur.performance.evaluation\'><span class=\'glyphicon glyphicon-briefcase\'></span></a></li></ul><div class=\'label-sub\'> Performance drift</div></div></li><li ui-sref-active=\'active\'><a ui-sref=\'augur.settings\'><span class=\'glyphicon glyphicon-wrench\'></span><br> Settings</a></li></ul></div><div class=\'main\'><div ui-view=\'\'></div></div></div>');
 }]);
 })();
 
@@ -57018,7 +57303,19 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('partials/dashboard.html',
-    '<div class=\'row dashboard action-bar\'><div class=\'columns small-12\'><ul class=\'left action-bar-breadcrumb\'><li><a ui-sref=\'dashboard\'><span class=\'glyphicon glyphicon-th\'></span> Dashboard</a></li><li><a href=\'#\'><span class=\'glyphicon glyphicon-picture\'></span> Habitat</a></li></ul><ul class=\'right action-bar-filter\'><li class=\'divider\'></li><li ng-class=\'{"active" : selectedArtifactTypes.augur}\'> <input id=\'selected-artifact-types-augur\' ng-model=\'selectedArtifactTypes.augur\' type=\'checkbox\'> <label for=\'selected-artifact-types-augur\'>Augurs</label></li><li ng-class=\'{"active" : selectedArtifactTypes.factTable}\'> <input id=\'selected-artifact-types-fact-table\' ng-model=\'selectedArtifactTypes.factTable\' type=\'checkbox\'> <label for=\'selected-artifact-types-fact-table\'>Fact tables</label></li><li ng-class=\'{"active" : selectedArtifactTypes.habitat}\'> <input id=\'selected-artifact-types-habitat\' ng-model=\'selectedArtifactTypes.habitat\' type=\'checkbox\'> <label for=\'selected-artifact-types-habitat\'>Habitats</label></li><li class=\'divider\'></li><li class=\'action-bar-search\'> <input ng-model=\'artifactsQuery\' placeholder=\'Type to search\' type=\'text\'></li></ul></div></div><div class=\'row dashboard container\'><div class=\'columns small-12\'><ul class=\'small-block-grid-2 medium-block-grid-3 large-block-grid-4\'><li><div class=\'th\'><a href=\'#/augurs/new\'><div class=\'artefact-body add-augur\'><p> Add augur</p><p class=\'icon\'><span class=\'glyphicon glyphicon-plus\'></span></p></div></a></div></li><li ng-repeat=\'artifact in artifacts | filter: artifactsFilter\'><div class=\'th habitat\' ng-class=\'artifact.colorScheme\' ng-if=\'artifact.type == "habitat"\'><a href=\'#/habitat/{{habitat.id}}\'><div class=\'artefact-body\'><span class=\'glyphicon glyphicon-picture\'></span><h5 class=\'title\'> {{ artifact.name }}</h5><p ng-if=\'artifact.augurCount &lt; 1\'> No Augurs</p><p ng-if=\'artifact.augurCount === 1\'> One Augur</p><p ng-if=\'artifact.augurCount &gt; 1\'> {{ artifact.augurCount }} Augurs</p></div></a></div><div class=\'th augur\' ng-class=\'artifact.colorScheme\' ng-if=\'artifact.type == "augur"\'><a ui-sref=\'augur.tree({ habitatId: artifact.habitat_id, augurId: artifact.id })\'><div class=\'artefact-body\'><span class=\'glyphicon glyphicon-eye-open\'></span><h5 class=\'title\'> {{artifact.name}}</h5></div></a></div><div class=\'th fact-table\' ng-class=\'artifact.colorScheme\' ng-if=\'artifact.type == "factTable"\'><a href=\'#/habitat/{{artifact.habitat_id}}/factTables/{{factTable.id}}\'><div class=\'artefact-body\'><span class=\'glyphicon glyphicon-list-alt\'></span><h5 class=\'title\'> {{artifact.name}}</h5><p class=\'description\'> {{artifact.description}}</p></div></a></div></li></ul></div></div>');
+    '<div class=\'row dashboard action-bar\'><div class=\'columns small-12\'><ul class=\'left action-bar-breadcrumb\'><li> Dashboard</li></ul><ul class=\'right action-bar-filter\'><li class=\'divider\'></li><li ng-class=\'{"active" : selectedArtifactTypes.augur}\'> <input id=\'selected-artifact-types-augur\' ng-model=\'selectedArtifactTypes.augur\' type=\'checkbox\'> <label for=\'selected-artifact-types-augur\'>Augurs</label></li><li ng-class=\'{"active" : selectedArtifactTypes.factTable}\'> <input id=\'selected-artifact-types-fact-table\' ng-model=\'selectedArtifactTypes.factTable\' type=\'checkbox\'> <label for=\'selected-artifact-types-fact-table\'>Fact tables</label></li><li ng-class=\'{"active" : selectedArtifactTypes.habitat}\'> <input id=\'selected-artifact-types-habitat\' ng-model=\'selectedArtifactTypes.habitat\' type=\'checkbox\'> <label for=\'selected-artifact-types-habitat\'>Habitats</label></li><li class=\'divider\'></li><li class=\'action-bar-search\'> <input ng-model=\'artifactsQuery\' placeholder=\'Type to search\' type=\'text\'></li></ul></div></div><div class=\'row dashboard container\'><div class=\'columns small-12\'><ul class=\'small-block-grid-2 medium-block-grid-3 large-block-grid-4\'><li><div class=\'tile\'><a href=\'#/augurs/new\'><div class=\'artefact-body add-augur\'><p> Add augur</p><p class=\'icon\'><span class=\'glyphicon glyphicon-plus\'></span></p></div></a></div></li><li ng-repeat=\'artifact in artifacts | filter: artifactsFilter\'><a href=\'#/habitat/{{habitat.id}}\'><div class=\'tile habitat\' ng-attr-data-theme=\'{{ artifact.colorScheme }}\' ng-if=\'artifact.type == "habitat"\'><h5 class=\'title\'> {{ artifact.name }}<span class=\'glyphicon glyphicon-picture\'></span></h5><div class=\'artefact-body\'><p ng-if=\'artifact.augurCount &lt; 1\'> No Augurs</p><p ng-if=\'artifact.augurCount === 1\'> One Augur</p><p ng-if=\'artifact.augurCount &gt; 1\'> {{ artifact.augurCount }} Augurs</p></div></div></a><a href=\'#/habitat/{{artifact.habitat_id}}/factTables/{{factTable.id}}\'><div class=\'tile fact-table\' ng-attr-data-theme=\'{{ artifact.colorScheme }}\' ng-if=\'artifact.type == "factTable"\'><h5 class=\'title\'> {{artifact.name}}<span class=\'glyphicon glyphicon-list-alt\'></span></h5><div class=\'artefact-body\'><p class=\'description\'> {{artifact.description}}</p></div></div></a><a ui-sref=\'augur.tree({ habitatId: artifact.habitat_id, augurId: artifact.id })\'><div class=\'tile augur\' ng-attr-data-theme=\'{{ artifact.colorScheme }}\' ng-if=\'artifact.type == "augur"\'><h5 class=\'title\'> {{artifact.name}}<span class=\'glyphicon glyphicon-eye-open\'></span></h5><div class=\'artefact-body\'><dl class=\'description\'><dt>KPI</dt><dd>True positive rate</dd><dt>Latest evaluation</dt><dd>0.6 on 2014/04/15</dd></dl></div><div class=\'chart\'><d3-line-chart-dashboard data=\'data\' height=\'30\'></d3-line-chart-dashboard></div></div></a></li></ul></div></div>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('dejalyticsPartials');
+} catch (e) {
+  module = angular.module('dejalyticsPartials', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('partials/directives/dropdown.html',
+    '<div class=\'dropdown\'> <a class=\'dropdown-trigger\' ng-class=\'{active: toggled }\' ng-click=\'toggle()\' ng-data-count=\'{{ counter }}\'><span>{{ label }}</span></a><div class=\'dropdown-content\' ng-if=\'toggled\' ng-transclude=\'\'></div></div>');
 }]);
 })();
 
@@ -57109,6 +57406,19 @@ define('app',[
           templateUrl: 'partials/augur-settings.html',
           controller: 'AugurSettingsCtrl'
         })
+    }]).run(['$rootScope', '$state', function ($rootScope, $state) {
+      var root = angular.element(document.documentElement);
+
+//      $rootScope.$on('$stateChangeSuccess', function(){
+//        root.attr('data-theme', '');
+//      });
+
+      $rootScope.$on('theme', function(ev, theme){
+        $rootScope.theme = theme;
+        root.attr('data-theme', theme);
+
+        $rootScope.$broadcast('themeChanged', theme);
+      });
     }]);
 });
 
