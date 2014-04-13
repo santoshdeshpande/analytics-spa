@@ -2,7 +2,10 @@
  define: false,
  console: false
  */
-define(['d3js'], function (d3) {
+define([
+  'd3js',
+  './chart'
+], function (d3, Chart) {
   'use strict';
 
   return ['$timeout', function ($timeout) {
@@ -15,20 +18,14 @@ define(['d3js'], function (d3) {
       },
       link: function (scope, ele, attrs) {
         var renderTimeout;
-        // define dimensions of graph
-        var m = [10, 20, 10, 35]; // margins
-        var w = 260 - m[1] - m[3]; // width
-        var h = 160 - m[0] - m[2]; // height
+        var dimensions = {
+          margins: { top: 10, right: 0, bottom: 10, left: 35 }
+        };
 
-        // Add an SVG element with the desired dimensions and margin.
-        var svg = d3.select(ele[0]).append('svg')
-          .attr('width', w + m[1] + m[3])
-          .attr('height', h + m[0] + m[2])
-          .append('g')
-          .attr('transform', 'translate(' + m[3] + ',' + m[0] + ')');
+        var svg = new Chart(ele[0], dimensions);
 
-        var xScale = d3.scale.ordinal().rangeBands([0, w]).rangeBands([0, w]);
-        var yScale = d3.scale.linear().range([h, 0]);
+        var xScale = d3.scale.ordinal().rangeBands([0, svg.width()]).rangeBands([0, svg.width()]);
+        var yScale = d3.scale.linear().range([svg.height(), 0]);
 
         scope.$watch('chart', function (newChart) {
           scope.render(newChart.data);

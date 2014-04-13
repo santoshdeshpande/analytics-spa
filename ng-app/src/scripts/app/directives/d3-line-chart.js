@@ -2,7 +2,10 @@
  define: false,
  console: false
  */
-define(['d3js'], function (d3) {
+define([
+  'd3js',
+  './chart'
+], function (d3, Chart) {
   'use strict';
 
   return ['$timeout', function ($timeout) {
@@ -18,27 +21,16 @@ define(['d3js'], function (d3) {
     return {
       restrict: 'E',
       scope: {
-        chart: '=',
-        label: '@',
-        onClick: '&'
+        chart: '='
       },
       link: function (scope, ele, attrs) {
         var renderTimeout;
-        // define dimensions of graph
-        //       T   R   B   L
-        var m = [10, 20, 10, 35]; // margins
-        var w = 260 - m[1] - m[3]; // width
-        var h = 160 - m[0] - m[2]; // height
 
-        // Add an SVG element with the desired dimensions and margin.
-        var graph = d3.select(ele[0]).append('svg')
-          .attr('width', w + m[1] + m[3])
-          .attr('height', h + m[0] + m[2])
-          .append('g')
-          .attr('transform', 'translate(' + m[3] + ',' + m[0] + ')');
+        var dimensions = {
+          margins: { top: 10, right: 10, bottom: 10, left: 35 }
+        };
 
-        var xScale = d3.scale.linear().range([0, w]);
-        var yScale = d3.scale.linear().range([h, 0]).nice();
+        var graph = new Chart(ele[0], dimensions);
 
         scope.$watch('chart', function (newData) {
           scope.render(newData.data, newData.baseline);
@@ -51,35 +43,35 @@ define(['d3js'], function (d3) {
           if (renderTimeout) $timeout.cancel(renderTimeout);
 
           renderTimeout = $timeout(function () {
-            xScale.domain([
+            graph.xScale.domain([
               d3.min(data, function(d){ return d[0]; }),
               d3.max(data, function(d){ return d[0]; })
             ]);
-            yScale.domain([
+            graph.yScale.domain([
               yScaleMin(d3.min(data, function(d){ return d[1]; }), baseline),
               d3.max(data, function(d){ return d[1]; })
             ]);
 
             var yTicks = [
-              d3.min(yScale.ticks()),
-              d3.max(yScale.ticks())
+              d3.min(graph.yScale.ticks()),
+              d3.max(graph.yScale.ticks())
             ];
 
             if (baseline) {
               yTicks.push(baseline);
 
               // only push middle helper line if far enough from baseline - 15%
-              var minDistance = (d3.max(yScale.ticks()) - d3.min(yScale.ticks())) * 0.15;
-              if (Math.abs(baseline - d3.mean(yScale.ticks())) > minDistance) {
-                yTicks.push(d3.mean(yScale.ticks()));
+              var minDistance = (d3.max(graph.yScale.ticks()) - d3.min(graph.yScale.ticks())) * 0.15;
+              if (Math.abs(baseline - d3.mean(graph.yScale.ticks())) > minDistance) {
+                yTicks.push(d3.mean(graph.yScale.ticks()));
               }
             } else {
               // always push middle helper line if no baseline to overlap
-              yTicks.push(d3.mean(yScale.ticks()));
+              yTicks.push(d3.mean(graph.yScale.ticks()));
             }
 
             // create left yAxis
-            var yAxisLeft = d3.svg.axis().scale(yScale).orient('left').tickValues(yTicks);
+            var yAxisLeft = d3.svg.axis().scale(graph.yScale).orient('left').tickValues(yTicks);
             // Add the y-axis to the left
             graph.append('g')
               .attr('class', 'y axis')
@@ -88,10 +80,10 @@ define(['d3js'], function (d3) {
             // create a line function that can convert data[] into x and y points
             var line = d3.svg.line()
               .x(function (d) {
-                return xScale(d[0]);
+                return graph.xScale(d[0]);
               })
               .y(function (d) {
-                return yScale(d[1]);
+                return graph.yScale(d[1]);
               });
 
             // helpline

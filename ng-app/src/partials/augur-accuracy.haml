@@ -1,64 +1,64 @@
 .row.augur-accuracy
   .columns.small-12
     %ul.small-block-grid-2.medium-block-grid-3
-      %li
-        .th
+      %li.tile
+        .tile-body
           %a{ ui: { sref: 'augur.accuracy-detail({ chartType: "lift" })' } }
             %h6.title Lift
             .chart.line-chart
               %d3-line-chart{ chart: 'charts.lift' }
 
-      %li
-        .th
+      %li.tile
+        .tile-body
           %a{ ui: { sref: 'dashboard' } }
             %h6.title Accumulated Lift
             .chart.line-chart
               %d3-line-chart{ chart: 'charts.accumulatedLift' }
 
-      %li
-        .th
+      %li.tile
+        .tile-body
           %a{ href: '' }
             %h6.title Response
             .chart.line-chart
               %d3-line-chart{ chart: 'charts.response' }
 
-      %li
-        .th
+      %li.tile
+        .tile-body
           %a{ href: '' }
             %h6.title Accumulated Response
             .chart.line-chart
               %d3-line-chart{ chart: 'charts.accumulatedResponse' }
 
-      %li
-        .th
+      %li.tile
+        .tile-body
           %a{ href: '' }
             %h6.title Captured Response
             .chart.line-chart
               %d3-line-chart{ chart: 'charts.capturedResponse' }
 
-      %li
-        .th
+      %li.tile
+        .tile-body
           %a{ href: '' }
             %h6.title Accumulated Captured Response
             .chart.line-chart
               %d3-line-chart{ chart: 'charts.accumulatedCapturedResponse' }
 
-      %li
-        .th
+      %li.tile
+        .tile-body
           %a{ href: '' }
             %h6.title ROC
             .chart.roc-chart
               %d3-roc-chart{ chart: 'charts.roc' }
 
-      %li
-        .th
+      %li.tile
+        .tile-body
           %a{ href: '' }
             %h6.title Misclassification
             .chart.pie-chart
               %d3-pie-chart{ chart: 'charts.misclassification', count: 'count', bucket: 'bucket' }
 
-      %li
-        .th
+      %li.tile
+        .tile-body
           %a{ href: '' }
             %h6.title Distribution of Predicted Values
             .chart.bar-chart

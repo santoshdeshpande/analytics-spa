@@ -49991,7 +49991,49 @@ define('directives/available-prediction-target',[
  define: false,
  console: false
  */
-define('directives/d3-bar-chart',['d3js'], function (d3) {
+define('directives/chart',['d3js'], function (d3) {
+  
+
+  function chart(element, dimensions) {
+    var _margins = dimensions.margins,
+    _width = (dimensions.width || element.offsetWidth) - _margins.left - _margins.right,
+    _height = (dimensions.height || element.offsetHeight) - _margins.top - _margins.bottom;
+
+    var  svg = d3.select(element).append('svg')
+      .attr('width', _width + _margins.left + _margins.right)
+      .attr('height', _height + _margins.top + _margins.bottom)
+      .append('g')
+      .attr('transform', 'translate(' + _margins.left + ',' + _margins.top + ')');
+
+    svg.height = function (value) {
+      if (!arguments.length) return _height;
+      _height = value;
+      return chart;
+    };
+
+    svg.width = function (value) {
+      if (!arguments.length) return _width;
+      _width = value;
+      return chart;
+    };
+
+    svg.xScale = d3.scale.linear().range([0, svg.width()]);
+    svg.yScale = d3.scale.linear().range([svg.height(), 0]).nice();
+
+    return svg;
+  }
+
+  return chart;
+});
+
+/* global
+ define: false,
+ console: false
+ */
+define('directives/d3-bar-chart',[
+  'd3js',
+  './chart'
+], function (d3, Chart) {
   
 
   return ['$timeout', function ($timeout) {
@@ -49999,32 +50041,18 @@ define('directives/d3-bar-chart',['d3js'], function (d3) {
       restrict: 'E',
       scope: {
         chart: '=',
-        label: '@',
-        onClick: '&'
       },
       link: function (scope, ele, attrs) {
         var renderTimeout;
-        // define dimensions of graph
-        var margin = { top: 10, right: 20, bottom: 10, left: 40 },
-          width = 260 - margin.left - margin.right,
-          height = 160 - margin.top - margin.bottom;
+        var dimensions = {
+          margins: { top: 10, right: 20, bottom: 10, left: 40 }
+        };
 
-        var x = d3.scale
-          .ordinal()
-          .rangeRoundBands([0, width], .1);
-        var y = d3.scale
-          .linear()
-          .range([height, 0]);
+        var svg = new Chart(ele[0], dimensions);
 
-        var yAxis = d3.svg.axis()
-          .scale(y)
-          .orient('left');
-
-        var svg = d3.select(ele[0]).append('svg')
-          .attr('width', width + margin.left + margin.right)
-          .attr('height', height + margin.top + margin.bottom)
-          .append('g')
-          .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+        var x = d3.scale.ordinal().rangeRoundBands([0, svg.width()], .1);
+        var y = d3.scale.linear().range([svg.height(), 0]);
+        var yAxis = d3.svg.axis().scale(y).orient('left');
 
         scope.$watch('chart', function (newChart) {
           scope.render(newChart.data);
@@ -50056,7 +50084,7 @@ define('directives/d3-bar-chart',['d3js'], function (d3) {
               svg.append('path')
                 .attr('d', d3.svg.line()([
                   [ 0, y(yValue) ],
-                  [ width, y(yValue) ]
+                  [ svg.width(), y(yValue) ]
                 ]))
                 .attr('class', 'axis helpline');
             });
@@ -50068,7 +50096,7 @@ define('directives/d3-bar-chart',['d3js'], function (d3) {
                   .attr('x', function(d) { return x(d[0]); })
                   .attr('width', x.rangeBand())
                   .attr('y', function(d) { return y(d[1]); })
-                  .attr('height', function(d) { return height - y(d[1]); });
+                  .attr('height', function(d) { return svg.height() - y(d[1]); });
 
           }, 200); // renderTimeout
         };
@@ -50369,7 +50397,10 @@ define('directives/d3-influencer-chart',['d3js'], function (d3) {
  define: false,
  console: false
  */
-define('directives/d3-line-chart',['d3js'], function (d3) {
+define('directives/d3-line-chart',[
+  'd3js',
+  './chart'
+], function (d3, Chart) {
   
 
   return ['$timeout', function ($timeout) {
@@ -50385,27 +50416,16 @@ define('directives/d3-line-chart',['d3js'], function (d3) {
     return {
       restrict: 'E',
       scope: {
-        chart: '=',
-        label: '@',
-        onClick: '&'
+        chart: '='
       },
       link: function (scope, ele, attrs) {
         var renderTimeout;
-        // define dimensions of graph
-        //       T   R   B   L
-        var m = [10, 20, 10, 35]; // margins
-        var w = 260 - m[1] - m[3]; // width
-        var h = 160 - m[0] - m[2]; // height
 
-        // Add an SVG element with the desired dimensions and margin.
-        var graph = d3.select(ele[0]).append('svg')
-          .attr('width', w + m[1] + m[3])
-          .attr('height', h + m[0] + m[2])
-          .append('g')
-          .attr('transform', 'translate(' + m[3] + ',' + m[0] + ')');
+        var dimensions = {
+          margins: { top: 10, right: 10, bottom: 10, left: 35 }
+        };
 
-        var xScale = d3.scale.linear().range([0, w]);
-        var yScale = d3.scale.linear().range([h, 0]).nice();
+        var graph = new Chart(ele[0], dimensions);
 
         scope.$watch('chart', function (newData) {
           scope.render(newData.data, newData.baseline);
@@ -50418,35 +50438,35 @@ define('directives/d3-line-chart',['d3js'], function (d3) {
           if (renderTimeout) $timeout.cancel(renderTimeout);
 
           renderTimeout = $timeout(function () {
-            xScale.domain([
+            graph.xScale.domain([
               d3.min(data, function(d){ return d[0]; }),
               d3.max(data, function(d){ return d[0]; })
             ]);
-            yScale.domain([
+            graph.yScale.domain([
               yScaleMin(d3.min(data, function(d){ return d[1]; }), baseline),
               d3.max(data, function(d){ return d[1]; })
             ]);
 
             var yTicks = [
-              d3.min(yScale.ticks()),
-              d3.max(yScale.ticks())
+              d3.min(graph.yScale.ticks()),
+              d3.max(graph.yScale.ticks())
             ];
 
             if (baseline) {
               yTicks.push(baseline);
 
               // only push middle helper line if far enough from baseline - 15%
-              var minDistance = (d3.max(yScale.ticks()) - d3.min(yScale.ticks())) * 0.15;
-              if (Math.abs(baseline - d3.mean(yScale.ticks())) > minDistance) {
-                yTicks.push(d3.mean(yScale.ticks()));
+              var minDistance = (d3.max(graph.yScale.ticks()) - d3.min(graph.yScale.ticks())) * 0.15;
+              if (Math.abs(baseline - d3.mean(graph.yScale.ticks())) > minDistance) {
+                yTicks.push(d3.mean(graph.yScale.ticks()));
               }
             } else {
               // always push middle helper line if no baseline to overlap
-              yTicks.push(d3.mean(yScale.ticks()));
+              yTicks.push(d3.mean(graph.yScale.ticks()));
             }
 
             // create left yAxis
-            var yAxisLeft = d3.svg.axis().scale(yScale).orient('left').tickValues(yTicks);
+            var yAxisLeft = d3.svg.axis().scale(graph.yScale).orient('left').tickValues(yTicks);
             // Add the y-axis to the left
             graph.append('g')
               .attr('class', 'y axis')
@@ -50455,10 +50475,10 @@ define('directives/d3-line-chart',['d3js'], function (d3) {
             // create a line function that can convert data[] into x and y points
             var line = d3.svg.line()
               .x(function (d) {
-                return xScale(d[0]);
+                return graph.xScale(d[0]);
               })
               .y(function (d) {
-                return yScale(d[1]);
+                return graph.yScale(d[1]);
               });
 
             // helpline
@@ -50617,12 +50637,11 @@ define('directives/d3-performance-chart',[
         var renderTimeout;
         // define dimensions of graph
 
+
         var $element = angular.element( ele[0] );
         var margin = { top: 10, right: 10, bottom: 20, left: 30 },
-            width  = 840 - margin.left - margin.right,
-            height = 600 - margin.top - margin.bottom;
-
-        console.log("css('border-top-color')", $element.css('border-top-color'));
+            width  = ele[0].offsetWidth - margin.left - margin.right,
+            height = ele[0].offsetHeight - margin.top - margin.bottom;
 
         var format = d3.format('.4f');
         var x = d3.scale.ordinal().domain(d3.range(0,32)).rangeRoundBands([0, width], .35);
@@ -50630,7 +50649,6 @@ define('directives/d3-performance-chart',[
         var svg = d3.select(ele[0]).append('svg')
           .attr('width', width + margin.left + margin.right)
           .attr('height', height + margin.top + margin.bottom);
-
 
         var gradId = 'gradientForegroundPurple' + Math.round( 999999 * Math.random() );
 
@@ -50653,14 +50671,11 @@ define('directives/d3-performance-chart',[
         }, true);
 
         $rootScope.$on('themeChanged', function () {
-          console.log("$element.css('border-top-color')", $element.css('border-top-color'), " $element.css('border-right-color')",  $element.css('border-right-color'))
-          stop1.attr('stop-color', $element.css('border-top-color'))
-          stop2.attr('stop-color', $element.css('border-right-color'))
+          stop1.attr('stop-color', $element.css('border-top-color'));
+          stop2.attr('stop-color', $element.css('border-right-color'));
         });
 
         scope.render = function (data) {
-
-
           graph.selectAll('*').remove();
 
           if (!data) return;
@@ -50713,7 +50728,7 @@ define('directives/d3-performance-chart',[
                   .attr('y', function (d) { return y(d.drift) })
                   .attr('height', function (d) {
                     return height - y(d.drift);
-                  })
+                  });
 
             //////////////////////////////////
 
@@ -50788,7 +50803,10 @@ define('directives/d3-performance-chart',[
  define: false,
  console: false
  */
-define('directives/d3-pie-chart',['d3js'], function (d3) {
+define('directives/d3-pie-chart',[
+  'd3js',
+  './chart'
+], function (d3, Chart) {
   
 
   return ['$timeout', function ($timeout) {
@@ -50796,20 +50814,17 @@ define('directives/d3-pie-chart',['d3js'], function (d3) {
       restrict: 'E',
       scope: {
         chart: '=',
-        label: '@',
-        onClick: '&'
       },
       link: function (scope, ele, attrs) {
         var renderTimeout;
 
-        var bucket = attrs.bucket,
-            count = attrs.count;
-
         // define dimensions of graph
-        var margin = { top: 0, right: 0, bottom: 0, left: 0 },
-          width = 260 - margin.left - margin.right,
-          height = 160 - margin.top - margin.bottom,
-          radius = Math.min(width, height) / 2;
+        var dimensions = {
+          margins: { top: 0, right: 0, bottom: 10, left: 0 }
+        };
+        var svg = new Chart(ele[0], dimensions);
+        svg.attr('transform', 'translate(' + svg.width() / 2 + ',' + svg.height() / 2 + ')');
+        var radius = Math.min(svg.width(), svg.height()) / 2;
 
         var color = d3.scale.ordinal().range(['#7fc340', '#a90009', '#ee000d', '#1c9f3f']);
 
@@ -50818,18 +50833,13 @@ define('directives/d3-pie-chart',['d3js'], function (d3) {
           .innerRadius(0);
 
         var pie = d3.layout.pie()
-//          .sort(null)
+          .sort(null)
           .value(function (d) {
-            return d[count];
+            return +d[count];
           });
 
-        // Add an SVG element with the desired dimensions and margin.
-        var svg = d3.select(ele[0]).append('svg')
-          .attr('width', width + margin.left + margin.right)
-          .attr('height', height + margin.top + margin.bottom)
-          .append('g')
-          .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')');
-
+        var bucket = attrs.bucket,
+            count = attrs.count;
 
         scope.$watch('chart', function (newChart) {
           scope.render(newChart.data);
@@ -50840,10 +50850,6 @@ define('directives/d3-pie-chart',['d3js'], function (d3) {
 
           if (!data) return;
           if (renderTimeout) $timeout.cancel(renderTimeout);
-          // convert all to numbers
-          data.forEach(function (d) {
-            d[count] = +d[count];
-          });
 
           renderTimeout = $timeout(function () {
             var g = svg.selectAll('.arc')
@@ -50863,13 +50869,13 @@ define('directives/d3-pie-chart',['d3js'], function (d3) {
               .attr('class', 'legend')
               .attr('height', 100)
               .attr('width', 100)
-              .attr('transform', 'translate(-320,-80)');
+              .attr('transform', 'translate(-400,-60)');
 
             legend.selectAll('rect')
                 .data(data)
               .enter()
                 .append('rect')
-                .attr('x', width - 65)
+                .attr('x', svg.width() - 65)
                 .attr('y', function (d, i) {
                   return i * 20;
                 })
@@ -50883,7 +50889,7 @@ define('directives/d3-pie-chart',['d3js'], function (d3) {
                 .data(data)
               .enter()
                 .append('text')
-                .attr('x', width - 52)
+                .attr('x', svg.width() - 52)
                 .attr('y', function (d, i) {
                   return i * 20 + 9;
                 })
@@ -50891,17 +50897,6 @@ define('directives/d3-pie-chart',['d3js'], function (d3) {
                   return d[bucket];
                 });
             // end legend
-
-
-//            g.append('text')
-//              .attr('transform', function (d) {
-//                return 'translate(' + arc.centroid(d) + ')';
-//              })
-//              .attr('dy', '.35em')
-//              .style('text-anchor', 'middle')
-//              .text(function (d) {
-//                return d.data[bucket];
-//              });
 
           }, 200); // renderTimeout
         };
@@ -50914,7 +50909,10 @@ define('directives/d3-pie-chart',['d3js'], function (d3) {
  define: false,
  console: false
  */
-define('directives/d3-roc-chart',['d3js'], function (d3) {
+define('directives/d3-roc-chart',[
+  'd3js',
+  './chart'
+], function (d3, Chart) {
   
 
   return ['$timeout', function ($timeout) {
@@ -50927,20 +50925,14 @@ define('directives/d3-roc-chart',['d3js'], function (d3) {
       },
       link: function (scope, ele, attrs) {
         var renderTimeout;
-        // define dimensions of graph
-        var m = [10, 20, 10, 35]; // margins
-        var w = 260 - m[1] - m[3]; // width
-        var h = 160 - m[0] - m[2]; // height
+        var dimensions = {
+          margins: { top: 10, right: 0, bottom: 10, left: 35 }
+        };
 
-        // Add an SVG element with the desired dimensions and margin.
-        var svg = d3.select(ele[0]).append('svg')
-          .attr('width', w + m[1] + m[3])
-          .attr('height', h + m[0] + m[2])
-          .append('g')
-          .attr('transform', 'translate(' + m[3] + ',' + m[0] + ')');
+        var svg = new Chart(ele[0], dimensions);
 
-        var xScale = d3.scale.ordinal().rangeBands([0, w]).rangeBands([0, w]);
-        var yScale = d3.scale.linear().range([h, 0]);
+        var xScale = d3.scale.ordinal().rangeBands([0, svg.width()]).rangeBands([0, svg.width()]);
+        var yScale = d3.scale.linear().range([svg.height(), 0]);
 
         scope.$watch('chart', function (newChart) {
           scope.render(newChart.data);
@@ -57199,7 +57191,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('partials/augur-accuracy.html',
-    '<div class=\'row augur-accuracy\'><div class=\'columns small-12\'><ul class=\'small-block-grid-2 medium-block-grid-3\'><li><div class=\'th\'><a ui-sref=\'augur.accuracy-detail({ chartType: "lift" })\'><h6 class=\'title\'>Lift</h6><div class=\'chart line-chart\'><d3-line-chart chart=\'charts.lift\'></d3-line-chart></div></a></div></li><li><div class=\'th\'><a ui-sref=\'dashboard\'><h6 class=\'title\'>Accumulated Lift</h6><div class=\'chart line-chart\'><d3-line-chart chart=\'charts.accumulatedLift\'></d3-line-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Response</h6><div class=\'chart line-chart\'><d3-line-chart chart=\'charts.response\'></d3-line-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Accumulated Response</h6><div class=\'chart line-chart\'><d3-line-chart chart=\'charts.accumulatedResponse\'></d3-line-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Captured Response</h6><div class=\'chart line-chart\'><d3-line-chart chart=\'charts.capturedResponse\'></d3-line-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Accumulated Captured Response</h6><div class=\'chart line-chart\'><d3-line-chart chart=\'charts.accumulatedCapturedResponse\'></d3-line-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>ROC</h6><div class=\'chart roc-chart\'><d3-roc-chart chart=\'charts.roc\'></d3-roc-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Misclassification</h6><div class=\'chart pie-chart\'><d3-pie-chart bucket=\'bucket\' chart=\'charts.misclassification\' count=\'count\'></d3-pie-chart></div></a></div></li><li><div class=\'th\'><a href=\'\'><h6 class=\'title\'>Distribution of Predicted Values</h6><div class=\'chart bar-chart\'><d3-bar-chart chart=\'charts.distributionPredictedValues\'></d3-bar-chart></div></a></div></li></ul></div></div>');
+    '<div class=\'row augur-accuracy\'><div class=\'columns small-12\'><ul class=\'small-block-grid-2 medium-block-grid-3\'><li class=\'tile\'><div class=\'tile-body\'><a ui-sref=\'augur.accuracy-detail({ chartType: "lift" })\'><h6 class=\'title\'>Lift</h6><div class=\'chart line-chart\'><d3-line-chart chart=\'charts.lift\'></d3-line-chart></div></a></div></li><li class=\'tile\'><div class=\'tile-body\'><a ui-sref=\'dashboard\'><h6 class=\'title\'>Accumulated Lift</h6><div class=\'chart line-chart\'><d3-line-chart chart=\'charts.accumulatedLift\'></d3-line-chart></div></a></div></li><li class=\'tile\'><div class=\'tile-body\'><a href=\'\'><h6 class=\'title\'>Response</h6><div class=\'chart line-chart\'><d3-line-chart chart=\'charts.response\'></d3-line-chart></div></a></div></li><li class=\'tile\'><div class=\'tile-body\'><a href=\'\'><h6 class=\'title\'>Accumulated Response</h6><div class=\'chart line-chart\'><d3-line-chart chart=\'charts.accumulatedResponse\'></d3-line-chart></div></a></div></li><li class=\'tile\'><div class=\'tile-body\'><a href=\'\'><h6 class=\'title\'>Captured Response</h6><div class=\'chart line-chart\'><d3-line-chart chart=\'charts.capturedResponse\'></d3-line-chart></div></a></div></li><li class=\'tile\'><div class=\'tile-body\'><a href=\'\'><h6 class=\'title\'>Accumulated Captured Response</h6><div class=\'chart line-chart\'><d3-line-chart chart=\'charts.accumulatedCapturedResponse\'></d3-line-chart></div></a></div></li><li class=\'tile\'><div class=\'tile-body\'><a href=\'\'><h6 class=\'title\'>ROC</h6><div class=\'chart roc-chart\'><d3-roc-chart chart=\'charts.roc\'></d3-roc-chart></div></a></div></li><li class=\'tile\'><div class=\'tile-body\'><a href=\'\'><h6 class=\'title\'>Misclassification</h6><div class=\'chart pie-chart\'><d3-pie-chart bucket=\'bucket\' chart=\'charts.misclassification\' count=\'count\'></d3-pie-chart></div></a></div></li><li class=\'tile\'><div class=\'tile-body\'><a href=\'\'><h6 class=\'title\'>Distribution of Predicted Values</h6><div class=\'chart bar-chart\'><d3-bar-chart chart=\'charts.distributionPredictedValues\'></d3-bar-chart></div></a></div></li></ul></div></div>');
 }]);
 })();
 

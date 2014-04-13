@@ -2,7 +2,10 @@
  define: false,
  console: false
  */
-define(['d3js'], function (d3) {
+define([
+  'd3js',
+  './chart'
+], function (d3, Chart) {
   'use strict';
 
   return ['$timeout', function ($timeout) {
@@ -10,20 +13,17 @@ define(['d3js'], function (d3) {
       restrict: 'E',
       scope: {
         chart: '=',
-        label: '@',
-        onClick: '&'
       },
       link: function (scope, ele, attrs) {
         var renderTimeout;
 
-        var bucket = attrs.bucket,
-            count = attrs.count;
-
         // define dimensions of graph
-        var margin = { top: 0, right: 0, bottom: 0, left: 0 },
-          width = 260 - margin.left - margin.right,
-          height = 160 - margin.top - margin.bottom,
-          radius = Math.min(width, height) / 2;
+        var dimensions = {
+          margins: { top: 0, right: 0, bottom: 10, left: 0 }
+        };
+        var svg = new Chart(ele[0], dimensions);
+        svg.attr('transform', 'translate(' + svg.width() / 2 + ',' + svg.height() / 2 + ')');
+        var radius = Math.min(svg.width(), svg.height()) / 2;
 
         var color = d3.scale.ordinal().range(['#7fc340', '#a90009', '#ee000d', '#1c9f3f']);
 
@@ -32,18 +32,13 @@ define(['d3js'], function (d3) {
           .innerRadius(0);
 
         var pie = d3.layout.pie()
-//          .sort(null)
+          .sort(null)
           .value(function (d) {
-            return d[count];
+            return +d[count];
           });
 
-        // Add an SVG element with the desired dimensions and margin.
-        var svg = d3.select(ele[0]).append('svg')
-          .attr('width', width + margin.left + margin.right)
-          .attr('height', height + margin.top + margin.bottom)
-          .append('g')
-          .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')');
-
+        var bucket = attrs.bucket,
+            count = attrs.count;
 
         scope.$watch('chart', function (newChart) {
           scope.render(newChart.data);
@@ -54,10 +49,6 @@ define(['d3js'], function (d3) {
 
           if (!data) return;
           if (renderTimeout) $timeout.cancel(renderTimeout);
-          // convert all to numbers
-          data.forEach(function (d) {
-            d[count] = +d[count];
-          });
 
           renderTimeout = $timeout(function () {
             var g = svg.selectAll('.arc')
@@ -77,13 +68,13 @@ define(['d3js'], function (d3) {
               .attr('class', 'legend')
               .attr('height', 100)
               .attr('width', 100)
-              .attr('transform', 'translate(-320,-80)');
+              .attr('transform', 'translate(-400,-60)');
 
             legend.selectAll('rect')
                 .data(data)
               .enter()
                 .append('rect')
-                .attr('x', width - 65)
+                .attr('x', svg.width() - 65)
                 .attr('y', function (d, i) {
                   return i * 20;
                 })
@@ -97,7 +88,7 @@ define(['d3js'], function (d3) {
                 .data(data)
               .enter()
                 .append('text')
-                .attr('x', width - 52)
+                .attr('x', svg.width() - 52)
                 .attr('y', function (d, i) {
                   return i * 20 + 9;
                 })
@@ -105,17 +96,6 @@ define(['d3js'], function (d3) {
                   return d[bucket];
                 });
             // end legend
-
-
-//            g.append('text')
-//              .attr('transform', function (d) {
-//                return 'translate(' + arc.centroid(d) + ')';
-//              })
-//              .attr('dy', '.35em')
-//              .style('text-anchor', 'middle')
-//              .text(function (d) {
-//                return d.data[bucket];
-//              });
 
           }, 200); // renderTimeout
         };

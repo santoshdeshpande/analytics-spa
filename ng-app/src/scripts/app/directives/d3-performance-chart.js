@@ -18,12 +18,11 @@ define([
         var renderTimeout;
         // define dimensions of graph
 
+
         var $element = angular.element( ele[0] );
         var margin = { top: 10, right: 10, bottom: 20, left: 30 },
-            width  = 840 - margin.left - margin.right,
-            height = 600 - margin.top - margin.bottom;
-
-        console.log("css('border-top-color')", $element.css('border-top-color'));
+            width  = ele[0].offsetWidth - margin.left - margin.right,
+            height = ele[0].offsetHeight - margin.top - margin.bottom;
 
         var format = d3.format('.4f');
         var x = d3.scale.ordinal().domain(d3.range(0,32)).rangeRoundBands([0, width], .35);
@@ -31,7 +30,6 @@ define([
         var svg = d3.select(ele[0]).append('svg')
           .attr('width', width + margin.left + margin.right)
           .attr('height', height + margin.top + margin.bottom);
-
 
         var gradId = 'gradientForegroundPurple' + Math.round( 999999 * Math.random() );
 
@@ -54,14 +52,11 @@ define([
         }, true);
 
         $rootScope.$on('themeChanged', function () {
-          console.log("$element.css('border-top-color')", $element.css('border-top-color'), " $element.css('border-right-color')",  $element.css('border-right-color'))
-          stop1.attr('stop-color', $element.css('border-top-color'))
-          stop2.attr('stop-color', $element.css('border-right-color'))
+          stop1.attr('stop-color', $element.css('border-top-color'));
+          stop2.attr('stop-color', $element.css('border-right-color'));
         });
 
         scope.render = function (data) {
-
-
           graph.selectAll('*').remove();
 
           if (!data) return;
@@ -114,7 +109,7 @@ define([
                   .attr('y', function (d) { return y(d.drift) })
                   .attr('height', function (d) {
                     return height - y(d.drift);
-                  })
+                  });
 
             //////////////////////////////////
 

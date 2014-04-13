@@ -130,14 +130,19 @@
   }
 
   .chart {
+    height: 600px;
+
+    d3-performance-chart {
+      @include themes( $main: border-right-color, $light: border-top-color, $dark: border-bottom-color);
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
     .bar {
       &.solid {
         @include themes( $dark: fill );
       }
-    }
-
-    d3-performance-chart {
-      @include themes( $main: border-right-color, $light: border-top-color, $dark: border-bottom-color);
     }
 
     .y.axis {

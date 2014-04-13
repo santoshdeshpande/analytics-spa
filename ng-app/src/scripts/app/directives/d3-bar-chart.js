@@ -2,7 +2,10 @@
  define: false,
  console: false
  */
-define(['d3js'], function (d3) {
+define([
+  'd3js',
+  './chart'
+], function (d3, Chart) {
   'use strict';
 
   return ['$timeout', function ($timeout) {
@@ -10,32 +13,18 @@ define(['d3js'], function (d3) {
       restrict: 'E',
       scope: {
         chart: '=',
-        label: '@',
-        onClick: '&'
       },
       link: function (scope, ele, attrs) {
         var renderTimeout;
-        // define dimensions of graph
-        var margin = { top: 10, right: 20, bottom: 10, left: 40 },
-          width = 260 - margin.left - margin.right,
-          height = 160 - margin.top - margin.bottom;
+        var dimensions = {
+          margins: { top: 10, right: 20, bottom: 10, left: 40 }
+        };
 
-        var x = d3.scale
-          .ordinal()
-          .rangeRoundBands([0, width], .1);
-        var y = d3.scale
-          .linear()
-          .range([height, 0]);
+        var svg = new Chart(ele[0], dimensions);
 
-        var yAxis = d3.svg.axis()
-          .scale(y)
-          .orient('left');
-
-        var svg = d3.select(ele[0]).append('svg')
-          .attr('width', width + margin.left + margin.right)
-          .attr('height', height + margin.top + margin.bottom)
-          .append('g')
-          .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+        var x = d3.scale.ordinal().rangeRoundBands([0, svg.width()], .1);
+        var y = d3.scale.linear().range([svg.height(), 0]);
+        var yAxis = d3.svg.axis().scale(y).orient('left');
 
         scope.$watch('chart', function (newChart) {
           scope.render(newChart.data);
@@ -67,7 +56,7 @@ define(['d3js'], function (d3) {
               svg.append('path')
                 .attr('d', d3.svg.line()([
                   [ 0, y(yValue) ],
-                  [ width, y(yValue) ]
+                  [ svg.width(), y(yValue) ]
                 ]))
                 .attr('class', 'axis helpline');
             });
@@ -79,7 +68,7 @@ define(['d3js'], function (d3) {
                   .attr('x', function(d) { return x(d[0]); })
                   .attr('width', x.rangeBand())
                   .attr('y', function(d) { return y(d[1]); })
-                  .attr('height', function(d) { return height - y(d[1]); });
+                  .attr('height', function(d) { return svg.height() - y(d[1]); });
 
           }, 200); // renderTimeout
         };

@@ -5662,25 +5662,6 @@ th.hide-for-touch {
 .touch th.show-for-touch {
   display: table-cell !important; }
 
-.theme-test {
-  border: 2px solid; }
-  [data-theme=theme-one] .theme-test {
-    color: #6C3BB6;
-    border-color: #6C3BB6;
-    background-color: #e9e1f5; }
-  [data-theme=theme-two] .theme-test {
-    color: #5C9FD2;
-    border-color: #5C9FD2;
-    background-color: #f0f6fb; }
-  [data-theme=theme-three] .theme-test {
-    color: #C2642C;
-    border-color: #C2642C;
-    background-color: #f7e6dc; }
-  [data-theme=theme-four] .theme-test {
-    color: #5B9D4D;
-    border-color: #5B9D4D;
-    background-color: #e3f0e0; }
-
 .container {
   padding-top: 1em;
   background-color: #fff;
@@ -6139,101 +6120,158 @@ th.hide-for-touch {
     border-radius: 3px;
     background-color: #fff; }
 
+.augur-accuracy .tile .tile-body {
+  border: 3px solid #eee; }
 .augur-accuracy .title {
   color: #000000;
   text-align: center; }
-.augur-accuracy .chart {
-  height: 175px;
-  width: 260px; }
-  .augur-accuracy .chart text {
-    font-size: 0.7em; }
-  .augur-accuracy .chart .axis {
-    shape-rendering: crispEdges; }
-    .augur-accuracy .chart .axis.y path {
-      display: none; }
-  .augur-accuracy .chart.line-chart path, .augur-accuracy .chart.roc-chart path {
-    stroke: steelblue;
-    stroke-width: 1;
-    fill: none; }
-  .augur-accuracy .chart.line-chart path.baseline, .augur-accuracy .chart.roc-chart path.baseline {
-    stroke: red;
-    stroke-width: 1;
-    fill: none; }
-  .augur-accuracy .chart.line-chart path.helpline, .augur-accuracy .chart.roc-chart path.helpline {
-    stroke: #ddd;
-    stroke-width: 1;
-    fill: none; }
-  .augur-accuracy .chart.bar-chart .bar {
-    fill: steelblue; }
-  .augur-accuracy .chart.bar-chart .bar:hover {
-    fill: brown; }
-  .augur-accuracy .chart.bar-chart .axis path {
-    fill: none;
-    stroke: #000;
-    shape-rendering: crispEdges; }
-  .augur-accuracy .chart.bar-chart path.helpline {
-    stroke: #ddd;
-    stroke-width: 1;
-    fill: none; }
-  .augur-accuracy .chart.pie-chart .arc path {
-    stroke: #fff; }
+.augur-accuracy .chart d3-line-chart, .augur-accuracy .chart d3-roc-chart, .augur-accuracy .chart d3-pie-chart, .augur-accuracy .chart d3-bar-chart {
+  height: 160px;
+  width: 100%;
+  display: block; }
+.augur-accuracy .chart text {
+  font-size: 0.7em; }
+.augur-accuracy .chart .axis {
+  shape-rendering: crispEdges; }
+  .augur-accuracy .chart .axis.y path {
+    display: none; }
+.augur-accuracy .chart.line-chart path, .augur-accuracy .chart.roc-chart path {
+  stroke: steelblue;
+  stroke-width: 1;
+  fill: none; }
+.augur-accuracy .chart.line-chart path.baseline, .augur-accuracy .chart.roc-chart path.baseline {
+  stroke: red;
+  stroke-width: 1;
+  fill: none; }
+.augur-accuracy .chart.line-chart path.helpline, .augur-accuracy .chart.roc-chart path.helpline {
+  stroke: #ddd;
+  stroke-width: 1;
+  fill: none; }
+.augur-accuracy .chart.bar-chart .bar {
+  fill: steelblue; }
+.augur-accuracy .chart.bar-chart .bar:hover {
+  fill: brown; }
+.augur-accuracy .chart.bar-chart .axis path {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges; }
+.augur-accuracy .chart.bar-chart path.helpline {
+  stroke: #ddd;
+  stroke-width: 1;
+  fill: none; }
+.augur-accuracy .chart.pie-chart .arc path {
+  stroke: #fff; }
 
 .augur-influencers {
   position: relative; }
   .augur-influencers .heading {
     position: absolute;
     top: 0; }
-    .augur-influencers .heading h1 {
-      color: #6418a2; }
+    [data-theme=theme-one] .augur-influencers .heading h1 {
+      color: #6C3BB6; }
+    [data-theme=theme-two] .augur-influencers .heading h1 {
+      color: #5C9FD2; }
+    [data-theme=theme-three] .augur-influencers .heading h1 {
+      color: #C2642C; }
+    [data-theme=theme-four] .augur-influencers .heading h1 {
+      color: #5B9D4D; }
     .augur-influencers .heading .subheader {
       margin-top: -1rem; }
 
 .augur-performance {
   position: relative; }
-  .augur-performance .heading .title {
-    color: #6418a2; }
+  [data-theme=theme-one] .augur-performance .heading .title {
+    color: #6C3BB6; }
+  [data-theme=theme-two] .augur-performance .heading .title {
+    color: #5C9FD2; }
+  [data-theme=theme-three] .augur-performance .heading .title {
+    color: #C2642C; }
+  [data-theme=theme-four] .augur-performance .heading .title {
+    color: #5B9D4D; }
   .augur-performance .heading .subheader {
-    margin-top: -1rem; }
+    margin-top: -0.8rem; }
   .augur-performance .heading .dropdown {
     display: inline-block; }
     .augur-performance .heading .dropdown .dropdown-trigger {
       display: block;
       padding: 0 0.25em;
-      border: 1px solid #6418a2;
+      border: 1px solid;
       border-radius: 3px;
       color: #333; }
+      [data-theme=theme-one] .augur-performance .heading .dropdown .dropdown-trigger {
+        border-color: #6C3BB6; }
+      [data-theme=theme-two] .augur-performance .heading .dropdown .dropdown-trigger {
+        border-color: #5C9FD2; }
+      [data-theme=theme-three] .augur-performance .heading .dropdown .dropdown-trigger {
+        border-color: #C2642C; }
+      [data-theme=theme-four] .augur-performance .heading .dropdown .dropdown-trigger {
+        border-color: #5B9D4D; }
       .augur-performance .heading .dropdown .dropdown-trigger > span {
         display: inline-block;
-        border-right: 1px solid #6418a2;
+        border-right: 1px solid;
         padding-right: inherit; }
+        [data-theme=theme-one] .augur-performance .heading .dropdown .dropdown-trigger > span {
+          border-color: #6C3BB6; }
+        [data-theme=theme-two] .augur-performance .heading .dropdown .dropdown-trigger > span {
+          border-color: #5C9FD2; }
+        [data-theme=theme-three] .augur-performance .heading .dropdown .dropdown-trigger > span {
+          border-color: #C2642C; }
+        [data-theme=theme-four] .augur-performance .heading .dropdown .dropdown-trigger > span {
+          border-color: #5B9D4D; }
       .augur-performance .heading .dropdown .dropdown-trigger::after {
         content: '';
         display: inline-block;
         vertical-align: middle;
         border: 0.35em solid transparent;
         border-bottom: 0;
-        border-top-color: #6418a2;
-        margin-left: 0.1em;
-        margin-right: 0.2em; }
+        margin-top: -0.2em;
+        margin-left: 0.2em;
+        margin-right: 0.1em; }
+        [data-theme=theme-one] .augur-performance .heading .dropdown .dropdown-trigger::after {
+          border-top-color: #6C3BB6; }
+        [data-theme=theme-two] .augur-performance .heading .dropdown .dropdown-trigger::after {
+          border-top-color: #5C9FD2; }
+        [data-theme=theme-three] .augur-performance .heading .dropdown .dropdown-trigger::after {
+          border-top-color: #C2642C; }
+        [data-theme=theme-four] .augur-performance .heading .dropdown .dropdown-trigger::after {
+          border-top-color: #5B9D4D; }
       .augur-performance .heading .dropdown .dropdown-trigger.active {
         color: #fff;
-        background: #6418a2;
-        border-color: #6418a2;
         border-radius: 3px 3px 0 0; }
+        [data-theme=theme-one] .augur-performance .heading .dropdown .dropdown-trigger.active {
+          background: #6C3BB6;
+          border-color: #6C3BB6; }
+        [data-theme=theme-two] .augur-performance .heading .dropdown .dropdown-trigger.active {
+          background: #5C9FD2;
+          border-color: #5C9FD2; }
+        [data-theme=theme-three] .augur-performance .heading .dropdown .dropdown-trigger.active {
+          background: #C2642C;
+          border-color: #C2642C; }
+        [data-theme=theme-four] .augur-performance .heading .dropdown .dropdown-trigger.active {
+          background: #5B9D4D;
+          border-color: #5B9D4D; }
         .augur-performance .heading .dropdown .dropdown-trigger.active::after {
           border-top-color: white; }
     .augur-performance .heading .dropdown .dropdown-content {
       position: absolute;
       margin-top: 0;
-      right: 0.5em; }
+      left: 5.5em; }
   .augur-performance .selection {
     position: relative;
     z-index: 1; }
     .augur-performance .selection .options {
       background: #fff;
-      border: 2px solid #6418a2;
+      border: 2px solid;
       border-radius: 3px;
       padding: 0.5rem 0; }
+      [data-theme=theme-one] .augur-performance .selection .options {
+        border-color: #6C3BB6; }
+      [data-theme=theme-two] .augur-performance .selection .options {
+        border-color: #5C9FD2; }
+      [data-theme=theme-three] .augur-performance .selection .options {
+        border-color: #C2642C; }
+      [data-theme=theme-four] .augur-performance .selection .options {
+        border-color: #5B9D4D; }
       .augur-performance .selection .options ul {
         padding: 0;
         margin: 0; }
@@ -6245,7 +6283,15 @@ th.hide-for-touch {
           font-size: 1rem;
           padding: 0.1rem; }
         .augur-performance .selection .options ul .indicators li {
-          border-bottom: 1px solid #6418a2; }
+          border-bottom: 1px solid; }
+          [data-theme=theme-one] .augur-performance .selection .options ul .indicators li {
+            border-color: #6C3BB6; }
+          [data-theme=theme-two] .augur-performance .selection .options ul .indicators li {
+            border-color: #5C9FD2; }
+          [data-theme=theme-three] .augur-performance .selection .options ul .indicators li {
+            border-color: #C2642C; }
+          [data-theme=theme-four] .augur-performance .selection .options ul .indicators li {
+            border-color: #5B9D4D; }
           .augur-performance .selection .options ul .indicators li .glyphicon {
             display: none; }
           .augur-performance .selection .options ul .indicators li.active label {
@@ -6255,79 +6301,98 @@ th.hide-for-touch {
               margin-top: 0.2rem;
               float: right;
               display: inline;
-              color: #6418a2;
               font-weight: bold; }
-        .augur-performance .selection .options ul .indicators li:hover, .augur-performance .selection .options ul .indicators a:focus {
-          background-color: #6418a2; }
-          .augur-performance .selection .options ul .indicators li:hover label, .augur-performance .selection .options ul .indicators a:focus label {
-            color: #fff; }
+              [data-theme=theme-one] .augur-performance .selection .options ul .indicators li.active label .glyphicon {
+                color: #6C3BB6; }
+              [data-theme=theme-two] .augur-performance .selection .options ul .indicators li.active label .glyphicon {
+                color: #5C9FD2; }
+              [data-theme=theme-three] .augur-performance .selection .options ul .indicators li.active label .glyphicon {
+                color: #C2642C; }
+              [data-theme=theme-four] .augur-performance .selection .options ul .indicators li.active label .glyphicon {
+                color: #5B9D4D; }
+        [data-theme=theme-one] .augur-performance .selection .options ul .indicators li:hover, [data-theme=theme-one] .augur-performance .selection .options ul .indicators a:focus {
+          background-color: #6C3BB6; }
+        [data-theme=theme-two] .augur-performance .selection .options ul .indicators li:hover, [data-theme=theme-two] .augur-performance .selection .options ul .indicators a:focus {
+          background-color: #5C9FD2; }
+        [data-theme=theme-three] .augur-performance .selection .options ul .indicators li:hover, [data-theme=theme-three] .augur-performance .selection .options ul .indicators a:focus {
+          background-color: #C2642C; }
+        [data-theme=theme-four] .augur-performance .selection .options ul .indicators li:hover, [data-theme=theme-four] .augur-performance .selection .options ul .indicators a:focus {
+          background-color: #5B9D4D; }
+        .augur-performance .selection .options ul .indicators li:hover label, .augur-performance .selection .options ul .indicators a:focus label {
+          color: #fff; }
         .augur-performance .selection .options ul .indicators li:last-child {
           border-bottom: none; }
-  [data-theme=theme-one] .augur-performance .chart .bar.solid {
-    fill: #542f8f; }
-  [data-theme=theme-two] .augur-performance .chart .bar.solid {
-    fill: #3689c5; }
-  [data-theme=theme-three] .augur-performance .chart .bar.solid {
-    fill: #984e23; }
-  [data-theme=theme-four] .augur-performance .chart .bar.solid {
-    fill: #487b3c; }
-  [data-theme=theme-one] .augur-performance .chart d3-performance-chart {
-    border-right-color: #6C3BB6;
-    border-top-color: #e9e1f5;
-    border-bottom-color: #542f8f; }
-  [data-theme=theme-two] .augur-performance .chart d3-performance-chart {
-    border-right-color: #5C9FD2;
-    border-top-color: #f0f6fb;
-    border-bottom-color: #3689c5; }
-  [data-theme=theme-three] .augur-performance .chart d3-performance-chart {
-    border-right-color: #C2642C;
-    border-top-color: #f7e6dc;
-    border-bottom-color: #984e23; }
-  [data-theme=theme-four] .augur-performance .chart d3-performance-chart {
-    border-right-color: #5B9D4D;
-    border-top-color: #e3f0e0;
-    border-bottom-color: #487b3c; }
-  .augur-performance .chart .y.axis path {
-    stroke: #ddd;
-    stroke-width: 1;
-    fill: none; }
-  .augur-performance .chart .helpline {
-    stroke: #ddd;
-    stroke-width: 1;
-    fill: none; }
-  .augur-performance .chart .threshold-line {
-    stroke-width: 3;
-    fill: none; }
-    [data-theme=theme-one] .augur-performance .chart .threshold-line {
-      stroke: #542f8f; }
-    [data-theme=theme-two] .augur-performance .chart .threshold-line {
-      stroke: #3689c5; }
-    [data-theme=theme-three] .augur-performance .chart .threshold-line {
-      stroke: #984e23; }
-    [data-theme=theme-four] .augur-performance .chart .threshold-line {
-      stroke: #487b3c; }
-  .augur-performance .chart .threshold-label rect {
-    stroke-width: 3;
-    fill: white; }
-    [data-theme=theme-one] .augur-performance .chart .threshold-label rect {
-      stroke: #542f8f; }
-    [data-theme=theme-two] .augur-performance .chart .threshold-label rect {
-      stroke: #3689c5; }
-    [data-theme=theme-three] .augur-performance .chart .threshold-label rect {
-      stroke: #984e23; }
-    [data-theme=theme-four] .augur-performance .chart .threshold-label rect {
-      stroke: #487b3c; }
-  .augur-performance .chart .legend {
-    stroke-width: 3;
-    fill: white; }
-    [data-theme=theme-one] .augur-performance .chart .legend {
-      stroke: #542f8f; }
-    [data-theme=theme-two] .augur-performance .chart .legend {
-      stroke: #3689c5; }
-    [data-theme=theme-three] .augur-performance .chart .legend {
-      stroke: #984e23; }
-    [data-theme=theme-four] .augur-performance .chart .legend {
-      stroke: #487b3c; }
+  .augur-performance .chart {
+    height: 600px; }
+    .augur-performance .chart d3-performance-chart {
+      width: 100%;
+      height: 100%;
+      display: block; }
+      [data-theme=theme-one] .augur-performance .chart d3-performance-chart {
+        border-right-color: #6C3BB6;
+        border-top-color: #e9e1f5;
+        border-bottom-color: #542f8f; }
+      [data-theme=theme-two] .augur-performance .chart d3-performance-chart {
+        border-right-color: #5C9FD2;
+        border-top-color: #f0f6fb;
+        border-bottom-color: #3689c5; }
+      [data-theme=theme-three] .augur-performance .chart d3-performance-chart {
+        border-right-color: #C2642C;
+        border-top-color: #f7e6dc;
+        border-bottom-color: #984e23; }
+      [data-theme=theme-four] .augur-performance .chart d3-performance-chart {
+        border-right-color: #5B9D4D;
+        border-top-color: #e3f0e0;
+        border-bottom-color: #487b3c; }
+    [data-theme=theme-one] .augur-performance .chart .bar.solid {
+      fill: #542f8f; }
+    [data-theme=theme-two] .augur-performance .chart .bar.solid {
+      fill: #3689c5; }
+    [data-theme=theme-three] .augur-performance .chart .bar.solid {
+      fill: #984e23; }
+    [data-theme=theme-four] .augur-performance .chart .bar.solid {
+      fill: #487b3c; }
+    .augur-performance .chart .y.axis path {
+      stroke: #ddd;
+      stroke-width: 1;
+      fill: none; }
+    .augur-performance .chart .helpline {
+      stroke: #ddd;
+      stroke-width: 1;
+      fill: none; }
+    .augur-performance .chart .threshold-line {
+      stroke-width: 3;
+      fill: none; }
+      [data-theme=theme-one] .augur-performance .chart .threshold-line {
+        stroke: #542f8f; }
+      [data-theme=theme-two] .augur-performance .chart .threshold-line {
+        stroke: #3689c5; }
+      [data-theme=theme-three] .augur-performance .chart .threshold-line {
+        stroke: #984e23; }
+      [data-theme=theme-four] .augur-performance .chart .threshold-line {
+        stroke: #487b3c; }
+    .augur-performance .chart .threshold-label rect {
+      stroke-width: 3;
+      fill: white; }
+      [data-theme=theme-one] .augur-performance .chart .threshold-label rect {
+        stroke: #542f8f; }
+      [data-theme=theme-two] .augur-performance .chart .threshold-label rect {
+        stroke: #3689c5; }
+      [data-theme=theme-three] .augur-performance .chart .threshold-label rect {
+        stroke: #984e23; }
+      [data-theme=theme-four] .augur-performance .chart .threshold-label rect {
+        stroke: #487b3c; }
+    .augur-performance .chart .legend {
+      stroke-width: 3;
+      fill: white; }
+      [data-theme=theme-one] .augur-performance .chart .legend {
+        stroke: #542f8f; }
+      [data-theme=theme-two] .augur-performance .chart .legend {
+        stroke: #3689c5; }
+      [data-theme=theme-three] .augur-performance .chart .legend {
+        stroke: #984e23; }
+      [data-theme=theme-four] .augur-performance .chart .legend {
+        stroke: #487b3c; }
 
 .augur-decision-tree .element-path {
   text-align: center; }

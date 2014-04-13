@@ -1,11 +1,21 @@
 .augur-accuracy {
+  .tile {
+    .tile-body {
+      border: 3px solid #eee;
+    }
+  }
+
   .title {
     color: #000000;
     text-align: center;
   }
+
   .chart {
-    height: 175px;
-    width: 260px;
+    d3-line-chart, d3-roc-chart, d3-pie-chart, d3-bar-chart {
+      height: 160px;
+      width: 100%;
+      display: block;
+    }
 
     text {
       font-size: 0.7em;
