@@ -44,7 +44,7 @@
     }
 
     .body {
-      overflow: hidden;
+//      overflow: hidden;
       border-bottom: 1px solid #ddd;
     }
     &.step-last .body {
@@ -85,6 +85,8 @@
       -o-transition: all linear 0.5s;
       transition: all linear 0.5s;
       display: block !important;
+
+      overflow:hidden;
     }
   }
 

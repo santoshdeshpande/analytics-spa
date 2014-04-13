@@ -15,3 +15,52 @@
     }
   }
 }
+
+$default-transition-time: 300ms;
+
+.animation-drop-in {
+  &.ng-enter {
+    transition: all $default-transition-time*2 ease-out $default-transition-time/2;
+    transform: translate( 0, -25px );
+
+    opacity: 0;
+
+    &.ng-enter-active {
+      transform: translate( 0, 0 );
+
+      opacity: 1;
+    }
+  }
+
+  &.ng-enter-stagger {
+    -webkit-transition-delay: .2s;
+    transition-delay: .2s;
+
+    -webkit-transition-duration: 0s;
+    transition-duration: 0s;
+  }
+
+  &.ng-leave {
+    transition: all $default-transition-time ease-in;
+    transform: translate( 0, 0 );
+
+    position: absolute;
+    top: 2.4rem;
+    left: 0;
+    right: 0;
+
+
+    opacity: 1;
+
+    &.ng-leave-active {
+      transform: translate( 0, 50px );
+
+      opacity: 0;
+    }
+  }
+}
+
+
+.view-container {
+  position: relative;
+}

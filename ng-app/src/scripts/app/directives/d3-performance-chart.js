@@ -8,7 +8,7 @@ define([
 ], function (d3, _) {
   'use strict';
 
-  return ['$timeout', function ($timeout) {
+  return ['$rootScope', '$timeout', function ($rootScope, $timeout) {
     return {
       restrict: 'E',
       scope: {
@@ -18,9 +18,12 @@ define([
         var renderTimeout;
         // define dimensions of graph
 
+        var $element = angular.element( ele[0] );
         var margin = { top: 10, right: 10, bottom: 20, left: 30 },
             width  = 840 - margin.left - margin.right,
             height = 600 - margin.top - margin.bottom;
+
+        console.log("css('border-top-color')", $element.css('border-top-color'));
 
         var format = d3.format('.4f');
         var x = d3.scale.ordinal().domain(d3.range(0,32)).rangeRoundBands([0, width], .35);
@@ -36,11 +39,11 @@ define([
         var gradientForegroundPurple = defs.append('linearGradient')
           .attr('id', gradId)
           .attr('x1', '0').attr('x2', '0').attr('y1', '0').attr('y2', '1');
-        gradientForegroundPurple.append('stop')
-          .attr('stop-color', '#E3D6F6')
+        var stop1 = gradientForegroundPurple.append('stop')
+          .attr('stop-color', $element.css('border-top-color'))
           .attr('offset', '0%');
-        gradientForegroundPurple.append('stop')
-          .attr('stop-color', '#6418A2')
+        var stop2 = gradientForegroundPurple.append('stop')
+          .attr('stop-color', $element.css('border-bottom-color'))
           .attr('offset', '100%');
 
         var graph = svg.append('g')
@@ -50,7 +53,15 @@ define([
           scope.render(angular.copy(newData));
         }, true);
 
+        $rootScope.$on('themeChanged', function () {
+          console.log("$element.css('border-top-color')", $element.css('border-top-color'), " $element.css('border-right-color')",  $element.css('border-right-color'))
+          stop1.attr('stop-color', $element.css('border-top-color'))
+          stop2.attr('stop-color', $element.css('border-right-color'))
+        });
+
         scope.render = function (data) {
+
+
           graph.selectAll('*').remove();
 
           if (!data) return;

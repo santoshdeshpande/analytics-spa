@@ -91,8 +91,10 @@ define([
 //      });
 
       $rootScope.$on('theme', function(ev, theme){
-        console.log(theme, root);
+        $rootScope.theme = theme;
         root.attr('data-theme', theme);
+
+        $rootScope.$broadcast('themeChanged', theme);
       });
     }]);
 });

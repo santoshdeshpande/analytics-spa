@@ -123,13 +123,13 @@
 
   .chart {
     .bar {
-      //    $c-purpleBright: #a8aff1;
-      //    .purpleForegroundStop1 { stop-color: adjust-lightness( $c-purpleBright, 17 ); }
-      //    .purpleForegroundStop2 { stop-color: adjust-lightness( $c-purpleBright, 8 ); }
-//      fill: url(#gradientForegroundPurple);
       &.solid {
-        fill: #482092;
+        @include themes( $dark: fill );
       }
+    }
+
+    d3-performance-chart {
+      @include themes( $main: border-right-color, $light: border-top-color, $dark: border-bottom-color);
     }
 
     .y.axis {
@@ -147,21 +147,21 @@
     }
 
     .threshold-line {
-      stroke: #6418a2;
+      @include themes( $dark: stroke );
       stroke-width: 3;
       fill: none;
     }
 
     .threshold-label {
       rect {
-        stroke: #6418a2;
+        @include themes( $dark: stroke );
         stroke-width: 3;
         fill: white;
       }
     }
 
     .legend {
-      stroke: #6418a2;
+      @include themes( $dark: stroke );
       stroke-width: 3;
       fill: white;
     }
