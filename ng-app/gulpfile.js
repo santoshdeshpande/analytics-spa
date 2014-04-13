@@ -2,6 +2,7 @@ var gulp = require('gulp'),
   gutil = require('gulp-util'),
   sass = require('gulp-sass'),
   haml = require('gulp-ruby-haml'),
+  watch = require('gulp-watch'),
   ngHtml2Js = require('gulp-ng-html2js'),
   cleanhtml = require('gulp-cleanhtml'),
   jshint = require('gulp-jshint'),
@@ -147,8 +148,13 @@ gulp.task('index', function () {
 gulp.task('haml', function () {
   return gulp
     .src(['src/partials*/**/*.haml'])
+    .pipe(watch(function(files) {
+                return files.pipe(haml())
+                    .pipe(gulp.dest('dist/'))
+            }))
     .pipe(haml())
     .pipe(gulp.dest('dist/'))
+    .pipe(livereload(lrserver))
     .pipe(notify({ message: 'Haml task complete' }));
 });
 
