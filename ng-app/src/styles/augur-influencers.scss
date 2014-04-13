@@ -5,7 +5,7 @@
     top: 0;
 
     h1 {
-      color: #6418a2;
+      @include themes( color );
     }
 
     .subheader {

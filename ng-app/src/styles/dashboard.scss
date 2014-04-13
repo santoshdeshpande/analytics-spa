@@ -73,17 +73,16 @@
       }
 
       &.fact-table {
-        @include themes(background, $isolated: true, $subselector: '.title');
+        @include themes(background, $isolated: true, $sub-selector: '.title');
 
         .title {
           color: #fff;
         }
-
       }
-      &.augur {
-        @include themes(color, $isolated: true, $subselector: '.title .glyphicon');
 
-        @include themes($light: fill, $isolated: true, $subselector: '.area');
+      &.augur {
+        @include themes(color, $isolated: true, $sub-selector: '.title .glyphicon');
+        @include themes($light: fill, $isolated: true, $sub-selector: '.area');
 
         d3-line-chart-dashboard {
           display: block;
@@ -96,15 +95,12 @@
           bottom: 0;
           left: 0;
 
-          height:30px;
+          height: 30px;
 
           .line {
             stroke: #ddd;
             stroke-width: 1;
             fill: none;
-          }
-
-          .area {
           }
         }
       }
