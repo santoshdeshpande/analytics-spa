@@ -22,7 +22,7 @@
   .columns.small-12
     %ul.small-block-grid-2.medium-block-grid-3.large-block-grid-4
       %li
-        .thx
+        .tile
           %a{ href: '#/augurs/new' }
             .artefact-body.add-augur
               %p
@@ -31,7 +31,7 @@
                 %span.glyphicon.glyphicon-plus
 
       %li{'ng-repeat' => 'artifact in artifacts | filter: artifactsFilter'}
-        .thx.habitat{ ng: { if: 'artifact.type == "habitat"', attr: { data: { theme: '{{ artifact.colorScheme }}' }}} }
+        .tile.habitat{ ng: { if: 'artifact.type == "habitat"', attr: { data: { theme: '{{ artifact.colorScheme }}' }}} }
           %a{ href: '#/habitat/{{habitat.id}}' }
             %h5.title
               {{ artifact.name }}
@@ -44,8 +44,16 @@
               %p{ ng: { if: 'artifact.augurCount > 1' } }
                 {{ artifact.augurCount }} Augurs
 
+        .tile.fact-table{ ng: { if: 'artifact.type == "factTable"', attr: { data: { theme: '{{ artifact.colorScheme }}' }} }}
+          %a{ href: '#/habitat/{{artifact.habitat_id}}/factTables/{{factTable.id}}' }
+            %h5.title
+              {{artifact.name}}
+              %span.glyphicon.glyphicon-list-alt
+            .artefact-body
+              %p.description
+                {{artifact.description}}
 
-        .thx.augur{ ng: { if: 'artifact.type == "augur"', attr: { data: { theme: '{{ artifact.colorScheme }}' }}} }
+        .tile.augur{ ng: { if: 'artifact.type == "augur"', attr: { data: { theme: '{{ artifact.colorScheme }}' }}} }
           %a{ ui: { sref: 'augur.tree({ habitatId: artifact.habitat_id, augurId: artifact.id })' } }
             %h5.title
               {{artifact.name}}
@@ -56,12 +64,6 @@
                 %dd True positive rate
                 %dt Latest evaluation
                 %dd 0.6 on 2014/04/15
+            .chart
+              %d3-line-chart-dashboard{ data: 'data', height: '30' }
 
-        .thx.fact-table{ ng: { if: 'artifact.type == "factTable"', attr: { data: { theme: '{{ artifact.colorScheme }}' }} }}
-          %a{ href: '#/habitat/{{artifact.habitat_id}}/factTables/{{factTable.id}}' }
-            %h5.title
-              {{artifact.name}}
-              %span.glyphicon.glyphicon-list-alt
-            .artefact-body
-              %p.description
-                {{artifact.description}}

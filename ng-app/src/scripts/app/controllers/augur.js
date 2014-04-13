@@ -5,16 +5,36 @@
 define([], function () {
   'use strict';
 
-  return  ['$state', '$scope', '$stateParams', 'Augur', 'Habitat', function ($state, $scope, $stateParams, Augur, Habitat) {
-    $scope.augur = Augur.get({ habitatId: $stateParams.habitatId, augurId: $stateParams.augurId });
-    $scope.habitat = Habitat.get({ habitatId: $stateParams.habitatId });
+  function controller($state, $scope, $stateParams, $rootScope, Augur, Habitat) {
+    $scope.statePerformance = 'augur.performance.learning'; // start state for first visit
 
-    $scope.statePerformance = 'augur.performance.learning';
-    $scope.trackCurrentState = function (currentChildState) {
+    $scope.augur = Augur.get({
+      habitatId: $stateParams.habitatId,
+      augurId: $stateParams.augurId
+    });
+    $scope.habitat = Habitat.get({
+      habitatId: $stateParams.habitatId
+    })
+      .$promise
+        .then( function ( habitat ) {
+          if ( habitat.colorScheme ) {
+            $rootScope.$broadcast( 'theme', habitat.colorScheme );
+          }
+        });
+
+    function trackCurrentState(currentChildState) {
       $scope.statePerformance = currentChildState;
-    };
-    $scope.activatePerformanceState = function () {
-      $state.transitionTo($scope.statePerformance, { habitatId: $stateParams.habitatId, augurId: $stateParams.augurId });
     }
-  }];
+    function activatePerformanceState() {
+      $state.go($scope.statePerformance, {
+        habitatId: $stateParams.habitatId,
+        augurId: $stateParams.augurId
+      });
+    }
+
+    $scope.trackCurrentState = trackCurrentState;
+    $scope.activatePerformanceState = activatePerformanceState;
+  }
+
+  return  ['$state', '$scope', '$stateParams', '$rootScope', 'Augur', 'Habitat', controller];
 });

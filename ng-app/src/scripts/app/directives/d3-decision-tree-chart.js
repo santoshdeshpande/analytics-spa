@@ -78,7 +78,7 @@ define(['d3js'], function (d3) {
         scope.render = function (root) {
 
           if (!root) return;
-          if (renderTimeout) clearTimeout(renderTimeout);
+          if (renderTimeout) $timeout.cancel(renderTimeout);
 
           renderTimeout = $timeout(function () {
 

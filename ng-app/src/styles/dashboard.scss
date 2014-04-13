@@ -54,7 +54,7 @@
   }
 
   &.container {
-    .thx {
+    .tile {
       @include themes(border-color, $isolated: true);
 
       position: relative;
@@ -78,42 +78,72 @@
         .title {
           color: #fff;
         }
+
       }
-    }
+      &.augur {
+        @include themes(color, $isolated: true, $subselector: '.title .glyphicon');
 
-    .title {
-      margin: 0;
-      padding: .2em .35em;
-      font-weight: bold;
+        @include themes($light: fill, $isolated: true, $subselector: '.area');
 
-      .glyphicon {
-        position: absolute;
-        font-size: 1.5rem;
-        top: 5px;
-        right: 5px;
-      }
-    }
-
-    .artefact-body {
-      color: #6f6f6f;
-
-      padding: .3em .5em;
-
-      .description {
-        font-size: .85em;
-      }
-
-      dl {
-        dt, dd {
-          float: left;
-          margin: 0;
+        d3-line-chart-dashboard {
+          display: block;
+          height: 30px;
         }
-        dt {
-          clear: left;
-          font-weight: bold;
-          margin-right: .5em;
-          color: #000;
+
+        .chart {
+          position: absolute;
+          right: 0;
+          bottom: 0;
+          left: 0;
+
+          height:30px;
+
+          .line {
+            stroke: #ddd;
+            stroke-width: 1;
+            fill: none;
+          }
+
+          .area {
+          }
         }
+      }
+
+      .title {
+        margin: 0;
+        padding: .2em .35em;
+        font-weight: bold;
+
+        .glyphicon {
+          position: absolute;
+          font-size: 1.5rem;
+          top: 5px;
+          right: 5px;
+        }
+      }
+
+      .artefact-body {
+        color: #6f6f6f;
+
+        padding: .3em .5em;
+
+        .description {
+          font-size: .85em;
+        }
+
+        dl {
+          dt, dd {
+            float: left;
+            margin: 0;
+          }
+          dt {
+            clear: left;
+            font-weight: bold;
+            margin-right: .5em;
+            color: #000;
+          }
+        }
+
       }
     }
   }

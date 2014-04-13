@@ -48,7 +48,7 @@ define(['d3js'], function (d3) {
           graph.selectAll('*').remove();
 
           if (!data) return;
-          if (renderTimeout) clearTimeout(renderTimeout);
+          if (renderTimeout) $timeout.cancel(renderTimeout);
 
           renderTimeout = $timeout(function () {
             xScale.domain([

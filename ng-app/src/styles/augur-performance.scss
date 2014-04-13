@@ -126,7 +126,7 @@
       //    $c-purpleBright: #a8aff1;
       //    .purpleForegroundStop1 { stop-color: adjust-lightness( $c-purpleBright, 17 ); }
       //    .purpleForegroundStop2 { stop-color: adjust-lightness( $c-purpleBright, 8 ); }
-      fill: url(#gradientForegroundPurple);
+//      fill: url(#gradientForegroundPurple);
       &.solid {
         fill: #482092;
       }

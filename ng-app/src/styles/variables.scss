@@ -1,29 +1,20 @@
 $crumb-bg: scale-color($secondary-color, $lightness: 55%) !default;
 
-
-$color-scheme-one-dark: #5FA4FD;
-$color-scheme-one-light: #F6FBFF;
-$color-scheme-two-dark: #8542CA;
-$color-scheme-two-light: #F5EEFD;
-$color-scheme-three-dark: #569535;
-$color-scheme-three-light: #FDFFFA;
-
-
 // purple
 $theme-one-color-main: #6C3BB6; 
-$theme-one-color-light: lighten( $theme-one-color-main, 10 );
+$theme-one-color-light: lighten( $theme-one-color-main, 45 );
 $theme-one-color-dark: darken( $theme-one-color-main, 10 );
 // light-blue
 $theme-two-color-main: #5C9FD2; 
-$theme-two-color-light: lighten( $theme-two-color-main, 10 );
+$theme-two-color-light: lighten( $theme-two-color-main, 37 );
 $theme-two-color-dark: darken( $theme-two-color-main, 10 );
 // orange
 $theme-three-color-main: #C2642C; 
-$theme-three-color-light: lighten( $theme-three-color-main, 10 );
+$theme-three-color-light: lighten( $theme-three-color-main, 45 );
 $theme-three-color-dark: darken( $theme-three-color-main, 10 );
 // green
 $theme-four-color-main: #5B9D4D; 
-$theme-four-color-light: lighten( $theme-four-color-main, 10 );
+$theme-four-color-light: lighten( $theme-four-color-main, 45 );
 $theme-four-color-dark: darken( $theme-four-color-main, 10 );
 
 @mixin theme( $name, $main, $light, $dark, $mainProp, $lightProp, $darkProp, $isolated, $subselector ) {

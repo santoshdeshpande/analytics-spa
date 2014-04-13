@@ -38,7 +38,7 @@ define(['d3js'], function (d3) {
           svg.selectAll('*').remove();
 
           if (!data) return;
-          if (renderTimeout) clearTimeout(renderTimeout);
+          if (renderTimeout) $timeout.cancel(renderTimeout);
 
           renderTimeout = $timeout(function () {
             xScale.domain(data.map(function (d) { return d[0] + '' }));

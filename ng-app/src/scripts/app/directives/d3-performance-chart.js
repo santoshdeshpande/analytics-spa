@@ -29,12 +29,12 @@ define([
           .attr('width', width + margin.left + margin.right)
           .attr('height', height + margin.top + margin.bottom);
 
-        var graph = svg.append('g')
-            .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+
+        var gradId = 'gradientForegroundPurple' + Math.round( 999999 * Math.random() );
 
         var defs = svg.append('defs');
         var gradientForegroundPurple = defs.append('linearGradient')
-          .attr('id', 'gradientForegroundPurple')
+          .attr('id', gradId)
           .attr('x1', '0').attr('x2', '0').attr('y1', '0').attr('y2', '1');
         gradientForegroundPurple.append('stop')
           .attr('stop-color', '#E3D6F6')
@@ -42,6 +42,9 @@ define([
         gradientForegroundPurple.append('stop')
           .attr('stop-color', '#6418A2')
           .attr('offset', '100%');
+
+        var graph = svg.append('g')
+            .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
         scope.$watch('data', function (newData) {
           scope.render(angular.copy(newData));
@@ -51,7 +54,7 @@ define([
           graph.selectAll('*').remove();
 
           if (!data) return;
-          if (renderTimeout) clearTimeout(renderTimeout);
+          if (renderTimeout) $timeout.cancel(renderTimeout);
 
           renderTimeout = $timeout(function () {
 
@@ -81,16 +84,26 @@ define([
               .call(yAxisLeft);
 
             // bars
-            graph.selectAll('.bar')
+            var bars = graph.selectAll('.bar')
               .data(data)
-              .enter().append('rect')
-              .attr('class', function(d) { return d.drift > d.threshold ? 'bar' : 'bar solid' })
-              .attr('x', function (d, i) { return x(i) })
-              .attr('width', x.rangeBand())
-              .attr('y', function (d) { return y(d.drift) })
-              .attr('height', function (d) {
-                return height - y(d.drift);
-              });
+              .enter()
+                .append('rect')
+                  .attr('fill', 'url(#' + gradId + ')')
+                  .attr('height', 0 )
+                  .attr('y', height )
+                  .attr('class', function(d) { return d.drift > d.threshold ? 'bar' : 'bar solid' })
+
+            bars.transition()
+              .duration( 500 )
+                .delay( function ( d, i ) {
+                  return i * 20;
+                })
+                .attr('x', function (d, i) { return x(i) })
+                  .attr('width', x.rangeBand())
+                  .attr('y', function (d) { return y(d.drift) })
+                  .attr('height', function (d) {
+                    return height - y(d.drift);
+                  })
 
             //////////////////////////////////
 

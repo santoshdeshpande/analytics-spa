@@ -54,7 +54,7 @@ define(['d3js'], function (d3) {
           svg.selectAll('*').remove();
 
           if (!data) return;
-          if (renderTimeout) clearTimeout(renderTimeout);
+          if (renderTimeout) $timeout.cancel(renderTimeout);
 
           renderTimeout = $timeout(function () {
             var dataNodes = data.nodes.sort(function(a, b) { return a.value - b.value}).reverse().slice(0, maxNodes - 1);

@@ -53,7 +53,7 @@ define(['d3js'], function (d3) {
           svg.selectAll('*').remove();
 
           if (!data) return;
-          if (renderTimeout) clearTimeout(renderTimeout);
+          if (renderTimeout) $timeout.cancel(renderTimeout);
           // convert all to numbers
           data.forEach(function (d) {
             d[count] = +d[count];

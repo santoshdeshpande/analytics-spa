@@ -1,9 +1,9 @@
-.row.augur.action-bar
+.row.augur.action-bar{ ng: { attr: { data: { theme: '{{ habitat.colorScheme }}' } } }}
   .small-12.columns
     .row
       .small-11.columns
         .row
-          .small-4.columns.habitat-name
+          .small-3.columns.habitat-name
             {{augur.name}}
           .small-4.columns.info
             %dl
@@ -11,12 +11,16 @@
               %dd Logistical Regression
               %dt KPI
               %dd Accumulated Lift Top 10% (0.4/0.2)
-          .small-4.columns.actions
+          .small-5.columns.actions
             %ul.no-bullet
               %li.action
-                Calculate new prediction
+                %a.action-button
+                  %span.glyphicon.glyphicon-tower
+                  Calculate new prediction
               %li.action
-                Download latest prediction
+                %a.action-button
+                  %span.glyphicon.glyphicon-tower
+                  Download latest prediction
       .small-1.columns.back
         %a{ ui: { sref: 'dashboard' } }
           %span.glyphicon.glyphicon-log-out
