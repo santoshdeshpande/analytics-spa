@@ -1,5 +1,6 @@
 $crumb-bg: scale-color($secondary-color, $lightness: 55%) !default;
 
+
 $color-scheme-one-dark: #5FA4FD;
 $color-scheme-one-light: #F6FBFF;
 $color-scheme-two-dark: #8542CA;
@@ -8,105 +9,60 @@ $color-scheme-three-dark: #569535;
 $color-scheme-three-light: #FDFFFA;
 
 
+// purple
+$theme-one-color-main: #6C3BB6; 
+$theme-one-color-light: lighten( $theme-one-color-main, 10 );
+$theme-one-color-dark: darken( $theme-one-color-main, 10 );
+// light-blue
+$theme-two-color-main: #5C9FD2; 
+$theme-two-color-light: lighten( $theme-two-color-main, 10 );
+$theme-two-color-dark: darken( $theme-two-color-main, 10 );
+// orange
+$theme-three-color-main: #C2642C; 
+$theme-three-color-light: lighten( $theme-three-color-main, 10 );
+$theme-three-color-dark: darken( $theme-three-color-main, 10 );
+// green
+$theme-four-color-main: #5B9D4D; 
+$theme-four-color-light: lighten( $theme-four-color-main, 10 );
+$theme-four-color-dark: darken( $theme-four-color-main, 10 );
 
-$blue   : #009fde;
-$teal   : #00daae;
-$green  : #48aa06;
-$orange : #ff8f00;
-$pink   : #ff3a5f;
-$purple : #902cba;
-$red    : #FF4136;
+@mixin theme( $name, $main, $light, $dark, $mainProp, $lightProp, $darkProp, $isolated, $subselector ) {
+  $selector: '[data-theme=#{$name}] & #{$subselector}';
 
-//$dark-blue   : darken( $blue, 10 );
-//$dark-teal   : darken( $teal, 10 );
-//$dark-green  : darken( $green, 10 );
-//$dark-orange : darken( $orange, 10 );
-//$dark-pink   : darken( $pink, 15 );
-//$dark-purple : darken( $purple, 10 );
-//$dark-red    : darken( $red, 20 );
-//
-//@mixin themes( $primaryProp: false, $secondaryProp: false ) {
-//  .theme\:blue & {
-//    @if $primaryProp {
-//      #{$primaryProp} : $blue;
-//    }
-//    @if $secondaryProp {
-//      #{$secondaryProp} : $dark-blue;
-//    }
-//  }
-//
-//  .theme\:teal & {
-//    @if $primaryProp {
-//      #{$primaryProp} : $teal;
-//    }
-//    @if $secondaryProp {
-//      #{$secondaryProp} : $dark-teal;
-//    }
-//  }
-//
-//  .theme\:green & {
-//    @if $primaryProp {
-//      #{$primaryProp} : $green;
-//    }
-//    @if $secondaryProp {
-//      #{$secondaryProp} : $dark-green;
-//    }
-//  }
-//
-//  .theme\:orange & {
-//    @if $primaryProp {
-//      #{$primaryProp} : $orange;
-//    }
-//    @if $secondaryProp {
-//      #{$secondaryProp} : $dark-orange;
-//    }
-//  }
-//
-//  .theme\:pink & {
-//    @if $primaryProp {
-//      #{$primaryProp} : $pink;
-//    }
-//    @if $secondaryProp {
-//      #{$secondaryProp} : $dark-pink;
-//    }
-//  }
-//
-//  .theme\:purple & {
-//    @if $primaryProp {
-//      #{$primaryProp} : $purple;
-//    }
-//    @if $secondaryProp {
-//      #{$secondaryProp} : $dark-purple;
-//    }
-//  }
-//
-//  .theme\:red & {
-//    @if $primaryProp {
-//      #{$primaryProp} : $red;
-//    }
-//    @if $secondaryProp {
-//      #{$secondaryProp} : $dark-red;
-//    }
-//  }
-//}
-//
-//button {
-//  @include themes( border-color, color );
-//
-//  background: none;
-//
-//  padding: 1rem;
-//  border: 1px solid black;
-//  border-radius: 1rem;
-//  font-size: 1rem;
-//}
-//
-//span {
-//  @include themes( background );
-//  padding: .25rem;
-//  color: #fff;
-//}
-//
-//b {
-//  @include themes( $secondaryProp : color );
-//}
+
+  @if $isolated {
+    $selector: '&[data-theme=#{$name}] #{$subselector}';
+  }
+
+  #{$selector} {
+    @if $mainProp {
+      @each $prop in $mainProp {
+        #{$prop}: $main;
+      }
+    }
+    
+    @if $lightProp {
+      @each $prop in $lightProp {
+        #{$prop}: $light;
+      }
+    }
+    
+    @if $darkProp {
+      @each $prop in $darkProp {
+        #{$prop}: $dark;
+      }
+    }
+  }
+}
+
+@mixin themes( $main: false, $light: false, $dark: false, $isolated: false, $subselector: '' ) {
+  @include theme( 'theme-one', $theme-one-color-main, $theme-one-color-light, $theme-one-color-dark, $main, $light, $dark, $isolated, $subselector );
+  @include theme( 'theme-two', $theme-two-color-main, $theme-two-color-light, $theme-two-color-dark, $main, $light, $dark, $isolated, $subselector );
+  @include theme( 'theme-three', $theme-three-color-main, $theme-three-color-light, $theme-three-color-dark, $main, $light, $dark, $isolated, $subselector );
+  @include theme( 'theme-four', $theme-four-color-main, $theme-four-color-light, $theme-four-color-dark, $main, $light, $dark, $isolated, $subselector );
+}
+
+.theme-test {
+  @include themes( ( color, border-color ), background-color );
+  border: 2px solid;
+}

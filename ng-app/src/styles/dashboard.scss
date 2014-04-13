@@ -9,17 +9,9 @@
       margin: 0;
       height: 50px;
 
-      $active-bg: $primary-color !default;
-      $active-bg-hover: scale-color($primary-color, $lightness: -14%) !default;
-
-      .glyphicon {
-        font-size: 140%;
-      }
-
       &.action-bar-filter li {
         &.active label {
           @include radius(5px);
-          background: $active-bg;
           padding: 3px;
           color: #fff;
           &:hover {
@@ -62,68 +54,68 @@
   }
 
   &.container {
-    .th {
-      padding: 0 0.3em;
+    .thx {
+      @include themes(border-color, $isolated: true);
+
       position: relative;
+      border: 1px solid;
+      background: #fff;
 
-      &.color-scheme-one {
-        border: 1px solid $color-scheme-one-dark;
-        background: $color-scheme-one-light;
-        .title, .glyphicon {
-          color: $color-scheme-one-dark;
-        }
+      min-height: 120px;
 
-        &.habitat {
-          border-left-width: 16px;
+      &.habitat {
+        @include themes(background, $isolated: true);
+
+        .artefact-body,
+        .title {
+          color: #fff;
         }
       }
 
-      &.color-scheme-two {
-        border: 1px solid $color-scheme-two-dark;
-        background: $color-scheme-two-light;
-        .title, .glyphicon {
-          color: $color-scheme-two-dark;
-        }
+      &.fact-table {
+        @include themes(background, $isolated: true, $subselector: '.title');
 
-        &.habitat {
-          border-left-width: 16px;
+        .title {
+          color: #fff;
         }
-
       }
+    }
 
-      &.color-scheme-three {
-        border: 1px solid $color-scheme-three-dark;
-        background: $color-scheme-three-light;
-        .title, .glyphicon {
-          color: $color-scheme-three-dark;
-        }
+    .title {
+      margin: 0;
+      padding: .2em .35em;
+      font-weight: bold;
 
-        &.habitat {
-          border-left-width: 16px;
-        }
-
+      .glyphicon {
+        position: absolute;
+        font-size: 1.5rem;
+        top: 5px;
+        right: 5px;
       }
     }
 
     .artefact-body {
-      height: 125px;
-      width: 200px;
       color: #6f6f6f;
 
-      .title {
-
-      }
+      padding: .3em .5em;
 
       .description {
-        font-size: 75%;
+        font-size: .85em;
       }
 
-      .glyphicon {
-        position: absolute;
-        font-size: 240%;
-        top: 90px;
-        right: 10px;
+      dl {
+        dt, dd {
+          float: left;
+          margin: 0;
+        }
+        dt {
+          clear: left;
+          font-weight: bold;
+          margin-right: .5em;
+          color: #000;
+        }
       }
     }
   }
 }
+

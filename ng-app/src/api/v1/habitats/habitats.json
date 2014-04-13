@@ -4,20 +4,20 @@
     "name": "ThreeHabitat",
     "description": "This is the third habitat",
     "code": "151EQ731N5",
-    "colorScheme": "color-scheme-one"
+    "colorScheme": "theme-one"
   },
   {
     "id": "151ER431N7",
     "name": "OneHabitat",
     "description": "This is the first habitat",
     "code": "151ER431N7",
-    "colorScheme": "color-scheme-three"
+    "colorScheme": "theme-three"
   },
   {
     "id": "151ER431N6",
     "name": "TwoHabitat",
     "description": "This is the second habitat",
     "code": "151ER431N6",
-    "colorScheme": "color-scheme-two"
+    "colorScheme": "theme-two"
   }
 ]

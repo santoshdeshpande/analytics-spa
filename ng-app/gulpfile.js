@@ -11,6 +11,7 @@ var gulp = require('gulp'),
   clean = require('gulp-clean'),
   concat = require('gulp-concat'),
   notify = require('gulp-notify'),
+  plumber = require('gulp-plumber'),
   cache = require('gulp-cache'),
   embedlr = require('gulp-embedlr'),
   livereload = require('gulp-livereload'),
@@ -179,6 +180,7 @@ gulp.task('clean-styles', function () {
 
 gulp.task('styles', ['glyphicons-bootstrap'], function () {
   return gulp.src(['src/styles/application.scss'])
+//    .pipe(plumber())
     .pipe(sass())
     .pipe(concat('main.css'))
     .pipe(gulp.dest('dist/styles/'))

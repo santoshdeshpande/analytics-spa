@@ -2,13 +2,7 @@
   .columns.small-12
     %ul.left.action-bar-breadcrumb
       %li
-        %a{ ui: { sref: 'dashboard' } }
-          %span.glyphicon.glyphicon-th
-          Dashboard
-      %li
-        %a{ href: '#' }
-          %span.glyphicon.glyphicon-picture
-          Habitat
+        Dashboard
     %ul.right.action-bar-filter
       %li.divider
       %li{ ng: { class: '{"active" : selectedArtifactTypes.augur}' } }
@@ -28,7 +22,7 @@
   .columns.small-12
     %ul.small-block-grid-2.medium-block-grid-3.large-block-grid-4
       %li
-        .th
+        .thx
           %a{ href: '#/augurs/new' }
             .artefact-body.add-augur
               %p
@@ -37,12 +31,12 @@
                 %span.glyphicon.glyphicon-plus
 
       %li{'ng-repeat' => 'artifact in artifacts | filter: artifactsFilter'}
-        .th.habitat{ ng: { if: 'artifact.type == "habitat"', class: 'artifact.colorScheme' }}
+        .thx.habitat{ ng: { if: 'artifact.type == "habitat"', attr: { data: { theme: '{{ artifact.colorScheme }}' }}} }
           %a{ href: '#/habitat/{{habitat.id}}' }
-            .artefact-body
+            %h5.title
+              {{ artifact.name }}
               %span.glyphicon.glyphicon-picture
-              %h5.title
-                {{ artifact.name }}
+            .artefact-body
               %p{ ng: { if: 'artifact.augurCount < 1' } }
                 No Augurs
               %p{ ng: { if: 'artifact.augurCount === 1' } }
@@ -51,18 +45,23 @@
                 {{ artifact.augurCount }} Augurs
 
 
-        .th.augur{ ng: { if: 'artifact.type == "augur"', class: 'artifact.colorScheme' }}
+        .thx.augur{ ng: { if: 'artifact.type == "augur"', attr: { data: { theme: '{{ artifact.colorScheme }}' }}} }
           %a{ ui: { sref: 'augur.tree({ habitatId: artifact.habitat_id, augurId: artifact.id })' } }
-            .artefact-body
+            %h5.title
+              {{artifact.name}}
               %span.glyphicon.glyphicon-eye-open
-              %h5.title
-                {{artifact.name}}
-
-        .th.fact-table{ ng: { if: 'artifact.type == "factTable"', class: 'artifact.colorScheme' }}
-          %a{ href: '#/habitat/{{artifact.habitat_id}}/factTables/{{factTable.id}}' }
             .artefact-body
+              %dl.description
+                %dt KPI
+                %dd True positive rate
+                %dt Latest evaluation
+                %dd 0.6 on 2014/04/15
+
+        .thx.fact-table{ ng: { if: 'artifact.type == "factTable"', attr: { data: { theme: '{{ artifact.colorScheme }}' }} }}
+          %a{ href: '#/habitat/{{artifact.habitat_id}}/factTables/{{factTable.id}}' }
+            %h5.title
+              {{artifact.name}}
               %span.glyphicon.glyphicon-list-alt
-              %h5.title
-                {{artifact.name}}
+            .artefact-body
               %p.description
                 {{artifact.description}}
