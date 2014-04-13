@@ -31,39 +31,42 @@
                 %span.glyphicon.glyphicon-plus
 
       %li{'ng-repeat' => 'artifact in artifacts | filter: artifactsFilter'}
-        %a{ href: '#/habitat/{{habitat.id}}' }
-          .tile.habitat{ ng: { if: 'artifact.type == "habitat"', attr: { data: { theme: '{{ artifact.colorScheme }}' }}} }
-            %h5.title
-              {{ artifact.name }}
-              %span.glyphicon.glyphicon-picture
-            .artefact-body
-              %p{ ng: { if: 'artifact.augurCount < 1' } }
-                No Augurs
-              %p{ ng: { if: 'artifact.augurCount === 1' } }
-                One Augur
-              %p{ ng: { if: 'artifact.augurCount > 1' } }
-                {{ artifact.augurCount }} Augurs
+        %div{ ng: { if: 'artifact.type == "habitat"' } }
+          %a{ href: '#/habitat/{{habitat.id}}' }
+            .tile.habitat{ ng: { attr: { data: { theme: '{{ artifact.colorScheme }}' }}} }
+              %h5.title
+                {{ artifact.name }}
+                %span.glyphicon.glyphicon-picture
+              .artefact-body
+                %p{ ng: { if: 'artifact.augurCount < 1' } }
+                  No Augurs
+                %p{ ng: { if: 'artifact.augurCount === 1' } }
+                  One Augur
+                %p{ ng: { if: 'artifact.augurCount > 1' } }
+                  {{ artifact.augurCount }} Augurs
 
-        %a{ href: '#/habitat/{{artifact.habitat_id}}/factTables/{{factTable.id}}' }
-          .tile.fact-table{ ng: { if: 'artifact.type == "factTable"', attr: { data: { theme: '{{ artifact.colorScheme }}' }} }}
-            %h5.title
-              {{artifact.name}}
-              %span.glyphicon.glyphicon-list-alt
-            .artefact-body
-              %p.description
-                {{artifact.description}}
+        %div{ ng: { if: 'artifact.type == "factTable"' } }
+          %a{ href: '#/habitat/{{artifact.habitat_id}}/factTables/{{factTable.id}}' }
+            .tile.fact-table{ ng: { attr: { data: { theme: '{{ artifact.colorScheme }}' }} }}
+              %h5.title
+                {{artifact.name}}
+                %span.glyphicon.glyphicon-list-alt
+              .artefact-body
+                %p.description
+                  {{artifact.description}}
 
-        %a{ ui: { sref: 'augur.tree({ habitatId: artifact.habitat_id, augurId: artifact.id })' } }
-          .tile.augur{ ng: { if: 'artifact.type == "augur"', attr: { data: { theme: '{{ artifact.colorScheme }}' }}} }
-            %h5.title
-              {{artifact.name}}
-              %span.glyphicon.glyphicon-eye-open
-            .artefact-body
-              %dl.description
-                %dt KPI
-                %dd True positive rate
-                %dt Latest evaluation
-                %dd 0.6 on 2014/04/15
-            .chart
-              %d3-line-chart-dashboard{ data: 'data', height: '30' }
+        %div{ ng: { if: 'artifact.type == "augur"' } }
+          %a{ ui: { sref: 'augur.tree({ habitatId: artifact.habitat_id, augurId: artifact.id })' } }
+            .tile.augur{ ng: { attr: { data: { theme: '{{ artifact.colorScheme }}' }}} }
+              %h5.title
+                {{artifact.name}}
+                %span.glyphicon.glyphicon-eye-open
+              .artefact-body
+                %dl.description
+                  %dt KPI
+                  %dd True positive rate
+                  %dt Latest evaluation
+                  %dd 0.6 on 2014/04/15
+              .chart
+                %d3-line-chart-dashboard{ data: 'artifact.dashboardChartData', height: '30' }
 
