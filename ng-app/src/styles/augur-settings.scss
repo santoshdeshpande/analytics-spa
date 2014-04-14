@@ -1,3 +1,64 @@
-.augur-detail {
+.augur-settings {
+  .heading {
+    h1 {
+      @include themes(color);
+    }
 
+    .subheader {
+      margin-top: -.5rem;
+    }
+  }
+
+  .form-body {
+    .title {
+      font-size: $h4-font-size;
+    }
+
+    .main-label {
+      @include themes(color);
+      font-size: $h5-font-size;
+    }
+
+    .evaluation, .prediction {
+      @include themes($light: border-color);
+      border-right: 2px solid;
+    }
+
+    .evaluation, .prediction, .learning {
+      padding-right: 1em;
+
+      .description {
+        min-height: 5em;
+      }
+    }
+  }
+
+  .form-buttons {
+    text-align: right;
+    margin-top: 1em;
+    height: 4 * $h4-font-size;
+    line-height: 4 * $h4-font-size;
+
+    @include themes( background-color );
+    background: linear-gradient(to right, rgba(255, 255, 255, 1),  rgba(255, 255, 255, .8));
+
+    .button {
+      margin-right: .5em;
+      font-size: $h4-font-size;
+
+
+      &.submit {
+        @include themes(background-color);
+      }
+
+      &.cancel {
+        @include themes( border-color, $light: background-color );
+        border: 1px solid;
+        color: #333;
+      }
+    }
+  }
 }
+
+
+

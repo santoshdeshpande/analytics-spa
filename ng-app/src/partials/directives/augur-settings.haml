@@ -1,0 +1,109 @@
+.row.settings
+  .small-4.columns
+    .prediction
+      %h6.title Prediction Schedule
+      .content
+        %p.description
+          Set your prediction schedule here. Please note that calculating predictions may take some time.
+          You can start predictions manually too.
+        .row
+          .small-12.columns
+            %label.main-label Select schedule
+        .row
+          .small-4.columns
+            %select{ name: 'prediction-schedule-frequency', ng: { model: 'augur.prediction.schedule.frequency' } }
+              %option{ value: 'daily' } daily
+              %option{ value: 'weekly' } weekly
+              %option{ value: 'monthly' } monthly
+          .small-8.columns
+
+            .row.daily{ ng: { if: 'augur.prediction.schedule.frequency == "daily"' } }
+              .small-6.columns.end{ ng: { class: '{"error" : form.predictionScheduleDailyTimeOfDay.$error.pattern}' }}
+                %input{ type: 'text', name: 'predictionScheduleDailyTimeOfDay', id: 'prediction-schedule-daily-time', ng: { model: 'augur.prediction.schedule.timeOfDay', pattern: '/^0?((1[012])|([1-9])):[0-5][0-9](\s)?(am|pm|AM|PM)$/' } }
+                %small.error{ ng: { show: 'form.predictionScheduleDailyTimeOfDay.$error.pattern' } } Not a valid time
+
+            .row.weekly{ ng: { if: 'augur.prediction.schedule.frequency == "weekly"' } }
+              .small-6.columns
+                %select{ name: 'prediction-schedule-weekly-day', ng: { model: 'augur.prediction.schedule.dayOfWeek' } }
+                  %option{ value: 'monday' }    Mon
+                  %option{ value: 'tuesday' }   Tue
+                  %option{ value: 'wednesday' } Wed
+                  %option{ value: 'thursday' }  Thu
+                  %option{ value: 'friday' }    Fri
+                  %option{ value: 'saturday' }  Sat
+                  %option{ value: 'sunday' }    Sun
+              .small-6.columns{ ng: { class: '{"error" : form.predictionScheduleWeeklyTimeOfDay.$error.pattern}' }}
+                %input{ type: 'text', name: 'predictionScheduleWeeklyTimeOfDay', id: 'prediction-schedule-weekly-time', ng: { model: 'augur.prediction.schedule.timeOfDay', pattern: '/^0?((1[012])|([1-9])):[0-5][0-9](\s)?(am|pm|AM|PM)$/' } }
+                %small.error{ ng: { show: 'form.predictionScheduleWeeklyTimeOfDay.$error.pattern' } } Not a valid time
+
+            .row.monthly{ ng: { if: 'augur.prediction.schedule.frequency == "monthly"' } }
+              .small-6.columns
+                %select{ name: 'prediction-schedule-monthly-day', ng: { model: 'augur.prediction.schedule.dayOfMonth', options: 'day.key as day.label for day in DAYS_IN_MONTH' } }
+              .small-6.columns{ ng: { class: '{"error" : form.predictionScheduleMonthlyTimeOfDay.$error.pattern}' }}
+                %input{ type: 'text', name: 'predictionScheduleMonthlyTimeOfDay', id: 'prediction-schedule-monthly-time', ng: { model: 'augur.prediction.schedule.timeOfDay', pattern: '/^0?((1[012])|([1-9])):[0-5][0-9](\s)?(am|pm|AM|PM)$/' } }
+                %small.error{ ng: { show: 'form.predictionScheduleMonthlyTimeOfDay.$error.pattern' } } Not a valid time
+
+  .small-4.columns
+    .evaluation
+      %h6.title Evaluation Schedule
+      .content
+        %p.description
+          Set your evaluation schedule here. Automatic learning is based on evaluation results.
+        .row
+          .small-12.columns
+            %label.main-label Select schedule
+        .row
+          .small-4.columns
+            %select{ name: 'evaluation-schedule-type', ng: { model: 'augur.evaluation.schedule.frequency' } }
+              %option{ value: 'daily' } daily
+              %option{ value: 'weekly' } weekly
+              %option{ value: 'monthly' } monthly
+          .small-8.columns
+            .row.daily{ ng: { if: 'augur.evaluation.schedule.frequency == "daily"' } }
+              .small-6.columns.end{ ng: { class: '{"error" : form.evaluationScheduleDailyTimeOfDay.$error.pattern}' }}
+                %input{ type: 'text', name: 'evaluationScheduleDailyTimeOfDay', id: 'evaluation-schedule-daily-time', ng: { model: 'augur.evaluation.schedule.timeOfDay', pattern: '/^0?((1[012])|([1-9])):[0-5][0-9](\s)?(am|pm|AM|PM)$/' } }
+                %small.error{ ng: { show: 'form.evaluationScheduleDailyTimeOfDay.$error.pattern' } } Not a valid time
+            .row.weekly{ ng: { if: 'augur.evaluation.schedule.frequency == "weekly"' } }
+              .small-6.columns
+                %select{ name: 'evaluation-schedule-weekly-day', ng: { model: 'augur.evaluation.schedule.dayOfWeek' } }
+                  %option{ value: 'monday' }    Mon
+                  %option{ value: 'tuesday' }   Tue
+                  %option{ value: 'wednesday' } Wed
+                  %option{ value: 'thursday' }  Thu
+                  %option{ value: 'friday' }    Fri
+                  %option{ value: 'saturday' }  Sat
+                  %option{ value: 'sunday' }    Sun
+              .small-6.columns{ ng: { class: '{"error" : form.evaluationScheduleWeeklyTimeOfDay.$error.pattern}' }}
+                %input{ type: 'text', name: 'evaluationScheduleWeeklyTimeOfDay', id: 'evaluation-schedule-weekly-time', ng: { model: 'augur.evaluation.schedule.timeOfDay', pattern: '/^0?((1[012])|([1-9])):[0-5][0-9](\s)?(am|pm|AM|PM)$/' } }
+                %small.error{ ng: { show: 'form.evaluationScheduleWeeklyTimeOfDay.$error.pattern' } } Not a valid time
+            .row.monthly{ ng: { if: 'augur.evaluation.schedule.frequency == "monthly"' } }
+              .small-6.columns
+                %select{ name: 'evaluation-schedule-monthly-day', ng: { model: 'augur.evaluation.schedule.dayOfMonth', options: 'day.key as day.label for day in DAYS_IN_MONTH' } }
+              .small-6.columns{ ng: { class: '{"error" : form.evaluationScheduleMonthlyTimeOfDay.$error.pattern}' }}
+                %input{ type: 'text', name: 'evaluationScheduleMonthlyTimeOfDay', id: 'evaluation-schedule-monthly-time', ng: { model: 'augur.evaluation.schedule.timeOfDay', pattern: '/^0?((1[012])|([1-9])):[0-5][0-9](\s)?(am|pm|AM|PM)$/' } }
+                %small.error{ ng: { show: 'form.evaluationScheduleMonthlyTimeOfDay.$error.pattern' } } Not a valid time
+
+  .small-4.columns
+    .learning
+      %h6.title Automatic Learning
+      .content
+        %p.description
+          Choose your key performance indicator (KPI) from the list of available indicators
+          and set the threshold that triggers automatic learning.
+        .row
+          .small-12.columns
+            %label.main-label Choose KPI and set threshold
+        .row
+          .small-6.columns
+            %select{ name: 'learning-kpi', ng: { model: 'augur.learning.kpi', options: 'day as day.label for day in KEY_PERFORMANCE_INDICATORS' } }
+          .small-6.columns{ ng: { show: 'augur.learning.kpi.key' }}
+            .row
+              .small-6.columns#comparator
+                %label.inline{ for: 'learning-threshold' }
+                  %span{ ng: { if: 'augur.learning.kpi.comparator == "lt"'} } less than
+                  %span{ ng: { if: 'augur.learning.kpi.comparator == "gt"'} } greater than
+              .small-6.columns
+                %input{ name: 'learningThreshold', type: 'text', id: 'learning-threshold', ng: { model: 'augur.learning.kpi.threshold' }, 'threshold-in-range' => '', min: '{{augur.learning.kpi.min}}', max: '{{augur.learning.kpi.max}}' }
+        .row
+          .small-12.columns{ ng: { class: '{"error" : form.learningThreshold.$error.thresholdInRange}' } }
+            %small.error{ ng: { show: 'form.learningThreshold.$error.thresholdInRange' } } Value not in range. Min: {{augur.learning.kpi.min}}, Max: {{augur.learning.kpi.max}}

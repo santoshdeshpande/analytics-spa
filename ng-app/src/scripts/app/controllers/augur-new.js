@@ -9,10 +9,7 @@ define([
   'use strict';
 
   return  ['$state', '$scope', 'Augur', 'FactTable', 'Habitat', function ($state, $scope, Augur, FactTable, Habitat) {
-    $scope.DAYS_IN_MONTH = Constants.DAYS_IN_MONTH;
     $scope.KEY_PERFORMANCE_INDICATORS = Constants.KEY_PERFORMANCE_INDICATORS;
-
-    console.log(Constants)
 
     $scope.habitats = [];
     $scope.factTables = [];

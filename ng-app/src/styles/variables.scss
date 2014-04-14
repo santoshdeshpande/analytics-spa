@@ -18,7 +18,6 @@ $theme-four-color-dark: darken( $theme-four-color-main, 10 );
 @mixin theme( $name, $main, $light, $dark, $mainProp, $lightProp, $darkProp, $isolated, $sub-selector ) {
   $selector: '[data-theme=#{$name}] & #{$sub-selector}';
 
-
   @if $isolated {
     $selector: '&[data-theme=#{$name}] #{$sub-selector}';
   }

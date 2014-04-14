@@ -5957,21 +5957,21 @@ th.hide-for-touch {
       opacity: 0; }
     .new-augur-wizard .prediction-targets .validation .validation-message-show-hide.ng-hide-add, .new-augur-wizard .prediction-targets .validation .validation-message-show-hide.ng-hide-remove.ng-hide-remove-active {
       opacity: 1; }
-  .new-augur-wizard .schedules .description {
+  .new-augur-wizard .settings .description {
     font-size: 80%; }
-  .new-augur-wizard .schedules .prediction .title h6, .new-augur-wizard .schedules .evaluation .title h6, .new-augur-wizard .schedules .learning .title h6 {
+  .new-augur-wizard .settings .prediction .title h6, .new-augur-wizard .settings .evaluation .title h6, .new-augur-wizard .settings .learning .title h6 {
     padding: 0.5em;
     background: #ddd; }
-  .new-augur-wizard .schedules .prediction .content, .new-augur-wizard .schedules .evaluation .content, .new-augur-wizard .schedules .learning .content {
+  .new-augur-wizard .settings .prediction .content, .new-augur-wizard .settings .evaluation .content, .new-augur-wizard .settings .learning .content {
     padding: 0.5em;
     background: #fff;
     height: 240px; }
-    .new-augur-wizard .schedules .prediction .content .description, .new-augur-wizard .schedules .evaluation .content .description, .new-augur-wizard .schedules .learning .content .description {
+    .new-augur-wizard .settings .prediction .content .description, .new-augur-wizard .settings .evaluation .content .description, .new-augur-wizard .settings .learning .content .description {
       height: 100px; }
-  .new-augur-wizard .schedules .learning #comparator {
+  .new-augur-wizard .settings .learning #comparator {
     padding: 0;
     text-align: center; }
-    .new-augur-wizard .schedules .learning #comparator span {
+    .new-augur-wizard .settings .learning #comparator span {
       font-size: 0.9em; }
 
 .augur.action-bar {
@@ -6482,3 +6482,79 @@ th.hide-for-touch {
   .augur-decision-tree .tree .leaf.sad {
     fill: #ff7500; }
 
+[data-theme=theme-one] .augur-settings .heading h1 {
+  color: #6C3BB6; }
+[data-theme=theme-two] .augur-settings .heading h1 {
+  color: #5C9FD2; }
+[data-theme=theme-three] .augur-settings .heading h1 {
+  color: #C2642C; }
+[data-theme=theme-four] .augur-settings .heading h1 {
+  color: #5B9D4D; }
+.augur-settings .heading .subheader {
+  margin-top: -0.5rem; }
+.augur-settings .form-body .title {
+  font-size: 1.4375rem; }
+.augur-settings .form-body .main-label {
+  font-size: 1.125rem; }
+  [data-theme=theme-one] .augur-settings .form-body .main-label {
+    color: #6C3BB6; }
+  [data-theme=theme-two] .augur-settings .form-body .main-label {
+    color: #5C9FD2; }
+  [data-theme=theme-three] .augur-settings .form-body .main-label {
+    color: #C2642C; }
+  [data-theme=theme-four] .augur-settings .form-body .main-label {
+    color: #5B9D4D; }
+.augur-settings .form-body .evaluation, .augur-settings .form-body .prediction {
+  border-right: 2px solid; }
+  [data-theme=theme-one] .augur-settings .form-body .evaluation, [data-theme=theme-one] .augur-settings .form-body .prediction {
+    border-color: #e9e1f5; }
+  [data-theme=theme-two] .augur-settings .form-body .evaluation, [data-theme=theme-two] .augur-settings .form-body .prediction {
+    border-color: #f0f6fb; }
+  [data-theme=theme-three] .augur-settings .form-body .evaluation, [data-theme=theme-three] .augur-settings .form-body .prediction {
+    border-color: #f7e6dc; }
+  [data-theme=theme-four] .augur-settings .form-body .evaluation, [data-theme=theme-four] .augur-settings .form-body .prediction {
+    border-color: #e3f0e0; }
+.augur-settings .form-body .evaluation, .augur-settings .form-body .prediction, .augur-settings .form-body .learning {
+  padding-right: 1em; }
+  .augur-settings .form-body .evaluation .description, .augur-settings .form-body .prediction .description, .augur-settings .form-body .learning .description {
+    min-height: 5em; }
+.augur-settings .form-buttons {
+  text-align: right;
+  margin-top: 1em;
+  height: 5.75rem;
+  line-height: 5.75rem;
+  background: linear-gradient(to right, #ffffff, rgba(255, 255, 255, 0.8)); }
+  [data-theme=theme-one] .augur-settings .form-buttons {
+    background-color: #6C3BB6; }
+  [data-theme=theme-two] .augur-settings .form-buttons {
+    background-color: #5C9FD2; }
+  [data-theme=theme-three] .augur-settings .form-buttons {
+    background-color: #C2642C; }
+  [data-theme=theme-four] .augur-settings .form-buttons {
+    background-color: #5B9D4D; }
+  .augur-settings .form-buttons .button {
+    margin-right: 0.5em;
+    font-size: 1.4375rem; }
+    [data-theme=theme-one] .augur-settings .form-buttons .button.submit {
+      background-color: #6C3BB6; }
+    [data-theme=theme-two] .augur-settings .form-buttons .button.submit {
+      background-color: #5C9FD2; }
+    [data-theme=theme-three] .augur-settings .form-buttons .button.submit {
+      background-color: #C2642C; }
+    [data-theme=theme-four] .augur-settings .form-buttons .button.submit {
+      background-color: #5B9D4D; }
+    .augur-settings .form-buttons .button.cancel {
+      border: 1px solid;
+      color: #333; }
+      [data-theme=theme-one] .augur-settings .form-buttons .button.cancel {
+        border-color: #6C3BB6;
+        background-color: #e9e1f5; }
+      [data-theme=theme-two] .augur-settings .form-buttons .button.cancel {
+        border-color: #5C9FD2;
+        background-color: #f0f6fb; }
+      [data-theme=theme-three] .augur-settings .form-buttons .button.cancel {
+        border-color: #C2642C;
+        background-color: #f7e6dc; }
+      [data-theme=theme-four] .augur-settings .form-buttons .button.cancel {
+        border-color: #5B9D4D;
+        background-color: #e3f0e0; }

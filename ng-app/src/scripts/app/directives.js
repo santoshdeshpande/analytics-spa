@@ -4,6 +4,7 @@
  */
 define([
   'angular',
+  'directives/augur-settings',
   'directives/available-prediction-target',
   'directives/d3-bar-chart',
   'directives/d3-decision-tree-chart',
@@ -18,6 +19,7 @@ define([
   'directives/threshold-in-range',
   'mm-foundation-tpls'
 ], function ( ng,
+              AugurSettings,
               AvailablePredictionTarget,
               D3BarChart,
               D3DecisionTreeChart,
@@ -33,6 +35,7 @@ define([
   'use strict';
 
   return ng.module('dejalyticsDirectives', ['mm.foundation'])
+    .directive('augurSettings', AugurSettings)
     .directive('availablePredictionTarget', AvailablePredictionTarget)
     .directive('d3BarChart', D3BarChart)
     .directive('d3DecisionTreeChart', D3DecisionTreeChart)

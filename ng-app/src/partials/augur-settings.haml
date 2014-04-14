@@ -1,4 +1,17 @@
-I am the settings
+.augur-settings
+  .row
+    .columns.small-12
+      .heading
+        %h1 Augur Settings
+        %h6.subheader Here you can change a lot of things for this augur
 
-{{ augur.id }}
-{{ augur }}
+  %form{ name: 'form', novalidate: '', ng: { submit: 'form.$valid && alert("submit")' } }
+    .row
+      .columns.small-12
+        .form-body
+          %augur-settings{ augur: 'augur' }
+    .row
+      .columns.small-12
+        .form-buttons
+          %a.button.radius.cancel{ href: '' } Cancel
+          %input.submit.button.radius{ type: 'submit', value: 'Update augur' }
