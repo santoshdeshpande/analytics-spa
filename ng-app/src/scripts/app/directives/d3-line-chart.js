@@ -94,6 +94,20 @@ define([
                 return graph.yScale(d[1]);
               });
 
+            var area = d3.svg.area()
+              .x(function (d) {
+                return graph.xScale(d[0]);
+              })
+              .y0(function (d) {
+                return graph.yScale(d[1]);
+              })
+              .y1(graph.height());
+
+            graph.append('path')
+              .attr('class', 'area')
+              .attr('d', area(data));
+
+
             // helpline
             var xValues = data.map(function (d) {
               return d[0]

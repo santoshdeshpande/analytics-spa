@@ -30,8 +30,13 @@
     }
 
     &.line-chart, &.roc-chart {
+      .area {
+        @include themes ( $light: fill );
+        stroke-width: 0;
+      }
+
       path {
-        stroke: steelblue;
+        @include themes ( stroke );
         stroke-width: 1;
         fill: none;
       }

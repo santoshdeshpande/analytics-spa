@@ -6135,10 +6135,27 @@ th.hide-for-touch {
   shape-rendering: crispEdges; }
   .augur-accuracy .chart .axis.y path {
     display: none; }
+.augur-accuracy .chart.line-chart .area, .augur-accuracy .chart.roc-chart .area {
+  stroke-width: 0; }
+  [data-theme=theme-one] .augur-accuracy .chart.line-chart .area, [data-theme=theme-one] .augur-accuracy .chart.roc-chart .area {
+    fill: #e9e1f5; }
+  [data-theme=theme-two] .augur-accuracy .chart.line-chart .area, [data-theme=theme-two] .augur-accuracy .chart.roc-chart .area {
+    fill: #f0f6fb; }
+  [data-theme=theme-three] .augur-accuracy .chart.line-chart .area, [data-theme=theme-three] .augur-accuracy .chart.roc-chart .area {
+    fill: #f7e6dc; }
+  [data-theme=theme-four] .augur-accuracy .chart.line-chart .area, [data-theme=theme-four] .augur-accuracy .chart.roc-chart .area {
+    fill: #e3f0e0; }
 .augur-accuracy .chart.line-chart path, .augur-accuracy .chart.roc-chart path {
-  stroke: steelblue;
   stroke-width: 1;
   fill: none; }
+  [data-theme=theme-one] .augur-accuracy .chart.line-chart path, [data-theme=theme-one] .augur-accuracy .chart.roc-chart path {
+    stroke: #6C3BB6; }
+  [data-theme=theme-two] .augur-accuracy .chart.line-chart path, [data-theme=theme-two] .augur-accuracy .chart.roc-chart path {
+    stroke: #5C9FD2; }
+  [data-theme=theme-three] .augur-accuracy .chart.line-chart path, [data-theme=theme-three] .augur-accuracy .chart.roc-chart path {
+    stroke: #C2642C; }
+  [data-theme=theme-four] .augur-accuracy .chart.line-chart path, [data-theme=theme-four] .augur-accuracy .chart.roc-chart path {
+    stroke: #5B9D4D; }
 .augur-accuracy .chart.line-chart path.baseline, .augur-accuracy .chart.roc-chart path.baseline {
   stroke: red;
   stroke-width: 1;

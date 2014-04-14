@@ -58,6 +58,20 @@ define([
                 return yScale(d[1]);
               });
 
+            var area = d3.svg.area()
+              .x(function (d) {
+                return xScale(d[0]);
+              })
+              .y0(function (d) {
+                return yScale(d[1]);
+              })
+              .y1(svg.height());
+
+            svg.append('path')
+              .attr('class', 'area')
+              .attr('d', area(data));
+
+
             // helpline
             var xValues = data.map(function(d) { return d[0] });
             angular.forEach(yTicks, function(yValue){
