@@ -44,12 +44,20 @@ define([
 
           renderTimeout = $timeout(function () {
             graph.xScale.domain([
-              d3.min(data, function(d){ return d[0]; }),
-              d3.max(data, function(d){ return d[0]; })
+              d3.min(data, function (d) {
+                return d[0];
+              }),
+              d3.max(data, function (d) {
+                return d[0];
+              })
             ]);
             graph.yScale.domain([
-              yScaleMin(d3.min(data, function(d){ return d[1]; }), baseline),
-              d3.max(data, function(d){ return d[1]; })
+              yScaleMin(d3.min(data, function (d) {
+                return d[1];
+              }), baseline),
+              d3.max(data, function (d) {
+                return d[1];
+              })
             ]);
 
             var yTicks = [
@@ -87,8 +95,10 @@ define([
               });
 
             // helpline
-            var xValues = data.map(function(d) { return d[0] });
-            angular.forEach(yTicks, function(yValue){
+            var xValues = data.map(function (d) {
+              return d[0]
+            });
+            angular.forEach(yTicks, function (yValue) {
               var path = graph.append('path')
                 .attr('d', line([
                   [ xValues[0], yValue ],
@@ -103,7 +113,17 @@ define([
             });
 
             // add actual line at the end in order to overlap all others
-            graph.append('path').attr('d', line(data));
+            var path = graph.append('path').attr('d', line(data));
+
+            var totalLength = path.node().getTotalLength();
+
+            path
+              .attr("stroke-dasharray", totalLength + " " + totalLength)
+              .attr("stroke-dashoffset", totalLength)
+              .transition()
+              .duration(300)
+              .ease("linear")
+              .attr("stroke-dashoffset", 0);
 
           }, 200); // renderTimeout
         };

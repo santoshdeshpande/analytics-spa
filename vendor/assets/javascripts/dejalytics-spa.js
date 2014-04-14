@@ -50089,14 +50089,22 @@ define('directives/d3-bar-chart',[
                 .attr('class', 'axis helpline');
             });
 
-            svg.selectAll('.bar')
+            var bars = svg.selectAll('.bar')
                   .data(data)
                 .enter().append('rect')
                   .attr('class', 'bar')
-                  .attr('x', function(d) { return x(d[0]); })
-                  .attr('width', x.rangeBand())
-                  .attr('y', function(d) { return y(d[1]); })
-                  .attr('height', function(d) { return svg.height() - y(d[1]); });
+                  .attr('y', svg.height())
+                  .attr('height', 0);
+
+            bars.transition()
+              .duration( 500 )
+              .delay( function ( d, i ) {
+                 return i * 20;
+               })
+              .attr('x', function(d) { return x(d[0]); })
+              .attr('width', x.rangeBand())
+              .attr('y', function(d) { return y(d[1]); })
+              .attr('height', function(d) { return svg.height() - y(d[1]); });
 
           }, 200); // renderTimeout
         };
@@ -50439,12 +50447,20 @@ define('directives/d3-line-chart',[
 
           renderTimeout = $timeout(function () {
             graph.xScale.domain([
-              d3.min(data, function(d){ return d[0]; }),
-              d3.max(data, function(d){ return d[0]; })
+              d3.min(data, function (d) {
+                return d[0];
+              }),
+              d3.max(data, function (d) {
+                return d[0];
+              })
             ]);
             graph.yScale.domain([
-              yScaleMin(d3.min(data, function(d){ return d[1]; }), baseline),
-              d3.max(data, function(d){ return d[1]; })
+              yScaleMin(d3.min(data, function (d) {
+                return d[1];
+              }), baseline),
+              d3.max(data, function (d) {
+                return d[1];
+              })
             ]);
 
             var yTicks = [
@@ -50482,8 +50498,10 @@ define('directives/d3-line-chart',[
               });
 
             // helpline
-            var xValues = data.map(function(d) { return d[0] });
-            angular.forEach(yTicks, function(yValue){
+            var xValues = data.map(function (d) {
+              return d[0]
+            });
+            angular.forEach(yTicks, function (yValue) {
               var path = graph.append('path')
                 .attr('d', line([
                   [ xValues[0], yValue ],
@@ -50498,7 +50516,17 @@ define('directives/d3-line-chart',[
             });
 
             // add actual line at the end in order to overlap all others
-            graph.append('path').attr('d', line(data));
+            var path = graph.append('path').attr('d', line(data));
+
+            var totalLength = path.node().getTotalLength();
+
+            path
+              .attr("stroke-dasharray", totalLength + " " + totalLength)
+              .attr("stroke-dashoffset", totalLength)
+              .transition()
+              .duration(300)
+              .ease("linear")
+              .attr("stroke-dashoffset", 0);
 
           }, 200); // renderTimeout
         };
@@ -50635,8 +50663,6 @@ define('directives/d3-performance-chart',[
       },
       link: function (scope, ele, attrs) {
         var renderTimeout;
-        // define dimensions of graph
-
 
         var $element = angular.element( ele[0] );
         var margin = { top: 10, right: 10, bottom: 20, left: 30 },
@@ -50716,7 +50742,7 @@ define('directives/d3-performance-chart',[
                   .attr('fill', 'url(#' + gradId + ')')
                   .attr('height', 0 )
                   .attr('y', height )
-                  .attr('class', function(d) { return d.drift > d.threshold ? 'bar' : 'bar solid' })
+                  .attr('class', function(d) { return d.drift > d.threshold ? 'bar' : 'bar solid' });
 
             bars.transition()
               .duration( 500 )

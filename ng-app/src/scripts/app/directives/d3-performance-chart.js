@@ -16,8 +16,6 @@ define([
       },
       link: function (scope, ele, attrs) {
         var renderTimeout;
-        // define dimensions of graph
-
 
         var $element = angular.element( ele[0] );
         var margin = { top: 10, right: 10, bottom: 20, left: 30 },
@@ -97,7 +95,7 @@ define([
                   .attr('fill', 'url(#' + gradId + ')')
                   .attr('height', 0 )
                   .attr('y', height )
-                  .attr('class', function(d) { return d.drift > d.threshold ? 'bar' : 'bar solid' })
+                  .attr('class', function(d) { return d.drift > d.threshold ? 'bar' : 'bar solid' });
 
             bars.transition()
               .duration( 500 )

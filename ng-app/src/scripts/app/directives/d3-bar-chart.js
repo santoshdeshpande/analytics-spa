@@ -61,14 +61,22 @@ define([
                 .attr('class', 'axis helpline');
             });
 
-            svg.selectAll('.bar')
+            var bars = svg.selectAll('.bar')
                   .data(data)
                 .enter().append('rect')
                   .attr('class', 'bar')
-                  .attr('x', function(d) { return x(d[0]); })
-                  .attr('width', x.rangeBand())
-                  .attr('y', function(d) { return y(d[1]); })
-                  .attr('height', function(d) { return svg.height() - y(d[1]); });
+                  .attr('y', svg.height())
+                  .attr('height', 0);
+
+            bars.transition()
+              .duration( 500 )
+              .delay( function ( d, i ) {
+                 return i * 20;
+               })
+              .attr('x', function(d) { return x(d[0]); })
+              .attr('width', x.rangeBand())
+              .attr('y', function(d) { return y(d[1]); })
+              .attr('height', function(d) { return svg.height() - y(d[1]); });
 
           }, 200); // renderTimeout
         };
