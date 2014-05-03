@@ -12,12 +12,14 @@ define([
 
     $scope.evaluation = {
       activeIndicator: { },
-      data: {}
+      data: {},
+      allData: {}
     };
 
     $scope.learning = {
       activeIndicator: { },
-      data: {}
+      data: {},
+      allData: {}
     };
 
     $scope.indicators = [
@@ -27,47 +29,20 @@ define([
     ];
 
     $scope.$watch('learning.activeIndicator', function(value){
-      $scope.learning.data = $scope.allData[value.key];
+      $scope.learning.data = $scope.learning.allData[value.key];
     });
 
     $scope.$watch('evaluation.activeIndicator', function(value){
-      $scope.evaluation.data = $scope.allData[value.key];
+      $scope.evaluation.data = $scope.evaluation.allData[value.key];
     });
 
-    randomData().then(function(data){
-      $scope.allData = data;
+    $scope.augur.$promise.then(function(augur){
+      $scope.learning.allData = augur['learningReport']['performanceDrift'];
+      $scope.evaluation.allData = augur['evaluationReport']['performanceDrift'];
+
       $scope.learning.activeIndicator   = { key: 'misclassification_rate', label: 'Misclassification Rate' };
       $scope.evaluation.activeIndicator = { key: 'false_positive_rate',    label: 'False Positive Rate'    };
     });
 
-    function randomData() {
-      var deferred = $q.defer();
-
-      var data = {};
-      var thresholds = [
-          Math.random() * 0.4 + 0.2, Math.random() * 0.4 + 0.2, Math.random() * 0.4 + 0.2, Math.random() * 0.4 + 0.2,
-          Math.random() * 0.4 + 0.2, Math.random() * 0.4 + 0.2, Math.random() * 0.4 + 0.2, Math.random() * 0.4 + 0.2
-      ];
-      var days = (Math.round(Math.random() * 15) + 15);
-
-      angular.forEach(Constants.KEY_PERFORMANCE_INDICATORS, function ( indicator ) {
-        var arr = [];
-
-        for ( var i = 0; i < days; i++ ) {
-          var dateOffset = (24 * 60 * 60 * 1000) * (days - i);
-          var myDate = new Date();
-          myDate.setTime(myDate.getTime() - dateOffset);
-
-          arr.push({drift: Math.random() * 0.8 + 0.2, threshold: thresholds[Math.floor(i / 7)], date: myDate})
-        }
-        data[indicator.key] = arr;
-
-        if ( Constants.KEY_PERFORMANCE_INDICATORS.indexOf(indicator) === Constants.KEY_PERFORMANCE_INDICATORS.length - 1 ) {
-          deferred.resolve(data)
-        }
-      });
-
-      return deferred.promise;
-    }
   }];
 });

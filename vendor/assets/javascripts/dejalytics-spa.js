@@ -39531,8 +39531,8 @@ define('constants',[], function () {
       {"key": "misclassification_rate", "label": "Misclassification Rate", "min": 0, "max": 1, "comparator": "gt"},
       {"key": "cumulative_captured_response_top_10", "label": "Cumulative Captured Response Top 10%", "min": 0, "max": 1, "comparator": "lt"},
       {"key": "cumulative_captured_response_top_25", "label": "Cumulative Captured Response Top 25%", "min": 0, "max": 1, "comparator": "lt"},
-      {"key": "cumulative_lift_top_10", "label": "Cumulative Lift Top 10%", "min": 0, "max": 1, "comparator": "lt"},
-      {"key": "cumulative_lift_top_25", "label": "Cumulative Lift Top 25%", "min": 0, "max": 1, "comparator": "lt"},
+      {"key": "cumulative_lift_top_10", "label": "Cumulative Lift Top 10%", "min": 1, "max": 100, "comparator": "lt"},
+      {"key": "cumulative_lift_top_25", "label": "Cumulative Lift Top 25%", "min": 1, "max": 100, "comparator": "lt"},
       {"key": "cumulative_response_top_10", "label": "Cumulative Response Top 10%", "min": 0, "max": 1, "comparator": "lt"},
       {"key": "cumulative_response_top_25", "label": "Cumulative Response Top 25%", "min": 0, "max": 1, "comparator": "lt"},
       {"key": "f_score", "label": "F-Score", "min": 0, "max": 1, "comparator": "lt"},
@@ -39782,200 +39782,11 @@ define('controllers/augur',[], function () {
 define('controllers/augur-accuracy',[], function () {
   
 
-  return  ['$scope', '$stateParams', function ($scope, $stateParams) {
-    $scope.charts = {
-      lift: {
-        baseline: 1.0,
-        data: [
-          [ 5, 1.969155654 ],
-          [ 10, 1.898043767 ],
-          [ 15, 1.844827586 ],
-          [ 20, 1.881246919 ],
-          [ 25, 1.543269231 ],
-          [ 30, 1.596485411 ],
-          [ 35, 1.617520715 ],
-          [ 40, 1.561007958 ],
-          [ 45, 1.543269231 ],
-          [ 50, 0.745026525 ],
-          [ 55, 0.632942889 ],
-          [ 60, 0.319297082 ],
-          [ 65, 0.337035809 ],
-          [ 70, 0.439543673 ],
-          [ 75, 0.478945623 ],
-          [ 80, 0.44346817 ],
-          [ 85, 0.386798432 ],
-          [ 90, 0.212864721 ],
-          [ 95, 0.266080902 ],
-          [ 100, 0.281307951 ]
-        ] },
-      accumulatedLift: {
-        baseline: 1.0,
-        data: [
-          [ 5, 1.654115282 ],
-          [ 10, 1.598938581 ],
-          [ 15, 1.580437194 ],
-          [ 20, 1.594472272 ],
-          [ 25, 1.612877915 ],
-          [ 30, 1.619202635 ],
-          [ 35, 1.601231324 ],
-          [ 40, 1.609659709 ],
-          [ 45, 1.596340965 ],
-          [ 50, 1.574940622 ],
-          [ 55, 1.544779165 ],
-          [ 60, 1.444758152 ],
-          [ 65, 1.369719043 ],
-          [ 70, 1.303264958 ],
-          [ 75, 1.241686883 ],
-          [ 80, 1.179955561 ],
-          [ 85, 1.135401193 ],
-          [ 90, 1.084438352 ],
-          [ 95, 1.038824937 ],
-          [ 100, 1.0 ]
-        ] },
-      response: {
-        baseline: 0.497552292,
-        data: [
-          [ 5, 0.991150442 ],
-          [ 10, 0.955357143 ],
-          [ 15, 0.928571429 ],
-          [ 20, 0.946902655 ],
-          [ 25, 0.776785714 ],
-          [ 30, 0.803571429 ],
-          [ 35, 0.814159292 ],
-          [ 40, 0.785714286 ],
-          [ 45, 0.776785714 ],
-          [ 50, 0.375 ],
-          [ 55, 0.318584071 ],
-          [ 60, 0.160714286 ],
-          [ 65, 0.169642857 ],
-          [ 70, 0.221238938 ],
-          [ 75, 0.241071429 ],
-          [ 80, 0.223214286 ],
-          [ 85, 0.194690265 ],
-          [ 90, 0.107142857 ],
-          [ 95, 0.133928571 ],
-          [ 100, 0.14159292 ]
-        ]
-      },
-      accumulatedResponse: {
-        baseline: 0.497552292,
-        data: [
-          [ 5, 0.991150442 ],
-          [ 10, 0.973333333 ],
-          [ 15, 0.958456973 ],
-          [ 20, 0.955555556 ],
-          [ 25, 0.919928826 ],
-          [ 30, 0.900593472 ],
-          [ 35, 0.888182973 ],
-          [ 40, 0.87541713 ],
-          [ 45, 0.864490603 ],
-          [ 50, 0.815672306 ],
-          [ 55, 0.770226537 ],
-          [ 60, 0.71958457 ],
-          [ 65, 0.67739726 ],
-          [ 70, 0.644628099 ],
-          [ 75, 0.617804154 ],
-          [ 80, 0.593210907 ],
-          [ 85, 0.569633508 ],
-          [ 90, 0.544015826 ],
-          [ 95, 0.522492971 ],
-          [ 100, 0.503337784 ]
-        ],
-        minline: 0.4
-      },
-      capturedResponse: {
-        data: [
-          [ 5, 0.099027409 ],
-          [ 10, 0.094606543 ],
-          [ 15, 0.091954023 ],
-          [ 20, 0.094606543 ],
-          [ 25, 0.076923077 ],
-          [ 30, 0.079575597 ],
-          [ 35, 0.081343943 ],
-          [ 40, 0.07780725 ],
-          [ 45, 0.076923077 ],
-          [ 50, 0.037135279 ],
-          [ 55, 0.031830239 ],
-          [ 60, 0.015915119 ],
-          [ 65, 0.016799293 ],
-          [ 70, 0.022104332 ],
-          [ 75, 0.023872679 ],
-          [ 80, 0.022104332 ],
-          [ 85, 0.019451813 ],
-          [ 90, 0.01061008 ],
-          [ 95, 0.013262599 ],
-          [ 100, 0.014146773 ]
-        ]
-      },
-      accumulatedCapturedResponse: {
-        data: [
-          [ 5, 0.099027409 ],
-          [ 10, 0.193633952 ],
-          [ 15, 0.285587975 ],
-          [ 20, 0.380194518 ],
-          [ 25, 0.457117595 ],
-          [ 30, 0.536693192 ],
-          [ 35, 0.618037135 ],
-          [ 40, 0.695844385 ],
-          [ 45, 0.772767462 ],
-          [ 50, 0.809902741 ],
-          [ 55, 0.84173298 ],
-          [ 60, 0.857648099 ],
-          [ 65, 0.874447392 ],
-          [ 70, 0.896551724 ],
-          [ 75, 0.920424403 ],
-          [ 80, 0.942528736 ],
-          [ 85, 0.961980548 ],
-          [ 90, 0.972590628 ],
-          [ 95, 0.985853227 ],
-          [ 100, 1.0 ]
-        ]
-      },
-      roc: {
-        data: [
-          [0.0, 0.0],
-          [0.01, 0.105943152],
-          [0.00297619, 0.206718346],
-          [0.014880952, 0.299741602],
-          [0.026785714, 0.392764858],
-          [0.044642857, 0.480620155],
-          [0.06547619, 0.565891473],
-          [0.083333333, 0.65374677],
-          [0.116071429, 0.728682171],
-          [0.172619048, 0.782945736],
-          [0.261904762, 0.811369509],
-          [0.345238095, 0.842377261],
-          [0.4375, 0.865633075],
-          [0.523809524, 0.894056848],
-          [0.619047619, 0.914728682],
-          [0.708333333, 0.940568475],
-          [0.806547619, 0.958656331],
-          [0.907738095, 0.974160207],
-          [1.0, 1.0]
-        ]
-      },
-      misclassification: {
-        data: [
-          { bucket: 'True Negatives', count: 990 },
-          { bucket: 'False Positives', count: 126 },
-          { bucket: 'False Negatives', count: 266 },
-          { bucket: 'True Positives', count: 865 }
-        ]
-      },
-      distributionPredictedValues: {
-        data: [
-          [ 0.16828479, 454 ],
-          [ 0.180288462, 599 ],
-          [ 0.345454545, 80 ],
-          [ 0.34939759, 123 ],
-          [ 0.825396825, 485 ],
-          [ 0.857142857, 21 ],
-          [ 0.875, 22 ],
-          [ 0.935810811, 388 ],
-          [ 1.0, 75 ]
-        ]
-      }
-    }
+  return  ['$scope', '$stateParams', function ($scope) {
+    $scope.charts = {};
+    $scope.augur.$promise.then(function (augur) {
+      $scope.charts = augur['learningReport'];
+    });
   }];
 });
 
@@ -39998,43 +39809,11 @@ define('controllers/augur-accuracy-detail',[], function () {
 define('controllers/augur-influencers',[], function () {
   
 
-  var nodes = [
-    { name: "delinquencies", value: 0.0786171428571429 },
-    { name: "debtinc", value: 0.0658285714285714 },
-    { name: "clage", value: 0.0587657142857143 },
-    { name: "derogatories", value: 0.0221828571428571 },
-    { name: "job", value: 0.02024 },
-    { name: "inquiries", value: 0.0145028571428571 },
-    { name: "loan", value: 0.0131085714285714 },
-    { name: "clno", value: 0.0116571428571429 },
-    { name: "yoj", value: 0.0108228571428571 },
-    { name: "value", value: 0.00955428571428571 },
-    { name: "mortgage", value: 0.00954285714285714 },
-    { name: "reason", value: 0.00635428571428571 }
-  ];
-
-  return  ['$scope', '$stateParams', 'Augur', 'Habitat', function ($scope, $stateParams, Augur, Habitat) {
+  return  ['$scope', '$stateParams', 'Augur', 'Habitat', function ($scope) {
     $scope.data = { nodes: [] };
-
-    Augur.get({ habitatId: $stateParams.habitatId, augurId: $stateParams.augurId }, function (augur) {
-      if (augur.name[0] === 'a' || augur.name[0] === 'A') {
-        angular.forEach(nodes, function (node) {
-          $scope.data.nodes.push(node);
-        });
-      } else {
-        angular.forEach(nodes, function (node) {
-          $scope.data.nodes.push(node);
-        });
-        angular.forEach(nodes, function (node) {
-          $scope.data.nodes.push(node);
-        });
-        angular.forEach(nodes, function (node) {
-          $scope.data.nodes.push(node);
-        });
-        angular.forEach(nodes, function (node) {
-          $scope.data.nodes.push(node);
-        });
-      }
+    
+    $scope.augur.$promise.then(function(augur){
+      $scope.data = { nodes: augur['learningReport']['featureImportance'] };
     });
   }];
 });
@@ -40053,12 +39832,14 @@ define('controllers/augur-performance',[
 
     $scope.evaluation = {
       activeIndicator: { },
-      data: {}
+      data: {},
+      allData: {}
     };
 
     $scope.learning = {
       activeIndicator: { },
-      data: {}
+      data: {},
+      allData: {}
     };
 
     $scope.indicators = [
@@ -40068,48 +39849,21 @@ define('controllers/augur-performance',[
     ];
 
     $scope.$watch('learning.activeIndicator', function(value){
-      $scope.learning.data = $scope.allData[value.key];
+      $scope.learning.data = $scope.learning.allData[value.key];
     });
 
     $scope.$watch('evaluation.activeIndicator', function(value){
-      $scope.evaluation.data = $scope.allData[value.key];
+      $scope.evaluation.data = $scope.evaluation.allData[value.key];
     });
 
-    randomData().then(function(data){
-      $scope.allData = data;
+    $scope.augur.$promise.then(function(augur){
+      $scope.learning.allData = augur['learningReport']['performanceDrift'];
+      $scope.evaluation.allData = augur['evaluationReport']['performanceDrift'];
+
       $scope.learning.activeIndicator   = { key: 'misclassification_rate', label: 'Misclassification Rate' };
       $scope.evaluation.activeIndicator = { key: 'false_positive_rate',    label: 'False Positive Rate'    };
     });
 
-    function randomData() {
-      var deferred = $q.defer();
-
-      var data = {};
-      var thresholds = [
-          Math.random() * 0.4 + 0.2, Math.random() * 0.4 + 0.2, Math.random() * 0.4 + 0.2, Math.random() * 0.4 + 0.2,
-          Math.random() * 0.4 + 0.2, Math.random() * 0.4 + 0.2, Math.random() * 0.4 + 0.2, Math.random() * 0.4 + 0.2
-      ];
-      var days = (Math.round(Math.random() * 15) + 15);
-
-      angular.forEach(Constants.KEY_PERFORMANCE_INDICATORS, function ( indicator ) {
-        var arr = [];
-
-        for ( var i = 0; i < days; i++ ) {
-          var dateOffset = (24 * 60 * 60 * 1000) * (days - i);
-          var myDate = new Date();
-          myDate.setTime(myDate.getTime() - dateOffset);
-
-          arr.push({drift: Math.random() * 0.8 + 0.2, threshold: thresholds[Math.floor(i / 7)], date: myDate})
-        }
-        data[indicator.key] = arr;
-
-        if ( Constants.KEY_PERFORMANCE_INDICATORS.indexOf(indicator) === Constants.KEY_PERFORMANCE_INDICATORS.length - 1 ) {
-          deferred.resolve(data)
-        }
-      });
-
-      return deferred.promise;
-    }
   }];
 });
 
@@ -40131,406 +39885,12 @@ define('controllers/augur-settings',[], function () {
 define('controllers/augur-tree',[], function () {
   
 
-  return  ['$scope', '$stateParams', function ($scope, $stateParams) {
+  return  ['$scope', '$stateParams', function ($scope) {
+    $scope.data = {};
 
-    $scope.treePathElements = ['smile'];
-
-    $scope.data = {
-      "root": {
-        "id": "1",
-        "score": "0",
-        "recordCount": "2378",
-        "defaultChild": "2",
-        "scoreDistribution": [
-          {
-            "value": "0",
-            "recordCount": "1189",
-            "confidence": "0.5"
-          },
-          {
-            "value": "1",
-            "recordCount": "1189",
-            "confidence": "0.5"
-          }
-        ],
-        "children": [
-          {
-            "id": "2",
-            "score": "0",
-            "recordCount": "2065",
-            "defaultChild": "4",
-            "simplePredicate": {
-              "field": "loan",
-              "operator": "greaterOrEqual",
-              "value": "7550"
-            },
-            "scoreDistribution": [
-              {
-                "value": "0",
-                "recordCount": "1105",
-                "confidence": "0.535108958837772"
-              },
-              {
-                "value": "1",
-                "recordCount": "960",
-                "confidence": "0.464891041162228"
-              }
-            ],
-            "children": [
-              {
-                "id": "4",
-                "score": "0",
-                "recordCount": "1699",
-                "defaultChild": "8",
-                "simplePredicate": {
-                  "field": "inquiries",
-                  "operator": "lessThan",
-                  "value": "2.5"
-                },
-                "scoreDistribution": [
-                  {
-                    "value": "0",
-                    "recordCount": "985",
-                    "confidence": "0.579752795762213"
-                  },
-                  {
-                    "value": "1",
-                    "recordCount": "714",
-                    "confidence": "0.420247204237787"
-                  }
-                ],
-                "children": [
-                  {
-                    "id": "8",
-                    "score": "0",
-                    "recordCount": "1662",
-                    "defaultChild": "16",
-                    "simplePredicate": {
-                      "field": "clno",
-                      "operator": "greaterOrEqual",
-                      "value": "2.5"
-                    },
-                    "scoreDistribution": [
-                      {
-                        "value": "0",
-                        "recordCount": "984",
-                        "confidence": "0.592057761732852"
-                      },
-                      {
-                        "value": "1",
-                        "recordCount": "678",
-                        "confidence": "0.407942238267148"
-                      }
-                    ],
-                    "children": [
-                      {
-                        "id": "16",
-                        "score": "0",
-                        "recordCount": "1142",
-                        "defaultChild": "32",
-                        "simplePredicate": {
-                          "field": "yoj",
-                          "operator": "greaterOrEqual",
-                          "value": "4.8"
-                        },
-                        "scoreDistribution": [
-                          {
-                            "value": "0",
-                            "recordCount": "725",
-                            "confidence": "0.634851138353765"
-                          },
-                          {
-                            "value": "1",
-                            "recordCount": "417",
-                            "confidence": "0.365148861646235"
-                          }
-                        ],
-                        "children": [
-                          {
-                            "id": "32",
-                            "score": "0",
-                            "recordCount": "1130",
-                            "defaultChild": "64",
-                            "simplePredicate": {
-                              "field": "clno",
-                              "operator": "lessThan",
-                              "value": "56.5"
-                            },
-                            "scoreDistribution": [
-                              {
-                                "value": "0",
-                                "recordCount": "725",
-                                "confidence": "0.641592920353982"
-                              },
-                              {
-                                "value": "1",
-                                "recordCount": "405",
-                                "confidence": "0.358407079646018"
-                              }
-                            ],
-                            "children": [
-                              {
-                                "id": "64",
-                                "score": "0",
-                                "recordCount": "687",
-                                "simplePredicate": {
-                                  "field": "loan",
-                                  "operator": "greaterOrEqual",
-                                  "value": "15050"
-                                },
-                                "scoreDistribution": [
-                                  {
-                                    "value": "0",
-                                    "recordCount": "477",
-                                    "confidence": "0.694323144104803"
-                                  },
-                                  {
-                                    "value": "1",
-                                    "recordCount": "210",
-                                    "confidence": "0.305676855895196"
-                                  }
-                                ]
-                              },
-                              {
-                                "id": "65",
-                                "score": "0",
-                                "recordCount": "443",
-                                "defaultChild": "130",
-                                "simplePredicate": {
-                                  "field": "loan",
-                                  "operator": "lessThan",
-                                  "value": "15050"
-                                },
-                                "scoreDistribution": [
-                                  {
-                                    "value": "0",
-                                    "recordCount": "248",
-                                    "confidence": "0.559819413092551"
-                                  },
-                                  {
-                                    "value": "1",
-                                    "recordCount": "195",
-                                    "confidence": "0.440180586907449"
-                                  }
-                                ],
-                                "children": [
-                                  {
-                                    "id": "130",
-                                    "score": "0",
-                                    "recordCount": "409",
-                                    "simplePredicate": {
-                                      "field": "loan",
-                                      "operator": "lessThan",
-                                      "value": "14950"
-                                    },
-                                    "scoreDistribution": [
-                                      {
-                                        "value": "0",
-                                        "recordCount": "245",
-                                        "confidence": "0.599022004889976"
-                                      },
-                                      {
-                                        "value": "1",
-                                        "recordCount": "164",
-                                        "confidence": "0.400977995110024"
-                                      }
-                                    ]
-                                  },
-                                  {
-                                    "id": "131",
-                                    "score": "1",
-                                    "recordCount": "34",
-                                    "simplePredicate": {
-                                      "field": "loan",
-                                      "operator": "greaterOrEqual",
-                                      "value": "14950"
-                                    },
-                                    "scoreDistribution": [
-                                      {
-                                        "value": "0",
-                                        "recordCount": "3",
-                                        "confidence": "0.0882352941176471"
-                                      },
-                                      {
-                                        "value": "1",
-                                        "recordCount": "31",
-                                        "confidence": "0.911764705882353"
-                                      }
-                                    ]
-                                  }
-                                ]
-                              }
-                            ]
-                          },
-                          {
-                            "id": "33",
-                            "score": "1",
-                            "recordCount": "12",
-                            "simplePredicate": {
-                              "field": "clno",
-                              "operator": "greaterOrEqual",
-                              "value": "56.5"
-                            },
-                            "scoreDistribution": [
-                              {
-                                "value": "0",
-                                "recordCount": "0",
-                                "confidence": "0"
-                              },
-                              {
-                                "value": "1",
-                                "recordCount": "12",
-                                "confidence": "1"
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "id": "17",
-                        "score": "1",
-                        "recordCount": "520",
-                        "defaultChild": "34",
-                        "simplePredicate": {
-                          "field": "yoj",
-                          "operator": "lessThan",
-                          "value": "4.8"
-                        },
-                        "scoreDistribution": [
-                          {
-                            "value": "0",
-                            "recordCount": "259",
-                            "confidence": "0.498076923076923"
-                          },
-                          {
-                            "value": "1",
-                            "recordCount": "261",
-                            "confidence": "0.501923076923077"
-                          }
-                        ],
-                        "children": [
-                          {
-                            "id": "34",
-                            "score": "0",
-                            "recordCount": "106",
-                            "simpleSetPredicate": {
-                              "field": "job",
-                              "booleanOperator": "isIn",
-                              "array": "\"Office\""
-                            },
-                            "scoreDistribution": [
-                              {
-                                "value": "0",
-                                "recordCount": "69",
-                                "confidence": "0.650943396226415"
-                              },
-                              {
-                                "value": "1",
-                                "recordCount": "37",
-                                "confidence": "0.349056603773585"
-                              }
-                            ]
-                          },
-                          {
-                            "id": "35",
-                            "score": "1",
-                            "recordCount": "414",
-                            "simpleSetPredicate": {
-                              "field": "job",
-                              "booleanOperator": "isIn",
-                              "array": "\"Mgr\" \"Other\" \"ProfExe\" \"Sales\" \"Self\""
-                            },
-                            "scoreDistribution": [
-                              {
-                                "value": "0",
-                                "recordCount": "190",
-                                "confidence": "0.458937198067633"
-                              },
-                              {
-                                "value": "1",
-                                "recordCount": "224",
-                                "confidence": "0.541062801932367"
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "id": "9",
-                    "score": "1",
-                    "recordCount": "37",
-                    "simplePredicate": {
-                      "field": "clno",
-                      "operator": "lessThan",
-                      "value": "2.5"
-                    },
-                    "scoreDistribution": [
-                      {
-                        "value": "0",
-                        "recordCount": "1",
-                        "confidence": "0.027027027027027"
-                      },
-                      {
-                        "value": "1",
-                        "recordCount": "36",
-                        "confidence": "0.972972972972973"
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                "id": "5",
-                "score": "1",
-                "recordCount": "366",
-                "simplePredicate": {
-                  "field": "inquiries",
-                  "operator": "greaterOrEqual",
-                  "value": "2.5"
-                },
-                "scoreDistribution": [
-                  {
-                    "value": "0",
-                    "recordCount": "120",
-                    "confidence": "0.327868852459016"
-                  },
-                  {
-                    "value": "1",
-                    "recordCount": "246",
-                    "confidence": "0.672131147540984"
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "id": "3",
-            "score": "1",
-            "recordCount": "313",
-            "simplePredicate": {
-              "field": "loan",
-              "operator": "lessThan",
-              "value": "7550"
-            },
-            "scoreDistribution": [
-              {
-                "value": "0",
-                "recordCount": "84",
-                "confidence": "0.268370607028754"
-              },
-              {
-                "value": "1",
-                "recordCount": "229",
-                "confidence": "0.731629392971246"
-              }
-            ]
-          }
-        ]
-      }
-    };
-
+    $scope.augur.$promise.then(function(augur){
+      $scope.data = augur['learningReport']['tree']['data'];
+    });
   }];
 });
 
@@ -50078,7 +49438,7 @@ define('directives/d3-bar-chart',[
         var yAxis = d3.svg.axis().scale(y).orient('left');
 
         scope.$watch('chart', function (newChart) {
-          scope.render(newChart.data);
+          if (newChart != null) scope.render(newChart.data);
         }, true);
 
         scope.render = function (data) {
@@ -50324,7 +49684,7 @@ define('directives/d3-influencer-chart',['d3js'], function (d3) {
   
 
   function nodeValues (nodes) {
-    return nodes.map(function (node) { return node.value })
+    return nodes.map(function (node) { return node.importance })
   }
   
   return ['$timeout', function ($timeout) {
@@ -50354,10 +49714,10 @@ define('directives/d3-influencer-chart',['d3js'], function (d3) {
         var radius = d3.scale.linear();
 
         var pack = d3.layout.pack()
-            .value(function(d) { return d.value })
+            .value(function(d) { return d.importance })
             .radius(radius)
             .padding(20)
-            .sort(function(a, b) { return Math.log(a.value * b.value) })
+            .sort(function(a, b) { return Math.log(a.importance * b.importance) })
             .size([width + 120, height]);
 
         var svg = d3.select(ele[0]).append('svg')
@@ -50375,7 +49735,7 @@ define('directives/d3-influencer-chart',['d3js'], function (d3) {
           if (renderTimeout) $timeout.cancel(renderTimeout);
 
           renderTimeout = $timeout(function () {
-            var dataNodes = data.nodes.sort(function(a, b) { return a.value - b.value}).reverse().slice(0, maxNodes - 1);
+            var dataNodes = data.nodes.sort(function(a, b) { return a.importance - b.importance}).reverse().slice(0, maxNodes - 1);
 
             var rMax = radiusMax(dataNodes.length);
 
@@ -50392,16 +49752,16 @@ define('directives/d3-influencer-chart',['d3js'], function (d3) {
               .range([radiusMin, rMax]);
 
             var nodes = pack.nodes({
-              value: 0,
+              importance: 0,
               children: dataNodes
             });
             
             var nodeEnter = svg.selectAll('.node')
-                 .data(nodes.filter(function(d) { return !!d.name }))
+                 .data(nodes.filter(function(d) { return !!d.feature }))
                .enter().append('g')
                  .attr('class', 'node')
                  .attr('transform', function(d) { return 'translate(' + d.x + ',' + d.y + ')'; })
-                 .style('font-size', function(d) { return fontSize(d.r/Math.log(Math.max(Math.min(d.name.length, variableLengthMax), variableLengthMin))) + '%' });
+                 .style('font-size', function(d) { return fontSize(d.r/Math.log(Math.max(Math.min(d.feature.length, variableLengthMax), variableLengthMin))) + '%' });
 
             nodeEnter.append('circle')
                 .attr('r', function(d) { return d.r; })
@@ -50410,7 +49770,7 @@ define('directives/d3-influencer-chart',['d3js'], function (d3) {
             nodeEnter.append('text')
               .style('text-anchor', 'middle')
               .attr('dy', '-.2em')
-              .text(function(d) { return d.name });
+              .text(function(d) { return d.feature });
 
             nodeEnter.append('text')
               .attr('dy', '.8em')
@@ -50452,14 +49812,15 @@ define('directives/d3-line-chart',[
       link: function (scope, ele, attrs) {
         var renderTimeout;
 
+
         var dimensions = {
-          margins: { top: 10, right: 10, bottom: 10, left: 35 }
+          margins: { top: 10, right: 20, bottom: 10, left: 45 }
         };
 
         var graph = new Chart(ele[0], dimensions);
 
         scope.$watch('chart', function (newData) {
-          scope.render(newData.data, newData.baseline);
+          if (newData != null) scope.render(newData.data, newData.baseline);
         }, true);
 
         scope.render = function (data, baseline) {
@@ -50504,12 +49865,6 @@ define('directives/d3-line-chart',[
               yTicks.push(d3.mean(graph.yScale.ticks()));
             }
 
-            // create left yAxis
-            var yAxisLeft = d3.svg.axis().scale(graph.yScale).orient('left').tickValues(yTicks);
-            // Add the y-axis to the left
-            graph.append('g')
-              .attr('class', 'y axis')
-              .call(yAxisLeft);
 
             // create a line function that can convert data[] into x and y points
             var line = d3.svg.line()
@@ -50552,11 +49907,9 @@ define('directives/d3-line-chart',[
               }
             });
 
-            // add actual line at the end in order to overlap all others
+            // add actual line
             var path = graph.append('path').attr('d', line(data));
-
             var totalLength = path.node().getTotalLength();
-
             path
               .attr("stroke-dasharray", totalLength + " " + totalLength)
               .attr("stroke-dashoffset", totalLength)
@@ -50565,6 +49918,13 @@ define('directives/d3-line-chart',[
               .ease("linear")
               .attr("stroke-dashoffset", 0);
 
+            // create left yAxis
+            var yAxisLeft = d3.svg.axis().scale(graph.yScale).orient('left').tickValues(yTicks);
+            // Add the y-axis to the left
+            graph.append('g')
+              .attr('class', 'y axis')
+              .call(yAxisLeft)
+              .attr('transform', 'translate(-10,0)');
           }, 200); // renderTimeout
         };
       }
@@ -50905,7 +50265,7 @@ define('directives/d3-pie-chart',[
             count = attrs.count;
 
         scope.$watch('chart', function (newChart) {
-          scope.render(newChart.data);
+          if (newChart != null) scope.render(newChart.data);
         }, true);
 
         scope.render = function (data) {
@@ -50998,7 +50358,7 @@ define('directives/d3-roc-chart',[
         var yScale = d3.scale.linear().range([svg.height(), 0]);
 
         scope.$watch('chart', function (newChart) {
-          scope.render(newChart.data);
+          if (newChart != null) scope.render(newChart.data);
         }, true);
 
         scope.render = function (data) {
@@ -51127,7 +50487,9 @@ define('directives/controllers/dropdown-controller',[
     $scope.toggled = false;
     $scope.toggle = toggle;
 
-    $scope.label = $scope.$eval($attrs.label);
+    $scope.$watch($attrs.label, function (label) {
+      $scope.label = $scope.$eval($attrs.label);
+    });
 
     if ($attrs.counter) {
       $scope.$watch($attrs.counter, function (counter) {
@@ -57271,7 +56633,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('partials/augur-accuracy.html',
-    '<div class=\'row augur-accuracy\'><div class=\'columns small-12\'><ul class=\'small-block-grid-2 medium-block-grid-3\'><li class=\'tile\'><div class=\'tile-body\'><a ui-sref=\'augur.accuracy-detail({ chartType: "lift" })\'><h6 class=\'title\'>Lift</h6><div class=\'chart line-chart\'><d3-line-chart chart=\'charts.lift\'></d3-line-chart></div></a></div></li><li class=\'tile\'><div class=\'tile-body\'><a ui-sref=\'dashboard\'><h6 class=\'title\'>Accumulated Lift</h6><div class=\'chart line-chart\'><d3-line-chart chart=\'charts.accumulatedLift\'></d3-line-chart></div></a></div></li><li class=\'tile\'><div class=\'tile-body\'><a href=\'\'><h6 class=\'title\'>Response</h6><div class=\'chart line-chart\'><d3-line-chart chart=\'charts.response\'></d3-line-chart></div></a></div></li><li class=\'tile\'><div class=\'tile-body\'><a href=\'\'><h6 class=\'title\'>Accumulated Response</h6><div class=\'chart line-chart\'><d3-line-chart chart=\'charts.accumulatedResponse\'></d3-line-chart></div></a></div></li><li class=\'tile\'><div class=\'tile-body\'><a href=\'\'><h6 class=\'title\'>Captured Response</h6><div class=\'chart line-chart\'><d3-line-chart chart=\'charts.capturedResponse\'></d3-line-chart></div></a></div></li><li class=\'tile\'><div class=\'tile-body\'><a href=\'\'><h6 class=\'title\'>Accumulated Captured Response</h6><div class=\'chart line-chart\'><d3-line-chart chart=\'charts.accumulatedCapturedResponse\'></d3-line-chart></div></a></div></li><li class=\'tile\'><div class=\'tile-body\'><a href=\'\'><h6 class=\'title\'>ROC</h6><div class=\'chart roc-chart\'><d3-roc-chart chart=\'charts.roc\'></d3-roc-chart></div></a></div></li><li class=\'tile\'><div class=\'tile-body\'><a href=\'\'><h6 class=\'title\'>Misclassification</h6><div class=\'chart pie-chart\'><d3-pie-chart bucket=\'bucket\' chart=\'charts.misclassification\' count=\'count\'></d3-pie-chart></div></a></div></li><li class=\'tile\'><div class=\'tile-body\'><a href=\'\'><h6 class=\'title\'>Distribution of Predicted Values</h6><div class=\'chart bar-chart\'><d3-bar-chart chart=\'charts.distributionPredictedValues\'></d3-bar-chart></div></a></div></li></ul></div></div>');
+    '<div class=\'row augur-accuracy\'><div class=\'columns small-12\'><ul class=\'small-block-grid-2 medium-block-grid-3\'><li class=\'tile\'><div class=\'tile-body\'><a ui-sref=\'augur.accuracy-detail({ chartType: "lift" })\'><h6 class=\'title\'>Lift</h6><div class=\'chart line-chart\'><d3-line-chart chart=\'charts.lift\'></d3-line-chart></div></a></div></li><li class=\'tile\'><div class=\'tile-body\'><a ui-sref=\'dashboard\'><h6 class=\'title\'>Cumulative Lift</h6><div class=\'chart line-chart\'><d3-line-chart chart=\'charts.cumulativeLift\'></d3-line-chart></div></a></div></li><li class=\'tile\'><div class=\'tile-body\'><a href=\'\'><h6 class=\'title\'>Response</h6><div class=\'chart line-chart\'><d3-line-chart chart=\'charts.response\'></d3-line-chart></div></a></div></li><li class=\'tile\'><div class=\'tile-body\'><a href=\'\'><h6 class=\'title\'>Cumulative Response</h6><div class=\'chart line-chart\'><d3-line-chart chart=\'charts.cumulativeResponse\'></d3-line-chart></div></a></div></li><li class=\'tile\'><div class=\'tile-body\'><a href=\'\'><h6 class=\'title\'>Captured Response</h6><div class=\'chart line-chart\'><d3-line-chart chart=\'charts.capturedResponse\'></d3-line-chart></div></a></div></li><li class=\'tile\'><div class=\'tile-body\'><a href=\'\'><h6 class=\'title\'>Cumulative Captured Response</h6><div class=\'chart line-chart\'><d3-line-chart chart=\'charts.cumulativeCapturedResponse\'></d3-line-chart></div></a></div></li><li class=\'tile\'><div class=\'tile-body\'><a href=\'\'><h6 class=\'title\'>ROC</h6><div class=\'chart roc-chart\'><d3-roc-chart chart=\'charts.roc\'></d3-roc-chart></div></a></div></li><li class=\'tile\'><div class=\'tile-body\'><a href=\'\'><h6 class=\'title\'>Misclassification</h6><div class=\'chart pie-chart\'><d3-pie-chart bucket=\'bucket\' chart=\'charts.misclassification\' count=\'count\'></d3-pie-chart></div></a></div></li><li class=\'tile\'><div class=\'tile-body\'><a href=\'\'><h6 class=\'title\'>Distribution of Predicted Values</h6><div class=\'chart bar-chart\'><d3-bar-chart chart=\'charts.predictedValuesDistribution\'></d3-bar-chart></div></a></div></li></ul></div></div>');
 }]);
 })();
 

@@ -57,7 +57,9 @@ define([
     $scope.toggled = false;
     $scope.toggle = toggle;
 
-    $scope.label = $scope.$eval($attrs.label);
+    $scope.$watch($attrs.label, function (label) {
+      $scope.label = $scope.$eval($attrs.label);
+    });
 
     if ($attrs.counter) {
       $scope.$watch($attrs.counter, function (counter) {
