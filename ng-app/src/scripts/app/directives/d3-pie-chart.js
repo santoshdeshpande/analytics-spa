@@ -41,7 +41,7 @@ define([
             count = attrs.count;
 
         scope.$watch('chart', function (newChart) {
-          scope.render(newChart.data);
+          if (newChart != null) scope.render(newChart.data);
         }, true);
 
         scope.render = function (data) {

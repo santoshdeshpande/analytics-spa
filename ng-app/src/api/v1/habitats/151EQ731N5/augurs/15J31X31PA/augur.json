@@ -1,6 +1,6 @@
 {"id": "15J31X31PA", "name": "asdf123", "description": null, "code": "15J31X31PA", "learningReport": {
   "lift": {
-    "timestamp": "2014-05-03T08:28:31-04:00",
+    "timestamp": "2014-05-03T10:09:33-04:00",
     "baseline": 1.0,
     "data": [
       ["5", 1.64532361161352],
@@ -25,8 +25,8 @@
       ["100", 0.314679379270346]
     ]
   },
-  "cumulative_lift": {
-    "timestamp": "2014-05-03T08:28:31-04:00",
+  "cumulativeLift": {
+    "timestamp": "2014-05-03T10:09:33-04:00",
     "baseline": 1.0,
     "data": [
       ["5", 1.64532361161352],
@@ -52,7 +52,7 @@
     ]
   },
   "response": {
-    "timestamp": "2014-05-03T08:28:31-04:00",
+    "timestamp": "2014-05-03T10:09:33-04:00",
     "baseline": 0.498763767138683,
     "data": [
       ["5", 0.820627802690583],
@@ -77,8 +77,8 @@
       ["100", 0.15695067264574]
     ]
   },
-  "cumulative_response": {
-    "timestamp": "2014-05-03T08:28:31-04:00",
+  "cumulativeResponse": {
+    "timestamp": "2014-05-03T10:09:33-04:00",
     "baseline": 0.498763767138683,
     "data": [
       ["5", 0.820627802690583],
@@ -101,10 +101,11 @@
       ["90", 0.538461538461538],
       ["95", 0.516800757217227],
       ["100", 0.498763767138683]
-    ]
+    ],
+    "minline": 0.4
   },
-  "captured_response": {
-    "timestamp": "2014-05-03T08:28:31-04:00",
+  "capturedResponse": {
+    "timestamp": "2014-05-03T10:09:33-04:00",
     "data": [
       ["5", 0.0824695808922938],
       ["10", 0.0788643533123028],
@@ -128,8 +129,8 @@
       ["100", 0.0157728706624606]
     ]
   },
-  "cumulative_captured_response": {
-    "timestamp": "2014-05-03T08:28:31-04:00",
+  "cumulativeCapturedResponse": {
+    "timestamp": "2014-05-03T10:09:33-04:00",
     "data": [
       ["5", 0.0824695808922938],
       ["10", 0.161333934204597],
@@ -155,1082 +156,255 @@
   },
   "roc": {
     "data": [
-      ["0", "0"],
-      ["0,092383956737269", "0,0192825112107623"],
-      ["0,176656151419558", "0,0461883408071749"],
-      ["0,260928346101848", "0,0730941704035874"],
-      ["0,344299233889139", "0,100896860986547"],
-      ["0,436232537178909", "0,120179372197309"],
-      ["0,521406038756197", "0,146188340807175"],
-      ["0,609734114465976", "0,169058295964126"],
-      ["0,702568724650744", "0,187443946188341"],
-      ["0,787291572780532", "0,21390134529148"],
-      ["0,874267688147814", "0,238565022421525"],
-      ["0,892744479495268", "0,330941704035874"],
-      ["0,904912122577738", "0,429596412556054"],
-      ["0,922036953582695", "0,523318385650224"],
-      ["0,937809824245155", "0,618385650224215"],
-      ["0,954033348355115", "0,713004484304933"],
-      ["0,96800360522758", "0,809865470852018"],
-      ["0,982424515547544", "0,90627802690583"],
-      ["1", "1"],
-      ["1", "1"]
+      ["0", 0.0],
+      ["0,092383956737269", 0.0192825112107623],
+      ["0,176656151419558", 0.0461883408071749],
+      ["0,260928346101848", 0.0730941704035874],
+      ["0,344299233889139", 0.100896860986547],
+      ["0,436232537178909", 0.120179372197309],
+      ["0,521406038756197", 0.146188340807175],
+      ["0,609734114465976", 0.169058295964126],
+      ["0,702568724650744", 0.187443946188341],
+      ["0,787291572780532", 0.21390134529148],
+      ["0,874267688147814", 0.238565022421525],
+      ["0,892744479495268", 0.330941704035874],
+      ["0,904912122577738", 0.429596412556054],
+      ["0,922036953582695", 0.523318385650224],
+      ["0,937809824245155", 0.618385650224215],
+      ["0,954033348355115", 0.713004484304933],
+      ["0,96800360522758", 0.809865470852018],
+      ["0,982424515547544", 0.90627802690583],
+      ["1", 1.0],
+      ["1", 1.0]
     ],
-    "timestamp": "2014-05-03T08:28:31-04:00"
+    "timestamp": "2014-05-03T10:09:33-04:00"
   },
   "misclassification": {
-    "data": {
-      "true_negatives": 1694,
-      "false_positives": 536,
-      "false_negatives": 270,
-      "true_positives": 1949
-    },
-    "timestamp": "2014-05-03T08:28:31-04:00"
+    "data": [
+      {
+        "bucket": "True Negatives",
+        "count": 1694
+      },
+      {
+        "bucket": "False Positives",
+        "count": 536
+      },
+      {
+        "bucket": "False Negatives",
+        "count": 270
+      },
+      {
+        "bucket": "True Positives",
+        "count": 1949
+      }
+    ],
+    "timestamp": "2014-05-03T10:09:33-04:00"
   },
-  "predicted_values_distribution": {
+  "predictedValuesDistribution": {
     "data": [
       ["0,121752041573868", 1964],
       ["0,78834182229768", 2485]
     ],
-    "timestamp": "2014-05-03T08:28:31-04:00"
+    "timestamp": "2014-05-03T10:09:33-04:00"
   },
-  "feature_importance": {
-    "data": [
-      {
-        "feature": "qty_order_af_l730d",
-        "importance": 1042.45720062585
-      },
-      {
-        "feature": "amt_order_af_l730d",
-        "importance": 985.630980561018
-      },
-      {
-        "feature": "qty_af_pct_l730d",
-        "importance": 763.051851463073
-      },
-      {
-        "feature": "amt_af_pct_l730d",
-        "importance": 762.554163024924
-      },
-      {
-        "feature": "amt_order_al_l730d",
-        "importance": 717.214896358207
-      },
-      {
-        "feature": "qty_order_al_l730d",
-        "importance": 704.86714329407
-      },
-      {
-        "feature": "prod_first_order_category",
-        "importance": 156.37412370758
-      },
-      {
-        "feature": "qty_orderlines_l730d",
-        "importance": 151.733159975605
-      },
-      {
-        "feature": "qty_order_l730d",
-        "importance": 143.067193340423
-      },
-      {
-        "feature": "qty_ship_l730d",
-        "importance": 132.305375764258
-      },
-      {
-        "feature": "offl_order_qty_l730d",
-        "importance": 127.928595375578
-      },
-      {
-        "feature": "amt_order_l730d",
-        "importance": 118.913424831325
-      },
-      {
-        "feature": "qty_orderline_l730d",
-        "importance": 112.168910390591
-      },
-      {
-        "feature": "qty_days_last_order",
-        "importance": 87.5670120361693
-      },
-      {
-        "feature": "qty_days_last_offl_order",
-        "importance": 62.5783970122091
-      },
-      {
-        "feature": "amt_order_hf_l730d",
-        "importance": 61.6555832326837
-      },
-      {
-        "feature": "bundesland",
-        "importance": 56.569463680891
-      },
-      {
-        "feature": "amt_q2_pct_l730d",
-        "importance": 44.8736104906672
-      },
-      {
-        "feature": "orders_amt_hometext_l730d",
-        "importance": 42.4712496062619
-      },
-      {
-        "feature": "qty_order_hf_l730d",
-        "importance": 42.4306357250181
-      },
-      {
-        "feature": "amt_al_pct_l730d",
-        "importance": 41.2652572484802
-      },
-      {
-        "feature": "amt_hf_pct_l730d",
-        "importance": 38.9382928327263
-      },
-      {
-        "feature": "qty_hf_pct_l730d",
-        "importance": 38.9100252786489
-      },
-      {
-        "feature": "qty_al_pct_l730d",
-        "importance": 36.763037322467
-      },
-      {
-        "feature": "orders_qty_hometext_l730d",
-        "importance": 34.5653641840705
-      },
-      {
-        "feature": "prod_first_order_top_division",
-        "importance": 30.1298525605127
-      },
-      {
-        "feature": "status_desc",
-        "importance": 24.1853750913517
-      },
-      {
-        "feature": "asp_l365d",
-        "importance": 20.6433629291522
-      },
-      {
-        "feature": "rate_limit",
-        "importance": 19.4596994196485
-      },
-      {
-        "feature": "amt_order_ah_l730d",
-        "importance": 17.2519230442279
-      },
-      {
-        "feature": "amt_q4_pct_l730d",
-        "importance": 16.0727889879495
-      },
-      {
-        "feature": "amt_hi_pct_l730d",
-        "importance": 15.1143685847068
-      },
-      {
-        "feature": "amt_qvc_pct_l730d",
-        "importance": 14.3697004256876
-      },
-      {
-        "feature": "amt_offair_pct_l730d",
-        "importance": 14.3695307684527
-      },
-      {
-        "feature": "qty_order_ah_l730d",
-        "importance": 14.279359739535
-      },
-      {
-        "feature": "amt_ht_pct_l730d",
-        "importance": 11.5968540191411
-      },
-      {
-        "feature": "avg_order_amt_lt",
-        "importance": 11.2129177606457
-      },
-      {
-        "feature": "qty_ah_pct_l730d",
-        "importance": 11.0969011807088
-      },
-      {
-        "feature": "amt_order_aw_l730d",
-        "importance": 11.0205326355387
-      },
-      {
-        "feature": "amt_order_hi_l730d",
-        "importance": 10.9649338714229
-      },
-      {
-        "feature": "amt_ao_pct_l730d",
-        "importance": 10.4138930393431
-      },
-      {
-        "feature": "orders_amt_wohnen_l730d",
-        "importance": 10.0076124123934
-      },
-      {
-        "feature": "qty_ht_pct_l730d",
-        "importance": 9.87372080803492
-      },
-      {
-        "feature": "qty_hm_pct_l730d",
-        "importance": 9.83838446903232
-      },
-      {
-        "feature": "amt_order_l365d",
-        "importance": 9.833936027403
-      },
-      {
-        "feature": "amt_ah_pct_l730d",
-        "importance": 9.73665113474446
-      },
-      {
-        "feature": "orderline_pc2_qty_l365d",
-        "importance": 9.70216201565496
-      },
-      {
-        "feature": "amt_order_jp_l730d",
-        "importance": 9.56285450916322
-      },
-      {
-        "feature": "amt_nonreturn_l730d",
-        "importance": 9.56185702791193
-      },
-      {
-        "feature": "orders_qty_diy_l730d",
-        "importance": 9.34620610995363
-      },
-      {
-        "feature": "asp_l730d",
-        "importance": 9.31345857123997
-      },
-      {
-        "feature": "zip_region",
-        "importance": 9.26346800503083
-      },
-      {
-        "feature": "amt_he_pct_l730d",
-        "importance": 9.24979680402127
-      },
-      {
-        "feature": "avg_rr_pct_l730d",
-        "importance": 9.05285824231505
-      },
-      {
-        "feature": "avg_rr_pct_lt",
-        "importance": 8.76787789725283
-      },
-      {
-        "feature": "amt_jp_pct_l730d",
-        "importance": 8.6525249864179
-      },
-      {
-        "feature": "relation_duration",
-        "importance": 8.63540310546177
-      },
-      {
-        "feature": "amt_order_he_l730d",
-        "importance": 8.58861260346402
-      },
-      {
-        "feature": "orders_amt_jewelry_l730d",
-        "importance": 8.50529418030569
-      },
-      {
-        "feature": "avg_margin_aa_pct_l730d",
-        "importance": 8.49685876139364
-      },
-      {
-        "feature": "amt_order_hh_l730d",
-        "importance": 8.33212740357509
-      },
-      {
-        "feature": "avg_margin_pct_l365d",
-        "importance": 8.26436101129422
-      },
-      {
-        "feature": "qty_order_aw_l730d",
-        "importance": 8.08059434966664
-      },
-      {
-        "feature": "amt_order_hm_l730d",
-        "importance": 8.0510728072538
-      },
-      {
-        "feature": "web_inter_al_flag",
-        "importance": 7.88078607523863
-      },
-      {
-        "feature": "orders_amt_cleaning_l730d",
-        "importance": 7.53449634002584
-      },
-      {
-        "feature": "amt_aw_pct_l730d",
-        "importance": 7.45878419583372
-      },
-      {
-        "feature": "orders_amt_diy_l730d",
-        "importance": 7.35950021941217
-      },
-      {
-        "feature": "avg_margin_hh_pct_l730d",
-        "importance": 7.27685870767829
-      },
-      {
-        "feature": "qty_mg_pct_l730d",
-        "importance": 7.18777630415562
-      },
-      {
-        "feature": "avg_margin_pct_l730d",
-        "importance": 7.12270412991551
-      },
-      {
-        "feature": "orders_amt_beauty_l730d",
-        "importance": 7.0760447351421
-      },
-      {
-        "feature": "avg_rr_jy_pct_l730d",
-        "importance": 6.9828920126403
-      },
-      {
-        "feature": "qty_order_hm_l730d",
-        "importance": 6.97759643295329
-      },
-      {
-        "feature": "qty_hi_pct_l730d",
-        "importance": 6.82155458937064
-      },
-      {
-        "feature": "amt_hm_pct_l730d",
-        "importance": 6.44085824580304
-      },
-      {
-        "feature": "qty_aw_pct_l730d",
-        "importance": 6.41885674086773
-      },
-      {
-        "feature": "amt_order_ht_l730d",
-        "importance": 6.40808029992559
-      },
-      {
-        "feature": "orders_qty_cleaning_l730d",
-        "importance": 6.40808029992559
-      },
-      {
-        "feature": "qty_order_ht_l730d",
-        "importance": 6.40808029992559
-      },
-      {
-        "feature": "amt_hg_pct_l730d",
-        "importance": 6.34093789363667
-      },
-      {
-        "feature": "qty_jp_pct_l730d",
-        "importance": 6.19716784356076
-      },
-      {
-        "feature": "qty_order_jp_l730d",
-        "importance": 6.19716784356076
-      },
-      {
-        "feature": "amt_return_lt",
-        "importance": 6.19533669695913
-      },
-      {
-        "feature": "qty_ship_lt",
-        "importance": 6.16698171258982
-      },
-      {
-        "feature": "qty_order_mg_l730d",
-        "importance": 6.1476909474257
-      },
-      {
-        "feature": "qty_order_hi_l730d",
-        "importance": 6.12774110829954
-      },
-      {
-        "feature": "orderline_pc1_qty_l365d",
-        "importance": 6.11079891981026
-      },
-      {
-        "feature": "qty_hh_pct_l730d",
-        "importance": 5.95172882672883
-      },
-      {
-        "feature": "top_division",
-        "importance": 5.92775025125212
-      },
-      {
-        "feature": "qty_tag_l730d",
-        "importance": 5.90251284978762
-      },
-      {
-        "feature": "amt_order_ph_l730d",
-        "importance": 5.75993193362894
-      },
-      {
-        "feature": "amt_tag_pct_l730d",
-        "importance": 5.74734611751434
-      },
-      {
-        "feature": "qty_hg_pct_l730d",
-        "importance": 5.52083885422437
-      },
-      {
-        "feature": "amt_sa_pct_l730d",
-        "importance": 5.51741365059588
-      },
-      {
-        "feature": "age",
-        "importance": 5.51337876708447
-      },
-      {
-        "feature": "amt_ar_pct_l730d",
-        "importance": 5.48562632796708
-      },
-      {
-        "feature": "rating_qty_l365d",
-        "importance": 5.34524565394783
-      },
-      {
-        "feature": "qty_jg_pct_l730d",
-        "importance": 5.17397827457139
-      },
-      {
-        "feature": "amt_mg_pct_l730d",
-        "importance": 4.99004959762865
-      },
-      {
-        "feature": "avg_margin_pct_lt",
-        "importance": 4.88772534737129
-      },
-      {
-        "feature": "orders_qty_jewelry_l730d",
-        "importance": 4.88111692803773
-      },
-      {
-        "feature": "amt_qpay_pct_l730d",
-        "importance": 4.87553923904585
-      },
-      {
-        "feature": "avg_margin_hf_pct_l730d",
-        "importance": 4.8551724137931
-      },
-      {
-        "feature": "web_inter_beauty_flag",
-        "importance": 4.84971450783916
-      },
-      {
-        "feature": "onl_amt_return_lt",
-        "importance": 4.8017094017094
-      },
-      {
-        "feature": "qty_order_ar_l730d",
-        "importance": 4.79355223938096
-      },
-      {
-        "feature": "age_group",
-        "importance": 4.79312715707371
-      },
-      {
-        "feature": "avg_rr_al_pct_l730d",
-        "importance": 4.75482949189649
-      },
-      {
-        "feature": "amt_jg_pct_l730d",
-        "importance": 4.70038336372362
-      },
-      {
-        "feature": "amt_hh_pct_l730d",
-        "importance": 4.57241832241833
-      },
-      {
-        "feature": "orders_qty_wohnen_l730d",
-        "importance": 4.53771845438512
-      },
-      {
-        "feature": "amt_ps_pct_l730d",
-        "importance": 4.47092630155511
-      },
-      {
-        "feature": "qty_ps_pct_l730d",
-        "importance": 4.47092630155511
-      },
-      {
-        "feature": "onl_qty_ship_l730d",
-        "importance": 4.44082843198422
-      },
-      {
-        "feature": "qty_he_pct_l730d",
-        "importance": 4.42326204987822
-      },
-      {
-        "feature": "amt_order_ar_l730d",
-        "importance": 4.38120365964926
-      },
-      {
-        "feature": "qty_hv_pct_l730d",
-        "importance": 4.25976634035097
-      },
-      {
-        "feature": "web_inter_ah_flag",
-        "importance": 4.24350019435926
-      },
-      {
-        "feature": "web_qty_sessions_l3m",
-        "importance": 4.24350019435926
-      },
-      {
-        "feature": "onl_amt_order_l730d",
-        "importance": 4.15698251176786
-      },
-      {
-        "feature": "amt_pn_pct_l730d",
-        "importance": 4.1205569543058
-      },
-      {
-        "feature": "amt_order_mg_l730d",
-        "importance": 4.10760559069578
-      },
-      {
-        "feature": "insider_flag",
-        "importance": 4.10760559069578
-      },
-      {
-        "feature": "amt_order_ps_l730d",
-        "importance": 4.09834910975885
-      },
-      {
-        "feature": "qty_order_ps_l730d",
-        "importance": 4.09834910975885
-      },
-      {
-        "feature": "qty_aa_pct_l730d",
-        "importance": 4.04426944064504
-      },
-      {
-        "feature": "orders_qty_artscr_l730d",
-        "importance": 3.87304677223752
-      },
-      {
-        "feature": "rate_top_dunning_level",
-        "importance": 3.82385572142122
-      },
-      {
-        "feature": "qty_ar_pct_l730d",
-        "importance": 3.71113721758526
-      },
-      {
-        "feature": "avg_rr_jg_pct_l730d",
-        "importance": 3.63850050658561
-      },
-      {
-        "feature": "onl_amt_order_lt",
-        "importance": 3.63186739560881
-      },
-      {
-        "feature": "qty_ship_l365d",
-        "importance": 3.59994767137624
-      },
-      {
-        "feature": "amt_q3_pct_l730d",
-        "importance": 3.57355741772776
-      },
-      {
-        "feature": "onl_avg_order_amt_lt",
-        "importance": 3.54332782933819
-      },
-      {
-        "feature": "orders_amt_electr_l730d",
-        "importance": 3.4963126904955
-      },
-      {
-        "feature": "avg_margin_ah_pct_l730d",
-        "importance": 3.33333333333333
-      },
-      {
-        "feature": "amt_order_jh_l730d",
-        "importance": 3.31832316762603
-      },
-      {
-        "feature": "avg_rr_hh_pct_l730d",
-        "importance": 3.09393122636968
-      },
-      {
-        "feature": "qty_order_pn_l730d",
-        "importance": 3.0926446447964
-      },
-      {
-        "feature": "qty_order_lt",
-        "importance": 3.02106849648909
-      },
-      {
-        "feature": "avg_margin_jy_pct_l730d",
-        "importance": 2.99266800541726
-      },
-      {
-        "feature": "orders_qty_beauty_l730d",
-        "importance": 2.98061753437007
-      },
-      {
-        "feature": "qty_order_he_l730d",
-        "importance": 2.95841843041927
-      },
-      {
-        "feature": "avg_rr_ar_pct_l730d",
-        "importance": 2.90725958467895
-      },
-      {
-        "feature": "amt_qvcplus_pct_l730d",
-        "importance": 2.90178571428571
-      },
-      {
-        "feature": "avg_margin_am_pct_l730d",
-        "importance": 2.87234042553192
-      },
-      {
-        "feature": "avg_margin_hm_pct_l730d",
-        "importance": 2.87234042553192
-      },
-      {
-        "feature": "qty_order_hh_l730d",
-        "importance": 2.86223344556678
-      },
-      {
-        "feature": "avg_rr_hv_pct_l730d",
-        "importance": 2.69489895938575
-      },
-      {
-        "feature": "amt_order_pf_l730d",
-        "importance": 2.68253968253968
-      },
-      {
-        "feature": "onl_avg_margin_pct_lt",
-        "importance": 2.667616334283
-      },
-      {
-        "feature": "amt_order_hg_l730d",
-        "importance": 2.66037865748709
-      },
-      {
-        "feature": "qty_order_jh_l730d",
-        "importance": 2.66037865748709
-      },
-      {
-        "feature": "onl_order_qty_l730d",
-        "importance": 2.65378969831489
-      },
-      {
-        "feature": "amt_hb_pct_l730d",
-        "importance": 2.61692451305909
-      },
-      {
-        "feature": "avg_margin_jh_pct_l730d",
-        "importance": 2.6123056580602
-      },
-      {
-        "feature": "first_order_channel",
-        "importance": 2.60543462138954
-      },
-      {
-        "feature": "orders_qty_electr_l730d",
-        "importance": 2.55499773536209
-      },
-      {
-        "feature": "contact_ch_group",
-        "importance": 2.52980036297641
-      },
-      {
-        "feature": "contact_ch_type",
-        "importance": 2.52980036297641
-      },
-      {
-        "feature": "amt_ph_pct_l730d",
-        "importance": 2.50150520537973
-      },
-      {
-        "feature": "qty_order_ph_l730d",
-        "importance": 2.50150520537973
-      },
-      {
-        "feature": "amt_order_hv_l730d",
-        "importance": 2.32859395752165
-      },
-      {
-        "feature": "qty_order_hv_l730d",
-        "importance": 2.32179480564395
-      },
-      {
-        "feature": "amt_jy_pct_l730d",
-        "importance": 2.29962001233233
-      },
-      {
-        "feature": "qty_order_pf_l730d",
-        "importance": 2.29931972789116
-      },
-      {
-        "feature": "qty_pf_pct_l730d",
-        "importance": 2.29931972789116
-      },
-      {
-        "feature": "amt_order_hb_l730d",
-        "importance": 2.28980894892671
-      },
-      {
-        "feature": "qty_ho_pct_l730d",
-        "importance": 2.28937728937729
-      },
-      {
-        "feature": "avg_margin_hv_pct_l730d",
-        "importance": 2.22634508348794
-      },
-      {
-        "feature": "qty_order_hk_l730d",
-        "importance": 2.16964285714286
-      },
-      {
-        "feature": "qty_ph_pct_l730d",
-        "importance": 2.08458767114977
-      },
-      {
-        "feature": "amt_ab_pct_l730d",
-        "importance": 2.07987405914953
-      },
-      {
-        "feature": "amt_so_pct_l730d",
-        "importance": 2.0403750689465
-      },
-      {
-        "feature": "avg_rr_pc_pct_l730d",
-        "importance": 2.0
-      },
-      {
-        "feature": "avg_margin_jf_pct_l730d",
-        "importance": 1.99511200361151
-      },
-      {
-        "feature": "onl_amt_nonreturn_l730d",
-        "importance": 1.99511200361151
-      },
-      {
-        "feature": "amt_order_electr_l365d",
-        "importance": 1.99264310931746
-      },
-      {
-        "feature": "qty_order_electr_l365d",
-        "importance": 1.99264310931746
-      },
-      {
-        "feature": "avg_rr_hc_pct_l730d",
-        "importance": 1.98863636363636
-      },
-      {
-        "feature": "qty_order_hometext_l365d",
-        "importance": 1.94232422467746
-      },
-      {
-        "feature": "amt_order_jg_l730d",
-        "importance": 1.93545197329796
-      },
-      {
-        "feature": "amt_order_ad_l730d",
-        "importance": 1.92659032007097
-      },
-      {
-        "feature": "avg_cancel_pct_l365d",
-        "importance": 1.92659032007097
-      },
-      {
-        "feature": "amt_pf_pct_l730d",
-        "importance": 1.91609977324263
-      },
-      {
-        "feature": "qpay_order_qty_l730d",
-        "importance": 1.85743239849745
-      },
-      {
-        "feature": "qty_pn_pct_l730d",
-        "importance": 1.85606060606061
-      },
-      {
-        "feature": "avg_margin_ha_pct_l730d",
-        "importance": 1.8
-      },
-      {
-        "feature": "amt_order_jk_l730d",
-        "importance": 1.78050124302896
-      },
-      {
-        "feature": "avg_rr_hf_pct_l730d",
-        "importance": 1.78050124302896
-      },
-      {
-        "feature": "amt_order_wohnen_l365d",
-        "importance": 1.71405088138509
-      },
-      {
-        "feature": "qty_hc_pct_l730d",
-        "importance": 1.70322856858892
-      },
-      {
-        "feature": "orders_qty_kitchen_l730d",
-        "importance": 1.67548500881834
-      },
-      {
-        "feature": "avg_margin_al_pct_l730d",
-        "importance": 1.6253778706353
-      },
-      {
-        "feature": "qty_hn_pct_l730d",
-        "importance": 1.59931718447802
-      },
-      {
-        "feature": "amt_order_pn_l730d",
-        "importance": 1.59075659132939
-      },
-      {
-        "feature": "amt_hv_pct_l730d",
-        "importance": 1.44
-      },
-      {
-        "feature": "amt_hk_pct_l730d",
-        "importance": 1.41935714049077
-      },
-      {
-        "feature": "qty_order_hc_l730d",
-        "importance": 1.41935714049077
-      },
-      {
-        "feature": "orders_amt_artscr_l730d",
-        "importance": 1.40434710469554
-      },
-      {
-        "feature": "qty_jw_pct_l730d",
-        "importance": 1.36025004596433
-      },
-      {
-        "feature": "qty_ab_pct_l730d",
-        "importance": 1.33333333333333
-      },
-      {
-        "feature": "amt_order_cleaning_l365d",
-        "importance": 1.32413793103448
-      },
-      {
-        "feature": "qty_order_cleaning_l365d",
-        "importance": 1.32413793103448
-      },
-      {
-        "feature": "perm_mailing_ind",
-        "importance": 1.28181347708895
-      },
-      {
-        "feature": "perm_telephone_ind",
-        "importance": 1.28181347708895
-      },
-      {
-        "feature": "qty_order_pc_l730d",
-        "importance": 1.26984126984127
-      },
-      {
-        "feature": "orders_qty_unused_l730d",
-        "importance": 1.22685307871653
-      },
-      {
-        "feature": "qty_order_hg_l730d",
-        "importance": 1.22685307871653
-      },
-      {
-        "feature": "amt_aa_pct_l730d",
-        "importance": 1.22420611246528
-      },
-      {
-        "feature": "amt_order_ho_l730d",
-        "importance": 1.18845052782251
-      },
-      {
-        "feature": "amt_order_jy_l730d",
-        "importance": 1.16408231710553
-      },
-      {
-        "feature": "amt_order_aj_l730d",
-        "importance": 1.15020080594196
-      },
-      {
-        "feature": "web_inter_wohnen_flag",
-        "importance": 1.12889605230302
-      },
-      {
-        "feature": "qty_order_jg_l730d",
-        "importance": 1.10597255617026
-      },
-      {
-        "feature": "amt_weekday_pct_l730d",
-        "importance": 1.10002175313027
-      },
-      {
-        "feature": "qty_je_pct_l730d",
-        "importance": 1.05759936157295
-      },
-      {
-        "feature": "qty_order_aj_l730d",
-        "importance": 1.05231137564903
-      },
-      {
-        "feature": "amt_js_pct_l730d",
-        "importance": 1.04882352378153
-      },
-      {
-        "feature": "amt_ha_pct_l730d",
-        "importance": 0.964251061325814
-      },
-      {
-        "feature": "qty_jf_pct_l730d",
-        "importance": 0.952430986722704
-      },
-      {
-        "feature": "avg_rr_js_pct_l730d",
-        "importance": 0.933175907270247
-      },
-      {
-        "feature": "amt_aj_pct_l730d",
-        "importance": 0.905477230209628
-      },
-      {
-        "feature": "amt_order_hn_l730d",
-        "importance": 0.846788416680889
-      },
-      {
-        "feature": "avg_margin_ht_pct_l730d",
-        "importance": 0.846569062407572
-      },
-      {
-        "feature": "qty_aj_pct_l730d",
-        "importance": 0.844296336276545
-      },
-      {
-        "feature": "orderline_qty_l365d",
-        "importance": 0.825016314847702
-      },
-      {
-        "feature": "amt_je_pct_l730d",
-        "importance": 0.808752452967549
-      },
-      {
-        "feature": "avg_margin_jg_pct_l730d",
-        "importance": 0.758020938872003
-      },
-      {
-        "feature": "avg_rr_af_pct_l730d",
-        "importance": 0.707171250327314
-      },
-      {
-        "feature": "qty_order_wohnen_l365d",
-        "importance": 0.674657619608104
-      },
-      {
-        "feature": "amt_order_je_l730d",
-        "importance": 0.649466937224209
-      },
-      {
-        "feature": "web_inter_ar_flag",
-        "importance": 0.632912784048091
-      },
-      {
-        "feature": "avg_margin_hd_pct_l730d",
-        "importance": 0.606416751097603
-      },
-      {
-        "feature": "avg_margin_pf_pct_l730d",
-        "importance": 0.606416751097603
-      },
-      {
-        "feature": "avg_rr_jh_pct_l730d",
-        "importance": 0.606416751097603
-      },
-      {
-        "feature": "amt_order_jf_l730d",
-        "importance": 0.552986278085125
-      },
-      {
-        "feature": "avg_margin_hk_pct_l730d",
-        "importance": 0.523383759346201
-      },
-      {
-        "feature": "amt_pc_pct_l730d",
-        "importance": 0.492248331479428
-      },
-      {
-        "feature": "amt_order_hometext_l365d",
-        "importance": 0.423394208340445
-      },
-      {
-        "feature": "avg_rr_aj_pct_l730d",
-        "importance": 0.379321542385114
-      },
-      {
-        "feature": "amt_order_aa_l730d",
-        "importance": 0.349773174990082
-      },
-      {
-        "feature": "amt_order_unused_l365d",
-        "importance": 0.33732880980405
-      },
-      {
-        "feature": "qty_order_ad_l730d",
-        "importance": 0.330376827238648
-      },
-      {
-        "feature": "qty_js_pct_l730d",
-        "importance": 0.31956013825217
-      },
-      {
-        "feature": "qty_order_unused_l365d",
-        "importance": 0.281107341503377
-      },
-      {
-        "feature": "qty_order_aa_l730d",
-        "importance": 0.262329881242562
-      },
-      {
-        "feature": "qty_order_diy_l365d",
-        "importance": 0.112442936601352
-      }
-    ],
-    "timestamp": "2014-05-03T08:28:31-04:00"
-  },
-  "performance_drift": {
+  "featureImportance": [
+    {
+      "feature": "qty_order_af_l730d",
+      "importance": 1042.45720062585
+    },
+    {
+      "feature": "amt_order_af_l730d",
+      "importance": 985.630980561018
+    },
+    {
+      "feature": "qty_af_pct_l730d",
+      "importance": 763.051851463073
+    },
+    {
+      "feature": "amt_af_pct_l730d",
+      "importance": 762.554163024924
+    },
+    {
+      "feature": "amt_order_al_l730d",
+      "importance": 717.214896358207
+    },
+    {
+      "feature": "qty_order_al_l730d",
+      "importance": 704.86714329407
+    },
+    {
+      "feature": "prod_first_order_category",
+      "importance": 156.37412370758
+    },
+    {
+      "feature": "qty_orderlines_l730d",
+      "importance": 151.733159975605
+    },
+    {
+      "feature": "qty_order_l730d",
+      "importance": 143.067193340423
+    },
+    {
+      "feature": "qty_ship_l730d",
+      "importance": 132.305375764258
+    },
+    {
+      "feature": "offl_order_qty_l730d",
+      "importance": 127.928595375578
+    },
+    {
+      "feature": "amt_order_l730d",
+      "importance": 118.913424831325
+    },
+    {
+      "feature": "qty_orderline_l730d",
+      "importance": 112.168910390591
+    },
+    {
+      "feature": "qty_days_last_order",
+      "importance": 87.5670120361693
+    },
+    {
+      "feature": "qty_days_last_offl_order",
+      "importance": 62.5783970122091
+    },
+    {
+      "feature": "amt_order_hf_l730d",
+      "importance": 61.6555832326837
+    },
+    {
+      "feature": "bundesland",
+      "importance": 56.569463680891
+    },
+    {
+      "feature": "amt_q2_pct_l730d",
+      "importance": 44.8736104906672
+    },
+    {
+      "feature": "orders_amt_hometext_l730d",
+      "importance": 42.4712496062619
+    },
+    {
+      "feature": "qty_order_hf_l730d",
+      "importance": 42.4306357250181
+    },
+    {
+      "feature": "amt_al_pct_l730d",
+      "importance": 41.2652572484802
+    },
+    {
+      "feature": "amt_hf_pct_l730d",
+      "importance": 38.9382928327263
+    },
+    {
+      "feature": "qty_hf_pct_l730d",
+      "importance": 38.9100252786489
+    },
+    {
+      "feature": "qty_al_pct_l730d",
+      "importance": 36.763037322467
+    },
+    {
+      "feature": "orders_qty_hometext_l730d",
+      "importance": 34.5653641840705
+    },
+    {
+      "feature": "prod_first_order_top_division",
+      "importance": 30.1298525605127
+    },
+    {
+      "feature": "status_desc",
+      "importance": 24.1853750913517
+    },
+    {
+      "feature": "asp_l365d",
+      "importance": 20.6433629291522
+    },
+    {
+      "feature": "rate_limit",
+      "importance": 19.4596994196485
+    },
+    {
+      "feature": "amt_order_ah_l730d",
+      "importance": 17.2519230442279
+    },
+    {
+      "feature": "amt_q4_pct_l730d",
+      "importance": 16.0727889879495
+    },
+    {
+      "feature": "amt_hi_pct_l730d",
+      "importance": 15.1143685847068
+    },
+    {
+      "feature": "amt_qvc_pct_l730d",
+      "importance": 14.3697004256876
+    },
+    {
+      "feature": "amt_offair_pct_l730d",
+      "importance": 14.3695307684527
+    },
+    {
+      "feature": "qty_order_ah_l730d",
+      "importance": 14.279359739535
+    },
+    {
+      "feature": "amt_ht_pct_l730d",
+      "importance": 11.5968540191411
+    },
+    {
+      "feature": "avg_order_amt_lt",
+      "importance": 11.2129177606457
+    },
+    {
+      "feature": "qty_ah_pct_l730d",
+      "importance": 11.0969011807088
+    },
+    {
+      "feature": "amt_order_aw_l730d",
+      "importance": 11.0205326355387
+    },
+    {
+      "feature": "amt_order_hi_l730d",
+      "importance": 10.9649338714229
+    }
+  ],
+  "performanceDrift": {
     "data": {
-      "average_squared_error": 0.14695342208795,
-      "area_under_the_curve": 0.818982412390343,
-      "true_positive": 1949.0,
-      "true_negative": 1694.0,
-      "false_positive": 536.0,
-      "false_negative": 270.0,
-      "true_positive_rate": 0.438075972128568,
-      "true_negative_rate": 0.380759721285682,
-      "false_positive_rate": 0.120476511575635,
-      "false_negative_rate": 0.0606877950101146,
+      "averageSquaredError": 0.14695342208795,
+      "areaUnderTheCurve": 0.818982412390343,
+      "truePositive": 1949.0,
+      "trueNegative": 1694.0,
+      "falsePositive": 536.0,
+      "falseNegative": 270.0,
+      "truePositiveRate": 0.438075972128568,
+      "trueNegativeRate": 0.380759721285682,
+      "falsePositiveRate": 0.120476511575635,
+      "falseNegativeRate": 0.0606877950101146,
       "sensitivity": 0.878323569175304,
       "specificity": 0.759641255605381,
       "accuracy": 0.81883569341425,
       "precision": 0.78430583501006,
-      "negative_predictive_value": 0.862525458248472,
-      "misclassification_rate": 0.18116430658575,
+      "negativePredictiveValue": 0.862525458248472,
+      "misclassificationRate": 0.18116430658575,
       "positive": 3643.0,
       "negative": 806.0,
       "observations": 4449.0,
-      "cumulative_captured_response_top_10": 0.161333934204597,
-      "cumulative_captured_response_top_25": 0.387561964849031,
-      "cumulative_lift_top_10": 1.61297679387921,
-      "cumulative_lift_top_25": 1.55059638634293,
-      "cumulative_response_top_10": 0.804494382022472,
-      "cumulative_response_top_25": 0.773381294964029,
-      "f_score": 0.828656462585034,
+      "cumulativeCapturedResponseTop10": 0.161333934204597,
+      "cumulativeCapturedResponseTop25": 0.387561964849031,
+      "cumulativeLiftTop10": 1.61297679387921,
+      "cumulativeLiftTop25": 1.55059638634293,
+      "cumulativeResponseTop10": 0.804494382022472,
+      "cumulativeResponseTop25": 0.773381294964029,
+      "fScore": 0.828656462585034,
       "informedness": 0.637964824780685,
       "markedness": 0.646831293258533,
-      "root_average_squared_error": 0.383345043124272,
+      "rootAverageSquaredError": 0.383345043124272,
       "sse": 0.0,
-      "maximum_absolute_error": 0.878247958426132,
-      "gini_coefficient": 0.637964824780686
+      "maximumAbsoluteError": 0.878247958426132,
+      "giniCoefficient": 0.637964824780686
     },
-    "timestamp": "2014-05-03T08:28:31-04:00"
+    "timestamp": "2014-05-03T10:09:33-04:00"
   },
   "tree": {
     "data": {
@@ -1300,6 +474,6 @@
         ]
       }
     },
-    "timestamp": "2014-05-03T12:29:12-04:00"
+    "timestamp": "2014-05-03T14:10:08-04:00"
   }
-}, "evaluationReport": {}}
+}, "evaluationReport": null}

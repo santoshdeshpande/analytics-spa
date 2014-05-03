@@ -28,7 +28,7 @@ define([
         var yScale = d3.scale.linear().range([svg.height(), 0]);
 
         scope.$watch('chart', function (newChart) {
-          scope.render(newChart.data);
+          if (newChart != null) scope.render(newChart.data);
         }, true);
 
         scope.render = function (data) {

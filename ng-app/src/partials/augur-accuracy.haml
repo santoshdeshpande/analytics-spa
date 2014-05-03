@@ -11,9 +11,9 @@
       %li.tile
         .tile-body
           %a{ ui: { sref: 'dashboard' } }
-            %h6.title Accumulated Lift
+            %h6.title Cumulative Lift
             .chart.line-chart
-              %d3-line-chart{ chart: 'charts.accumulatedLift' }
+              %d3-line-chart{ chart: 'charts.cumulativeLift' }
 
       %li.tile
         .tile-body
@@ -25,9 +25,9 @@
       %li.tile
         .tile-body
           %a{ href: '' }
-            %h6.title Accumulated Response
+            %h6.title Cumulative Response
             .chart.line-chart
-              %d3-line-chart{ chart: 'charts.accumulatedResponse' }
+              %d3-line-chart{ chart: 'charts.cumulativeResponse' }
 
       %li.tile
         .tile-body
@@ -39,9 +39,9 @@
       %li.tile
         .tile-body
           %a{ href: '' }
-            %h6.title Accumulated Captured Response
+            %h6.title Cumulative Captured Response
             .chart.line-chart
-              %d3-line-chart{ chart: 'charts.accumulatedCapturedResponse' }
+              %d3-line-chart{ chart: 'charts.cumulativeCapturedResponse' }
 
       %li.tile
         .tile-body
@@ -62,4 +62,4 @@
           %a{ href: '' }
             %h6.title Distribution of Predicted Values
             .chart.bar-chart
-              %d3-bar-chart{ chart: 'charts.distributionPredictedValues' }
+              %d3-bar-chart{ chart: 'charts.predictedValuesDistribution' }

@@ -26,14 +26,15 @@ define([
       link: function (scope, ele, attrs) {
         var renderTimeout;
 
+
         var dimensions = {
-          margins: { top: 10, right: 10, bottom: 10, left: 35 }
+          margins: { top: 10, right: 20, bottom: 10, left: 45 }
         };
 
         var graph = new Chart(ele[0], dimensions);
 
         scope.$watch('chart', function (newData) {
-          scope.render(newData.data, newData.baseline);
+          if (newData != null) scope.render(newData.data, newData.baseline);
         }, true);
 
         scope.render = function (data, baseline) {
@@ -78,12 +79,6 @@ define([
               yTicks.push(d3.mean(graph.yScale.ticks()));
             }
 
-            // create left yAxis
-            var yAxisLeft = d3.svg.axis().scale(graph.yScale).orient('left').tickValues(yTicks);
-            // Add the y-axis to the left
-            graph.append('g')
-              .attr('class', 'y axis')
-              .call(yAxisLeft);
 
             // create a line function that can convert data[] into x and y points
             var line = d3.svg.line()
@@ -126,11 +121,9 @@ define([
               }
             });
 
-            // add actual line at the end in order to overlap all others
+            // add actual line
             var path = graph.append('path').attr('d', line(data));
-
             var totalLength = path.node().getTotalLength();
-
             path
               .attr("stroke-dasharray", totalLength + " " + totalLength)
               .attr("stroke-dashoffset", totalLength)
@@ -139,6 +132,13 @@ define([
               .ease("linear")
               .attr("stroke-dashoffset", 0);
 
+            // create left yAxis
+            var yAxisLeft = d3.svg.axis().scale(graph.yScale).orient('left').tickValues(yTicks);
+            // Add the y-axis to the left
+            graph.append('g')
+              .attr('class', 'y axis')
+              .call(yAxisLeft)
+              .attr('transform', 'translate(-10,0)');
           }, 200); // renderTimeout
         };
       }

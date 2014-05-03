@@ -27,7 +27,7 @@ define([
         var yAxis = d3.svg.axis().scale(y).orient('left');
 
         scope.$watch('chart', function (newChart) {
-          scope.render(newChart.data);
+          if (newChart != null) scope.render(newChart.data);
         }, true);
 
         scope.render = function (data) {
