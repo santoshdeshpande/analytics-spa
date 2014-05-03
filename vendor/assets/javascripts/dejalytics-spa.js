@@ -39517,30 +39517,30 @@ define('constants',[], function () {
 
   return {
     KEY_PERFORMANCE_INDICATORS: [
-      {"key": "average_squared_error", "label": "Average Squared Error", "min": 0, "max": 1, "comparator": "gt"},
-      {"key": "area_under_the_curve", "label": "Area Under the Curve", "min": 0, "max": 1, "comparator": "lt"},
-      {"key": "true_positive_rate", "label": "True Positive Rate", "min": 0, "max": 1, "comparator": "lt"},
-      {"key": "true_negative_rate", "label": "True Negative Rate", "min": 0, "max": 1, "comparator": "lt"},
-      {"key": "false_positive_rate", "label": "False Positive Rate", "min": 0, "max": 1, "comparator": "gt"},
-      {"key": "false_negative_rate", "label": "False Negative Rate", "min": 0, "max": 1, "comparator": "gt"},
-      {"key": "sensitivity", "label": "Sensitivity", "min": 0, "max": 1, "comparator": "lt"},
-      {"key": "specificity", "label": "Specificity", "min": 0, "max": 1, "comparator": "lt"},
-      {"key": "accuracy", "label": "Accuracy", "min": 0, "max": 1, "comparator": "lt"},
-      {"key": "precision", "label": "Precision", "min": 0, "max": 1, "comparator": "lt"},
-      {"key": "negative_predictive_value", "label": "Negative Predictive Value", "min": 0, "max": 1, "comparator": "lt"},
-      {"key": "misclassification_rate", "label": "Misclassification Rate", "min": 0, "max": 1, "comparator": "gt"},
-      {"key": "cumulative_captured_response_top_10", "label": "Cumulative Captured Response Top 10%", "min": 0, "max": 1, "comparator": "lt"},
-      {"key": "cumulative_captured_response_top_25", "label": "Cumulative Captured Response Top 25%", "min": 0, "max": 1, "comparator": "lt"},
+      {"key": "average_squared_error", "label": "Average Squared Error", "min": 0.0001, "max": 1, "comparator": "gt"},
+      {"key": "area_under_the_curve", "label": "Area Under the Curve", "min": 0.0001, "max": 1, "comparator": "lt"},
+      {"key": "true_positive_rate", "label": "True Positive Rate", "min": 0.0001, "max": 1, "comparator": "lt"},
+      {"key": "true_negative_rate", "label": "True Negative Rate", "min": 0.0001, "max": 1, "comparator": "lt"},
+      {"key": "false_positive_rate", "label": "False Positive Rate", "min": 0.0001, "max": 1, "comparator": "gt"},
+      {"key": "false_negative_rate", "label": "False Negative Rate", "min": 0.0001, "max": 1, "comparator": "gt"},
+      {"key": "sensitivity", "label": "Sensitivity", "min": 0.0001, "max": 1, "comparator": "lt"},
+      {"key": "specificity", "label": "Specificity", "min": 0.0001, "max": 1, "comparator": "lt"},
+      {"key": "accuracy", "label": "Accuracy", "min": 0.0001, "max": 1, "comparator": "lt"},
+      {"key": "precision", "label": "Precision", "min": 0.0001, "max": 1, "comparator": "lt"},
+      {"key": "negative_predictive_value", "label": "Negative Predictive Value", "min": 0.0001, "max": 1, "comparator": "lt"},
+      {"key": "misclassification_rate", "label": "Misclassification Rate", "min": 0.0001, "max": 1, "comparator": "gt"},
+      {"key": "cumulative_captured_response_top_10", "label": "Cumulative Captured Response Top 10%", "min": 0.0001, "max": 1, "comparator": "lt"},
+      {"key": "cumulative_captured_response_top_25", "label": "Cumulative Captured Response Top 25%", "min": 0.0001, "max": 1, "comparator": "lt"},
       {"key": "cumulative_lift_top_10", "label": "Cumulative Lift Top 10%", "min": 1, "max": 100, "comparator": "lt"},
       {"key": "cumulative_lift_top_25", "label": "Cumulative Lift Top 25%", "min": 1, "max": 100, "comparator": "lt"},
-      {"key": "cumulative_response_top_10", "label": "Cumulative Response Top 10%", "min": 0, "max": 1, "comparator": "lt"},
-      {"key": "cumulative_response_top_25", "label": "Cumulative Response Top 25%", "min": 0, "max": 1, "comparator": "lt"},
-      {"key": "f_score", "label": "F-Score", "min": 0, "max": 1, "comparator": "lt"},
+      {"key": "cumulative_response_top_10", "label": "Cumulative Response Top 10%", "min": 0.0001, "max": 1, "comparator": "lt"},
+      {"key": "cumulative_response_top_25", "label": "Cumulative Response Top 25%", "min": 0.0001, "max": 1, "comparator": "lt"},
+      {"key": "f_score", "label": "F-Score", "min": 0.0001, "max": 1, "comparator": "lt"},
       {"key": "informedness", "label": "Informedness", "min": -1, "max": 1, "comparator": "lt"},
       {"key": "markedness", "label": "Markedness", "min": -1, "max": 1, "comparator": "lt"},
-      {"key": "root_average_squared_error", "label": "Root Average Squared Error", "min": 0, "max": 1, "comparator": "gt"},
-      {"key": "maximum_absolute_error", "label": "Maximum Absolute Error", "min": 0, "max": 1, "comparator": "gt"},
-      {"key": "gini_coefficient", "label": "Gini Coefficient", "min": 0, "max": 1, "comparator": "lt"}
+      {"key": "root_average_squared_error", "label": "Root Average Squared Error", "min": 0.0001, "max": 1, "comparator": "gt"},
+      {"key": "maximum_absolute_error", "label": "Maximum Absolute Error", "min": 0.0001, "max": 1, "comparator": "gt"},
+      {"key": "gini_coefficient", "label": "Gini Coefficient", "min": 0.0001, "max": 1, "comparator": "lt"}
     ],
     DAYS_IN_MONTH: [
       {"key": 1, "label": "1st"},
@@ -39592,8 +39592,8 @@ define('controllers/augur-new',[
     $scope.habitats = [];
     $scope.factTables = [];
 
-    $scope.unrecognizedPredictionTargetIds = [];
-    $scope.predictionTargetIdsValidated = false;
+    $scope.unrecognizedEventIds = [];
+    $scope.eventIdsValidated = false;
 
     $scope.step = 1;
 
@@ -39605,7 +39605,7 @@ define('controllers/augur-new',[
       name: '',
       habitat: '',
       factTable: {},
-      predictionTargetIds: '',
+      eventIds: '',
       learning: {
         kpi: { }
       },
@@ -39648,7 +39648,7 @@ define('controllers/augur-new',[
     };
 
     var validateStepTwo = function () {
-      $scope.augur.predictionTargetIds = '';
+      $scope.augur.eventIds = '';
       $scope.stepValid.three = false;
 
       if ($scope.factTables && ($scope.factTables.indexOf($scope.augur.factTable) > -1)) {
@@ -39662,7 +39662,7 @@ define('controllers/augur-new',[
     function resetAugurByNewHabitat(){
       $scope.augur.factTable = {};
       $scope.augur.factTableId = undefined;
-      $scope.augur.predictionTargetIds = '';
+      $scope.augur.eventIds = '';
 
       $scope.stepValid.two   = false;
       $scope.stepValid.three = false;
@@ -39685,9 +39685,9 @@ define('controllers/augur-new',[
     }, validateStepTwo);
 
     $scope.$watch(function(){
-      return $scope.augur.predictionTargetIds;
+      return $scope.augur.eventIds;
     }, function() {
-      $scope.predictionTargetIdsValidated = false;
+      $scope.eventIdsValidated = false;
       $scope.stepValid.three = false;
     });
 
@@ -39709,8 +39709,8 @@ define('controllers/augur-new',[
 
     // Maintain valid states for next button - end
 
-    $scope.validatePredictionTargetIds = function() {
-      $scope.$broadcast('validate:predictionTargetIds', $scope.augur.factTable.predictionTargetIds || [], function(isValid){
+    $scope.validateEventIds = function() {
+      $scope.$broadcast('validate:eventIds', $scope.augur.factTable.eventIds || [], function(isValid){
         $scope.stepValid.three = isValid;
       });
     };
@@ -39719,20 +39719,20 @@ define('controllers/augur-new',[
       augurNewAttributes = _.pick($scope.augur, ['name', 'factTableId']);
       augurNewAttributes.learningKpi = $scope.augur.learning.kpi.key;
       augurNewAttributes.learningThreshold = $scope.augur.learning.kpi.threshold;
-      augurNewAttributes.predictionTargets = $scope.augur.learning.predictionTargetIds;
+      augurNewAttributes.predictionTargets = $scope.augur.eventIds.split(',');
       augurNewAttributes.evaluationScheduleAttrs = $scope.augur.evaluation.schedule;
       augurNewAttributes.predictionScheduleAttrs = $scope.augur.prediction.schedule;
 
       Augur.save({ habitatId: $scope.augur.habitatId }, { augur: augurNewAttributes },
-        function (augur, responseHeaders) {
-          $state.transitionTo('augur.tree', { habitatId: $scope.augur.habitatId, augurId: augur.id });
+        function (augur) {
+          $state.transitionTo('augur.performance.learning', { habitatId: $scope.augur.habitatId, augurId: augur.id });
         }, function (httpResponse) {
-          alert("There was an error saving the new Augur - see console.log");
           console.log("There was an error saving the new Augur  ", httpResponse);
         });
     }
   }];
 });
+
 
 /* global
  define: false,
@@ -40026,7 +40026,7 @@ define('directives/augur-settings',[
  define: false,
  console: false
  */
-define('directives/available-prediction-target',[
+define('directives/available-event',[
   'lodash'
 ], function (_) {
   
@@ -40042,9 +40042,9 @@ define('directives/available-prediction-target',[
           return lodashTokens.uniq().compact();
         }
 
-        scope.$on('validate:predictionTargetIds', function (event, validIds, stepValidThreeCb) {
-          scope.predictionTargetIdsValidated = true;
-          scope.unrecognizedPredictionTargetIds = [];
+        scope.$on('validate:eventIds', function (event, validIds, stepValidThreeCb) {
+          scope.eventIdsValidated = true;
+          scope.unrecognizedEventIds = [];
           ngModel.$setValidity('present', true);
           ngModel.$setValidity('recognized', true);
           stepValidThreeCb(true);
@@ -40059,11 +40059,11 @@ define('directives/available-prediction-target',[
 
           scope.candidateIds.forEach(function (candidateId) {
             if (validIds.indexOf(candidateId) === -1) {
-              scope.unrecognizedPredictionTargetIds.push(candidateId);
+              scope.unrecognizedEventIds.push(candidateId);
             }
           });
 
-          if (_.isEmpty(scope.unrecognizedPredictionTargetIds)) {
+          if (_.isEmpty(scope.unrecognizedEventIds)) {
             return scope.candidateIds;
           } else {
             ngModel.$setValidity('recognized', false);
@@ -53223,7 +53223,7 @@ define("mm-foundation-tpls", ["angular"], function(){});
 define('directives',[
   'angular',
   'directives/augur-settings',
-  'directives/available-prediction-target',
+  'directives/available-event',
   'directives/d3-bar-chart',
   'directives/d3-decision-tree-chart',
   'directives/d3-influencer-chart',
@@ -53238,7 +53238,7 @@ define('directives',[
   'mm-foundation-tpls'
 ], function ( ng,
               AugurSettings,
-              AvailablePredictionTarget,
+              AvailableEvent,
               D3BarChart,
               D3DecisionTreeChart,
               D3InfluencerChart,
@@ -53254,7 +53254,7 @@ define('directives',[
 
   return ng.module('dejalyticsDirectives', ['mm.foundation'])
     .directive('augurSettings', AugurSettings)
-    .directive('availablePredictionTarget', AvailablePredictionTarget)
+    .directive('availableEvent', AvailableEvent)
     .directive('d3BarChart', D3BarChart)
     .directive('d3DecisionTreeChart', D3DecisionTreeChart)
     .directive('d3InfluencerChart', D3InfluencerChart)
@@ -56657,7 +56657,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('partials/augur-new.html',
-    '<div class=\'row action-bar\'><div class=\'columns small-12\'><ul class=\'left action-bar-breadcrumb\'><li><a href=\'#/\'><span class=\'glyphicon glyphicon-th\'></span></a></li><li><a href=\'#/\'><span class=\'glyphicon glyphicon-picture\'></span></a></li><li><span class=\'glyphicon glyphicon-eye-open\'></span> <span>Set up New Augur</span></li></ul></div></div><div class=\'row container new-augur-wizard\'><div class=\'small-12 columns\'><form name=\'form\' ng-submit=\'form.$valid &amp;&amp; submit()\' novalidate=\'\'><div class=\'row step step-1\' ng-class=\'(step==1) ? "active" : ""\'><div class=\'small-12 columns\'><a href=\'\' ng-click=\'step=1\'><h5 class=\'subheader title\'> Step 1 - Name and habitat</h5></a><div class=\'body\' ng-show=\'step==1\'><h6 class=\'subheader subtitle\'> Give your augur a unique name and select a habitat</h6><div class=\'row augur-name\'><div class=\'small-1 columns\'> <label class=\'right inline\' for=\'augur-name\'>Name</label></div><div class=\'small-3 columns end\' ng-class=\'{"error" : form.augurName.$error.uniqueAugurName}\'> <input id=\'augur-name\' name=\'augurName\' ng-model=\'augur.name\' placeholder=\'Please enter a name\' type=\'text\' unique-augur-name=\'\'> <small class=\'error\' ng-show=\'form.augurName.$error.uniqueAugurName\'>This name already exists</small></div></div><div class=\'row augur-habitat\'><div class=\'small-1 columns\'> <label class=\'right inline\' for=\'augur-habitat\'>Habitat</label></div><div class=\'small-3 columns end\'> <input id=\'augur-habitat\' name=\'augurHabitat\' ng-model=\'augur.habitat\' placeholder=\'Type to search\' type=\'text\' typeahead=\'habitat as habitat.name for habitat in habitats\'></div></div></div><div class=\'next-button\'><div class=\'next-button-wrap\'> <a class=\'tiny button radius\' href=\'\' ng-click=\'stepValid.one &amp;&amp; (step=2)\' ng-disabled=\'!stepValid.one || form.augurName.$error.uniqueAugurName\'>Next step ></a></div></div></div></div><div class=\'row step step-2\' ng-class=\'(step==2) ? "active" : ""\'><div class=\'small-12 columns\'><a ng-click=\'stepValid.one &amp;&amp; (step=2)\'><h5 class=\'subheader title\'> Step 2 - Select a fact table</h5></a><div class=\'body\' ng-show=\'step==2\'><h6 class=\'subheader subtitle\'>Select the facts table that contains the prediction target</h6><div class=\'row\'><div class=\'small-12 columns\'><ul class=\'small-block-grid-2 medium-block-grid-3 large-block-grid-4 fact-tables\'><li ng-repeat=\'factTable in factTables\'> <label for=\'{{ factTable.id }}\'><input id=\'{{ factTable.id }}\' ng-model=\'augur.factTable\' ng-value=\'factTable\' type=\'radio\'><div class=\'th\' ng-class=\'(augur.factTable==factTable) ? "selected" : ""\'><div class=\'fact-body\'><h8 class=\'subheader\'> {{factTable.name}}<span class=\'check-status glyphicon glyphicon-check\' ng-show=\'augur.factTable==factTable\'></span></h8><p> {{factTable.description}}</p></div></div></label></li></ul></div></div></div><div class=\'next-button\'><div class=\'next-button-wrap\'> <a class=\'tiny button radius\' href=\'\' ng-click=\'stepValid.two &amp;&amp; (step=3)\' ng-disabled=\'!stepValid.two\'>Next step ></a></div></div></div></div><div class=\'row step step-3\' ng-class=\'(step==3) ? "active" : ""\'><div class=\'small-12 columns\'><a href=\'\' ng-click=\'stepValid.two &amp;&amp; (step=3)\'><h5 class=\'subheader title\'> Step 3 - Define prediction target</h5></a><div class=\'body\' ng-show=\'step==3\'><h6 class=\'subheader subtitle\'> Enter a comma separated list of IDs to define the prediction target<div class=\'row prediction-targets\'><div class=\'small-9 columns input\'><textarea available-prediction-target=\'\' name=\'predictionTargetIds\' ng-model=\'augur.predictionTargetIds\' placeholder=\'Enter a comma separated list of IDs to define the prediction target\'></textarea></div><div class=\'small-3 columns\'><div class=\'validation\'><h5 class=\'subheader\'>Validation</h5><div class=\'validation-message-show-hide not-validated\' ng-show=\'!predictionTargetIdsValidated\'><h6>You need to validate your prediction target before continuing</h6></div><div class=\'validation-message-show-hide validated\' ng-show=\'predictionTargetIdsValidated\'><div class=\'valid validation-elements\' ng-show=\'stepValid.three\'> Your prediction target ids have been verified.<div class=\'verified validation-icon\'><span class=\'glyphicon glyphicon-ok-circle\'></span></div></div><div class=\'invalid validation-elements\' ng-show=\'!stepValid.three\'><div class=\'error\' ng-show=\'form.predictionTargetIds.$error.recognized\'> The following prediction target ids do not exist in the fact table: {{ unrecognizedPredictionTargetIds.join(\', \') }}</div><div class=\'error\' ng-show=\'form.predictionTargetIds.$error.present\'> You need to provide one or more prediction target ids</div><div class=\'error validation-icon\'><span class=\'glyphicon glyphicon-remove-circle\'></span></div></div></div><div class=\'validation-elements validate-action\'> <a class=\'button small radius\' ng-click=\'validatePredictionTargetIds()\' ng-show=\'!stepValid.three\'>Validate</a></div></div></div></div></h6></div><div class=\'next-button\'><div class=\'next-button-wrap\'> <a class=\'tiny button radius\' href=\'\' ng-click=\'stepValid.three &amp;&amp; (step=4)\' ng-disabled=\'!stepValid.three\'>Next step ></a></div></div></div></div><div class=\'row step step-4 step-last\' ng-class=\'(step==4) ? "active" : ""\'><div class=\'small-12 columns\'><a href=\'\' ng-click=\'stepValid.three &amp;&amp; (step=4)\'><h5 class=\'subheader title\'> Step 4 - Schedule and trigger settings</h5></a><div class=\'body\' ng-show=\'step==4\'><h6 class=\'subheader subtitle\'> Set prediction and evaluation schedule, set a key performance indicator and set the automatic learning threshold</h6><augur-settings augur=\'augur\'></augur-settings></div><div class=\'next-button\'><div class=\'next-button-wrap\'> <input class=\'tiny button radius\' ng-disabled=\'!stepValid.four || !form.$valid\' type=\'submit\' value=\'Activate Augur &gt;\'></div></div></div></div></form></div></div>');
+    '<div class=\'row action-bar\'><div class=\'columns small-12\'><ul class=\'left action-bar-breadcrumb\'><li> Set up New Augur</li></ul></div></div><div class=\'row container new-augur-wizard\'><div class=\'small-12 columns\'><form name=\'form\' ng-submit=\'form.$valid &amp;&amp; submit()\' novalidate=\'\'><div class=\'row step step-1\' ng-class=\'(step==1) ? "active" : ""\'><div class=\'small-12 columns\'><a href=\'\' ng-click=\'step=1\'><h5 class=\'subheader title\'> Step 1 - Name and habitat</h5></a><div class=\'body\' ng-show=\'step==1\'><h6 class=\'subheader subtitle\'> Give your augur a unique name and select a habitat</h6><div class=\'row augur-name\'><div class=\'small-1 columns\'> <label class=\'right inline\' for=\'augur-name\'>Name</label></div><div class=\'small-3 columns end\' ng-class=\'{"error" : form.augurName.$error.uniqueAugurName}\'> <input id=\'augur-name\' name=\'augurName\' ng-model=\'augur.name\' placeholder=\'Please enter a name\' type=\'text\' unique-augur-name=\'\'> <small class=\'error\' ng-show=\'form.augurName.$error.uniqueAugurName\'>This name already exists</small></div></div><div class=\'row augur-habitat\'><div class=\'small-1 columns\'> <label class=\'right inline\' for=\'augur-habitat\'>Habitat</label></div><div class=\'small-3 columns end\'> <input id=\'augur-habitat\' name=\'augurHabitat\' ng-model=\'augur.habitat\' placeholder=\'Type to search\' type=\'text\' typeahead=\'habitat as habitat.name for habitat in habitats\'></div></div></div><div class=\'next-button\'><div class=\'next-button-wrap\'> <a class=\'tiny button radius\' href=\'\' ng-click=\'stepValid.one &amp;&amp; (step=2)\' ng-disabled=\'!stepValid.one || form.augurName.$error.uniqueAugurName\'>Next step ></a></div></div></div></div><div class=\'row step step-2\' ng-class=\'(step==2) ? "active" : ""\'><div class=\'small-12 columns\'><a ng-click=\'stepValid.one &amp;&amp; (step=2)\'><h5 class=\'subheader title\'> Step 2 - Select a fact table</h5></a><div class=\'body\' ng-show=\'step==2\'><h6 class=\'subheader subtitle\'>Select the facts table that contains the prediction target</h6><div class=\'row\'><div class=\'small-12 columns\'><ul class=\'small-block-grid-2 medium-block-grid-3 large-block-grid-4 fact-tables\'><li ng-repeat=\'factTable in factTables\'> <label for=\'{{ factTable.id }}\'><input id=\'{{ factTable.id }}\' ng-model=\'augur.factTable\' ng-value=\'factTable\' type=\'radio\'><div class=\'th\' ng-class=\'(augur.factTable==factTable) ? "selected" : ""\'><div class=\'fact-body\'><h8 class=\'subheader\'> {{factTable.name}}<span class=\'check-status glyphicon glyphicon-check\' ng-show=\'augur.factTable==factTable\'></span></h8><p> {{factTable.description}}</p></div></div></label></li></ul></div></div></div><div class=\'next-button\'><div class=\'next-button-wrap\'> <a class=\'tiny button radius\' href=\'\' ng-click=\'stepValid.two &amp;&amp; (step=3)\' ng-disabled=\'!stepValid.two\'>Next step ></a></div></div></div></div><div class=\'row step step-3\' ng-class=\'(step==3) ? "active" : ""\'><div class=\'small-12 columns\'><a href=\'\' ng-click=\'stepValid.two &amp;&amp; (step=3)\'><h5 class=\'subheader title\'> Step 3 - Define prediction target</h5></a><div class=\'body\' ng-show=\'step==3\'><h6 class=\'subheader subtitle\'> Enter a comma separated list of IDs to define the prediction events<div class=\'row events\'><div class=\'small-9 columns input\'><textarea available-event=\'\' name=\'eventIds\' ng-model=\'augur.eventIds\' placeholder=\'Enter a comma separated list of IDs to define the prediction events\'></textarea></div><div class=\'small-3 columns\'><div class=\'validation\'><h5 class=\'subheader\'>Validation</h5><div class=\'validation-message-show-hide not-validated\' ng-show=\'!eventIdsValidated\'><h6>You need to validate your prediction target before continuing</h6></div><div class=\'validation-message-show-hide validated\' ng-show=\'eventIdsValidated\'><div class=\'valid validation-elements\' ng-show=\'stepValid.three\'> Your prediction target ids have been verified.<div class=\'verified validation-icon\'><span class=\'glyphicon glyphicon-ok-circle\'></span></div></div><div class=\'invalid validation-elements\' ng-show=\'!stepValid.three\'><div class=\'error\' ng-show=\'form.eventIds.$error.recognized\'> The following prediction target ids do not exist in the fact table: {{ unrecognizedEventIds.join(\', \') }}</div><div class=\'error\' ng-show=\'form.eventIds.$error.present\'> You need to provide one or more prediction target ids</div><div class=\'error validation-icon\'><span class=\'glyphicon glyphicon-remove-circle\'></span></div></div></div><div class=\'validation-elements validate-action\'> <a class=\'button small radius\' ng-click=\'validateEventIds()\' ng-show=\'!stepValid.three\'>Validate</a></div></div></div></div></h6></div><div class=\'next-button\'><div class=\'next-button-wrap\'> <a class=\'tiny button radius\' href=\'\' ng-click=\'stepValid.three &amp;&amp; (step=4)\' ng-disabled=\'!stepValid.three\'>Next step ></a></div></div></div></div><div class=\'row step step-4 step-last\' ng-class=\'(step==4) ? "active" : ""\'><div class=\'small-12 columns\'><a href=\'\' ng-click=\'stepValid.three &amp;&amp; (step=4)\'><h5 class=\'subheader title\'> Step 4 - Schedule and trigger settings</h5></a><div class=\'body\' ng-show=\'step==4\'><h6 class=\'subheader subtitle\'> Set prediction and evaluation schedule, set a key performance indicator and set the automatic learning threshold</h6><augur-settings augur=\'augur\'></augur-settings></div><div class=\'next-button\'><div class=\'next-button-wrap\'> <input class=\'tiny button radius\' ng-disabled=\'!stepValid.four || !form.$valid\' type=\'submit\' value=\'Activate Augur &gt;\'></div></div></div></div></form></div></div>');
 }]);
 })();
 

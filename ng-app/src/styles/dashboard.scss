@@ -13,9 +13,10 @@
         &.active label {
           @include radius(5px);
           padding: 3px;
-          color: #fff;
+          color: #333;
           &:hover {
-            color: #333;
+            color: #fff;
+            background: #333;
           }
         }
 

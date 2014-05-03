@@ -14,8 +14,8 @@ define([
     $scope.habitats = [];
     $scope.factTables = [];
 
-    $scope.unrecognizedPredictionTargetIds = [];
-    $scope.predictionTargetIdsValidated = false;
+    $scope.unrecognizedEventIds = [];
+    $scope.eventIdsValidated = false;
 
     $scope.step = 1;
 
@@ -27,7 +27,7 @@ define([
       name: '',
       habitat: '',
       factTable: {},
-      predictionTargetIds: '',
+      eventIds: '',
       learning: {
         kpi: { }
       },
@@ -70,7 +70,7 @@ define([
     };
 
     var validateStepTwo = function () {
-      $scope.augur.predictionTargetIds = '';
+      $scope.augur.eventIds = '';
       $scope.stepValid.three = false;
 
       if ($scope.factTables && ($scope.factTables.indexOf($scope.augur.factTable) > -1)) {
@@ -84,7 +84,7 @@ define([
     function resetAugurByNewHabitat(){
       $scope.augur.factTable = {};
       $scope.augur.factTableId = undefined;
-      $scope.augur.predictionTargetIds = '';
+      $scope.augur.eventIds = '';
 
       $scope.stepValid.two   = false;
       $scope.stepValid.three = false;
@@ -107,9 +107,9 @@ define([
     }, validateStepTwo);
 
     $scope.$watch(function(){
-      return $scope.augur.predictionTargetIds;
+      return $scope.augur.eventIds;
     }, function() {
-      $scope.predictionTargetIdsValidated = false;
+      $scope.eventIdsValidated = false;
       $scope.stepValid.three = false;
     });
 
@@ -131,8 +131,8 @@ define([
 
     // Maintain valid states for next button - end
 
-    $scope.validatePredictionTargetIds = function() {
-      $scope.$broadcast('validate:predictionTargetIds', $scope.augur.factTable.predictionTargetIds || [], function(isValid){
+    $scope.validateEventIds = function() {
+      $scope.$broadcast('validate:eventIds', $scope.augur.factTable.eventIds || [], function(isValid){
         $scope.stepValid.three = isValid;
       });
     };
@@ -141,17 +141,17 @@ define([
       augurNewAttributes = _.pick($scope.augur, ['name', 'factTableId']);
       augurNewAttributes.learningKpi = $scope.augur.learning.kpi.key;
       augurNewAttributes.learningThreshold = $scope.augur.learning.kpi.threshold;
-      augurNewAttributes.predictionTargets = $scope.augur.learning.predictionTargetIds;
+      augurNewAttributes.predictionTargets = $scope.augur.eventIds.split(',');
       augurNewAttributes.evaluationScheduleAttrs = $scope.augur.evaluation.schedule;
       augurNewAttributes.predictionScheduleAttrs = $scope.augur.prediction.schedule;
 
       Augur.save({ habitatId: $scope.augur.habitatId }, { augur: augurNewAttributes },
-        function (augur, responseHeaders) {
-          $state.transitionTo('augur.tree', { habitatId: $scope.augur.habitatId, augurId: augur.id });
+        function (augur) {
+          $state.transitionTo('augur.performance.learning', { habitatId: $scope.augur.habitatId, augurId: augur.id });
         }, function (httpResponse) {
-          alert("There was an error saving the new Augur - see console.log");
           console.log("There was an error saving the new Augur  ", httpResponse);
         });
     }
   }];
 });
+

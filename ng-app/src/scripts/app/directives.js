@@ -5,7 +5,7 @@
 define([
   'angular',
   'directives/augur-settings',
-  'directives/available-prediction-target',
+  'directives/available-event',
   'directives/d3-bar-chart',
   'directives/d3-decision-tree-chart',
   'directives/d3-influencer-chart',
@@ -20,7 +20,7 @@ define([
   'mm-foundation-tpls'
 ], function ( ng,
               AugurSettings,
-              AvailablePredictionTarget,
+              AvailableEvent,
               D3BarChart,
               D3DecisionTreeChart,
               D3InfluencerChart,
@@ -36,7 +36,7 @@ define([
 
   return ng.module('dejalyticsDirectives', ['mm.foundation'])
     .directive('augurSettings', AugurSettings)
-    .directive('availablePredictionTarget', AvailablePredictionTarget)
+    .directive('availableEvent', AvailableEvent)
     .directive('d3BarChart', D3BarChart)
     .directive('d3DecisionTreeChart', D3DecisionTreeChart)
     .directive('d3InfluencerChart', D3InfluencerChart)

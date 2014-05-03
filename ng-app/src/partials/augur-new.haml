@@ -1,15 +1,8 @@
-.row.action-bar
+.row.new-augur-wizard.action-bar
   .columns.small-12
     %ul.left.action-bar-breadcrumb
       %li
-        %a{ href: '#/' }
-          %span.glyphicon.glyphicon-th
-      %li
-        %a{ href: '#/' }
-          %span.glyphicon.glyphicon-picture
-      %li
-        %span.glyphicon.glyphicon-eye-open
-        %span Set up New Augur
+        Set up a new Augur
 
 .row.container.new-augur-wizard
   .small-12.columns
@@ -70,30 +63,30 @@
               Step 3 - Define prediction target
           .body{ ng: { show: 'step==3' } }
             %h6.subheader.subtitle
-              Enter a comma separated list of IDs to define the prediction target
-              .row.prediction-targets
+              Enter a comma separated list of IDs to define the prediction events
+              .row.events
                 .small-9.columns.input
-                  %textarea{ name: 'predictionTargetIds', placeholder: 'Enter a comma separated list of IDs to define the prediction target', ng: { model: 'augur.predictionTargetIds' }, 'available-prediction-target' => '' }
+                  %textarea{ name: 'eventIds', placeholder: 'Enter a comma separated list of IDs to define the prediction events', ng: { model: 'augur.eventIds' }, 'available-event' => '' }
                 .small-3.columns
                   .validation
                     %h5.subheader Validation
-                    .validation-message-show-hide.not-validated{ ng: { show: '!predictionTargetIdsValidated' }}
+                    .validation-message-show-hide.not-validated{ ng: { show: '!eventIdsValidated' }}
                       %h6 You need to validate your prediction target before continuing
-                    .validation-message-show-hide.validated{ ng: { show: 'predictionTargetIdsValidated' }}
+                    .validation-message-show-hide.validated{ ng: { show: 'eventIdsValidated' }}
                       .valid.validation-elements{ ng: { show: 'stepValid.three' }}
                         Your prediction target ids have been verified.
                         .verified.validation-icon
                           %span.glyphicon.glyphicon-ok-circle
                       .invalid.validation-elements{ ng: { show: '!stepValid.three' }}
-                        .error{ ng: { show: 'form.predictionTargetIds.$error.recognized' } }
+                        .error{ ng: { show: 'form.eventIds.$error.recognized' } }
                           The following prediction target ids do not exist in the fact table:
-                          {{ unrecognizedPredictionTargetIds.join(', ') }}
-                        .error{ ng: { show: 'form.predictionTargetIds.$error.present' } }
+                          {{ unrecognizedEventIds.join(', ') }}
+                        .error{ ng: { show: 'form.eventIds.$error.present' } }
                           You need to provide one or more prediction target ids
                         .error.validation-icon
                           %span.glyphicon.glyphicon-remove-circle
                     .validation-elements.validate-action
-                      %a.button.small.radius{ ng: { click: 'validatePredictionTargetIds()', show: '!stepValid.three' } }
+                      %a.button.small.radius{ ng: { click: 'validateEventIds()', show: '!stepValid.three' } }
                         Validate
 
           .next-button

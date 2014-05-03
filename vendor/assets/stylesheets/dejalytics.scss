@@ -5879,7 +5879,7 @@ th.hide-for-touch {
   .new-augur-wizard .step.step-2 .body {
     height: 300px; }
   .new-augur-wizard .step.step-3 .body {
-    height: 400px; }
+    height: 330px; }
   .new-augur-wizard .step.step-4 .body {
     height: 360px; }
   .new-augur-wizard .step .body.ng-hide {
@@ -5925,37 +5925,37 @@ th.hide-for-touch {
       .new-augur-wizard .fact-tables .fact-body .check-status {
         float: right;
         font-size: 175%; }
-  .new-augur-wizard .prediction-targets .input textarea {
-    height: 23em; }
-  .new-augur-wizard .prediction-targets .validation {
-    height: 20em;
+  .new-augur-wizard .events .input textarea {
+    height: 20em; }
+  .new-augur-wizard .events .validation {
+    height: 17em;
     background: #fff;
     position: relative; }
-    .new-augur-wizard .prediction-targets .validation .subheader {
+    .new-augur-wizard .events .validation .subheader {
       padding: 1em;
       padding-bottom: 0; }
-    .new-augur-wizard .prediction-targets .validation .validation-elements {
+    .new-augur-wizard .events .validation .validation-elements {
       text-align: center; }
-    .new-augur-wizard .prediction-targets .validation .validation-icon {
+    .new-augur-wizard .events .validation .validation-icon {
       font-size: 4em; }
-    .new-augur-wizard .prediction-targets .validation .validation-message-show-hide {
+    .new-augur-wizard .events .validation .validation-message-show-hide {
       position: absolute;
       padding: 0 1em; }
-    .new-augur-wizard .prediction-targets .validation .validate-action {
+    .new-augur-wizard .events .validation .validate-action {
       position: absolute;
       top: 200px;
       width: 100%; }
-      .new-augur-wizard .prediction-targets .validation .validate-action .button {
+      .new-augur-wizard .events .validation .validate-action .button {
         text-align: center; }
-    .new-augur-wizard .prediction-targets .validation .validation-message-show-hide.ng-hide-add, .new-augur-wizard .prediction-targets .validation .validation-message-show-hide.ng-hide-remove {
+    .new-augur-wizard .events .validation .validation-message-show-hide.ng-hide-add, .new-augur-wizard .events .validation .validation-message-show-hide.ng-hide-remove {
       -webkit-transition: all linear 0.3s;
       -moz-transition: all linear 0.3s;
       -o-transition: all linear 0.3s;
       transition: all linear 0.3s;
       display: block !important; }
-    .new-augur-wizard .prediction-targets .validation .validation-message-show-hide.ng-hide-add.ng-hide-add-active, .new-augur-wizard .prediction-targets .validation .validation-message-show-hide.ng-hide-remove {
+    .new-augur-wizard .events .validation .validation-message-show-hide.ng-hide-add.ng-hide-add-active, .new-augur-wizard .events .validation .validation-message-show-hide.ng-hide-remove {
       opacity: 0; }
-    .new-augur-wizard .prediction-targets .validation .validation-message-show-hide.ng-hide-add, .new-augur-wizard .prediction-targets .validation .validation-message-show-hide.ng-hide-remove.ng-hide-remove-active {
+    .new-augur-wizard .events .validation .validation-message-show-hide.ng-hide-add, .new-augur-wizard .events .validation .validation-message-show-hide.ng-hide-remove.ng-hide-remove-active {
       opacity: 1; }
   .new-augur-wizard .settings .description {
     font-size: 80%; }

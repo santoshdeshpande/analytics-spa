@@ -1,6 +1,30 @@
 .new-augur-wizard {
   padding: 0;
 
+  &.action-bar {
+    ul {
+      display: block;
+      width: auto;
+      overflow: hidden;
+      margin: 0;
+      height: 50px;
+
+      li {
+        float: left;
+        display: inline;
+        padding-right: 1em;
+        line-height: 50px;
+
+        &.divider {
+          border-right: 2px solid #FFFFFF;
+          margin-right: 10px;
+          height: 999px;
+        }
+      }
+    }
+  }
+
+
   .active {
     background: #eeeeee;
     .columns {
@@ -65,7 +89,7 @@
 
     &.step-3 {
       .body {
-        height: 400px;
+        height: 330px;
       }
     }
 
@@ -146,13 +170,13 @@
     }
   }
 
-  .prediction-targets {
+  .events {
     .input textarea {
-      height: 23em;
+      height: 20em;
     }
 
     .validation {
-      height: 20em;
+      height: 17em;
       background: #fff;
 
       .subheader {

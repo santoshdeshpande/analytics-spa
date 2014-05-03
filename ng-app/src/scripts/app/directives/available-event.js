@@ -18,9 +18,9 @@ define([
           return lodashTokens.uniq().compact();
         }
 
-        scope.$on('validate:predictionTargetIds', function (event, validIds, stepValidThreeCb) {
-          scope.predictionTargetIdsValidated = true;
-          scope.unrecognizedPredictionTargetIds = [];
+        scope.$on('validate:eventIds', function (event, validIds, stepValidThreeCb) {
+          scope.eventIdsValidated = true;
+          scope.unrecognizedEventIds = [];
           ngModel.$setValidity('present', true);
           ngModel.$setValidity('recognized', true);
           stepValidThreeCb(true);
@@ -35,11 +35,11 @@ define([
 
           scope.candidateIds.forEach(function (candidateId) {
             if (validIds.indexOf(candidateId) === -1) {
-              scope.unrecognizedPredictionTargetIds.push(candidateId);
+              scope.unrecognizedEventIds.push(candidateId);
             }
           });
 
-          if (_.isEmpty(scope.unrecognizedPredictionTargetIds)) {
+          if (_.isEmpty(scope.unrecognizedEventIds)) {
             return scope.candidateIds;
           } else {
             ngModel.$setValidity('recognized', false);
