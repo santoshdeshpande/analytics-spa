@@ -40038,7 +40038,7 @@ define('directives/available-event',[
       require: 'ngModel',
       link: function (scope, element, attrs, ngModel) {
         function sanitizeInput(input) {
-          var lodashTokens = _(input.replace(/;/g, ',').replace(/, */g, ',').replace(/ /g, ',').split(','));
+          var lodashTokens = _(input.replace(/;/g, ',').replace(/, */g, ',').split(','));
           return lodashTokens.uniq().compact();
         }
 
