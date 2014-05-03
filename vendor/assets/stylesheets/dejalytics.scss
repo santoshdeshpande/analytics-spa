@@ -40,7 +40,7 @@ body {
   color: #222;
   padding: 0;
   margin: 0;
-  font-family: 'Dosis', sans-serif;
+  font-family: 'Source Sans Pro', sans-serif;
   font-weight: normal;
   font-style: normal;
   line-height: 1;
@@ -744,7 +744,7 @@ select {
       color: #222;
       padding: 1rem;
       display: block;
-      font-family: 'Dosis', sans-serif;
+      font-family: 'Source Sans Pro', sans-serif;
       font-size: 1rem; }
       .accordion dd > a:hover {
         background: #e3e3e3; }
@@ -1834,7 +1834,7 @@ button, .button {
   border-style: solid;
   border-width: 0px;
   cursor: pointer;
-  font-family: 'Dosis', sans-serif;
+  font-family: 'Source Sans Pro', sans-serif;
   font-weight: normal;
   line-height: normal;
   margin: 0 0 1.25rem;
@@ -3057,7 +3057,7 @@ label.error {
 
 .label {
   font-weight: normal;
-  font-family: 'Dosis', sans-serif;
+  font-family: 'Source Sans Pro', sans-serif;
   text-align: center;
   text-decoration: none;
   line-height: 1;
@@ -3510,7 +3510,7 @@ ul.pagination {
     color: #eee;
     font-weight: normal;
     font-size: 1rem;
-    font-family: 'Dosis', sans-serif; }
+    font-family: 'Source Sans Pro', sans-serif; }
   .pricing-table .price {
     background-color: #f6f6f6;
     padding: 0.9375rem 1.25rem;
@@ -3518,7 +3518,7 @@ ul.pagination {
     color: #333;
     font-weight: normal;
     font-size: 2rem;
-    font-family: 'Dosis', sans-serif; }
+    font-family: 'Source Sans Pro', sans-serif; }
   .pricing-table .description {
     background-color: #fff;
     padding: 0.9375rem;
@@ -3753,7 +3753,7 @@ dialog[open] {
   padding: 0.875rem 0;
   list-style-type: none;
   list-style-position: inside;
-  font-family: 'Dosis', sans-serif; }
+  font-family: 'Source Sans Pro', sans-serif; }
   .side-nav li {
     margin: 0 0 0.4375rem 0;
     font-size: 0.875rem; }
@@ -3765,7 +3765,7 @@ dialog[open] {
     .side-nav li.active > a:first-child:not(.button) {
       color: #1ccaff;
       font-weight: normal;
-      font-family: 'Dosis', sans-serif; }
+      font-family: 'Source Sans Pro', sans-serif; }
     .side-nav li.divider {
       border-top: 1px solid;
       height: 0;
@@ -3874,7 +3874,7 @@ dialog[open] {
     display: inline;
     margin-left: 1rem;
     margin-bottom: 0.625rem;
-    font-family: 'Dosis', sans-serif;
+    font-family: 'Source Sans Pro', sans-serif;
     font-weight: normal;
     font-size: 0.875rem;
     color: #999; }
@@ -4086,7 +4086,7 @@ table {
       background: #efefef;
       color: #222;
       padding: 1rem 2rem;
-      font-family: 'Dosis', sans-serif;
+      font-family: 'Source Sans Pro', sans-serif;
       font-size: 1rem; }
       .tabs dd > a:hover {
         background: #e1e1e1; }
@@ -4388,7 +4388,7 @@ meta.foundation-mq-topbar {
     color: #333;
     padding: 12px 0 12px 0;
     padding-left: 16.66667px;
-    font-family: 'Dosis', sans-serif;
+    font-family: 'Source Sans Pro', sans-serif;
     font-size: 0.8125rem;
     font-weight: normal;
     text-transform: none;
@@ -4892,7 +4892,7 @@ p {
 
 /* Default header styles */
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Dosis', sans-serif;
+  font-family: 'Source Sans Pro', sans-serif;
   font-weight: normal;
   font-style: normal;
   color: #222;
@@ -5737,9 +5737,10 @@ th.hide-for-touch {
     -webkit-border-radius: 5px;
     border-radius: 5px;
     padding: 3px;
-    color: #fff; }
+    color: #333; }
     .dashboard.action-bar ul.action-bar-filter li.active label:hover {
-      color: #333; }
+      color: #fff;
+      background: #333; }
   .dashboard.action-bar ul.action-bar-filter li input[type=checkbox] {
     display: none; }
   .dashboard.action-bar ul li {
@@ -5846,6 +5847,21 @@ th.hide-for-touch {
 
 .new-augur-wizard {
   padding: 0; }
+  .new-augur-wizard.action-bar ul {
+    display: block;
+    width: auto;
+    overflow: hidden;
+    margin: 0;
+    height: 50px; }
+    .new-augur-wizard.action-bar ul li {
+      float: left;
+      display: inline;
+      padding-right: 1em;
+      line-height: 50px; }
+      .new-augur-wizard.action-bar ul li.divider {
+        border-right: 2px solid #FFFFFF;
+        margin-right: 10px;
+        height: 999px; }
   .new-augur-wizard .active {
     background: #eeeeee; }
     .new-augur-wizard .active .columns .title {
