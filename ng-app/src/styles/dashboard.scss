@@ -10,10 +10,21 @@
       height: 50px;
 
       &.action-bar-filter li {
-        &.active label {
+        label {
           @include radius(5px);
           padding: 3px;
+          color: #fff;
+          background: #333;
+
+          &:hover {
+            color: #ccc;
+          }
+        }
+
+        &.active label {
           color: #333;
+          background: none;
+
           &:hover {
             color: #fff;
             background: #333;

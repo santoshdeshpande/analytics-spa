@@ -1,4 +1,6 @@
-{"id": "15J31X31PA", "name": "asdf123", "description": null, "code": "15J31X31PA", "learningReport": {
+{"id": "15J31X31PA", "name": "asdf123", "description": null, "code": "15J31X31PA",
+  "learningKpi":"true_positive_rate","learningThreshold":1.0,"predictionTargets":["var_1"],
+  "learningReport": {
   "lift": {
     "timestamp": "2014-05-03T09:17:18-04:00",
     "baseline": 1.0,

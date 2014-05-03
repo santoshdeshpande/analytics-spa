@@ -12,6 +12,7 @@
         .row
           .small-4.columns
             %select{ name: 'prediction-schedule-frequency', ng: { model: 'augur.prediction.schedule.frequency' } }
+              %option{ value: 'hourly' } hourly
               %option{ value: 'daily' } daily
               %option{ value: 'weekly' } weekly
               %option{ value: 'monthly' } monthly

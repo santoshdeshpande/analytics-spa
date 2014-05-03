@@ -2,7 +2,10 @@
  define: false,
  console: false
  */
-define([], function () {
+define([
+  'angular',
+  '../constants'
+], function (ng, Constants) {
   'use strict';
 
   function controller($state, $scope, $stateParams, $rootScope, Augur, Habitat) {
@@ -12,6 +15,17 @@ define([], function () {
       habitatId: $stateParams.habitatId,
       augurId: $stateParams.augurId
     });
+
+    $scope.augur.$promise.then(function (augur) {
+
+      ng.forEach(Constants.KEY_PERFORMANCE_INDICATORS, function (kpi) {
+        if (kpi.key === augur.learningKpi) {
+          augur.learningKpiLabel = kpi.label + ' (' + parseFloat(augur.learningThreshold).toFixed(2) + ')'
+        }
+      });
+    });
+
+
     $scope.habitat = Habitat.get({
       habitatId: $stateParams.habitatId
     })

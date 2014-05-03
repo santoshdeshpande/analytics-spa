@@ -54,7 +54,8 @@ define([], function () {
             augur.habitat_id = habitat.code;
             augur.colorScheme = habitat.colorScheme;
 
-            augur.dashboardChartData = randomDashboardChartData();
+            if (!augur.dashboardChartData)
+              augur.dashboardChartData = randomDashboardChartData();
 
             $scope.artifacts.push(augur);
           });

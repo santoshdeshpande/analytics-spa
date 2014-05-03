@@ -35,9 +35,9 @@
         .small-12.columns
           %a{ ng: { click: 'stepValid.one && (step=2)' } }
             %h5.subheader.title
-              Step 2 - Select a fact table
+              Step 2 - Select an event table
           .body{ ng: { show: 'step==2' } }
-            %h6.subheader.subtitle Select the facts table that contains the prediction target
+            %h6.subheader.subtitle Select the events table that contains the prediction target
 
             .row
               .small-12.columns
@@ -79,7 +79,7 @@
                           %span.glyphicon.glyphicon-ok-circle
                       .invalid.validation-elements{ ng: { show: '!stepValid.three' }}
                         .error{ ng: { show: 'form.eventIds.$error.recognized' } }
-                          The following prediction target ids do not exist in the fact table:
+                          The following prediction target ids do not exist in the events table:
                           {{ unrecognizedEventIds.join(', ') }}
                         .error{ ng: { show: 'form.eventIds.$error.present' } }
                           You need to provide one or more prediction target ids

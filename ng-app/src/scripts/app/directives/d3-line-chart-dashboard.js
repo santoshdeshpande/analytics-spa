@@ -30,6 +30,7 @@ define(['d3js'], function (d3) {
         var xScale = d3.scale.linear();
         var yScale = d3.scale.linear();
 
+        var watchTimeout;
         window.onresize = function () {
           if (watchTimeout) {
             clearTimeout(watchTimeout);

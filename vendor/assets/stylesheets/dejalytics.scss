@@ -5733,11 +5733,17 @@ th.hide-for-touch {
   overflow: hidden;
   margin: 0;
   height: 50px; }
-  .dashboard.action-bar ul.action-bar-filter li.active label {
+  .dashboard.action-bar ul.action-bar-filter li label {
     -webkit-border-radius: 5px;
     border-radius: 5px;
     padding: 3px;
-    color: #333; }
+    color: #fff;
+    background: #333; }
+    .dashboard.action-bar ul.action-bar-filter li label:hover {
+      color: #ccc; }
+  .dashboard.action-bar ul.action-bar-filter li.active label {
+    color: #333;
+    background: none; }
     .dashboard.action-bar ul.action-bar-filter li.active label:hover {
       color: #fff;
       background: #333; }
@@ -6015,7 +6021,7 @@ th.hide-for-touch {
   .augur.action-bar .habitat-name, .augur.action-bar .back {
     font-size: 2.75rem; }
   .augur.action-bar .actions, .augur.action-bar .info {
-    line-height: 20px;
+    padding-top: 0.5em;
     background: #fff;
     color: #333; }
   .augur.action-bar .action-button {
@@ -6046,6 +6052,7 @@ th.hide-for-touch {
   .augur.action-bar .info dt, .augur.action-bar .info dd {
     float: left; }
   .augur.action-bar .info dt {
+    padding-right: 0.5em;
     clear: both; }
   .augur.action-bar .back {
     text-align: right; }

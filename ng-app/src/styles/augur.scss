@@ -1,6 +1,5 @@
 .augur {
   &.action-bar {
-
     @include themes ( background-color );
 
     color: #fff;
@@ -28,7 +27,7 @@
     }
 
     .actions, .info {
-      line-height: 20px;
+      padding-top: .5em;
       background: #fff;
       color: #333;
     }
@@ -67,6 +66,7 @@
         float: left
       }
       dt {
+        padding-right: .5em;
         clear: both
       }
     }
