@@ -6,7 +6,7 @@ define(['d3js'], function (d3) {
   'use strict';
 
   function nodeValues (nodes) {
-    return nodes.map(function (node) { return node.value })
+    return nodes.map(function (node) { return node.importance })
   }
   
   return ['$timeout', function ($timeout) {
@@ -36,10 +36,10 @@ define(['d3js'], function (d3) {
         var radius = d3.scale.linear();
 
         var pack = d3.layout.pack()
-            .value(function(d) { return d.value })
+            .value(function(d) { return d.importance })
             .radius(radius)
             .padding(20)
-            .sort(function(a, b) { return Math.log(a.value * b.value) })
+            .sort(function(a, b) { return Math.log(a.importance * b.importance) })
             .size([width + 120, height]);
 
         var svg = d3.select(ele[0]).append('svg')
@@ -57,7 +57,7 @@ define(['d3js'], function (d3) {
           if (renderTimeout) $timeout.cancel(renderTimeout);
 
           renderTimeout = $timeout(function () {
-            var dataNodes = data.nodes.sort(function(a, b) { return a.value - b.value}).reverse().slice(0, maxNodes - 1);
+            var dataNodes = data.nodes.sort(function(a, b) { return a.importance - b.importance}).reverse().slice(0, maxNodes - 1);
 
             var rMax = radiusMax(dataNodes.length);
 
@@ -74,16 +74,16 @@ define(['d3js'], function (d3) {
               .range([radiusMin, rMax]);
 
             var nodes = pack.nodes({
-              value: 0,
+              importance: 0,
               children: dataNodes
             });
             
             var nodeEnter = svg.selectAll('.node')
-                 .data(nodes.filter(function(d) { return !!d.name }))
+                 .data(nodes.filter(function(d) { return !!d.feature }))
                .enter().append('g')
                  .attr('class', 'node')
                  .attr('transform', function(d) { return 'translate(' + d.x + ',' + d.y + ')'; })
-                 .style('font-size', function(d) { return fontSize(d.r/Math.log(Math.max(Math.min(d.name.length, variableLengthMax), variableLengthMin))) + '%' });
+                 .style('font-size', function(d) { return fontSize(d.r/Math.log(Math.max(Math.min(d.feature.length, variableLengthMax), variableLengthMin))) + '%' });
 
             nodeEnter.append('circle')
                 .attr('r', function(d) { return d.r; })
@@ -92,7 +92,7 @@ define(['d3js'], function (d3) {
             nodeEnter.append('text')
               .style('text-anchor', 'middle')
               .attr('dy', '-.2em')
-              .text(function(d) { return d.name });
+              .text(function(d) { return d.feature });
 
             nodeEnter.append('text')
               .attr('dy', '.8em')
