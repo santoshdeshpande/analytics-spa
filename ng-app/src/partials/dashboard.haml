@@ -36,7 +36,7 @@
             .tile.habitat{ ng: { attr: { data: { theme: '{{ artifact.colorScheme }}' }}} }
               %h5.title
                 {{ artifact.name }}
-                %span.glyphicon.glyphicon-picture
+                %i.icon.icon-birdhouse
               .artefact-body
                 %p{ ng: { if: 'artifact.augurCount < 1' } }
                   No Augurs
@@ -50,7 +50,7 @@
             .tile.fact-table{ ng: { attr: { data: { theme: '{{ artifact.colorScheme }}' }} }}
               %h5.title
                 {{artifact.name}}
-                %span.glyphicon.glyphicon-list-alt
+                %span.icon.glyphicon.glyphicon-list-alt
               .artefact-body
                 %p.description
                   {{artifact.description}}
@@ -60,7 +60,7 @@
             .tile.augur{ ng: { attr: { data: { theme: '{{ artifact.colorScheme }}' }}} }
               %h5.title
                 {{artifact.name}}
-                %span.glyphicon.glyphicon-eye-open
+                %i.icon.icon-telescope
               .artefact-body
                 %dl.description
                   %dt KPI

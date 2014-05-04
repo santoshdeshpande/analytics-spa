@@ -196,7 +196,7 @@ gulp.task('styles', ['glyphicons-bootstrap'], function () {
     .pipe(notify({ message: 'Styles task complete' }));
 });
 
-gulp.task('glyphicons-bootstrap', ['glyphicons-bootstrap-fonts'], function () {
+gulp.task('glyphicons-bootstrap', ['glyphicons-bootstrap-fonts', 'dejalytics-icons'], function () {
   return gulp.src(['src/styles/vendor/bootstrap-glyphicons-3.0.0/bootstrap-glyphicons.css'])
     .pipe(gulp.dest('dist/styles/'));
 });
@@ -207,6 +207,21 @@ gulp.task('glyphicons-bootstrap-fonts', function () {
       'src/styles/vendor/bootstrap-glyphicons-3.0.0/*.svg',
       'src/styles/vendor/bootstrap-glyphicons-3.0.0/*.ttf',
       'src/styles/vendor/bootstrap-glyphicons-3.0.0/*.woff'
+    ])
+    .pipe(gulp.dest('dist/fonts/'))
+});
+
+gulp.task('dejalytics-icons', ['dejalytics-icon-fonts'], function () {
+  return gulp.src(['src/styles/vendor/dejalytics-icon-fonts-1.0.0/dejalytics-icon-fonts.css'])
+    .pipe(gulp.dest('dist/styles/'));
+});
+
+gulp.task('dejalytics-icon-fonts', function () {
+  return gulp.src([
+      'src/styles/vendor/dejalytics-icon-fonts-1.0.0/*.eot',
+      'src/styles/vendor/dejalytics-icon-fonts-1.0.0/*.svg',
+      'src/styles/vendor/dejalytics-icon-fonts-1.0.0/*.ttf',
+      'src/styles/vendor/dejalytics-icon-fonts-1.0.0/*.woff'
     ])
     .pipe(gulp.dest('dist/fonts/'))
 });

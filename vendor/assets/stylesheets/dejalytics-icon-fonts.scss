@@ -1,0 +1,69 @@
+@font-face {
+  font-family: 'Dejalytics Icons';
+  src: url(font-path('dejalytics-icon-fonts-1.0.0/dejalytics-icon-fonts.eot'));
+  src: url(font-path('dejalytics-icon-fonts-1.0.0/dejafont.eot?#iefix')) format('embedded-opentype'),
+       url(font-path('dejalytics-icon-fonts-1.0.0/dejalytics-icon-fonts.woff')) format('woff'),
+       url(font-path('dejalytics-icon-fonts-1.0.0/dejalytics-icon-fonts.ttf')) format('truetype'),
+       url(font-path('dejalytics-icon-fonts-1.0.0/dejalytics-icon-fonts.svg?#dejafont')) format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+/* Chrome hack: SVG is rendered more smooth in Windozze. 100% magic, uncomment if you need it. */
+/* Note, that will break hinting! In other OS-es font will be not as sharp as it could be */
+/*
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: 'dejafont';
+    src: url('../font/dejafont.svg?4575799#dejafont') format('svg');
+  }
+}
+*/
+ 
+ [class^="icon-"]:before, [class*=" icon-"]:before {
+  font-family: 'Dejalytics Icons';
+  font-style: normal;
+  font-weight: normal;
+  speak: none;
+ 
+  display: inline-block;
+  text-decoration: inherit;
+  width: 1em;
+  margin-right: .2em;
+  text-align: center;
+  /* opacity: .8; */
+ 
+  /* For safety - reset parent styles, that can break glyph codes*/
+  font-variant: normal;
+  text-transform: none;
+     
+  /* fix buttons height, for twitter bootstrap */
+  line-height: 1em;
+ 
+  /* Animation center compensation - margins should be symmetric */
+  /* remove if not needed */
+  margin-left: .2em;
+ 
+  /* you can be more comfortable with increased icons size */
+  /* font-size: 120%; */
+ 
+  /* Uncomment for 3D effect */
+  /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
+}
+ 
+.icon-account:before { content: '\e800'; } /* '' */
+.icon-telescope:before { content: '\e801'; } /* '' */
+.icon-birdhouse:before { content: '\e80f'; } /* '' */
+.icon-calculator:before { content: '\e80e'; } /* '' */
+.icon-cleanup:before { content: '\e80d'; } /* '' */
+.icon-dashboard:before { content: '\e80c'; } /* '' */
+.icon-decisiontree:before { content: '\e80b'; } /* '' */
+.icon-download:before { content: '\e80a'; } /* '' */
+.icon-ambulance:before { content: '\e810'; } /* '' */
+.icon-exit:before { content: '\e808'; } /* '' */
+.icon-gamepad:before { content: '\e807'; } /* '' */
+.icon-influencer:before { content: '\e806'; } /* '' */
+.icon-ok:before { content: '\e805'; } /* '' */
+.icon-settings:before { content: '\e804'; } /* '' */
+.icon-suitcase:before { content: '\e803'; } /* '' */
+.icon-target:before { content: '\e802'; } /* '' */
+.icon-drift:before { content: '\e809'; } /* '' */

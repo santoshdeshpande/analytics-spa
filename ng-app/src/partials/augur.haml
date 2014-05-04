@@ -16,39 +16,46 @@
             %ul.no-bullet
               %li.action
                 %a.action-button
-                  %span.glyphicon.glyphicon-tower
+                  %span.calculate
+                    %i.icon.icon-calculator
                   Calculate new prediction
               %li.action
                 %a.action-button
-                  %span.glyphicon.glyphicon-tower
+                  %span.download
+                    %i.icon.icon-download
                   Download latest prediction
       .small-1.columns.back
         %a{ ui: { sref: 'dashboard' } }
-          %span.glyphicon.glyphicon-log-out
+          %span.download
+            %i.icon.icon-exit
 
 .row.augur.container
   .side-nav-container
     %ul.side-nav
       %li{ ui: { sref: { active: 'active' } } }
         %a{ ui: { sref: 'augur.tree' } }
-          %span.glyphicon.glyphicon-th
+          %span.model-viewer
+            %i.icon.icon-decisiontree
           %br
           Model Viewer
       %li{ ui: { sref: { active: 'active' } } }
         %a{ ui: { sref: 'augur.influencers' } }
-          %span.glyphicon.glyphicon-th
+          %span.influencer
+            %i.icon.icon-influencer
           %br
           Influencers
       %li{ ui: { sref: { active: 'active' } } }
         %a{ ui: { sref: 'augur.accuracy' } }
-          %span.glyphicon.glyphicon-record
+          %span.accuracy
+            %i.icon.icon-target
           %br
           Accuracy
       %li{ ui: { sref: { active: 'active' } } }
         %a{ ui: { sref: 'augur.performance' }, style: 'display:none;', fyi: 'only to get sref-active working' }
 
         %a{ ng: { click: 'activatePerformanceState()' } }
-          %span.glyphicon.glyphicon-th
+          %span.performance-drift
+            %i.icon.icon-drift
           %div.label-main
             Performance drift
 
@@ -56,17 +63,20 @@
           %ul.no-bullet.inline-list
             %li.first{ ui: { sref: { active: 'active' } } }
               %a{ ui: { sref: 'augur.performance.learning' } }
-                %span.glyphicon.glyphicon-tower
+                %span.performance-drift-learning
+                  %i.icon.icon-gamepad
             %li{ ui: { sref: { active: 'active' } } }
               %a{ ui: { sref: 'augur.performance.evaluation' } }
-                %span.glyphicon.glyphicon-briefcase
+                %span.performance-drift-evaluation
+                  %i.icon.icon-suitcase
 
           %div.label-sub
             Performance drift
 
       %li{ ui: { sref: { active: 'active' } } }
         %a{ ui: { sref: 'augur.settings' } }
-          %span.glyphicon.glyphicon-wrench
+          %span.settings
+            %icon.icon-settings
           %br
           Settings
 

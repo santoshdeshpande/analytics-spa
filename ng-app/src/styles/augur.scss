@@ -1,6 +1,6 @@
 .augur {
   &.action-bar {
-    @include themes ( background-color );
+    @include themes(background-color);
 
     color: #fff;
     line-height: 80px;
@@ -41,23 +41,22 @@
 
       color: #666;
 
-      padding-right: 12px;
-
       background: #f5f5f5;
-      background-image: linear-gradient( 180deg, #fff 5%, #f5f5f5, #eee 90%, #ccc );
+      background-image: linear-gradient(180deg, #fff 5%, #f5f5f5, #eee 90%, #ccc);
       border: 1px solid #888;
 
-
-      .glyphicon {
-        @include themes( color );
+      .calculate, .download {
+        @include themes(color);
 
         float: left;
         width: 48px;
         text-align: center;
         height: 48px;
-        font-size: 24px;
+        font-size: 30px;
         line-height: 40px;
-
+        margin-top: .2rem;
+        margin-left: .2rem;
+        margin-right: .2rem;
       }
     }
 
@@ -72,7 +71,7 @@
     }
 
     .back {
-      text-align: right;
+      text-align: center;
       a {
         color: #fff;
       }
@@ -108,7 +107,7 @@
         span {
           color: #fff;
 
-          @include themes( background-color );
+          @include themes(background-color);
         }
 
         .side-nav-sub {
@@ -124,6 +123,7 @@
         color: #000;
 
         span {
+          display: inline-block;
           border-radius: 50%;
           width: 50px;
           height: 50px;
@@ -131,14 +131,42 @@
           background-color: #fff;
           color: #000;
           text-align: center;
-          font-weight: bold;
+          font-size: 1.5rem;
+
+          position: relative;
+          .icon { position: absolute; }
+
+          &.model-viewer .icon {
+            right: .4rem;
+          }
+          &.influencer .icon {
+            right: 1rem;
+          }
+          &.accuracy .icon {
+            top: .1rem;
+            right: .55rem;
+          }
+          &.performance-drift .icon {
+            right: .7rem;
+          }
+          &.performance-drift-learning .icon {
+            right: .7rem;
+            font-size: 1.2rem;
+          }
+          &.performance-drift-evaluation .icon {
+            right: .5rem;
+            font-size: 1.2rem;
+          }
+          &.settings .icon {
+            right: 1rem;
+          }
         }
       }
 
       a:hover {
         color: #333;
         span {
-          @include themes( background-color );
+          @include themes(background-color);
 
           color: #fff;
         }
@@ -169,7 +197,7 @@
 
           &.active span {
             color: #fff;
-            @include themes( background-color );
+            @include themes(background-color);
           }
         }
       }

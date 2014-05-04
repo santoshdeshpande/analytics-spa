@@ -89,11 +89,15 @@
 
         .title {
           color: #fff;
+          .icon {
+            top: .3rem;
+            right: .5rem;
+          }
         }
       }
 
       &.augur {
-        @include themes($light10: color, $isolated: true, $sub-selector: '.title .glyphicon');
+        @include themes($light10: color, $isolated: true, $sub-selector: '.title .icon');
         @include themes($light50: fill, $isolated: true, $sub-selector: '.area');
 
         d3-line-chart-dashboard {
@@ -116,11 +120,8 @@
           }
         }
 
-        .icon {
-          position: absolute;
-          font-size: 1.5rem;
-          top: 3px;
-          right: 20px;
+        .title .icon {
+          right: .9rem;
         }
       }
 
@@ -129,11 +130,11 @@
         padding: .2em .35em;
         font-weight: bold;
 
-        .glyphicon {
+        .icon {
+          font-size: 1.3rem;
           position: absolute;
-          font-size: 1.5rem;
-          top: 5px;
-          right: 25px;
+          top: .15rem;
+          right: .4rem;
         }
       }
 
