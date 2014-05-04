@@ -2,7 +2,9 @@
  define: false,
  console: false
  */
-define([], function () {
+define([
+  '../constants'
+], function (Constants) {
   'use strict';
 
   function randomDashboardChartData () {
@@ -53,6 +55,10 @@ define([], function () {
             augur.type = 'augur';
             augur.habitat_id = habitat.code;
             augur.colorScheme = habitat.colorScheme;
+
+            augur.learningKpiLabel =
+              Constants.KEY_PERFORMANCE_INDICATORS_HASH[augur.learningKpi]
+              + ' (' + parseFloat(augur.learningThreshold).toFixed(2) + ')';
 
             if (!augur.dashboardChartData)
               augur.dashboardChartData = randomDashboardChartData();

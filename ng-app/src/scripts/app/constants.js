@@ -2,10 +2,10 @@
  define: false,
  console: false
  */
-define([], function () {
+define(['angular'], function (ng) {
   'use strict';
 
-  return {
+  var constants = {
     KEY_PERFORMANCE_INDICATORS: [
       {"key": "average_squared_error", "label": "Average Squared Error", "min": 0.0001, "max": 1, "comparator": "gt"},
       {"key": "area_under_the_curve", "label": "Area Under the Curve", "min": 0.0001, "max": 1, "comparator": "lt"},
@@ -32,6 +32,7 @@ define([], function () {
       {"key": "maximum_absolute_error", "label": "Maximum Absolute Error", "min": 0.0001, "max": 1, "comparator": "gt"},
       {"key": "gini_coefficient", "label": "Gini Coefficient", "min": 0.0001, "max": 1, "comparator": "lt"}
     ],
+    KEY_PERFORMANCE_INDICATORS_HASH: {},
     DAYS_IN_MONTH: [
       {"key": 1, "label": "1st"},
       {"key": 2, "label": "2nd"},
@@ -62,6 +63,13 @@ define([], function () {
       {"key": 27, "label": "27th"},
       {"key": 28, "label": "28th"}
     ]
-  }
+  };
 
+  (function () {
+    ng.forEach(constants.KEY_PERFORMANCE_INDICATORS, function (kpi) {
+      constants.KEY_PERFORMANCE_INDICATORS_HASH[kpi.key] = kpi.label;
+    })
+  })();
+
+  return constants;
 });

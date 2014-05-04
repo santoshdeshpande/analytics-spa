@@ -39512,10 +39512,10 @@ define('services',[
  define: false,
  console: false
  */
-define('constants',[], function () {
+define('constants',['angular'], function (ng) {
   
 
-  return {
+  var constants = {
     KEY_PERFORMANCE_INDICATORS: [
       {"key": "average_squared_error", "label": "Average Squared Error", "min": 0.0001, "max": 1, "comparator": "gt"},
       {"key": "area_under_the_curve", "label": "Area Under the Curve", "min": 0.0001, "max": 1, "comparator": "lt"},
@@ -39542,6 +39542,7 @@ define('constants',[], function () {
       {"key": "maximum_absolute_error", "label": "Maximum Absolute Error", "min": 0.0001, "max": 1, "comparator": "gt"},
       {"key": "gini_coefficient", "label": "Gini Coefficient", "min": 0.0001, "max": 1, "comparator": "lt"}
     ],
+    KEY_PERFORMANCE_INDICATORS_HASH: {},
     DAYS_IN_MONTH: [
       {"key": 1, "label": "1st"},
       {"key": 2, "label": "2nd"},
@@ -39572,8 +39573,15 @@ define('constants',[], function () {
       {"key": 27, "label": "27th"},
       {"key": 28, "label": "28th"}
     ]
-  }
+  };
 
+  (function () {
+    ng.forEach(constants.KEY_PERFORMANCE_INDICATORS, function (kpi) {
+      constants.KEY_PERFORMANCE_INDICATORS_HASH[kpi.key] = kpi.label;
+    })
+  })();
+
+  return constants;
 });
 
 /* global
@@ -39753,12 +39761,7 @@ define('controllers/augur',[
     });
 
     $scope.augur.$promise.then(function (augur) {
-
-      ng.forEach(Constants.KEY_PERFORMANCE_INDICATORS, function (kpi) {
-        if (kpi.key === augur.learningKpi) {
-          augur.learningKpiLabel = kpi.label + ' (' + parseFloat(augur.learningThreshold).toFixed(2) + ')'
-        }
-      });
+      augur.learningKpiLabel = Constants.KEY_PERFORMANCE_INDICATORS_HASH[augur.learningKpi] + ' (' + parseFloat(augur.learningThreshold).toFixed(2) + ')'
     });
 
 
@@ -39912,7 +39915,9 @@ define('controllers/augur-tree',[], function () {
  define: false,
  console: false
  */
-define('controllers/dashboard',[], function () {
+define('controllers/dashboard',[
+  '../constants'
+], function (Constants) {
   
 
   function randomDashboardChartData () {
@@ -39963,6 +39968,10 @@ define('controllers/dashboard',[], function () {
             augur.type = 'augur';
             augur.habitat_id = habitat.code;
             augur.colorScheme = habitat.colorScheme;
+
+            augur.learningKpiLabel =
+              Constants.KEY_PERFORMANCE_INDICATORS_HASH[augur.learningKpi]
+              + ' (' + parseFloat(augur.learningThreshold).toFixed(2) + ')';
 
             if (!augur.dashboardChartData)
               augur.dashboardChartData = randomDashboardChartData();
@@ -56757,7 +56766,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('partials/dashboard.html',
-    '<div class=\'row dashboard action-bar\'><div class=\'columns small-12\'><ul class=\'left action-bar-breadcrumb\'><li> Dashboard</li></ul><ul class=\'right action-bar-filter\'><li class=\'divider\'></li><li ng-class=\'{"active" : selectedArtifactTypes.augur}\'> <input id=\'selected-artifact-types-augur\' ng-model=\'selectedArtifactTypes.augur\' type=\'checkbox\'> <label for=\'selected-artifact-types-augur\'>Augurs</label></li><li ng-class=\'{"active" : selectedArtifactTypes.factTable}\'> <input id=\'selected-artifact-types-fact-table\' ng-model=\'selectedArtifactTypes.factTable\' type=\'checkbox\'> <label for=\'selected-artifact-types-fact-table\'>Event tables</label></li><li ng-class=\'{"active" : selectedArtifactTypes.habitat}\'> <input id=\'selected-artifact-types-habitat\' ng-model=\'selectedArtifactTypes.habitat\' type=\'checkbox\'> <label for=\'selected-artifact-types-habitat\'>Habitats</label></li><li class=\'divider\'></li><li class=\'action-bar-search\'> <input ng-model=\'artifactsQuery\' placeholder=\'Type to search\' type=\'text\'></li></ul></div></div><div class=\'row dashboard container\'><div class=\'columns small-12\'><ul class=\'small-block-grid-2 medium-block-grid-3 large-block-grid-4\'><li><div class=\'tile\'><a href=\'#/augurs/new\'><div class=\'artefact-body add-augur\'><p> Add augur</p><p class=\'icon\'><span class=\'glyphicon glyphicon-plus\'></span></p></div></a></div></li><li ng-repeat=\'artifact in artifacts | filter: artifactsFilter\'><div ng-if=\'artifact.type == "habitat"\'><a href=\'#/habitat/{{habitat.id}}\'><div class=\'tile habitat\' ng-attr-data-theme=\'{{ artifact.colorScheme }}\'><h5 class=\'title\'> {{ artifact.name }}<span class=\'glyphicon glyphicon-picture\'></span></h5><div class=\'artefact-body\'><p ng-if=\'artifact.augurCount &lt; 1\'> No Augurs</p><p ng-if=\'artifact.augurCount === 1\'> One Augur</p><p ng-if=\'artifact.augurCount &gt; 1\'> {{ artifact.augurCount }} Augurs</p></div></div></a></div><div ng-if=\'artifact.type == "factTable"\'><a href=\'#/habitat/{{artifact.habitat_id}}/factTables/{{factTable.id}}\'><div class=\'tile fact-table\' ng-attr-data-theme=\'{{ artifact.colorScheme }}\'><h5 class=\'title\'> {{artifact.name}}<span class=\'glyphicon glyphicon-list-alt\'></span></h5><div class=\'artefact-body\'><p class=\'description\'> {{artifact.description}}</p></div></div></a></div><div ng-if=\'artifact.type == "augur"\'><a ui-sref=\'augur.tree({ habitatId: artifact.habitat_id, augurId: artifact.id })\'><div class=\'tile augur\' ng-attr-data-theme=\'{{ artifact.colorScheme }}\'><h5 class=\'title\'> {{artifact.name}}<span class=\'glyphicon glyphicon-eye-open\'></span></h5><div class=\'artefact-body\'><dl class=\'description\'><dt>KPI</dt><dd>True positive rate</dd><dt>Latest evaluation</dt><dd>0.6 on 2014/04/15</dd></dl></div><div class=\'chart\'><d3-line-chart-dashboard data=\'artifact.dashboardChartData\' height=\'30\'></d3-line-chart-dashboard></div></div></a></div></li></ul></div></div>');
+    '<div class=\'row dashboard action-bar\'><div class=\'columns small-12\'><ul class=\'left action-bar-breadcrumb\'><li> Dashboard</li></ul><ul class=\'right action-bar-filter\'><li class=\'divider\'></li><li ng-class=\'{"active" : selectedArtifactTypes.augur}\'> <input id=\'selected-artifact-types-augur\' ng-model=\'selectedArtifactTypes.augur\' type=\'checkbox\'> <label for=\'selected-artifact-types-augur\'>Augurs</label></li><li ng-class=\'{"active" : selectedArtifactTypes.factTable}\'> <input id=\'selected-artifact-types-fact-table\' ng-model=\'selectedArtifactTypes.factTable\' type=\'checkbox\'> <label for=\'selected-artifact-types-fact-table\'>Event tables</label></li><li ng-class=\'{"active" : selectedArtifactTypes.habitat}\'> <input id=\'selected-artifact-types-habitat\' ng-model=\'selectedArtifactTypes.habitat\' type=\'checkbox\'> <label for=\'selected-artifact-types-habitat\'>Habitats</label></li><li class=\'divider\'></li><li class=\'action-bar-search\'> <input ng-model=\'artifactsQuery\' placeholder=\'Type to search\' type=\'text\'></li></ul></div></div><div class=\'row dashboard container\'><div class=\'columns small-12\'><ul class=\'small-block-grid-2 medium-block-grid-3 large-block-grid-4\'><li><div class=\'tile\'><a href=\'#/augurs/new\'><div class=\'artefact-body add-augur\'><p> Add augur</p><p class=\'icon\'><span class=\'glyphicon glyphicon-plus\'></span></p></div></a></div></li><li ng-repeat=\'artifact in artifacts | filter: artifactsFilter\'><div ng-if=\'artifact.type == "habitat"\'><a href=\'#/habitat/{{habitat.id}}\'><div class=\'tile habitat\' ng-attr-data-theme=\'{{ artifact.colorScheme }}\'><h5 class=\'title\'> {{ artifact.name }}<span class=\'glyphicon glyphicon-picture\'></span></h5><div class=\'artefact-body\'><p ng-if=\'artifact.augurCount &lt; 1\'> No Augurs</p><p ng-if=\'artifact.augurCount === 1\'> One Augur</p><p ng-if=\'artifact.augurCount &gt; 1\'> {{ artifact.augurCount }} Augurs</p></div></div></a></div><div ng-if=\'artifact.type == "factTable"\'><a href=\'#/habitat/{{artifact.habitat_id}}/factTables/{{factTable.id}}\'><div class=\'tile fact-table\' ng-attr-data-theme=\'{{ artifact.colorScheme }}\'><h5 class=\'title\'> {{artifact.name}}<span class=\'glyphicon glyphicon-list-alt\'></span></h5><div class=\'artefact-body\'><p class=\'description\'> {{artifact.description}}</p></div></div></a></div><div ng-if=\'artifact.type == "augur"\'><a ui-sref=\'augur.tree({ habitatId: artifact.habitat_id, augurId: artifact.id })\'><div class=\'tile augur\' ng-attr-data-theme=\'{{ artifact.colorScheme }}\'><h5 class=\'title\'> {{artifact.name}}<span class=\'glyphicon glyphicon-eye-open\'></span></h5><div class=\'artefact-body\'><dl class=\'description\'><dt>KPI</dt><dd> {{ artifact.learningKpiLabel }}</dd><dt>Latest evaluation</dt><dd> {{ artifact.latestEvaluationTimestamp }}</dd></dl></div><div class=\'chart\'><d3-line-chart-dashboard data=\'artifact.dashboardChartData\' height=\'30\'></d3-line-chart-dashboard></div></div></a></div></li></ul></div></div>');
 }]);
 })();
 

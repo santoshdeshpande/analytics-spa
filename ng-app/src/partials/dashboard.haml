@@ -64,9 +64,11 @@
               .artefact-body
                 %dl.description
                   %dt KPI
-                  %dd True positive rate
+                  %dd
+                    {{ artifact.learningKpiLabel }}
                   %dt Latest evaluation
-                  %dd 0.6 on 2014/04/15
+                  %dd
+                    {{ artifact.latestEvaluationTimestamp }}
               .chart
                 %d3-line-chart-dashboard{ data: 'artifact.dashboardChartData', height: '30' }
 
