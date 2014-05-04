@@ -31,12 +31,12 @@
 
     &.line-chart, &.roc-chart {
       .area {
-        @include themes ( $light: fill );
+        @include themes ( $light50: fill );
         stroke-width: 0;
       }
 
       path {
-        @include themes ( stroke );
+        @include themes ( $light10: stroke );
         stroke-width: 1;
         fill: none;
       }

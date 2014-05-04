@@ -133,7 +133,9 @@
     height: 600px;
 
     d3-performance-chart {
-      @include themes( $main: border-right-color, $light: border-top-color, $dark: border-bottom-color);
+      @include themes( $light10: border-right-color, $light50: border-top-color);
+      @include themes( $main: border-bottom-color);
+
       width: 100%;
       height: 100%;
       display: block;
@@ -141,7 +143,7 @@
 
     .bar {
       &.solid {
-        @include themes( $dark: fill );
+        @include themes( fill );
       }
     }
 
@@ -160,21 +162,21 @@
     }
 
     .threshold-line {
-      @include themes( $dark: stroke );
+      @include themes( stroke );
       stroke-width: 3;
       fill: none;
     }
 
     .threshold-label {
       rect {
-        @include themes( $dark: stroke );
+        @include themes( stroke );
         stroke-width: 3;
         fill: white;
       }
     }
 
     .legend {
-      @include themes( $dark: stroke );
+      @include themes( stroke );
 
       stroke-width: 3;
       fill: white;

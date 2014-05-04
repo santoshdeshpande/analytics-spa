@@ -67,7 +67,7 @@
 
   &.container {
     .tile {
-      @include themes(border-color, $isolated: true);
+      @include themes( $light30: border-color, $isolated: true);
 
       position: relative;
       border: 1px solid;
@@ -85,7 +85,7 @@
       }
 
       &.fact-table {
-        @include themes(background, $isolated: true, $sub-selector: '.title');
+        @include themes( background, $isolated: true, $sub-selector: '.title');
 
         .title {
           color: #fff;
@@ -93,8 +93,8 @@
       }
 
       &.augur {
-        @include themes(color, $isolated: true, $sub-selector: '.title .glyphicon');
-        @include themes($light: fill, $isolated: true, $sub-selector: '.area');
+        @include themes($light10: color, $isolated: true, $sub-selector: '.title .icon');
+        @include themes($light50: fill, $isolated: true, $sub-selector: '.area');
 
         d3-line-chart-dashboard {
           display: block;
@@ -115,6 +115,13 @@
             fill: none;
           }
         }
+
+        .icon {
+          position: absolute;
+          font-size: 1.5rem;
+          top: 3px;
+          right: 20px;
+        }
       }
 
       .title {
@@ -126,7 +133,7 @@
           position: absolute;
           font-size: 1.5rem;
           top: 5px;
-          right: 5px;
+          right: 25px;
         }
       }
 

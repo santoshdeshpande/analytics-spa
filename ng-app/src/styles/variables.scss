@@ -1,21 +1,38 @@
 // purple
-$theme-one-color-main: #6C3BB6;
-$theme-one-color-light: lighten( $theme-one-color-main, 45 );
-$theme-one-color-dark: darken( $theme-one-color-main, 10 );
-// light-blue
-$theme-two-color-main: #5C9FD2; 
-$theme-two-color-light: lighten( $theme-two-color-main, 37 );
-$theme-two-color-dark: darken( $theme-two-color-main, 10 );
-// orange
-$theme-three-color-main: #C2642C; 
-$theme-three-color-light: lighten( $theme-three-color-main, 45 );
-$theme-three-color-dark: darken( $theme-three-color-main, 10 );
-// green
-$theme-four-color-main: #5B9D4D; 
-$theme-four-color-light: lighten( $theme-four-color-main, 45 );
-$theme-four-color-dark: darken( $theme-four-color-main, 10 );
+$theme-one-color-main: #7B30B7;
+$theme-one-color-light-10: #9559C5;
+$theme-one-color-light-20: #B083D4;
+$theme-one-color-light-30: #CAACE2;
+$theme-one-color-light-40: #E5D6F1;
+$theme-one-color-light-50: #F2EAF8;
 
-@mixin theme( $name, $main, $light, $dark, $mainProp, $lightProp, $darkProp, $isolated, $sub-selector ) {
+// light-blue
+$theme-two-color-main: #00A1D3;
+$theme-two-color-light-10: #33B4DC;
+$theme-two-color-light-20: #66C7E5;
+$theme-two-color-light-30: #99D9ED;
+$theme-two-color-light-40: #CCECF6;
+$theme-two-color-light-50: #E5F5FB;
+
+// orange
+$theme-three-color-main: #DD5A26;
+$theme-three-color-light-10: #E47B51;
+$theme-three-color-light-20: #EB9C7D;
+$theme-three-color-light-30: #F1BDA8;
+$theme-three-color-light-40: #F8DED4;
+$theme-three-color-light-50: #FCEEE9;
+
+// green
+$theme-four-color-main: #00A14B;
+$theme-four-color-light-10: #33B46F;
+$theme-four-color-light-20: #66C793;
+$theme-four-color-light-30: #99D9B7;
+$theme-four-color-light-40: #CCECDB;
+$theme-four-color-light-50: #E5F5ED;
+
+
+@mixin theme( $name, $main,     $light10,     $light20,     $light30,     $light40,     $light50,
+                     $mainProp, $light10Prop, $light20Prop, $light30Prop, $light40Prop, $light50Prop, $isolated, $sub-selector ) {
   $selector: '[data-theme=#{$name}] & #{$sub-selector}';
 
   @if $isolated {
@@ -29,23 +46,41 @@ $theme-four-color-dark: darken( $theme-four-color-main, 10 );
       }
     }
     
-    @if $lightProp {
-      @each $prop in $lightProp {
-        #{$prop}: $light;
+    @if $light10Prop {
+      @each $prop in $light10Prop {
+        #{$prop}: $light10;
       }
     }
-    
-    @if $darkProp {
-      @each $prop in $darkProp {
-        #{$prop}: $dark;
+
+    @if $light20Prop {
+      @each $prop in $light20Prop {
+        #{$prop}: $light20;
+      }
+    }
+
+    @if $light30Prop {
+      @each $prop in $light30Prop {
+        #{$prop}: $light30;
+      }
+    }
+
+    @if $light40Prop {
+      @each $prop in $light40Prop {
+        #{$prop}: $light40;
+      }
+    }
+
+    @if $light50Prop {
+      @each $prop in $light50Prop {
+        #{$prop}: $light50;
       }
     }
   }
 }
 
-@mixin themes( $main: false, $light: false, $dark: false, $isolated: false, $sub-selector: '' ) {
-  @include theme( 'theme-one', $theme-one-color-main, $theme-one-color-light, $theme-one-color-dark, $main, $light, $dark, $isolated, $sub-selector );
-  @include theme( 'theme-two', $theme-two-color-main, $theme-two-color-light, $theme-two-color-dark, $main, $light, $dark, $isolated, $sub-selector );
-  @include theme( 'theme-three', $theme-three-color-main, $theme-three-color-light, $theme-three-color-dark, $main, $light, $dark, $isolated, $sub-selector );
-  @include theme( 'theme-four', $theme-four-color-main, $theme-four-color-light, $theme-four-color-dark, $main, $light, $dark, $isolated, $sub-selector );
+@mixin themes( $main: false, $light10: false,  $light20: false,  $light30: false,  $light40: false,  $light50: false,  $isolated: false, $sub-selector: '' ) {
+  @include theme( 'theme-one',   $theme-one-color-main,   $theme-one-color-light-10,   $theme-one-color-light-20,   $theme-one-color-light-30,   $theme-one-color-light-40,   $theme-one-color-light-50,   $main, $light10, $light20, $light30, $light40, $light50, $isolated, $sub-selector );
+  @include theme( 'theme-two',   $theme-two-color-main,   $theme-two-color-light-10,   $theme-two-color-light-20,   $theme-two-color-light-30,   $theme-two-color-light-40,   $theme-two-color-light-50,   $main, $light10, $light20, $light30, $light40, $light50, $isolated, $sub-selector );
+  @include theme( 'theme-three', $theme-three-color-main, $theme-three-color-light-10, $theme-three-color-light-20, $theme-three-color-light-30, $theme-three-color-light-40, $theme-three-color-light-50, $main, $light10, $light20, $light30, $light40, $light50, $isolated, $sub-selector );
+  @include theme( 'theme-four',  $theme-four-color-main,  $theme-four-color-light-10,  $theme-four-color-light-20,  $theme-four-color-light-30,  $theme-four-color-light-40,  $theme-four-color-light-50,  $main, $light10, $light20, $light30, $light40, $light50, $isolated, $sub-selector );
 }
