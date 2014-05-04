@@ -4,6 +4,12 @@
       height: 40px;
     }
   }
+
+  .top-bar-section li a.sign-out {
+    &:hover {
+      background: #fff;
+    }
+  }
 }
 
 .app-nav-bar {

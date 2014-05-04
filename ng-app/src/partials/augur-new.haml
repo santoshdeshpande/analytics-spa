@@ -66,7 +66,7 @@
               Enter a comma separated list of IDs to define the prediction events
               .row.events
                 .small-9.columns.input
-                  %textarea{ name: 'eventIds', placeholder: 'Enter a comma separated list of IDs to define the prediction events', ng: { model: 'augur.eventIds' }, 'available-event' => '' }
+                  %textarea{ name: 'eventIds', placeholder: '{{ augur.factTable.suggestedIds }}', ng: { model: 'augur.eventIds' } }
                 .small-3.columns
                   .validation
                     %h5.subheader Validation
@@ -74,15 +74,15 @@
                       %h6 You need to validate your prediction target before continuing
                     .validation-message-show-hide.validated{ ng: { show: 'eventIdsValidated' }}
                       .valid.validation-elements{ ng: { show: 'stepValid.three' }}
-                        Your prediction target ids have been verified.
+                        Your Prediction Target IDs have been verified.
                         .verified.validation-icon
                           %span.glyphicon.glyphicon-ok-circle
                       .invalid.validation-elements{ ng: { show: '!stepValid.three' }}
                         .error{ ng: { show: 'form.eventIds.$error.recognized' } }
-                          The following prediction target ids do not exist in the events table:
+                          The following Prediction Target IDs do not exist in the events table:
                           {{ unrecognizedEventIds.join(', ') }}
                         .error{ ng: { show: 'form.eventIds.$error.present' } }
-                          You need to provide one or more prediction target ids
+                          You need to provide one or more Prediction Target IDs
                         .error.validation-icon
                           %span.glyphicon.glyphicon-remove-circle
                     .validation-elements.validate-action

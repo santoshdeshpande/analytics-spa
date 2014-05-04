@@ -5702,6 +5702,8 @@ th.hide-for-touch {
 
 .top-bar .title-area .logo img {
   height: 40px; }
+.top-bar .top-bar-section li a.sign-out:hover {
+  background: #fff; }
 
 .app-nav-bar {
   background: #333;
@@ -6180,26 +6182,21 @@ th.hide-for-touch {
   height: 160px;
   width: 100%;
   display: block; }
-[data-theme=theme-one] .augur-accuracy .chart d3-pie-chart {
-  border-top-color: #9559C5;
-  border-right-color: #B083D4;
-  border-bottom-color: #CAACE2;
-  border-left-color: #E5D6F1; }
-[data-theme=theme-two] .augur-accuracy .chart d3-pie-chart {
-  border-top-color: #33B4DC;
-  border-right-color: #66C7E5;
-  border-bottom-color: #99D9ED;
-  border-left-color: #CCECF6; }
-[data-theme=theme-three] .augur-accuracy .chart d3-pie-chart {
-  border-top-color: #E47B51;
-  border-right-color: #EB9C7D;
-  border-bottom-color: #F1BDA8;
-  border-left-color: #F8DED4; }
-[data-theme=theme-four] .augur-accuracy .chart d3-pie-chart {
-  border-top-color: #33B46F;
-  border-right-color: #66C793;
-  border-bottom-color: #99D9B7;
-  border-left-color: #CCECDB; }
+.augur-accuracy .chart d3-pie-chart {
+  border-right-color: #cdcdcd;
+  border-bottom-color: #8f8f8f; }
+  [data-theme=theme-one] .augur-accuracy .chart d3-pie-chart {
+    border-top-color: #7B30B7;
+    border-left-color: #B083D4; }
+  [data-theme=theme-two] .augur-accuracy .chart d3-pie-chart {
+    border-top-color: #00A1D3;
+    border-left-color: #66C7E5; }
+  [data-theme=theme-three] .augur-accuracy .chart d3-pie-chart {
+    border-top-color: #DD5A26;
+    border-left-color: #EB9C7D; }
+  [data-theme=theme-four] .augur-accuracy .chart d3-pie-chart {
+    border-top-color: #00A14B;
+    border-left-color: #66C793; }
 .augur-accuracy .chart text {
   font-size: 0.7em; }
 .augur-accuracy .chart .axis {
@@ -6228,9 +6225,16 @@ th.hide-for-touch {
   [data-theme=theme-four] .augur-accuracy .chart.line-chart path, [data-theme=theme-four] .augur-accuracy .chart.roc-chart path {
     stroke: #33B46F; }
 .augur-accuracy .chart.line-chart path.baseline, .augur-accuracy .chart.roc-chart path.baseline {
-  stroke: red;
   stroke-width: 1;
   fill: none; }
+  [data-theme=theme-one] .augur-accuracy .chart.line-chart path.baseline, [data-theme=theme-one] .augur-accuracy .chart.roc-chart path.baseline {
+    stroke: #7B30B7; }
+  [data-theme=theme-two] .augur-accuracy .chart.line-chart path.baseline, [data-theme=theme-two] .augur-accuracy .chart.roc-chart path.baseline {
+    stroke: #00A1D3; }
+  [data-theme=theme-three] .augur-accuracy .chart.line-chart path.baseline, [data-theme=theme-three] .augur-accuracy .chart.roc-chart path.baseline {
+    stroke: #DD5A26; }
+  [data-theme=theme-four] .augur-accuracy .chart.line-chart path.baseline, [data-theme=theme-four] .augur-accuracy .chart.roc-chart path.baseline {
+    stroke: #00A14B; }
 .augur-accuracy .chart.line-chart path.helpline, .augur-accuracy .chart.roc-chart path.helpline {
   stroke: #ddd;
   stroke-width: 1;
@@ -6277,6 +6281,9 @@ th.hide-for-touch {
       color: #00A14B; }
     .augur-influencers .heading .subheader {
       margin-top: -1rem; }
+  .augur-influencers d3-influencer-chart text {
+    fill: #fff;
+    stroke: 0.1; }
   [data-theme=theme-one] .augur-influencers d3-influencer-chart {
     border-top-color: #9559C5;
     border-right-color: #B083D4;
@@ -6534,26 +6541,12 @@ th.hide-for-touch {
       background-color: #DD5A26; }
     [data-theme=theme-four] .augur-decision-tree .element-path .node {
       background-color: #00A14B; }
-  .augur-decision-tree .element-path .leaf.happy {
+  .augur-decision-tree .element-path .leaf {
     color: #fff; }
-    [data-theme=theme-one] .augur-decision-tree .element-path .leaf.happy {
-      background-color: #9559C5; }
-    [data-theme=theme-two] .augur-decision-tree .element-path .leaf.happy {
-      background-color: #33B4DC; }
-    [data-theme=theme-three] .augur-decision-tree .element-path .leaf.happy {
-      background-color: #E47B51; }
-    [data-theme=theme-four] .augur-decision-tree .element-path .leaf.happy {
-      background-color: #33B46F; }
-  .augur-decision-tree .element-path .leaf.sad {
-    color: #fff; }
-    [data-theme=theme-one] .augur-decision-tree .element-path .leaf.sad {
-      background-color: #E5D6F1; }
-    [data-theme=theme-two] .augur-decision-tree .element-path .leaf.sad {
-      background-color: #CCECF6; }
-    [data-theme=theme-three] .augur-decision-tree .element-path .leaf.sad {
-      background-color: #F8DED4; }
-    [data-theme=theme-four] .augur-decision-tree .element-path .leaf.sad {
-      background-color: #CCECDB; }
+    .augur-decision-tree .element-path .leaf.happy {
+      background-color: #00A14B; }
+    .augur-decision-tree .element-path .leaf.sad {
+      background-color: #DD5A26; }
 .augur-decision-tree .tree-tooltip {
   position: absolute;
   text-align: center;
@@ -6627,22 +6620,10 @@ th.hide-for-touch {
     fill: #66C793; }
 .augur-decision-tree .tree .leaf {
   stroke: none; }
-  [data-theme=theme-one] .augur-decision-tree .tree .leaf.happy {
-    fill: #9559C5; }
-  [data-theme=theme-two] .augur-decision-tree .tree .leaf.happy {
-    fill: #33B4DC; }
-  [data-theme=theme-three] .augur-decision-tree .tree .leaf.happy {
-    fill: #E47B51; }
-  [data-theme=theme-four] .augur-decision-tree .tree .leaf.happy {
-    fill: #33B46F; }
-  [data-theme=theme-one] .augur-decision-tree .tree .leaf.sad {
-    fill: #E5D6F1; }
-  [data-theme=theme-two] .augur-decision-tree .tree .leaf.sad {
-    fill: #CCECF6; }
-  [data-theme=theme-three] .augur-decision-tree .tree .leaf.sad {
-    fill: #F8DED4; }
-  [data-theme=theme-four] .augur-decision-tree .tree .leaf.sad {
-    fill: #CCECDB; }
+  .augur-decision-tree .tree .leaf.happy {
+    fill: #00A14B; }
+  .augur-decision-tree .tree .leaf.sad {
+    fill: #DD5A26; }
 
 [data-theme=theme-one] .augur-settings .heading h1 {
   color: #7B30B7; }
