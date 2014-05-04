@@ -39877,8 +39877,8 @@ define('controllers/augur-performance',[
       $scope.learning.allData = augur['learningReport']['performanceDrift'];
       $scope.evaluation.allData = augur['evaluationReport']['performanceDrift'];
 
-      $scope.learning.activeIndicator   = { key: 'misclassification_rate', label: 'Misclassification Rate' };
-      $scope.evaluation.activeIndicator = { key: 'false_positive_rate',    label: 'False Positive Rate'    };
+      $scope.learning.activeIndicator   = { key: augur.learningKpi, label: Constants.KEY_PERFORMANCE_INDICATORS_HASH[augur.learningKpi] };
+      $scope.evaluation.activeIndicator = { key: augur.learningKpi, label: Constants.KEY_PERFORMANCE_INDICATORS_HASH[augur.learningKpi] };
     });
 
   }];
@@ -39906,7 +39906,8 @@ define('controllers/augur-tree',[], function () {
     $scope.data = {};
 
     $scope.augur.$promise.then(function(augur){
-      $scope.data = augur['learningReport']['tree']['data'];
+      var tree = augur['learningReport']['tree'];
+      if (tree) $scope.data = tree['data'];
     });
   }];
 });
@@ -49710,8 +49711,17 @@ define('directives/d3-influencer-chart',['d3js'], function (d3) {
   function nodeValues (nodes) {
     return nodes.map(function (node) { return node.importance })
   }
+
+  function colorScale(element) {
+    return d3.scale.ordinal().range([
+      element.css('border-top-color'),
+      element.css('border-right-color'),
+      element.css('border-bottom-color'),
+      element.css('border-left-color')
+    ]);
+  }
   
-  return ['$timeout', function ($timeout) {
+  return ['$rootScope', '$timeout', function ($rootScope, $timeout) {
     return {
       restrict: 'E',
       scope: {
@@ -49731,7 +49741,12 @@ define('directives/d3-influencer-chart',['d3js'], function (d3) {
             variableLengthMin = 3,
             variableLengthMax = 12;
 
-        var color = d3.scale.category10();
+        var $element = angular.element( ele[0] );
+        var color = colorScale($element);
+        $rootScope.$on('themeChanged', function () {
+          color = colorScale($element);
+        });
+
         var format = d3.format('.2%');
         var fontSize = d3.scale.linear().range([60, 240]).nice();
 
@@ -49759,7 +49774,25 @@ define('directives/d3-influencer-chart',['d3js'], function (d3) {
           if (renderTimeout) $timeout.cancel(renderTimeout);
 
           renderTimeout = $timeout(function () {
-            var dataNodes = data.nodes.sort(function(a, b) { return a.importance - b.importance}).reverse().slice(0, maxNodes - 1);
+            var dataNodes = data.nodes
+              .sort(function (a, b) { return a.importance - b.importance })
+              .reverse()
+              .slice(0, maxNodes - 1)
+              .map(function (node) {
+                if (node.feature.length > 10) {
+                  node.line1 = node.feature.substr(0, Math.round(node.feature.length / 2));
+                  node.line2 = node.feature.substr(Math.round(node.feature.length / 2), node.feature.length);
+                  node.dy_line1 = '-.8em';
+                  node.dy_line2 = '.2em';
+                  node.dy_value = '1.2em';
+                } else {
+                  node.line1 = node.feature;
+                  node.dy_line1 = '-0.3em';
+                  node.dy_line2 = '0em';
+                  node.dy_value = '.7em';
+                }
+                return node
+              });
 
             var rMax = radiusMax(dataNodes.length);
 
@@ -49793,11 +49826,16 @@ define('directives/d3-influencer-chart',['d3js'], function (d3) {
 
             nodeEnter.append('text')
               .style('text-anchor', 'middle')
-              .attr('dy', '-.2em')
-              .text(function(d) { return d.feature });
+              .attr('dy', function(d) { return d.dy_line1 })
+              .text(function(d) { return d.line1 });
 
             nodeEnter.append('text')
-              .attr('dy', '.8em')
+              .style('text-anchor', 'middle')
+              .attr('dy', function(d) { return d.dy_line2 })
+              .text(function(d) { return d.line2 });
+
+            nodeEnter.append('text')
+              .attr('dy', function(d) { return d.dy_value })
               .style('text-anchor', 'middle')
               .text(function(d) { return format(d.value) });
 
@@ -49835,7 +49873,6 @@ define('directives/d3-line-chart',[
       },
       link: function (scope, ele, attrs) {
         var renderTimeout;
-
 
         var dimensions = {
           margins: { top: 10, right: 20, bottom: 10, left: 45 }
@@ -50257,16 +50294,24 @@ define('directives/d3-pie-chart',[
 ], function (d3, Chart) {
   
 
-  return ['$timeout', function ($timeout) {
+  function colorScale(element) {
+    return d3.scale.ordinal().range([
+      element.css('border-top-color'),
+      element.css('border-right-color'),
+      element.css('border-bottom-color'),
+      element.css('border-left-color')
+    ]);
+  }
+
+  return ['$rootScope', '$timeout', function ($rootScope, $timeout) {
     return {
       restrict: 'E',
       scope: {
-        chart: '=',
+        chart: '='
       },
       link: function (scope, ele, attrs) {
         var renderTimeout;
 
-        // define dimensions of graph
         var dimensions = {
           margins: { top: 0, right: 0, bottom: 10, left: 0 }
         };
@@ -50274,7 +50319,11 @@ define('directives/d3-pie-chart',[
         svg.attr('transform', 'translate(' + svg.width() / 2 + ',' + svg.height() / 2 + ')');
         var radius = Math.min(svg.width(), svg.height()) / 2;
 
-        var color = d3.scale.ordinal().range(['#7fc340', '#a90009', '#ee000d', '#1c9f3f']);
+        var $element = angular.element( ele[0] );
+        var color = colorScale($element);
+        $rootScope.$on('themeChanged', function () {
+          color = colorScale($element)
+        });
 
         var arc = d3.svg.arc()
           .outerRadius(radius)
