@@ -93,7 +93,7 @@
       }
 
       &.augur {
-        @include themes($light10: color, $isolated: true, $sub-selector: '.title .icon');
+        @include themes($light10: color, $isolated: true, $sub-selector: '.title .glyphicon');
         @include themes($light50: fill, $isolated: true, $sub-selector: '.area');
 
         d3-line-chart-dashboard {
