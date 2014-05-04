@@ -40,8 +40,8 @@ define([
       $scope.learning.allData = augur['learningReport']['performanceDrift'];
       $scope.evaluation.allData = augur['evaluationReport']['performanceDrift'];
 
-      $scope.learning.activeIndicator   = { key: 'misclassification_rate', label: 'Misclassification Rate' };
-      $scope.evaluation.activeIndicator = { key: 'false_positive_rate',    label: 'False Positive Rate'    };
+      $scope.learning.activeIndicator   = { key: augur.learningKpi, label: Constants.KEY_PERFORMANCE_INDICATORS_HASH[augur.learningKpi] };
+      $scope.evaluation.activeIndicator = { key: augur.learningKpi, label: Constants.KEY_PERFORMANCE_INDICATORS_HASH[augur.learningKpi] };
     });
 
   }];

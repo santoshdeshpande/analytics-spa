@@ -26,7 +26,6 @@ define([
       link: function (scope, ele, attrs) {
         var renderTimeout;
 
-
         var dimensions = {
           margins: { top: 10, right: 20, bottom: 10, left: 45 }
         };

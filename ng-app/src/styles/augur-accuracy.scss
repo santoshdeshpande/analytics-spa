@@ -17,6 +17,14 @@
       display: block;
     }
 
+    d3-pie-chart {
+      // color scale
+      @include themes( border-top-color, $light20: border-left-color );
+
+      border-right-color: #cdcdcd;
+      border-bottom-color: #8f8f8f;
+    }
+
     text {
       font-size: 0.7em;
     }
@@ -42,7 +50,7 @@
       }
 
       path.baseline {
-        stroke: red;
+        @include themes ( stroke );
         stroke-width: 1;
         fill: none;
       }
@@ -56,11 +64,11 @@
 
     &.bar-chart {
       .bar {
-        fill: steelblue;
+        @include themes ( $light10: fill );
       }
 
       .bar:hover {
-        fill: brown;
+        @include themes ( fill );
       }
 
       .axis path {

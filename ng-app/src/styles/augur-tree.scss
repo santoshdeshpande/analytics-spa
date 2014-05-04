@@ -8,19 +8,17 @@
     }
 
     .node {
-      background-color: #1f18ff;
+      @include themes ( background-color );
       color: #fff;
     }
 
     .leaf {
+      color: #fff;
       &.happy {
-        color: #fff;
-        background-color: #1c9f3f;
+        background-color: $decision-tree-happy;
       }
-
       &.sad {
-        color: #fff;
-        background-color: #ff7500;
+        background-color: $decision-tree-sad;
       }
     }
   }
@@ -68,11 +66,13 @@
   .tree {
     .link {
       fill: none;
-      stroke: #000;
+      @include themes ( $light30: stroke );
+      stroke-width: 3px;
 
       &.fat {
-        stroke: #ee000d;
-        stroke-width: 3px;
+        @include themes ( stroke );
+
+        stroke-width: 5px;
       }
     }
 
@@ -88,17 +88,17 @@
 
     .node {
       stroke: none;
-      fill: #1f18ff;
+      @include themes ( $light20: fill );
     }
 
     .leaf {
       stroke: none;
 
       &.happy {
-        fill: #1c9f3f;
+        fill: $decision-tree-happy;
       }
       &.sad {
-        fill: #ff7500;
+        fill: $decision-tree-sad;
       }
     }
   }

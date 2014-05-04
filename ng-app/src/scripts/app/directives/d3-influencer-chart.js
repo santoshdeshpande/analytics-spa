@@ -8,8 +8,17 @@ define(['d3js'], function (d3) {
   function nodeValues (nodes) {
     return nodes.map(function (node) { return node.importance })
   }
+
+  function colorScale(element) {
+    return d3.scale.ordinal().range([
+      element.css('border-top-color'),
+      element.css('border-right-color'),
+      element.css('border-bottom-color'),
+      element.css('border-left-color')
+    ]);
+  }
   
-  return ['$timeout', function ($timeout) {
+  return ['$rootScope', '$timeout', function ($rootScope, $timeout) {
     return {
       restrict: 'E',
       scope: {
@@ -29,7 +38,12 @@ define(['d3js'], function (d3) {
             variableLengthMin = 3,
             variableLengthMax = 12;
 
-        var color = d3.scale.category10();
+        var $element = angular.element( ele[0] );
+        var color = colorScale($element);
+        $rootScope.$on('themeChanged', function () {
+          color = colorScale($element);
+        });
+
         var format = d3.format('.2%');
         var fontSize = d3.scale.linear().range([60, 240]).nice();
 
@@ -57,7 +71,25 @@ define(['d3js'], function (d3) {
           if (renderTimeout) $timeout.cancel(renderTimeout);
 
           renderTimeout = $timeout(function () {
-            var dataNodes = data.nodes.sort(function(a, b) { return a.importance - b.importance}).reverse().slice(0, maxNodes - 1);
+            var dataNodes = data.nodes
+              .sort(function (a, b) { return a.importance - b.importance })
+              .reverse()
+              .slice(0, maxNodes - 1)
+              .map(function (node) {
+                if (node.feature.length > 10) {
+                  node.line1 = node.feature.substr(0, Math.round(node.feature.length / 2));
+                  node.line2 = node.feature.substr(Math.round(node.feature.length / 2), node.feature.length);
+                  node.dy_line1 = '-.8em';
+                  node.dy_line2 = '.2em';
+                  node.dy_value = '1.2em';
+                } else {
+                  node.line1 = node.feature;
+                  node.dy_line1 = '-0.3em';
+                  node.dy_line2 = '0em';
+                  node.dy_value = '.7em';
+                }
+                return node
+              });
 
             var rMax = radiusMax(dataNodes.length);
 
@@ -91,11 +123,16 @@ define(['d3js'], function (d3) {
 
             nodeEnter.append('text')
               .style('text-anchor', 'middle')
-              .attr('dy', '-.2em')
-              .text(function(d) { return d.feature });
+              .attr('dy', function(d) { return d.dy_line1 })
+              .text(function(d) { return d.line1 });
 
             nodeEnter.append('text')
-              .attr('dy', '.8em')
+              .style('text-anchor', 'middle')
+              .attr('dy', function(d) { return d.dy_line2 })
+              .text(function(d) { return d.line2 });
+
+            nodeEnter.append('text')
+              .attr('dy', function(d) { return d.dy_value })
               .style('text-anchor', 'middle')
               .text(function(d) { return format(d.value) });
 

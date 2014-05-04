@@ -1,5 +1,6 @@
 .augur-influencers {
   position: relative;
+
   .heading {
     position: absolute;
     top: 0;
@@ -11,5 +12,17 @@
     .subheader {
       margin-top: -1rem;
     }
+  }
+
+  d3-influencer-chart {
+    text { fill: #fff; stroke: .1; }
+
+    // color scale
+    @include themes(
+      $light10: border-top-color,
+      $light20: border-right-color,
+      $light30: border-bottom-color,
+      $light40: border-left-color
+    );
   }
 }

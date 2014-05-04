@@ -8,16 +8,24 @@ define([
 ], function (d3, Chart) {
   'use strict';
 
-  return ['$timeout', function ($timeout) {
+  function colorScale(element) {
+    return d3.scale.ordinal().range([
+      element.css('border-top-color'),
+      element.css('border-right-color'),
+      element.css('border-bottom-color'),
+      element.css('border-left-color')
+    ]);
+  }
+
+  return ['$rootScope', '$timeout', function ($rootScope, $timeout) {
     return {
       restrict: 'E',
       scope: {
-        chart: '=',
+        chart: '='
       },
       link: function (scope, ele, attrs) {
         var renderTimeout;
 
-        // define dimensions of graph
         var dimensions = {
           margins: { top: 0, right: 0, bottom: 10, left: 0 }
         };
@@ -25,7 +33,11 @@ define([
         svg.attr('transform', 'translate(' + svg.width() / 2 + ',' + svg.height() / 2 + ')');
         var radius = Math.min(svg.width(), svg.height()) / 2;
 
-        var color = d3.scale.ordinal().range(['#7fc340', '#a90009', '#ee000d', '#1c9f3f']);
+        var $element = angular.element( ele[0] );
+        var color = colorScale($element);
+        $rootScope.$on('themeChanged', function () {
+          color = colorScale($element)
+        });
 
         var arc = d3.svg.arc()
           .outerRadius(radius)
