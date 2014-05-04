@@ -66,7 +66,7 @@
               Enter a comma separated list of IDs to define the prediction events
               .row.events
                 .small-9.columns.input
-                  %textarea{ name: 'eventIds', placeholder: '{{ augur.factTable.suggestedIds }}', ng: { model: 'augur.eventIds' } }
+                  %textarea{ name: 'eventIds', placeholder: '{{ augur.factTable.suggestedIds }}', ng: { model: 'augur.eventIds' }, 'available-event' => '' }
                 .small-3.columns
                   .validation
                     %h5.subheader Validation
