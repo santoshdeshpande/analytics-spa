@@ -1,5 +1,5 @@
 {"id": "15J31X31PA", "name": "Augur 15J31X31PA", "description": null, "code": "15J31X31PA",
-  "learningKpi": "area_under_the_curve", "learningThreshold": 1.0, "predictionTargets": null, "learningReport": {
+  "learningKpi": "cumulative_captured_response_top_25", "learningThreshold": 1.0, "predictionTargets": null, "learningReport": {
   "lift": {
     "timestamp": "2014-05-04T02:53:06-04:00",
     "baseline": 1.0,

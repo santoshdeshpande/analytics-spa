@@ -17,7 +17,8 @@ define([
     });
 
     $scope.augur.$promise.then(function (augur) {
-      augur.learningKpiLabel = Constants.KEY_PERFORMANCE_INDICATORS_HASH[augur.learningKpi] + ' (' + parseFloat(augur.learningThreshold).toFixed(2) + ')'
+      augur.learningKpiLabel = Constants.KEY_PERFORMANCE_INDICATORS_HASH[augur.learningKpi];
+      augur.learningThresholdLabel = '(' + parseFloat(augur.learningThreshold).toFixed(2) + ')';
     });
 
 

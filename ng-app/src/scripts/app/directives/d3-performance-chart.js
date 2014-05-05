@@ -83,7 +83,7 @@ define([
             // create left yAxis
             var yAxisLeft = d3.svg.axis().scale(y).orient('left');
             graph.append('g')
-              .attr('transform', 'translate(5,0)')
+              .attr('transform', 'translate(10,0)')
               .attr('class', 'y axis')
               .call(yAxisLeft);
 

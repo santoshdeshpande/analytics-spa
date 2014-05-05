@@ -44,7 +44,7 @@ define(['d3js'], function (d3) {
           color = colorScale($element);
         });
 
-        var format = d3.format('.1f');
+        var format = d3.format('.0f');
         var fontSize = d3.scale.linear().range([60, 240]).nice();
 
         var radius = d3.scale.linear();
@@ -134,7 +134,7 @@ define(['d3js'], function (d3) {
             nodeEnter.append('text')
               .attr('dy', function(d) { return d.dy_value })
               .style('text-anchor', 'middle')
-              .text(function(d) { return format(d.value) });
+              .text(function(d) { return format(d.value * 1000) });
 
           }, 200); // renderTimeout
         };

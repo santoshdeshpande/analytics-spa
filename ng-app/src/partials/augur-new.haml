@@ -12,10 +12,10 @@
         .small-12.columns
           %a{ href: '', ng: { click: 'step=1' } }
             %h5.subheader.title
-              Step 1 - Name and Data Space
+              Step 1 - Name and DataSpace
           .body{ ng: { show: 'step==1' } }
             %h6.subheader.subtitle
-              Give your augur a unique name and select a Data Space
+              Give your augur a unique name and select a DataSpace
             .row.augur-name
               .small-1.columns
                 %label.right.inline{ for: 'augur-name' } Name
@@ -24,7 +24,7 @@
                 %small.error{ ng: { show: 'form.augurName.$error.uniqueAugurName' } } This name already exists
             .row.augur-habitat
               .small-1.columns
-                %label.right.inline{ for: 'augur-habitat' } Data Space
+                %label.right.inline{ for: 'augur-habitat' } DataSpace
               .small-3.columns.end
                 %input#augur-habitat{ name: 'augurHabitat', placeholder: 'Type to search', type: 'text', ng: { model: 'augur.habitat' }, typeahead: 'habitat as habitat.name for habitat in habitats' }
           .next-button

@@ -12,7 +12,7 @@
                   %ul.no-bullet.inline-list
                     %li.left
                       %ul.no-bullet.indicators
-                        %li{ ng: { repeat: 'indicator in indicators[0]', class: '{active: learning.activeIndicator.key===indicator.key}' } }
+                        %li{ ng: { repeat: 'indicator in indicators[0]', class: '{active: learning.activeIndicator.key===indicator.key, kpi: augur.learningKpi===indicator.key}' } }
                           %label
                             %input{ type: 'radio', ng: { model: '$parent.learning.activeIndicator', value: 'indicator' } }
                             {{ indicator.label }}
@@ -20,7 +20,7 @@
 
                     %li.middle
                       %ul.no-bullet.indicators
-                        %li{ ng: { repeat: 'indicator in indicators[1]', class: '{active: learning.activeIndicator.key===indicator.key}' } }
+                        %li{ ng: { repeat: 'indicator in indicators[1]', class: '{active: learning.activeIndicator.key===indicator.key, kpi: augur.learningKpi===indicator.key}' } }
                           %label
                             %input{ type: 'radio', ng: { model: '$parent.learning.activeIndicator', value: 'indicator' } }
                             {{ indicator.label }}
@@ -28,7 +28,7 @@
 
                     %li.right
                       %ul.no-bullet.indicators
-                        %li{ ng: { repeat: 'indicator in indicators[2]', class: '{active: learning.activeIndicator.key===indicator.key}' } }
+                        %li{ ng: { repeat: 'indicator in indicators[2]', class: '{active: learning.activeIndicator.key===indicator.key, kpi: augur.learningKpi===indicator.key}' } }
                           %label
                             %input{ type: 'radio', ng: { model: '$parent.learning.activeIndicator', value: 'indicator' } }
                             {{ indicator.label }}

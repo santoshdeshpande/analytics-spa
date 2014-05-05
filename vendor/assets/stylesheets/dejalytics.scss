@@ -6029,7 +6029,7 @@ th.hide-for-touch {
       display: table-cell;
       padding: 10px 5px; }
   .augur.action-bar .habitat-name, .augur.action-bar .back {
-    font-size: 2.75rem; }
+    font-size: 1.6875rem; }
   .augur.action-bar .actions, .augur.action-bar .info {
     padding-top: 0.5em;
     background: #fff;
@@ -6062,11 +6062,13 @@ th.hide-for-touch {
       [data-theme=theme-four] .augur.action-bar .action-button .calculate, [data-theme=theme-four] .augur.action-bar .action-button .download {
         color: #00A14B; }
   .augur.action-bar .info dt, .augur.action-bar .info dd {
+    margin-bottom: -0.1em;
     float: left; }
   .augur.action-bar .info dt {
     padding-right: 0.5em;
     clear: both; }
   .augur.action-bar .back {
+    font-size: 2.5rem;
     text-align: center; }
     .augur.action-bar .back a {
       color: #fff; }
@@ -6425,20 +6427,21 @@ th.hide-for-touch {
           .augur-performance .selection .options ul .indicators li .glyphicon {
             display: none; }
           .augur-performance .selection .options ul .indicators li.active label {
-            background: #E3D6F6;
-            margin-right: -1.1rem; }
-            .augur-performance .selection .options ul .indicators li.active label .glyphicon {
+            background: #E3D6F6; }
+          .augur-performance .selection .options ul .indicators li.kpi label {
+            margin-right: -1.4rem; }
+            .augur-performance .selection .options ul .indicators li.kpi label .glyphicon {
               margin-top: 0.2rem;
               float: right;
               display: inline;
               font-weight: bold; }
-              [data-theme=theme-one] .augur-performance .selection .options ul .indicators li.active label .glyphicon {
+              [data-theme=theme-one] .augur-performance .selection .options ul .indicators li.kpi label .glyphicon {
                 color: #7B30B7; }
-              [data-theme=theme-two] .augur-performance .selection .options ul .indicators li.active label .glyphicon {
+              [data-theme=theme-two] .augur-performance .selection .options ul .indicators li.kpi label .glyphicon {
                 color: #00A1D3; }
-              [data-theme=theme-three] .augur-performance .selection .options ul .indicators li.active label .glyphicon {
+              [data-theme=theme-three] .augur-performance .selection .options ul .indicators li.kpi label .glyphicon {
                 color: #DD5A26; }
-              [data-theme=theme-four] .augur-performance .selection .options ul .indicators li.active label .glyphicon {
+              [data-theme=theme-four] .augur-performance .selection .options ul .indicators li.kpi label .glyphicon {
                 color: #00A14B; }
         [data-theme=theme-one] .augur-performance .selection .options ul .indicators li:hover, [data-theme=theme-one] .augur-performance .selection .options ul .indicators a:focus {
           background-color: #7B30B7; }
