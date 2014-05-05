@@ -99,10 +99,6 @@
               display: none;
             }
 
-            &.active label {
-              @include themes( background );
-            }
-
             &.kpi label {
               margin-right: -1.4rem;
               .glyphicon {
