@@ -5791,6 +5791,9 @@ th.hide-for-touch {
     background: #00A14B; }
   .dashboard.container .tile.habitat .artefact-body, .dashboard.container .tile.habitat .title {
     color: #fff; }
+    .dashboard.container .tile.habitat .artefact-body .icon, .dashboard.container .tile.habitat .title .icon {
+      top: 0.4rem;
+      right: 0.4rem; }
   .dashboard.container .tile.fact-table[data-theme=theme-one] .title {
     background: #7B30B7; }
   .dashboard.container .tile.fact-table[data-theme=theme-two] .title {

@@ -67,7 +67,7 @@
 
   &.container {
     .tile {
-      @include themes( $light30: border-color, $isolated: true);
+      @include themes($light30: border-color, $isolated: true);
 
       position: relative;
       border: 1px solid;
@@ -81,11 +81,15 @@
         .artefact-body,
         .title {
           color: #fff;
+          .icon {
+            top: .4rem;
+            right: .4rem;
+          }
         }
       }
 
       &.fact-table {
-        @include themes( background, $isolated: true, $sub-selector: '.title');
+        @include themes(background, $isolated: true, $sub-selector: '.title');
 
         .title {
           color: #fff;

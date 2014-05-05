@@ -13,7 +13,7 @@
         %label{ for: 'selected-artifact-types-fact-table' } Event tables
       %li{ ng: { class: '{"active" : selectedArtifactTypes.habitat}' } }
         %input{ type: 'checkbox', id: 'selected-artifact-types-habitat', ng: { model: 'selectedArtifactTypes.habitat'} }
-        %label{ for: 'selected-artifact-types-habitat' } Habitats
+        %label{ for: 'selected-artifact-types-habitat' } Data Spaces
       %li.divider
       %li.action-bar-search
         %input{ placeholder: 'Type to search', type: 'text', ng: { model: 'artifactsQuery' }}
@@ -36,7 +36,7 @@
             .tile.habitat{ ng: { attr: { data: { theme: '{{ artifact.colorScheme }}' }}} }
               %h5.title
                 {{ artifact.name }}
-                %i.icon.icon-birdhouse
+                %span.icon.glyphicon.glyphicon-hdd
               .artefact-body
                 %p{ ng: { if: 'artifact.augurCount < 1' } }
                   No Augurs
@@ -54,6 +54,9 @@
               .artefact-body
                 %p.description
                   {{artifact.description}}
+                  %br
+                  {{artifact.observationCount}} Observations
+
 
         %div{ ng: { if: 'artifact.type == "augur"' } }
           %a{ ui: { sref: 'augur.tree({ habitatId: artifact.habitat_id, augurId: artifact.id })' } }
