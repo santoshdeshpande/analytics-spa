@@ -6068,7 +6068,7 @@ th.hide-for-touch {
     padding-right: 0.5em;
     clear: both; }
   .augur.action-bar .back {
-    font-size: 2.5rem;
+    font-size: 2rem;
     text-align: center; }
     .augur.action-bar .back a {
       color: #fff; }
@@ -6531,105 +6531,121 @@ th.hide-for-touch {
       [data-theme=theme-four] .augur-performance .chart .legend {
         stroke: #00A14B; }
 
-.augur-decision-tree .element-path {
-  text-align: center; }
-  .augur-decision-tree .element-path span {
-    display: block;
-    padding: 0.3em 0.5em;
-    font-size: 0.8em; }
-  .augur-decision-tree .element-path .node {
-    color: #fff; }
-    [data-theme=theme-one] .augur-decision-tree .element-path .node {
-      background-color: #7B30B7; }
-    [data-theme=theme-two] .augur-decision-tree .element-path .node {
-      background-color: #00A1D3; }
-    [data-theme=theme-three] .augur-decision-tree .element-path .node {
-      background-color: #DD5A26; }
-    [data-theme=theme-four] .augur-decision-tree .element-path .node {
-      background-color: #00A14B; }
-  .augur-decision-tree .element-path .leaf {
-    color: #fff; }
-    .augur-decision-tree .element-path .leaf.happy {
-      background-color: #00A14B; }
-    .augur-decision-tree .element-path .leaf.sad {
-      background-color: #DD5A26; }
-.augur-decision-tree .tree-tooltip {
-  position: absolute;
-  text-align: center;
-  padding: 0.5em;
-  border: 0px;
-  border-radius: 5px;
-  color: #fff;
-  pointer-events: none; }
-  .augur-decision-tree .tree-tooltip dl {
-    *zoom: 1;
-    margin-bottom: 0.5em;
-    width: 180px; }
-    .augur-decision-tree .tree-tooltip dl:before, .augur-decision-tree .tree-tooltip dl:after {
-      content: " ";
-      display: table; }
-    .augur-decision-tree .tree-tooltip dl:after {
-      clear: both; }
-  .augur-decision-tree .tree-tooltip dt, .augur-decision-tree .tree-tooltip dd {
-    font-size: 80%;
-    float: left;
-    margin: -0.1em 0.1em; }
-  .augur-decision-tree .tree-tooltip dt {
-    clear: both;
-    text-align: right;
-    width: 50%; }
-  .augur-decision-tree .tree-tooltip dt:after {
-    content: ':'; }
-  .augur-decision-tree .tree-tooltip .summary {
-    font-size: 80%;
-    border-top: 1px solid #fff;
-    padding-top: 0.5em; }
-    .augur-decision-tree .tree-tooltip .summary span {
+.augur-decision-tree {
+  position: relative; }
+  .augur-decision-tree .aside {
+    position: absolute; }
+  .augur-decision-tree .heading {
+    top: 0; }
+    [data-theme=theme-one] .augur-decision-tree .heading h4 {
+      color: #7B30B7; }
+    [data-theme=theme-two] .augur-decision-tree .heading h4 {
+      color: #00A1D3; }
+    [data-theme=theme-three] .augur-decision-tree .heading h4 {
+      color: #DD5A26; }
+    [data-theme=theme-four] .augur-decision-tree .heading h4 {
+      color: #00A14B; }
+    .augur-decision-tree .heading .subheader {
+      margin-top: -1rem; }
+  .augur-decision-tree .element-path {
+    text-align: center; }
+    .augur-decision-tree .element-path span {
       display: block;
-      margin: -0.3em 0; }
-.augur-decision-tree .tree .link {
-  fill: none;
-  stroke-width: 3px; }
-  [data-theme=theme-one] .augur-decision-tree .tree .link {
-    stroke: #CAACE2; }
-  [data-theme=theme-two] .augur-decision-tree .tree .link {
-    stroke: #99D9ED; }
-  [data-theme=theme-three] .augur-decision-tree .tree .link {
-    stroke: #F1BDA8; }
-  [data-theme=theme-four] .augur-decision-tree .tree .link {
-    stroke: #99D9B7; }
-  .augur-decision-tree .tree .link.fat {
-    stroke-width: 5px; }
-    [data-theme=theme-one] .augur-decision-tree .tree .link.fat {
-      stroke: #7B30B7; }
-    [data-theme=theme-two] .augur-decision-tree .tree .link.fat {
-      stroke: #00A1D3; }
-    [data-theme=theme-three] .augur-decision-tree .tree .link.fat {
-      stroke: #DD5A26; }
-    [data-theme=theme-four] .augur-decision-tree .tree .link.fat {
-      stroke: #00A14B; }
-.augur-decision-tree .tree .border {
-  fill: none;
-  shape-rendering: crispEdges;
-  stroke: #aaa; }
-.augur-decision-tree .tree text {
-  font: 10px sans-serif; }
-.augur-decision-tree .tree .node {
-  stroke: none; }
-  [data-theme=theme-one] .augur-decision-tree .tree .node {
-    fill: #B083D4; }
-  [data-theme=theme-two] .augur-decision-tree .tree .node {
-    fill: #66C7E5; }
-  [data-theme=theme-three] .augur-decision-tree .tree .node {
-    fill: #EB9C7D; }
-  [data-theme=theme-four] .augur-decision-tree .tree .node {
-    fill: #66C793; }
-.augur-decision-tree .tree .leaf {
-  stroke: none; }
-  .augur-decision-tree .tree .leaf.happy {
-    fill: #00A14B; }
-  .augur-decision-tree .tree .leaf.sad {
-    fill: #DD5A26; }
+      padding: 0.3em 0.5em;
+      font-size: 0.8em; }
+    .augur-decision-tree .element-path .node {
+      color: #fff; }
+      [data-theme=theme-one] .augur-decision-tree .element-path .node {
+        background-color: #7B30B7; }
+      [data-theme=theme-two] .augur-decision-tree .element-path .node {
+        background-color: #00A1D3; }
+      [data-theme=theme-three] .augur-decision-tree .element-path .node {
+        background-color: #DD5A26; }
+      [data-theme=theme-four] .augur-decision-tree .element-path .node {
+        background-color: #00A14B; }
+    .augur-decision-tree .element-path .leaf {
+      color: #fff; }
+      .augur-decision-tree .element-path .leaf.happy {
+        background-color: #00A14B; }
+      .augur-decision-tree .element-path .leaf.sad {
+        background-color: #DD5A26; }
+  .augur-decision-tree .tree-tooltip {
+    position: absolute;
+    text-align: center;
+    padding: 0.5em;
+    border: 0px;
+    border-radius: 5px;
+    color: #fff;
+    pointer-events: none; }
+    .augur-decision-tree .tree-tooltip dl {
+      *zoom: 1;
+      margin-bottom: 0.5em;
+      width: 180px; }
+      .augur-decision-tree .tree-tooltip dl:before, .augur-decision-tree .tree-tooltip dl:after {
+        content: " ";
+        display: table; }
+      .augur-decision-tree .tree-tooltip dl:after {
+        clear: both; }
+    .augur-decision-tree .tree-tooltip dt, .augur-decision-tree .tree-tooltip dd {
+      font-size: 80%;
+      float: left;
+      margin: -0.1em 0.1em; }
+    .augur-decision-tree .tree-tooltip dt {
+      clear: both;
+      text-align: right;
+      width: 50%; }
+    .augur-decision-tree .tree-tooltip dt:after {
+      content: ':'; }
+    .augur-decision-tree .tree-tooltip .summary {
+      font-size: 80%;
+      border-top: 1px solid #fff;
+      padding-top: 0.5em; }
+      .augur-decision-tree .tree-tooltip .summary span {
+        display: block;
+        margin: -0.3em 0; }
+  .augur-decision-tree .tree .link {
+    fill: none;
+    stroke-width: 3px; }
+    [data-theme=theme-one] .augur-decision-tree .tree .link {
+      stroke: #CAACE2; }
+    [data-theme=theme-two] .augur-decision-tree .tree .link {
+      stroke: #99D9ED; }
+    [data-theme=theme-three] .augur-decision-tree .tree .link {
+      stroke: #F1BDA8; }
+    [data-theme=theme-four] .augur-decision-tree .tree .link {
+      stroke: #99D9B7; }
+    .augur-decision-tree .tree .link.fat {
+      stroke-width: 5px; }
+      [data-theme=theme-one] .augur-decision-tree .tree .link.fat {
+        stroke: #7B30B7; }
+      [data-theme=theme-two] .augur-decision-tree .tree .link.fat {
+        stroke: #00A1D3; }
+      [data-theme=theme-three] .augur-decision-tree .tree .link.fat {
+        stroke: #DD5A26; }
+      [data-theme=theme-four] .augur-decision-tree .tree .link.fat {
+        stroke: #00A14B; }
+  .augur-decision-tree .tree .border {
+    fill: none;
+    shape-rendering: crispEdges;
+    stroke: #aaa; }
+  .augur-decision-tree .tree text {
+    font: 10px sans-serif; }
+  .augur-decision-tree .tree .node {
+    stroke: none; }
+    [data-theme=theme-one] .augur-decision-tree .tree .node {
+      fill: #B083D4; }
+    [data-theme=theme-two] .augur-decision-tree .tree .node {
+      fill: #66C7E5; }
+    [data-theme=theme-three] .augur-decision-tree .tree .node {
+      fill: #EB9C7D; }
+    [data-theme=theme-four] .augur-decision-tree .tree .node {
+      fill: #66C793; }
+  .augur-decision-tree .tree .leaf {
+    stroke: none; }
+    .augur-decision-tree .tree .leaf.happy {
+      fill: #00A14B; }
+    .augur-decision-tree .tree .leaf.sad {
+      fill: #DD5A26; }
 
 [data-theme=theme-one] .augur-settings .heading h1 {
   color: #7B30B7; }

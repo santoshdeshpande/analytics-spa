@@ -1,5 +1,8 @@
 .row.augur-decision-tree
   .columns.small-2.element-path
+    .heading{ ng: { show: 'treePathElements' }}
+      %h4 Prediction Path
+
     %dl
       %dt{ ng: { repeat: { start: 'pathElement in treePathElements track by $index' } } }
         {{ pathElement.operation }}

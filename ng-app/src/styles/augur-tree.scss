@@ -1,4 +1,22 @@
 .augur-decision-tree {
+  position: relative;
+
+  .aside {
+    position: absolute;
+  }
+
+  .heading {
+    top: 0;
+
+    h4 {
+      @include themes( color );
+    }
+
+    .subheader {
+      margin-top: -1rem;
+    }
+  }
+
   .element-path {
     text-align: center;
     span {
