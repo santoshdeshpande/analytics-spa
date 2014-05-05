@@ -55,7 +55,7 @@
                 %p.description
                   {{artifact.description}}
                   %br
-                  {{artifact.observationCount}} Observations
+                  {{artifact.observationCount | number:0 }} Observations
 
 
         %div{ ng: { if: 'artifact.type == "augur"' } }
