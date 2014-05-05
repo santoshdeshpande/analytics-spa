@@ -49747,7 +49747,7 @@ define('directives/d3-influencer-chart',['d3js'], function (d3) {
           color = colorScale($element);
         });
 
-        var format = d3.format('.2%');
+        var format = d3.format('.1f');
         var fontSize = d3.scale.linear().range([60, 240]).nice();
 
         var radius = d3.scale.linear();
@@ -49782,9 +49782,9 @@ define('directives/d3-influencer-chart',['d3js'], function (d3) {
                 if (node.feature.length > 10) {
                   node.line1 = node.feature.substr(0, Math.round(node.feature.length / 2));
                   node.line2 = node.feature.substr(Math.round(node.feature.length / 2), node.feature.length);
-                  node.dy_line1 = '-.8em';
-                  node.dy_line2 = '.2em';
-                  node.dy_value = '1.2em';
+                  node.dy_line1 = '-.6em';
+                  node.dy_line2 = '0.4em';
+                  node.dy_value = '1.4em';
                 } else {
                   node.line1 = node.feature;
                   node.dy_line1 = '-0.3em';
