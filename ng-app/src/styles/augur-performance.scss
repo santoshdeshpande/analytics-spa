@@ -100,7 +100,7 @@
             }
 
             &.active label {
-              background: #E3D6F6;
+              @include themes( background );
             }
 
             &.kpi label {
