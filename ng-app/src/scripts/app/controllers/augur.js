@@ -24,13 +24,13 @@ define([
 
     $scope.habitat = Habitat.get({
       habitatId: $stateParams.habitatId
-    })
-      .$promise
-        .then( function ( habitat ) {
-          if ( habitat.colorScheme ) {
-            $rootScope.$broadcast( 'theme', habitat.colorScheme );
-          }
-        });
+    });
+
+    $scope.habitat.$promise.then(function ( habitat ) {
+        if (habitat.colorScheme) {
+          $rootScope.$broadcast('theme', habitat.colorScheme);
+        }
+      });
 
     function trackCurrentState(currentChildState) {
       $scope.statePerformance = currentChildState;

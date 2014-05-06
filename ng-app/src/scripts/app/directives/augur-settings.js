@@ -15,7 +15,8 @@ define([
       transclude: true,
       replace: true,
       scope: {
-        augur: '='
+        augur: '=',
+        form: '='
       },
       link: function (scope, ele, attrs) {
         scope.DAYS_IN_MONTH = Constants.DAYS_IN_MONTH;

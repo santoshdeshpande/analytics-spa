@@ -3,15 +3,21 @@
     .columns.small-12
       .heading
         %h1 Augur Settings
-        %h6.subheader Here you can change a lot of things for this augur
+        %h6.subheader Update the settings for this Augur
 
-  %form{ name: 'form', novalidate: '', ng: { submit: 'form.$valid && alert("submit")' } }
+  %form{ name: 'form', novalidate: '', ng: { submit: 'form.$valid && submit()' } }
     .row
       .columns.small-12
         .form-body
-          %augur-settings{ augur: 'augur' }
+          %augur-settings{ augur: 'augurSettings', form: 'form' }
+    .row
+      .columns.small-12
+        .alert-box.alert{ ng: { if: 'error' } }
+          {{ error }}
+        .alert-box.success{ ng: { if: 'success' } }
+          {{ success }}
     .row
       .columns.small-12
         .form-buttons
-          %a.button.radius.cancel{ href: '' } Cancel
-          %input.submit.button.radius{ type: 'submit', value: 'Update augur' }
+          %a.button.radius.cancel{ ng: { click: 'initialize()' } } Cancel
+          %input.submit.button.radius{ type: 'submit', value: 'Update augur', ng: { disabled: '!form.$valid' } }

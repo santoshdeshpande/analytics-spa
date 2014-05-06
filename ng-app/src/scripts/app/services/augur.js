@@ -8,6 +8,13 @@ define([
   'use strict';
 
   return ['$resource', function ($resource) {
-    return $resource('/api/v1/habitats/:habitatId/augurs/:augurId')
+    return $resource('/api/v1/habitats/:habitatId/augurs/:augurId', {
+      augurId: '@id',
+      habitatId: '@habitatId'
+    }, {
+      update: {
+        method: 'PUT'
+      }
+    })
   }];
 });

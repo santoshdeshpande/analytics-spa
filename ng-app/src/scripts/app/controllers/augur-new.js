@@ -140,7 +140,7 @@ define([
     $scope.submit = function (augurNewAttributes) {
       augurNewAttributes = _.pick($scope.augur, ['name', 'factTableId']);
       augurNewAttributes.learningKpi = $scope.augur.learning.kpi.key;
-      augurNewAttributes.learningThreshold = $scope.augur.learning.kpi.threshold;
+      augurNewAttributes.learningThreshold = $scope.augur.learning.threshold;
       augurNewAttributes.predictionTargets = $scope.augur.eventIds.split(',');
       augurNewAttributes.evaluationScheduleAttrs = $scope.augur.evaluation.schedule;
       augurNewAttributes.predictionScheduleAttrs = $scope.augur.prediction.schedule;

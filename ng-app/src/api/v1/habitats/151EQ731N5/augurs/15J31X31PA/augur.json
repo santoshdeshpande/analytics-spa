@@ -1,4 +1,5 @@
 {"id": "15J31X31PA", "name": "Augur 15J31X31PA :)", "description": null, "code": "15J31X31PA",
+  "prediction": { "schedule": { "frequency" : "daily",  "minuteOfHour" : 12, "timeOfDay" : "12:10 am", "dayOfWeek" : "monday", "dayOfMonth" : 18 } },
   "learningKpi": "cumulative_captured_response_top_25", "learningThreshold": 1.0, "predictionTargets": null, "learningReport": {
   "lift": {
     "timestamp": "2014-05-04T02:53:06-04:00",
