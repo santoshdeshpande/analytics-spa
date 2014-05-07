@@ -7,6 +7,16 @@ define([
 ], function (Constants) {
   'use strict';
 
+  function camelize(str) {
+    if(!str) return;
+
+    var camelized =  str.replace(/(?:^|[-_])(\w)/g, function (_, c) {
+      return c ? c.toUpperCase() : '';
+    });
+
+    return camelized.charAt(0).toLowerCase() + camelized.slice(1); // special camelization (first one is lower)
+  }
+
   return  ['$state', '$scope', '$stateParams', '$q', '$timeout', 'Augur', 'Habitat', function ($state, $scope, $stateParams, $q, $timeout, Augur, Habitat) {
     $scope.trackCurrentState($state.current.name); // inherited from parent augur.js
 
@@ -29,11 +39,11 @@ define([
     ];
 
     $scope.$watch('learning.activeIndicator', function(value){
-      $scope.learning.data = $scope.learning.allData[value.key];
+      $scope.learning.data = $scope.learning.allData[camelize(value.key)];
     });
 
     $scope.$watch('evaluation.activeIndicator', function(value){
-      $scope.evaluation.data = $scope.evaluation.allData[value.key];
+      $scope.evaluation.data = $scope.evaluation.allData[camelize(value.key)];
     });
 
     $scope.augur.$promise.then(function(augur){
