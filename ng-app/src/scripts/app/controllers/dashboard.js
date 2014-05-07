@@ -47,13 +47,13 @@ define([
 
           angular.forEach(factTables[i], function(factTable) {
             factTable.type = 'factTable';
-            factTable.habitat_id = habitat.code;
+            factTable.habitatId = habitat.code;
             factTable.colorScheme = habitat.colorScheme;
             $scope.artifacts.push(factTable);
           });
           angular.forEach(augurs[i], function(augur) {
             augur.type = 'augur';
-            augur.habitat_id = habitat.code;
+            augur.habitatId = habitat.code;
             augur.colorScheme = habitat.colorScheme;
 
             augur.learningKpiLabel =

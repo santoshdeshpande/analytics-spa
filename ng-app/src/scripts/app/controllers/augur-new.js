@@ -114,11 +114,11 @@ define([
     });
 
     $scope.$watch(function(){
-      return $scope.augur.learning.kpi.threshold;
+      return $scope.augur.learning.threshold;
     }, function(){
-      var floatValue = Math.abs(+($scope.augur.learning.kpi.threshold+"".replace(/,/,'.')));
+      var floatValue = Math.abs(+($scope.augur.learning.threshold+"".replace(/,/,'.')));
 
-      if (($scope.augur.learning.kpi.threshold+"").length < 1 ||
+      if (($scope.augur.learning.threshold+"").length < 1 ||
           isNaN(floatValue) ||
           floatValue > $scope.augur.learning.kpi.max ||
           floatValue < $scope.augur.learning.kpi.min)

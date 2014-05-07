@@ -46,7 +46,7 @@
                   {{ artifact.augurCount }} Augurs
 
         %div{ ng: { if: 'artifact.type == "factTable"' } }
-          %a{ href: '#/habitat/{{artifact.habitat_id}}/factTables/{{factTable.id}}' }
+          %a{ href: '#/habitat/{{artifact.habitatId}}/factTables/{{factTable.id}}' }
             .tile.fact-table{ ng: { attr: { data: { theme: '{{ artifact.colorScheme }}' }} }}
               %h5.title
                 {{artifact.name}}
@@ -59,7 +59,7 @@
 
 
         %div{ ng: { if: 'artifact.type == "augur"' } }
-          %a{ ui: { sref: 'augur.tree({ habitatId: artifact.habitat_id, augurId: artifact.id })' } }
+          %a{ ui: { sref: 'augur.tree({ habitatId: artifact.habitatId, augurId: artifact.id })' } }
             .tile.augur{ ng: { attr: { data: { theme: '{{ artifact.colorScheme }}' }}} }
               %h5.title
                 {{artifact.name}}

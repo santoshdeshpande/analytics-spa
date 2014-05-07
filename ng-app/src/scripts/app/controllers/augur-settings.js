@@ -18,8 +18,8 @@ define([
     });
 
     $scope.initialize = function () {
-      $scope.augurSettings.evaluation = $scope.augur.evaluation;
-      $scope.augurSettings.prediction = $scope.augur.prediction;
+      $scope.augurSettings.evaluation = { schedule: $scope.augur.evaluationSchedule };
+      $scope.augurSettings.prediction = { schedule: $scope.augur.predictionSchedule };
       $scope.augurSettings.learning = { threshold: $scope.augur.learningThreshold };
 
       angular.forEach(Constants.KEY_PERFORMANCE_INDICATORS, function (indicator) {
