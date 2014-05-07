@@ -12,7 +12,8 @@ define([
     return {
       restrict: 'E',
       scope: {
-        data: '='
+        data: '=',
+        comparator: '='
       },
       link: function (scope, ele, attrs) {
         var renderTimeout;
@@ -22,7 +23,7 @@ define([
             width  = ele[0].offsetWidth - margin.left - margin.right,
             height = ele[0].offsetHeight - margin.top - margin.bottom;
 
-        var format = d3.format('.4f');
+        var format = d3.format('.1f');
         var x = d3.scale.ordinal().domain(d3.range(0,32)).rangeRoundBands([0, width], .35);
         var y = d3.scale.linear().range([height, 0]);
         var svg = d3.select(ele[0]).append('svg')
@@ -62,7 +63,14 @@ define([
 
           renderTimeout = $timeout(function () {
 
-            y.domain([0, d3.max(data, function (d) { return d.drift })]);
+            y.domain([0, d3.max(data, function (d) {
+              if (attrs.mode == 'learning') {
+                return d.drift
+              } else {
+                return d.threshold ? Math.max(d.drift, d.threshold * 1.1) : d.drift
+              }
+            })]);
+
 
             // helplines
             var yHelplineTicks = _.filter(y.ticks(), function(ele, i){ return i % 2 == 0});
@@ -95,7 +103,15 @@ define([
                   .attr('fill', 'url(#' + gradId + ')')
                   .attr('height', 0 )
                   .attr('y', height )
-                  .attr('class', function(d) { return d.drift > d.threshold ? 'bar' : 'bar solid' });
+                  .attr('class', function (d) {
+                    if (attrs.mode == 'learning') return 'bar';
+
+                    if (scope.comparator === 'lt') {
+                      return d.drift > d.threshold ? 'bar' : 'bar solid'
+                    } else {
+                      return d.drift < d.threshold ? 'bar' : 'bar solid'
+                    }
+                  });
 
             bars.transition()
               .duration( 500 )
@@ -120,12 +136,15 @@ define([
             var thresholdChangeIndexes = [];
             var thresholdLineData = [];
             for (var i = 0; i < thresholds.length; i++) {
+              if (!thresholds[i]) continue;
+
               thresholdLineData.push([i, thresholds[i]]);
               if (thresholds[i] !== thresholds[i+1]) {
                 thresholdChangeIndexes.push(i);
                 thresholdLineData.push([i+1, thresholds[i]]);
               }
             }
+
             var thresholdLine = d3.svg.line()
               .x(function (d) { return x(d[0]) - x.rangeBand()})
               .y(function (d) { return y(d[1]) });
@@ -169,7 +188,7 @@ define([
               .attr('dx', '2.8em')
               .attr('dy', '1.3em')
               .style('text-anchor', 'middle')
-              .text('Last ' + data.length + ' runs');
+              .text('Last ' + (data.length > 1 ? data.length + ' runs' : 'run'));
 
           }, 200); // renderTimeout
         };

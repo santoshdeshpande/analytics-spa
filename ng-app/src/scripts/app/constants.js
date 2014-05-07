@@ -33,6 +33,7 @@ define(['angular'], function (ng) {
       {"key": "gini_coefficient", "label": "Gini Coefficient", "min": 0.0001, "max": 1, "comparator": "lt"}
     ],
     KEY_PERFORMANCE_INDICATORS_HASH: {},
+    KEY_PERFORMANCE_INDICATORS_HASH_FULL: {},
     DAYS_IN_MONTH: [
       {"key": 1, "label": "1st"},
       {"key": 2, "label": "2nd"},
@@ -68,6 +69,7 @@ define(['angular'], function (ng) {
   (function () {
     ng.forEach(constants.KEY_PERFORMANCE_INDICATORS, function (kpi) {
       constants.KEY_PERFORMANCE_INDICATORS_HASH[kpi.key] = kpi.label;
+      constants.KEY_PERFORMANCE_INDICATORS_HASH_FULL[kpi.key] = kpi;
     })
   })();
 

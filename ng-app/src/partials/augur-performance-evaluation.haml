@@ -5,7 +5,7 @@
         %h3.title
           Performance Drift (Evaluation)
           —
-          %dropdown{ label: 'learning.activeIndicator.label' }
+          %dropdown{ label: 'evaluation.activeIndicator.label' }
             .row.selection#selection
               .columns.small-12
                 .options#options
@@ -39,4 +39,4 @@
   .row
     .columns.small-12
       .chart
-        %d3-performance-chart{ data: 'evaluation.data', mode: 'evaluation' }
+        %d3-performance-chart{ data: 'evaluation.data', mode: 'evaluation', comparator: 'evaluation.driftComparator' }

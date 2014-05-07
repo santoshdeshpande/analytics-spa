@@ -39550,6 +39550,7 @@ define('constants',['angular'], function (ng) {
       {"key": "gini_coefficient", "label": "Gini Coefficient", "min": 0.0001, "max": 1, "comparator": "lt"}
     ],
     KEY_PERFORMANCE_INDICATORS_HASH: {},
+    KEY_PERFORMANCE_INDICATORS_HASH_FULL: {},
     DAYS_IN_MONTH: [
       {"key": 1, "label": "1st"},
       {"key": 2, "label": "2nd"},
@@ -39585,6 +39586,7 @@ define('constants',['angular'], function (ng) {
   (function () {
     ng.forEach(constants.KEY_PERFORMANCE_INDICATORS, function (kpi) {
       constants.KEY_PERFORMANCE_INDICATORS_HASH[kpi.key] = kpi.label;
+      constants.KEY_PERFORMANCE_INDICATORS_HASH_FULL[kpi.key] = kpi;
     })
   })();
 
@@ -39866,15 +39868,16 @@ define('controllers/augur-performance',[
     $scope.trackCurrentState($state.current.name); // inherited from parent augur.js
 
     $scope.evaluation = {
+      allData: {},
       activeIndicator: { },
       data: {},
-      allData: {}
+      driftComparator: null
     };
 
     $scope.learning = {
+      allData: {},
       activeIndicator: { },
-      data: {},
-      allData: {}
+      data: {}
     };
 
     $scope.indicators = [
@@ -39889,6 +39892,7 @@ define('controllers/augur-performance',[
 
     $scope.$watch('evaluation.activeIndicator', function(value){
       $scope.evaluation.data = $scope.evaluation.allData[camelize(value.key)];
+      $scope.evaluation.driftComparator = value.key && Constants.KEY_PERFORMANCE_INDICATORS_HASH_FULL[value.key]['comparator'];
     });
 
     $scope.augur.$promise.then(function(augur){
@@ -50176,7 +50180,8 @@ define('directives/d3-performance-chart',[
     return {
       restrict: 'E',
       scope: {
-        data: '='
+        data: '=',
+        comparator: '='
       },
       link: function (scope, ele, attrs) {
         var renderTimeout;
@@ -50186,7 +50191,7 @@ define('directives/d3-performance-chart',[
             width  = ele[0].offsetWidth - margin.left - margin.right,
             height = ele[0].offsetHeight - margin.top - margin.bottom;
 
-        var format = d3.format('.4f');
+        var format = d3.format('.1f');
         var x = d3.scale.ordinal().domain(d3.range(0,32)).rangeRoundBands([0, width], .35);
         var y = d3.scale.linear().range([height, 0]);
         var svg = d3.select(ele[0]).append('svg')
@@ -50226,7 +50231,14 @@ define('directives/d3-performance-chart',[
 
           renderTimeout = $timeout(function () {
 
-            y.domain([0, d3.max(data, function (d) { return d.drift })]);
+            y.domain([0, d3.max(data, function (d) {
+              if (attrs.mode == 'learning') {
+                return d.drift
+              } else {
+                return d.threshold ? Math.max(d.drift, d.threshold * 1.1) : d.drift
+              }
+            })]);
+
 
             // helplines
             var yHelplineTicks = _.filter(y.ticks(), function(ele, i){ return i % 2 == 0});
@@ -50259,7 +50271,15 @@ define('directives/d3-performance-chart',[
                   .attr('fill', 'url(#' + gradId + ')')
                   .attr('height', 0 )
                   .attr('y', height )
-                  .attr('class', function(d) { return d.drift > d.threshold ? 'bar' : 'bar solid' });
+                  .attr('class', function (d) {
+                    if (attrs.mode == 'learning') return 'bar';
+
+                    if (scope.comparator === 'lt') {
+                      return d.drift > d.threshold ? 'bar' : 'bar solid'
+                    } else {
+                      return d.drift < d.threshold ? 'bar' : 'bar solid'
+                    }
+                  });
 
             bars.transition()
               .duration( 500 )
@@ -50284,12 +50304,15 @@ define('directives/d3-performance-chart',[
             var thresholdChangeIndexes = [];
             var thresholdLineData = [];
             for (var i = 0; i < thresholds.length; i++) {
+              if (!thresholds[i]) continue;
+
               thresholdLineData.push([i, thresholds[i]]);
               if (thresholds[i] !== thresholds[i+1]) {
                 thresholdChangeIndexes.push(i);
                 thresholdLineData.push([i+1, thresholds[i]]);
               }
             }
+
             var thresholdLine = d3.svg.line()
               .x(function (d) { return x(d[0]) - x.rangeBand()})
               .y(function (d) { return y(d[1]) });
@@ -50333,7 +50356,7 @@ define('directives/d3-performance-chart',[
               .attr('dx', '2.8em')
               .attr('dy', '1.3em')
               .style('text-anchor', 'middle')
-              .text('Last ' + data.length + ' runs');
+              .text('Last ' + (data.length > 1 ? data.length + ' runs' : 'run'));
 
           }, 200); // renderTimeout
         };
@@ -56801,7 +56824,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('partials/augur-performance-evaluation.html',
-    '<div class=\'augur-performance\'><div class=\'row\'><div class=\'columns small-12\'><div class=\'heading\'><h3 class=\'title\'> Performance Drift (Evaluation) —<dropdown label=\'learning.activeIndicator.label\'><div class=\'row selection\' id=\'selection\'><div class=\'columns small-12\'><div class=\'options\' id=\'options\'><ul class=\'no-bullet inline-list\'><li class=\'left\'><ul class=\'no-bullet indicators\'><li ng-class=\'{active: evaluation.activeIndicator.key===indicator.key, kpi: augur.learningKpi===indicator.key}\' ng-repeat=\'indicator in indicators[0]\'> <label><input ng-model=\'$parent.evaluation.activeIndicator\' ng-value=\'indicator\' type=\'radio\'> {{ indicator.label }}<span class=\'glyphicon glyphicon-ok-circle\'></span></label></li></ul></li><li class=\'middle\'><ul class=\'no-bullet indicators\'><li ng-class=\'{active: evaluation.activeIndicator.key===indicator.key, kpi: augur.learningKpi===indicator.key}\' ng-repeat=\'indicator in indicators[1]\'> <label><input ng-model=\'$parent.evaluation.activeIndicator\' ng-value=\'indicator\' type=\'radio\'> {{ indicator.label }}<span class=\'glyphicon glyphicon-ok-circle\'></span></label></li></ul></li><li class=\'right\'><ul class=\'no-bullet indicators\'><li ng-class=\'{active: evaluation.activeIndicator.key===indicator.key, kpi: augur.learningKpi===indicator.key}\' ng-repeat=\'indicator in indicators[2]\'> <label><input ng-model=\'$parent.evaluation.activeIndicator\' ng-value=\'indicator\' type=\'radio\'> {{ indicator.label }}<span class=\'glyphicon glyphicon-ok-circle\'></span></label></li></ul></li></ul></div></div></div></dropdown></h3><h6 class=\'subheader\'>Changes in the evaluation data runs over the last 30 days</h6></div></div></div><div class=\'row\'><div class=\'columns small-12\'><div class=\'chart\'><d3-performance-chart data=\'evaluation.data\' mode=\'evaluation\'></d3-performance-chart></div></div></div></div>');
+    '<div class=\'augur-performance\'><div class=\'row\'><div class=\'columns small-12\'><div class=\'heading\'><h3 class=\'title\'> Performance Drift (Evaluation) —<dropdown label=\'evaluation.activeIndicator.label\'><div class=\'row selection\' id=\'selection\'><div class=\'columns small-12\'><div class=\'options\' id=\'options\'><ul class=\'no-bullet inline-list\'><li class=\'left\'><ul class=\'no-bullet indicators\'><li ng-class=\'{active: evaluation.activeIndicator.key===indicator.key, kpi: augur.learningKpi===indicator.key}\' ng-repeat=\'indicator in indicators[0]\'> <label><input ng-model=\'$parent.evaluation.activeIndicator\' ng-value=\'indicator\' type=\'radio\'> {{ indicator.label }}<span class=\'glyphicon glyphicon-ok-circle\'></span></label></li></ul></li><li class=\'middle\'><ul class=\'no-bullet indicators\'><li ng-class=\'{active: evaluation.activeIndicator.key===indicator.key, kpi: augur.learningKpi===indicator.key}\' ng-repeat=\'indicator in indicators[1]\'> <label><input ng-model=\'$parent.evaluation.activeIndicator\' ng-value=\'indicator\' type=\'radio\'> {{ indicator.label }}<span class=\'glyphicon glyphicon-ok-circle\'></span></label></li></ul></li><li class=\'right\'><ul class=\'no-bullet indicators\'><li ng-class=\'{active: evaluation.activeIndicator.key===indicator.key, kpi: augur.learningKpi===indicator.key}\' ng-repeat=\'indicator in indicators[2]\'> <label><input ng-model=\'$parent.evaluation.activeIndicator\' ng-value=\'indicator\' type=\'radio\'> {{ indicator.label }}<span class=\'glyphicon glyphicon-ok-circle\'></span></label></li></ul></li></ul></div></div></div></dropdown></h3><h6 class=\'subheader\'>Changes in the evaluation data runs over the last 30 days</h6></div></div></div><div class=\'row\'><div class=\'columns small-12\'><div class=\'chart\'><d3-performance-chart comparator=\'evaluation.driftComparator\' data=\'evaluation.data\' mode=\'evaluation\'></d3-performance-chart></div></div></div></div>');
 }]);
 })();
 

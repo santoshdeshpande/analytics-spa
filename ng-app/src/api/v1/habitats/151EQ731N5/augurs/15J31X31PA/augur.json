@@ -1,4 +1,4 @@
-{"id": "15J31X31PA", "name": "Augur 15J31X31PA :)", "description": null, "code": "15J31X31PA", "learningKpi": "area_under_the_curve", "learningThreshold": 1.0, "predictionTargets": null, "learningReport": {
+{"id": "15J31X31PA", "name": "Augur 15J31X31PA :)", "description": null, "code": "15J31X31PA", "learningKpi": "cumulative_lift_top_25", "learningThreshold": 10.0, "predictionTargets": null, "learningReport": {
   "lift": {
     "timestamp": "2014-05-04T02:53:06-04:00",
     "baseline": 1.0,
@@ -306,1984 +306,1600 @@
     "averageSquaredError": [
       {
         "drift": 0.177452230914282,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.177452230914282,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.177452230914282,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.177452230914282,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.177452230914282,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.177452230914282,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.177452230914282,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.177452230914282,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.177452230914282,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.177452230914282,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.177452230914282,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.177452230914282,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       }
     ],
     "areaUnderTheCurve": [
       {
         "drift": 0.807396031093418,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.807396031093418,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.807396031093418,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.807396031093418,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.807396031093418,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.807396031093418,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.807396031093418,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.807396031093418,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.807396031093418,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.807396031093418,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.807396031093418,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.807396031093418,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       }
     ],
     "truePositive": [
       {
         "drift": 2410.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 2410.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 2410.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 2410.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 2410.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 2410.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 2410.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 2410.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 2410.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 2410.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 2410.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 2410.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       }
     ],
     "trueNegative": [
       {
         "drift": 2387.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 2387.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 2387.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 2387.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 2387.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 2387.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 2387.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 2387.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 2387.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 2387.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 2387.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 2387.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       }
     ],
     "falsePositive": [
       {
         "drift": 888.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 888.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 888.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 888.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 888.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 888.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 888.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 888.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 888.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 888.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 888.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 888.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       }
     ],
     "falseNegative": [
       {
         "drift": 867.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 867.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 867.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 867.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 867.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 867.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 867.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 867.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 867.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 867.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 867.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 867.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       }
     ],
     "truePositiveRate": [
       {
         "drift": 0.367826617826618,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.367826617826618,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.367826617826618,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.367826617826618,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.367826617826618,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.367826617826618,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.367826617826618,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.367826617826618,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.367826617826618,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.367826617826618,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.367826617826618,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.367826617826618,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       }
     ],
     "trueNegativeRate": [
       {
         "drift": 0.364316239316239,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.364316239316239,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.364316239316239,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.364316239316239,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.364316239316239,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.364316239316239,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.364316239316239,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.364316239316239,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.364316239316239,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.364316239316239,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.364316239316239,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.364316239316239,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       }
     ],
     "falsePositiveRate": [
       {
         "drift": 0.135531135531136,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.135531135531136,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.135531135531136,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.135531135531136,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.135531135531136,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.135531135531136,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.135531135531136,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.135531135531136,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.135531135531136,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.135531135531136,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.135531135531136,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.135531135531136,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       }
     ],
     "falseNegativeRate": [
       {
         "drift": 0.132326007326007,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.132326007326007,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.132326007326007,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.132326007326007,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.132326007326007,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.132326007326007,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.132326007326007,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.132326007326007,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.132326007326007,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.132326007326007,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.132326007326007,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.132326007326007,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       }
     ],
     "sensitivity": [
       {
         "drift": 0.735428745804089,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.735428745804089,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.735428745804089,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.735428745804089,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.735428745804089,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.735428745804089,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.735428745804089,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.735428745804089,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.735428745804089,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.735428745804089,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.735428745804089,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.735428745804089,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       }
     ],
     "specificity": [
       {
         "drift": 0.728854961832061,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.728854961832061,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.728854961832061,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.728854961832061,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.728854961832061,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.728854961832061,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.728854961832061,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.728854961832061,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.728854961832061,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.728854961832061,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.728854961832061,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.728854961832061,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       }
     ],
     "accuracy": [
       {
         "drift": 0.732142857142857,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.732142857142857,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.732142857142857,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.732142857142857,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.732142857142857,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.732142857142857,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.732142857142857,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.732142857142857,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.732142857142857,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.732142857142857,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.732142857142857,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.732142857142857,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       }
     ],
     "precision": [
       {
         "drift": 0.730745906610067,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.730745906610067,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.730745906610067,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.730745906610067,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.730745906610067,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.730745906610067,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.730745906610067,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.730745906610067,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.730745906610067,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.730745906610067,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.730745906610067,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.730745906610067,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       }
     ],
     "negativePredictiveValue": [
       {
         "drift": 0.733558696988322,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.733558696988322,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.733558696988322,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.733558696988322,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.733558696988322,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.733558696988322,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.733558696988322,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.733558696988322,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.733558696988322,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.733558696988322,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.733558696988322,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.733558696988322,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       }
     ],
     "misclassificationRate": [
       {
         "drift": 0.267857142857143,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.267857142857143,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.267857142857143,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.267857142857143,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.267857142857143,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.267857142857143,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.267857142857143,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.267857142857143,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.267857142857143,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.267857142857143,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.267857142857143,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.267857142857143,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       }
     ],
     "positive": [
       {
         "drift": 4797.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 4797.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 4797.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 4797.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 4797.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 4797.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 4797.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 4797.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 4797.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 4797.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 4797.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 4797.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       }
     ],
     "negative": [
       {
         "drift": 1755.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 1755.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 1755.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 1755.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 1755.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 1755.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 1755.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 1755.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 1755.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 1755.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 1755.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 1755.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       }
     ],
     "observations": [
       {
         "drift": 6552.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 6552.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 6552.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 6552.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 6552.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 6552.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 6552.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 6552.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 6552.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 6552.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 6552.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 6552.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       }
     ],
     "cumulativeCapturedResponseTop10": [
       {
         "drift": 0.165090021361001,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.165090021361001,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.165090021361001,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.165090021361001,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.165090021361001,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.165090021361001,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.165090021361001,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.165090021361001,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.165090021361001,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.165090021361001,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.165090021361001,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.165090021361001,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       }
     ],
     "cumulativeCapturedResponseTop25": [
       {
         "drift": 0.412572474824535,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.412572474824535,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.412572474824535,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.412572474824535,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.412572474824535,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.412572474824535,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.412572474824535,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.412572474824535,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.412572474824535,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.412572474824535,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.412572474824535,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.412572474824535,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       }
     ],
     "cumulativeLiftTop10": [
       {
         "drift": 1.64888692066658,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 1.64888692066658,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 1.64888692066658,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 1.64888692066658,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 1.64888692066658,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 1.64888692066658,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 1.64888692066658,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 1.64888692066658,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 1.64888692066658,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 1.64888692066658,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 1.64888692066658,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 1.64888692066658,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       }
     ],
     "cumulativeLiftTop25": [
       {
         "drift": 1.65028989929814,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 1.65028989929814,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 1.65028989929814,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 1.65028989929814,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 1.65028989929814,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 1.65028989929814,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 1.65028989929814,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 1.65028989929814,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 1.65028989929814,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 1.65028989929814,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 1.65028989929814,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 1.65028989929814,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       }
     ],
     "cumulativeResponseTop10": [
       {
         "drift": 0.82469512195122,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.82469512195122,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.82469512195122,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.82469512195122,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.82469512195122,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.82469512195122,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.82469512195122,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.82469512195122,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.82469512195122,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.82469512195122,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.82469512195122,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.82469512195122,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       }
     ],
     "cumulativeResponseTop25": [
       {
         "drift": 0.825396825396825,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.825396825396825,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.825396825396825,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.825396825396825,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.825396825396825,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.825396825396825,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.825396825396825,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.825396825396825,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.825396825396825,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.825396825396825,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.825396825396825,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.825396825396825,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       }
     ],
     "fScore": [
       {
         "drift": 0.733079847908745,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.733079847908745,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.733079847908745,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.733079847908745,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.733079847908745,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.733079847908745,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.733079847908745,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.733079847908745,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.733079847908745,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.733079847908745,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.733079847908745,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.733079847908745,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       }
     ],
     "informedness": [
       {
         "drift": 0.46428370763615,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.46428370763615,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.46428370763615,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.46428370763615,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.46428370763615,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.46428370763615,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.46428370763615,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.46428370763615,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.46428370763615,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.46428370763615,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.46428370763615,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.46428370763615,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       }
     ],
     "markedness": [
       {
         "drift": 0.464304603598389,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.464304603598389,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.464304603598389,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.464304603598389,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.464304603598389,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.464304603598389,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.464304603598389,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.464304603598389,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.464304603598389,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.464304603598389,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.464304603598389,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.464304603598389,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       }
     ],
     "rootAverageSquaredError": [
       {
         "drift": 0.42125079336932,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.42125079336932,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.42125079336932,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.42125079336932,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.42125079336932,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.42125079336932,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.42125079336932,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.42125079336932,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.42125079336932,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.42125079336932,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.42125079336932,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.42125079336932,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       }
     ],
     "sse": [
       {
         "drift": 0.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.0,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       }
     ],
     "maximumAbsoluteError": [
       {
         "drift": 0.957078313253012,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.957078313253012,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.957078313253012,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.957078313253012,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.957078313253012,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.957078313253012,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.957078313253012,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.957078313253012,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.957078313253012,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.957078313253012,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.957078313253012,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.957078313253012,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       }
     ],
     "giniCoefficient": [
       {
         "drift": 0.614792062186835,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.614792062186835,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.614792062186835,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.614792062186835,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.614792062186835,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.614792062186835,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.614792062186835,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.614792062186835,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.614792062186835,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.614792062186835,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.614792062186835,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       },
       {
         "drift": 0.614792062186835,
-        "threshold": null,
         "timestamp": "2014-05-04T02:53:06-04:00"
       }
     ]
@@ -3277,224 +2893,967 @@
     "averageSquaredError": [
       {
         "drift": 0.177452230914282,
-        "threshold": null,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.177452230914282,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.177452230914282,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.177452230914282,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.177452230914282,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.177452230914282,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.177452230914282,
         "timestamp": "2014-05-04T02:53:06-04:00"
       }
     ],
     "areaUnderTheCurve": [
       {
         "drift": 0.807396031093418,
-        "threshold": 1.0,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.807396031093418,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.807396031093418,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.807396031093418,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.807396031093418,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.807396031093418,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.807396031093418,
         "timestamp": "2014-05-04T02:53:06-04:00"
       }
     ],
     "truePositive": [
       {
         "drift": 2410.0,
-        "threshold": null,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 2410.0,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 2410.0,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 2410.0,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 2410.0,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 2410.0,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 2410.0,
         "timestamp": "2014-05-04T02:53:06-04:00"
       }
     ],
     "trueNegative": [
       {
         "drift": 2387.0,
-        "threshold": null,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 2387.0,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 2387.0,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 2387.0,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 2387.0,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 2387.0,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 2387.0,
         "timestamp": "2014-05-04T02:53:06-04:00"
       }
     ],
     "falsePositive": [
       {
         "drift": 888.0,
-        "threshold": null,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 888.0,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 888.0,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 888.0,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 888.0,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 888.0,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 888.0,
         "timestamp": "2014-05-04T02:53:06-04:00"
       }
     ],
     "falseNegative": [
       {
         "drift": 867.0,
-        "threshold": null,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 867.0,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 867.0,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 867.0,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 867.0,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 867.0,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 867.0,
         "timestamp": "2014-05-04T02:53:06-04:00"
       }
     ],
     "truePositiveRate": [
       {
         "drift": 0.367826617826618,
-        "threshold": null,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.367826617826618,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.367826617826618,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.367826617826618,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.367826617826618,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.367826617826618,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.367826617826618,
         "timestamp": "2014-05-04T02:53:06-04:00"
       }
     ],
     "trueNegativeRate": [
       {
         "drift": 0.364316239316239,
-        "threshold": null,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.364316239316239,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.364316239316239,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.364316239316239,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.364316239316239,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.364316239316239,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.364316239316239,
         "timestamp": "2014-05-04T02:53:06-04:00"
       }
     ],
     "falsePositiveRate": [
       {
         "drift": 0.135531135531136,
-        "threshold": null,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.135531135531136,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.135531135531136,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.135531135531136,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.135531135531136,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.135531135531136,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.135531135531136,
         "timestamp": "2014-05-04T02:53:06-04:00"
       }
     ],
     "falseNegativeRate": [
       {
         "drift": 0.132326007326007,
-        "threshold": null,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.132326007326007,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.132326007326007,
+        "threshold": 0.7,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.132326007326007,
+        "threshold": 0.7,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.132326007326007,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.132326007326007,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.132326007326007,
         "timestamp": "2014-05-04T02:53:06-04:00"
       }
     ],
     "sensitivity": [
       {
         "drift": 0.735428745804089,
-        "threshold": null,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.735428745804089,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.735428745804089,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.735428745804089,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.735428745804089,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.735428745804089,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.735428745804089,
         "timestamp": "2014-05-04T02:53:06-04:00"
       }
     ],
     "specificity": [
       {
         "drift": 0.728854961832061,
-        "threshold": null,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.728854961832061,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.728854961832061,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.728854961832061,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.728854961832061,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.728854961832061,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.728854961832061,
         "timestamp": "2014-05-04T02:53:06-04:00"
       }
     ],
     "accuracy": [
       {
         "drift": 0.732142857142857,
-        "threshold": null,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.732142857142857,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.732142857142857,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.732142857142857,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.732142857142857,
+        "threshold": 0.3,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.732142857142857,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.732142857142857,
         "timestamp": "2014-05-04T02:53:06-04:00"
       }
     ],
     "precision": [
       {
         "drift": 0.730745906610067,
-        "threshold": null,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.730745906610067,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.730745906610067,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.730745906610067,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.730745906610067,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.730745906610067,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.730745906610067,
         "timestamp": "2014-05-04T02:53:06-04:00"
       }
     ],
     "negativePredictiveValue": [
       {
         "drift": 0.733558696988322,
-        "threshold": null,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.733558696988322,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.733558696988322,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.733558696988322,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.733558696988322,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.733558696988322,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.733558696988322,
         "timestamp": "2014-05-04T02:53:06-04:00"
       }
     ],
     "misclassificationRate": [
       {
         "drift": 0.267857142857143,
-        "threshold": null,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.267857142857143,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.267857142857143,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.267857142857143,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.267857142857143,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.267857142857143,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.267857142857143,
         "timestamp": "2014-05-04T02:53:06-04:00"
       }
     ],
     "positive": [
       {
         "drift": 4797.0,
-        "threshold": null,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 4797.0,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 4797.0,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 4797.0,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 4797.0,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 4797.0,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 4797.0,
         "timestamp": "2014-05-04T02:53:06-04:00"
       }
     ],
     "negative": [
       {
         "drift": 1755.0,
-        "threshold": null,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 1755.0,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 1755.0,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 1755.0,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 1755.0,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 1755.0,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 1755.0,
         "timestamp": "2014-05-04T02:53:06-04:00"
       }
     ],
     "observations": [
       {
         "drift": 6552.0,
-        "threshold": null,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 6552.0,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 6552.0,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 6552.0,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 6552.0,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 6552.0,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 6552.0,
         "timestamp": "2014-05-04T02:53:06-04:00"
       }
     ],
     "cumulativeCapturedResponseTop10": [
       {
         "drift": 0.165090021361001,
-        "threshold": null,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.165090021361001,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.165090021361001,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.165090021361001,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.165090021361001,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.165090021361001,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.165090021361001,
         "timestamp": "2014-05-04T02:53:06-04:00"
       }
     ],
     "cumulativeCapturedResponseTop25": [
       {
         "drift": 0.412572474824535,
-        "threshold": null,
+        "threshold": 0.7,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.412572474824535,
+        "threshold": 0.7,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.412572474824535,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.412572474824535,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.412572474824535,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.412572474824535,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.412572474824535,
         "timestamp": "2014-05-04T02:53:06-04:00"
       }
     ],
     "cumulativeLiftTop10": [
       {
         "drift": 1.64888692066658,
-        "threshold": null,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 1.64888692066658,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 1.64888692066658,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 1.64888692066658,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 1.64888692066658,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 1.64888692066658,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 1.64888692066658,
         "timestamp": "2014-05-04T02:53:06-04:00"
       }
     ],
     "cumulativeLiftTop25": [
       {
         "drift": 1.65028989929814,
-        "threshold": null,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 1.65028989929814,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 1.65028989929814,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 1.65028989929814,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 1.65028989929814,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 1.65028989929814,
+        "threshold": 10.0,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 1.65028989929814,
+        "threshold": 10.0,
         "timestamp": "2014-05-04T02:53:06-04:00"
       }
     ],
     "cumulativeResponseTop10": [
       {
         "drift": 0.82469512195122,
-        "threshold": null,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.82469512195122,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.82469512195122,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.82469512195122,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.82469512195122,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.82469512195122,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.82469512195122,
         "timestamp": "2014-05-04T02:53:06-04:00"
       }
     ],
     "cumulativeResponseTop25": [
       {
         "drift": 0.825396825396825,
-        "threshold": null,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.825396825396825,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.825396825396825,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.825396825396825,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.825396825396825,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.825396825396825,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.825396825396825,
         "timestamp": "2014-05-04T02:53:06-04:00"
       }
     ],
     "fScore": [
       {
         "drift": 0.733079847908745,
-        "threshold": null,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.733079847908745,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.733079847908745,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.733079847908745,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.733079847908745,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.733079847908745,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.733079847908745,
         "timestamp": "2014-05-04T02:53:06-04:00"
       }
     ],
     "informedness": [
       {
         "drift": 0.46428370763615,
-        "threshold": null,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.46428370763615,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.46428370763615,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.46428370763615,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.46428370763615,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.46428370763615,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.46428370763615,
         "timestamp": "2014-05-04T02:53:06-04:00"
       }
     ],
     "markedness": [
       {
         "drift": 0.464304603598389,
-        "threshold": null,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.464304603598389,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.464304603598389,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.464304603598389,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.464304603598389,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.464304603598389,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.464304603598389,
         "timestamp": "2014-05-04T02:53:06-04:00"
       }
     ],
     "rootAverageSquaredError": [
       {
         "drift": 0.42125079336932,
-        "threshold": null,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.42125079336932,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.42125079336932,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.42125079336932,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.42125079336932,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.42125079336932,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.42125079336932,
         "timestamp": "2014-05-04T02:53:06-04:00"
       }
     ],
     "sse": [
       {
         "drift": 0.0,
-        "threshold": null,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.0,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.0,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.0,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.0,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.0,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.0,
         "timestamp": "2014-05-04T02:53:06-04:00"
       }
     ],
     "maximumAbsoluteError": [
       {
         "drift": 0.957078313253012,
-        "threshold": null,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.957078313253012,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.957078313253012,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.957078313253012,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.957078313253012,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.957078313253012,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.957078313253012,
         "timestamp": "2014-05-04T02:53:06-04:00"
       }
     ],
     "giniCoefficient": [
       {
         "drift": 0.614792062186835,
-        "threshold": null,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.614792062186835,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.614792062186835,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.614792062186835,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.614792062186835,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.614792062186835,
+        "timestamp": "2014-05-04T02:53:06-04:00"
+      },
+      {
+        "drift": 0.614792062186835,
         "timestamp": "2014-05-04T02:53:06-04:00"
       }
     ]

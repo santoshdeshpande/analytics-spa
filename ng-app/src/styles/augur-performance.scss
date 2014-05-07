@@ -99,6 +99,10 @@
               display: none;
             }
 
+            &.active label {
+              @include themes( $light40: background);
+            }
+
             &.kpi label {
               margin-right: -1.4rem;
               .glyphicon {
@@ -131,7 +135,7 @@
     height: 600px;
 
     d3-performance-chart {
-      @include themes( $light10: border-right-color, $light50: border-top-color);
+      @include themes( $light20: border-right-color, $light50: border-top-color);
       @include themes( $main: border-bottom-color);
 
       width: 100%;

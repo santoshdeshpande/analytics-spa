@@ -6426,6 +6426,14 @@ th.hide-for-touch {
             border-color: #00A14B; }
           .augur-performance .selection .options ul .indicators li .glyphicon {
             display: none; }
+          [data-theme=theme-one] .augur-performance .selection .options ul .indicators li.active label {
+            background: #E5D6F1; }
+          [data-theme=theme-two] .augur-performance .selection .options ul .indicators li.active label {
+            background: #CCECF6; }
+          [data-theme=theme-three] .augur-performance .selection .options ul .indicators li.active label {
+            background: #F8DED4; }
+          [data-theme=theme-four] .augur-performance .selection .options ul .indicators li.active label {
+            background: #CCECDB; }
           .augur-performance .selection .options ul .indicators li.kpi label {
             margin-right: -1.4rem; }
             .augur-performance .selection .options ul .indicators li.kpi label .glyphicon {
@@ -6460,16 +6468,16 @@ th.hide-for-touch {
       height: 100%;
       display: block; }
       [data-theme=theme-one] .augur-performance .chart d3-performance-chart {
-        border-right-color: #9559C5;
+        border-right-color: #B083D4;
         border-top-color: #F2EAF8; }
       [data-theme=theme-two] .augur-performance .chart d3-performance-chart {
-        border-right-color: #33B4DC;
+        border-right-color: #66C7E5;
         border-top-color: #E5F5FB; }
       [data-theme=theme-three] .augur-performance .chart d3-performance-chart {
-        border-right-color: #E47B51;
+        border-right-color: #EB9C7D;
         border-top-color: #FCEEE9; }
       [data-theme=theme-four] .augur-performance .chart d3-performance-chart {
-        border-right-color: #33B46F;
+        border-right-color: #66C793;
         border-top-color: #E5F5ED; }
       [data-theme=theme-one] .augur-performance .chart d3-performance-chart {
         border-bottom-color: #7B30B7; }

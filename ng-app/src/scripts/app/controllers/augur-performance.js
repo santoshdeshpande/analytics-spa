@@ -21,15 +21,16 @@ define([
     $scope.trackCurrentState($state.current.name); // inherited from parent augur.js
 
     $scope.evaluation = {
+      allData: {},
       activeIndicator: { },
       data: {},
-      allData: {}
+      driftComparator: null
     };
 
     $scope.learning = {
+      allData: {},
       activeIndicator: { },
-      data: {},
-      allData: {}
+      data: {}
     };
 
     $scope.indicators = [
@@ -44,6 +45,7 @@ define([
 
     $scope.$watch('evaluation.activeIndicator', function(value){
       $scope.evaluation.data = $scope.evaluation.allData[camelize(value.key)];
+      $scope.evaluation.driftComparator = value.key && Constants.KEY_PERFORMANCE_INDICATORS_HASH_FULL[value.key]['comparator'];
     });
 
     $scope.augur.$promise.then(function(augur){
