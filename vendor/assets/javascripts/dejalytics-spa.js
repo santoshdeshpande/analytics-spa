@@ -50191,7 +50191,7 @@ define('directives/d3-performance-chart',[
             width  = ele[0].offsetWidth - margin.left - margin.right,
             height = ele[0].offsetHeight - margin.top - margin.bottom;
 
-        var format = d3.format('.1f');
+        var format = d3.format('.2f');
         var x = d3.scale.ordinal().domain(d3.range(0,32)).rangeRoundBands([0, width], .35);
         var y = d3.scale.linear().range([height, 0]);
         var svg = d3.select(ele[0]).append('svg')
