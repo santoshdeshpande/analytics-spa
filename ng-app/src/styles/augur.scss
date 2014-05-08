@@ -139,24 +139,28 @@
           .icon { position: absolute; }
 
           &.model-viewer .icon {
-            right: .4rem;
+            right: .5rem;
           }
           &.influencer .icon {
-            right: 1rem;
+            right: -.2rem;
+            top: .1rem;
+            font-size: 2.5rem;
           }
           &.accuracy .icon {
-            top: .1rem;
-            right: .55rem;
+            top: .15rem;
+            right: .5rem;
           }
           &.performance-drift .icon {
-            right: .7rem;
+            font-size: 1.7rem;
+            top: .15rem;
+            right: .4rem;
           }
           &.performance-drift-learning .icon {
-            right: .7rem;
+            right: .4rem;
             font-size: 1.2rem;
           }
           &.performance-drift-evaluation .icon {
-            right: .5rem;
+            right: .4rem;
             font-size: 1.2rem;
           }
           &.settings .icon {

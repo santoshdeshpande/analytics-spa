@@ -6121,19 +6121,23 @@ th.hide-for-touch {
         .augur.container .side-nav-container a span .icon {
           position: absolute; }
         .augur.container .side-nav-container a span.model-viewer .icon {
-          right: 0.4rem; }
+          right: 0.5rem; }
         .augur.container .side-nav-container a span.influencer .icon {
-          right: 1rem; }
-        .augur.container .side-nav-container a span.accuracy .icon {
+          right: -0.2rem;
           top: 0.1rem;
-          right: 0.55rem; }
+          font-size: 2.5rem; }
+        .augur.container .side-nav-container a span.accuracy .icon {
+          top: 0.15rem;
+          right: 0.5rem; }
         .augur.container .side-nav-container a span.performance-drift .icon {
-          right: 0.7rem; }
+          font-size: 1.7rem;
+          top: 0.15rem;
+          right: 0.4rem; }
         .augur.container .side-nav-container a span.performance-drift-learning .icon {
-          right: 0.7rem;
+          right: 0.4rem;
           font-size: 1.2rem; }
         .augur.container .side-nav-container a span.performance-drift-evaluation .icon {
-          right: 0.5rem;
+          right: 0.4rem;
           font-size: 1.2rem; }
         .augur.container .side-nav-container a span.settings .icon {
           right: 1rem; }
