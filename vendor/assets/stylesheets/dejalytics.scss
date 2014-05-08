@@ -5837,7 +5837,10 @@ th.hide-for-touch {
       stroke-width: 1;
       fill: none; }
   .dashboard.container .tile.augur .title .icon {
-    right: 0.9rem; }
+    right: 0rem;
+    font-size: 2.5rem;
+    position: absolute;
+    top: -0.5rem; }
   .dashboard.container .tile .title {
     margin: 0;
     padding: 0.2em 0.35em;
