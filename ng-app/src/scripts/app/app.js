@@ -86,10 +86,6 @@ define([
     }]).run(['$rootScope', '$state', function ($rootScope, $state) {
       var root = angular.element(document.documentElement);
 
-//      $rootScope.$on('$stateChangeSuccess', function(){
-//        root.attr('data-theme', '');
-//      });
-
       $rootScope.$on('theme', function(ev, theme){
         $rootScope.theme = theme;
         root.attr('data-theme', theme);

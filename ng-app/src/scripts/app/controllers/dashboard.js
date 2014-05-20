@@ -17,10 +17,16 @@ define([
     return arr;
   }
 
-  function controller ($scope, $q, Augur, DataSource, FactTable, Habitat) {
+  function controller ($scope, $stateParams, $timeout, $q, Augur, DataSource, FactTable, FlashMessages, Habitat) {
     $scope.artifacts = [];
     $scope.selectedArtifactTypes = { augur: true, habitat: true, factTable: true };
     $scope.artifactsQuery = '';
+
+    $scope.flash = FlashMessages.getMessage();
+    $timeout(function () {
+      $scope.flash = '';
+    }, 1500);
+
 
     $scope.artifactsFilter = function (artifact) {
       var queryMatch = true;
@@ -70,5 +76,5 @@ define([
     });
   }
 
-  return ['$scope', '$q', 'Augur', 'DataSource', 'FactTable', 'Habitat', controller];
+  return ['$scope', '$stateParams', '$timeout', '$q', 'Augur', 'DataSource', 'FactTable', 'FlashMessages', 'Habitat', controller];
 });

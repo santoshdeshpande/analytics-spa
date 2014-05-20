@@ -5,7 +5,7 @@
         %h1 Augur Settings
         %h6.subheader Update the settings for this Augur
 
-  %form{ name: 'form', novalidate: '', ng: { submit: 'form.$valid && submit()' } }
+  %form.update{ name: 'form', novalidate: '', ng: { submit: 'form.$valid && submit()' } }
     .row
       .columns.small-12
         .form-body
@@ -19,5 +19,8 @@
     .row
       .columns.small-12
         .form-buttons
-          %a.button.radius.cancel{ ng: { click: 'initialize()' } } Cancel
-          %input.submit.button.radius{ type: 'submit', value: 'Update augur', ng: { disabled: '!form.$valid' } }
+          .left
+            %a.button.radius.delete{ ng: { click: 'delete()' } } Delete augur
+          .right
+            %a.button.radius.cancel{ ng: { click: 'initialize()' } } Cancel
+            %input.submit.button.radius{ type: 'submit', value: 'Update augur', ng: { disabled: '!form.$valid' } }

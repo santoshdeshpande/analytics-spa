@@ -34,32 +34,40 @@
   }
 
   .form-buttons {
-    text-align: right;
     margin-top: 1em;
     height: 4 * $h4-font-size;
     line-height: 4 * $h4-font-size;
 
-    @include themes( background-color );
-    background: linear-gradient(to right, rgba(255, 255, 255, 0.97),  rgba(255, 255, 255, .8));
+    @include themes(background-color);
+    background: linear-gradient(to right, rgba(255, 255, 255, 0.97), rgba(255, 255, 255, .8));
+
+    .right {
+      text-align: right;
+    }
 
     .button {
       margin-right: .5em;
       font-size: $h4-font-size;
-
 
       &.submit {
         @include themes(background-color);
       }
 
       &.cancel {
-        @include themes( $light40: border-color, $light30: background-color );
+        @include themes($light40: border-color, $light30: background-color);
         border: 1px solid;
 
         &:hover {
-          @include themes( $light30: border-color, $light20: background-color );
+          @include themes($light30: border-color, $light20: background-color);
         }
       }
+
+      &.delete {
+        @include themes(background-color);
+        margin-left: 0px;
+      }
     }
+
   }
 }
 

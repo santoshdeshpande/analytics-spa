@@ -18,6 +18,10 @@
       %li.action-bar-search
         %input{ placeholder: 'Type to search', type: 'text', ng: { model: 'artifactsQuery' }}
 
+.row.dashboard.flash{ ng: { if: 'flash', animate: 'animate' }}
+  .columns.small-12
+    .alert-box.success.radius
+      {{ flash }}
 .row.dashboard.container
   .columns.small-12
     %ul.small-block-grid-2.medium-block-grid-3.large-block-grid-4

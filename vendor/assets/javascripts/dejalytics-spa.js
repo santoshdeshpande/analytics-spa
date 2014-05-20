@@ -32698,6 +32698,34 @@ define('services/facttable',[
  define: false,
  console: false
  */
+define('services/flash-messages',[], function () {
+  
+
+  function FlashMessages( $timeout ) {
+    var message;
+
+    this.setMessage = function (msg) {
+      return message = msg;
+    };
+
+    this.getMessage = function () {
+      $timeout(function () {
+        message = '';
+      }, 1000);
+
+      return message;
+    }
+  }
+
+  return ['$timeout', function ( $timeout ) {
+    return new FlashMessages($timeout)
+  }];
+});
+
+/* global
+ define: false,
+ console: false
+ */
 define('services/habitat',[
   'angular.resource'
 ], function () {
@@ -32718,14 +32746,16 @@ define('services',[
   'services/augur',
   'services/datasource',
   'services/facttable',
+  'services/flash-messages',
   'services/habitat'
-], function (ng, ngResource, Augur, DataSource, FactTable, Habitat) {
+], function (ng, ngResource, Augur, DataSource, FactTable, FlashMessages, Habitat) {
   
 
   return ng.module('dejalyticsServices', ['ngResource'])
       .factory('Augur', Augur)
       .factory('DataSource', DataSource)
       .factory('FactTable', FactTable)
+      .factory('FlashMessages', FlashMessages)
       .factory('Habitat', Habitat);
 });
 
@@ -39915,7 +39945,7 @@ define('controllers/augur-settings',[
 ], function (Constants) {
   
 
-  return  ['$scope', '$stateParams', '$q', 'Augur', function ($scope, $stateParams, $q, Augur) {
+  function controller( $state, $scope, $stateParams, $q, Augur, FlashMessages ) {
     $scope.augurSettings = {};
 
     $q.all([
@@ -39952,8 +39982,21 @@ define('controllers/augur-settings',[
           $scope.success = null;
           $scope.error = 'There was an error saving the new Augur: ' + httpResponse.data['error'];
         });
-    }
-  }];
+    };
+
+    $scope.delete = function () {
+      Augur.delete({ habitatId: $scope.habitat.id, augurId: $scope.augur.id },
+        function () {
+          FlashMessages.setMessage('Augur ' + $scope.augur.name + ' has been deleted');
+          $state.transitionTo('dashboard');
+        }, function (httpResponse) {
+          $scope.success = null;
+          $scope.error = 'There was an error deleting the new Augur: ' + httpResponse.data['error'];
+        })
+    };
+  }
+
+  return  ['$state', '$scope', '$stateParams', '$q', 'Augur', 'FlashMessages', controller]
 });
 
 /* global
@@ -39992,10 +40035,16 @@ define('controllers/dashboard',[
     return arr;
   }
 
-  function controller ($scope, $q, Augur, DataSource, FactTable, Habitat) {
+  function controller ($scope, $stateParams, $timeout, $q, Augur, DataSource, FactTable, FlashMessages, Habitat) {
     $scope.artifacts = [];
     $scope.selectedArtifactTypes = { augur: true, habitat: true, factTable: true };
     $scope.artifactsQuery = '';
+
+    $scope.flash = FlashMessages.getMessage();
+    $timeout(function () {
+      $scope.flash = '';
+    }, 1500);
+
 
     $scope.artifactsFilter = function (artifact) {
       var queryMatch = true;
@@ -40045,7 +40094,7 @@ define('controllers/dashboard',[
     });
   }
 
-  return ['$scope', '$q', 'Augur', 'DataSource', 'FactTable', 'Habitat', controller];
+  return ['$scope', '$stateParams', '$timeout', '$q', 'Augur', 'DataSource', 'FactTable', 'FlashMessages', 'Habitat', controller];
 });
 
 /* global
@@ -56860,7 +56909,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('partials/augur-settings.html',
-    '<div class=\'augur-settings\'><div class=\'row\'><div class=\'columns small-12\'><div class=\'heading\'><h1>Augur Settings</h1><h6 class=\'subheader\'>Update the settings for this Augur</h6></div></div></div><form name=\'form\' ng-submit=\'form.$valid &amp;&amp; submit()\' novalidate=\'\'><div class=\'row\'><div class=\'columns small-12\'><div class=\'form-body\'><augur-settings augur=\'augurSettings\' form=\'form\'></augur-settings></div></div></div><div class=\'row\'><div class=\'columns small-12\'><div class=\'alert-box alert\' ng-if=\'error\'> {{ error }}</div><div class=\'alert-box success\' ng-if=\'success\'> {{ success }}</div></div></div><div class=\'row\'><div class=\'columns small-12\'><div class=\'form-buttons\'> <a class=\'button radius cancel\' ng-click=\'initialize()\'>Cancel</a> <input class=\'submit button radius\' ng-disabled=\'!form.$valid\' type=\'submit\' value=\'Update augur\'></div></div></div></form></div>');
+    '<div class=\'augur-settings\'><div class=\'row\'><div class=\'columns small-12\'><div class=\'heading\'><h1>Augur Settings</h1><h6 class=\'subheader\'>Update the settings for this Augur</h6></div></div></div><form class=\'update\' name=\'form\' ng-submit=\'form.$valid &amp;&amp; submit()\' novalidate=\'\'><div class=\'row\'><div class=\'columns small-12\'><div class=\'form-body\'><augur-settings augur=\'augurSettings\' form=\'form\'></augur-settings></div></div></div><div class=\'row\'><div class=\'columns small-12\'><div class=\'alert-box alert\' ng-if=\'error\'> {{ error }}</div><div class=\'alert-box success\' ng-if=\'success\'> {{ success }}</div></div></div><div class=\'row\'><div class=\'columns small-12\'><div class=\'form-buttons\'><div class=\'left\'> <a class=\'button radius delete\' ng-click=\'delete()\'>Delete augur</a></div><div class=\'right\'> <a class=\'button radius cancel\' ng-click=\'initialize()\'>Cancel</a> <input class=\'submit button radius\' ng-disabled=\'!form.$valid\' type=\'submit\' value=\'Update augur\'></div></div></div></div></form></div>');
 }]);
 })();
 
@@ -56896,7 +56945,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('partials/dashboard.html',
-    '<div class=\'row dashboard action-bar\'><div class=\'columns small-12\'><ul class=\'left action-bar-breadcrumb\'><li> Dashboard</li></ul><ul class=\'right action-bar-filter\'><li class=\'divider\'></li><li ng-class=\'{"active" : selectedArtifactTypes.augur}\'> <input id=\'selected-artifact-types-augur\' ng-model=\'selectedArtifactTypes.augur\' type=\'checkbox\'> <label for=\'selected-artifact-types-augur\'>Augurs</label></li><li ng-class=\'{"active" : selectedArtifactTypes.factTable}\'> <input id=\'selected-artifact-types-fact-table\' ng-model=\'selectedArtifactTypes.factTable\' type=\'checkbox\'> <label for=\'selected-artifact-types-fact-table\'>Event tables</label></li><li ng-class=\'{"active" : selectedArtifactTypes.habitat}\'> <input id=\'selected-artifact-types-habitat\' ng-model=\'selectedArtifactTypes.habitat\' type=\'checkbox\'> <label for=\'selected-artifact-types-habitat\'>DataSpaces</label></li><li class=\'divider\'></li><li class=\'action-bar-search\'> <input ng-model=\'artifactsQuery\' placeholder=\'Type to search\' type=\'text\'></li></ul></div></div><div class=\'row dashboard container\'><div class=\'columns small-12\'><ul class=\'small-block-grid-2 medium-block-grid-3 large-block-grid-4\'><li><div class=\'tile\'><a href=\'#/augurs/new\'><div class=\'artefact-body add-augur\'><p> Add augur</p><p class=\'icon\'><span class=\'glyphicon glyphicon-plus\'></span></p></div></a></div></li><li ng-repeat=\'artifact in artifacts | filter: artifactsFilter\'><div ng-if=\'artifact.type == "habitat"\'><a href=\'#/habitat/{{habitat.id}}\'><div class=\'tile habitat\' ng-attr-data-theme=\'{{ artifact.colorScheme }}\'><h5 class=\'title\'> {{ artifact.name }}<i class=\'icon icon-dataspace\'></i></h5><div class=\'artefact-body\'><p ng-if=\'artifact.augurCount &lt; 1\'> No Augurs</p><p ng-if=\'artifact.augurCount === 1\'> One Augur</p><p ng-if=\'artifact.augurCount &gt; 1\'> {{ artifact.augurCount }} Augurs</p></div></div></a></div><div ng-if=\'artifact.type == "factTable"\'><a href=\'#/habitat/{{artifact.habitatId}}/factTables/{{factTable.id}}\'><div class=\'tile fact-table\' ng-attr-data-theme=\'{{ artifact.colorScheme }}\'><h5 class=\'title\'> {{artifact.name}}<span class=\'icon glyphicon glyphicon-list-alt\'></span></h5><div class=\'artefact-body\'><p class=\'description\'> {{artifact.description}}<br> {{artifact.observationCount | number:0 }} Observations</p></div></div></a></div><div ng-if=\'artifact.type == "augur"\'><a ui-sref=\'augur.tree({ habitatId: artifact.habitatId, augurId: artifact.id })\'><div class=\'tile augur\' ng-attr-data-theme=\'{{ artifact.colorScheme }}\'><h5 class=\'title\'> {{artifact.name}}<i class=\'icon icon-telescope\'></i></h5><div class=\'artefact-body\'><dl class=\'description\'><dt>KPI</dt><dd> {{ artifact.learningKpiLabel }}</dd><dt>Latest evaluation</dt><dd> {{ artifact.latestEvaluationTimestamp }}</dd></dl></div><div class=\'chart\'><d3-line-chart-dashboard data=\'artifact.dashboardChartData\' height=\'30\'></d3-line-chart-dashboard></div></div></a></div></li></ul></div></div>');
+    '<div class=\'row dashboard action-bar\'><div class=\'columns small-12\'><ul class=\'left action-bar-breadcrumb\'><li> Dashboard</li></ul><ul class=\'right action-bar-filter\'><li class=\'divider\'></li><li ng-class=\'{"active" : selectedArtifactTypes.augur}\'> <input id=\'selected-artifact-types-augur\' ng-model=\'selectedArtifactTypes.augur\' type=\'checkbox\'> <label for=\'selected-artifact-types-augur\'>Augurs</label></li><li ng-class=\'{"active" : selectedArtifactTypes.factTable}\'> <input id=\'selected-artifact-types-fact-table\' ng-model=\'selectedArtifactTypes.factTable\' type=\'checkbox\'> <label for=\'selected-artifact-types-fact-table\'>Event tables</label></li><li ng-class=\'{"active" : selectedArtifactTypes.habitat}\'> <input id=\'selected-artifact-types-habitat\' ng-model=\'selectedArtifactTypes.habitat\' type=\'checkbox\'> <label for=\'selected-artifact-types-habitat\'>DataSpaces</label></li><li class=\'divider\'></li><li class=\'action-bar-search\'> <input ng-model=\'artifactsQuery\' placeholder=\'Type to search\' type=\'text\'></li></ul></div></div><div class=\'row dashboard flash\' ng-animate=\'animate\' ng-if=\'flash\'><div class=\'columns small-12\'><div class=\'alert-box success radius\'> {{ flash }}</div></div></div><div class=\'row dashboard container\'><div class=\'columns small-12\'><ul class=\'small-block-grid-2 medium-block-grid-3 large-block-grid-4\'><li><div class=\'tile\'><a href=\'#/augurs/new\'><div class=\'artefact-body add-augur\'><p> Add augur</p><p class=\'icon\'><span class=\'glyphicon glyphicon-plus\'></span></p></div></a></div></li><li ng-repeat=\'artifact in artifacts | filter: artifactsFilter\'><div ng-if=\'artifact.type == "habitat"\'><a href=\'#/habitat/{{habitat.id}}\'><div class=\'tile habitat\' ng-attr-data-theme=\'{{ artifact.colorScheme }}\'><h5 class=\'title\'> {{ artifact.name }}<i class=\'icon icon-dataspace\'></i></h5><div class=\'artefact-body\'><p ng-if=\'artifact.augurCount &lt; 1\'> No Augurs</p><p ng-if=\'artifact.augurCount === 1\'> One Augur</p><p ng-if=\'artifact.augurCount &gt; 1\'> {{ artifact.augurCount }} Augurs</p></div></div></a></div><div ng-if=\'artifact.type == "factTable"\'><a href=\'#/habitat/{{artifact.habitatId}}/factTables/{{factTable.id}}\'><div class=\'tile fact-table\' ng-attr-data-theme=\'{{ artifact.colorScheme }}\'><h5 class=\'title\'> {{artifact.name}}<span class=\'icon glyphicon glyphicon-list-alt\'></span></h5><div class=\'artefact-body\'><p class=\'description\'> {{artifact.description}}<br> {{artifact.observationCount | number:0 }} Observations</p></div></div></a></div><div ng-if=\'artifact.type == "augur"\'><a ui-sref=\'augur.tree({ habitatId: artifact.habitatId, augurId: artifact.id })\'><div class=\'tile augur\' ng-attr-data-theme=\'{{ artifact.colorScheme }}\'><h5 class=\'title\'> {{artifact.name}}<i class=\'icon icon-telescope\'></i></h5><div class=\'artefact-body\'><dl class=\'description\'><dt>KPI</dt><dd> {{ artifact.learningKpiLabel }}</dd><dt>Latest evaluation</dt><dd> {{ artifact.latestEvaluationTimestamp }}</dd></dl></div><div class=\'chart\'><d3-line-chart-dashboard data=\'artifact.dashboardChartData\' height=\'30\'></d3-line-chart-dashboard></div></div></a></div></li></ul></div></div>');
 }]);
 })();
 
@@ -57013,10 +57062,6 @@ define('app',[
         })
     }]).run(['$rootScope', '$state', function ($rootScope, $state) {
       var root = angular.element(document.documentElement);
-
-//      $rootScope.$on('$stateChangeSuccess', function(){
-//        root.attr('data-theme', '');
-//      });
 
       $rootScope.$on('theme', function(ev, theme){
         $rootScope.theme = theme;

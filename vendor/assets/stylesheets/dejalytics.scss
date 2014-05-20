@@ -5768,6 +5768,18 @@ th.hide-for-touch {
       color: #333; }
       .dashboard.action-bar ul li a:hover {
         background: #008cba; }
+.dashboard.flash {
+  position: absolute;
+  top: 2rem;
+  left: 0;
+  right: 0; }
+  .dashboard.flash.ng-leave {
+    transition: all 1300ms ease-in;
+    transform: translate(0, 0);
+    opacity: 1; }
+    .dashboard.flash.ng-leave.ng-leave-active {
+      transform: translate(0, 50px);
+      opacity: 0; }
 .dashboard.container .tile {
   position: relative;
   border: 1px solid;
@@ -6697,7 +6709,6 @@ th.hide-for-touch {
   .augur-settings .form-body .evaluation .description, .augur-settings .form-body .prediction .description, .augur-settings .form-body .learning .description {
     min-height: 5em; }
 .augur-settings .form-buttons {
-  text-align: right;
   margin-top: 1em;
   height: 5.75rem;
   line-height: 5.75rem;
@@ -6710,6 +6721,8 @@ th.hide-for-touch {
     background-color: #DD5A26; }
   [data-theme=theme-four] .augur-settings .form-buttons {
     background-color: #00A14B; }
+  .augur-settings .form-buttons .right {
+    text-align: right; }
   .augur-settings .form-buttons .button {
     margin-right: 0.5em;
     font-size: 1.4375rem; }
@@ -6747,3 +6760,13 @@ th.hide-for-touch {
       [data-theme=theme-four] .augur-settings .form-buttons .button.cancel:hover {
         background-color: #66C793;
         border-color: #99D9B7; }
+    .augur-settings .form-buttons .button.delete {
+      margin-left: 0px; }
+      [data-theme=theme-one] .augur-settings .form-buttons .button.delete {
+        background-color: #7B30B7; }
+      [data-theme=theme-two] .augur-settings .form-buttons .button.delete {
+        background-color: #00A1D3; }
+      [data-theme=theme-three] .augur-settings .form-buttons .button.delete {
+        background-color: #DD5A26; }
+      [data-theme=theme-four] .augur-settings .form-buttons .button.delete {
+        background-color: #00A14B; }

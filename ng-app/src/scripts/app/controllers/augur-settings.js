@@ -7,7 +7,7 @@ define([
 ], function (Constants) {
   'use strict';
 
-  return  ['$scope', '$stateParams', '$q', 'Augur', function ($scope, $stateParams, $q, Augur) {
+  function controller( $state, $scope, $stateParams, $q, Augur, FlashMessages ) {
     $scope.augurSettings = {};
 
     $q.all([
@@ -44,6 +44,19 @@ define([
           $scope.success = null;
           $scope.error = 'There was an error saving the new Augur: ' + httpResponse.data['error'];
         });
-    }
-  }];
+    };
+
+    $scope.delete = function () {
+      Augur.delete({ habitatId: $scope.habitat.id, augurId: $scope.augur.id },
+        function () {
+          FlashMessages.setMessage('Augur ' + $scope.augur.name + ' has been deleted');
+          $state.transitionTo('dashboard');
+        }, function (httpResponse) {
+          $scope.success = null;
+          $scope.error = 'There was an error deleting the new Augur: ' + httpResponse.data['error'];
+        })
+    };
+  }
+
+  return  ['$state', '$scope', '$stateParams', '$q', 'Augur', 'FlashMessages', controller]
 });

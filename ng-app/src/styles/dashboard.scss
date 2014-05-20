@@ -65,6 +65,27 @@
     }
   }
 
+  &.flash {
+    position: absolute;
+    top: 2rem;
+    left: 0;
+    right: 0;
+
+    $flash-transition-time: 1300ms;
+    &.ng-leave {
+      transition: all $flash-transition-time ease-in;
+      transform: translate(0, 0);
+
+      opacity: 1;
+
+      &.ng-leave-active {
+        transform: translate(0, 50px);
+
+        opacity: 0;
+      }
+    }
+  }
+
   &.container {
     .tile {
       @include themes($light30: border-color, $isolated: true);
