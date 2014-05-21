@@ -49608,12 +49608,17 @@ define('directives/d3-bar-chart',[
                 .attr('class', 'axis helpline');
             });
 
-            var bars = svg.selectAll('.bar')
+            var barContainers = svg.selectAll('.bar')
                   .data(data)
-                .enter().append('rect')
+                .enter().append('g')
                   .attr('class', 'bar')
                   .attr('y', svg.height())
                   .attr('height', 0);
+
+            var bars = barContainers.append('rect')
+              .attr('class', 'bar')
+              .attr('y', svg.height())
+              .attr('height', 0);
 
             bars.transition()
               .duration( 500 )
@@ -49623,7 +49628,24 @@ define('directives/d3-bar-chart',[
               .attr('x', function(d) { return x(d[0]); })
               .attr('width', x.rangeBand())
               .attr('y', function(d) { return y(d[1]); })
-              .attr('height', function(d) { return svg.height() - y(d[1]); });
+              .attr('height', function(d) { return svg.height() - y(d[1]) });
+
+            barContainers.append('text')
+              .attr('x', function(d) { return x(d[0]) + x.rangeBand() / 2 })
+              .attr('y', function(d) { return y(d[1]) - 2 })
+              .style('text-anchor', 'middle')
+              .text(function (d) {
+                return d[1]
+              });
+
+            barContainers.on('mouseover', function (d) {
+                d3.select(this)
+                  .classed('active', true);
+              })
+              .on('mouseout', function (d) {
+                d3.select(this)
+                  .classed('active', false);
+              });
 
           }, 200); // renderTimeout
         };
@@ -50424,13 +50446,27 @@ define('directives/d3-pie-chart',[
 ], function (d3, Chart) {
   
 
-  function colorScale(element) {
+  function colorScale( element ) {
     return d3.scale.ordinal().range([
       element.css('border-top-color'),
       element.css('border-right-color'),
       element.css('border-bottom-color'),
       element.css('border-left-color')
     ]);
+  }
+
+  function sortData( data ) {
+    var legendOrdered = [ 'True Positives', 'True Negatives', 'False Positives',  'False Negatives' ];
+
+    return data.sort( function ( a, b ) {
+      var indexA = legendOrdered.indexOf(a['bucket']);
+      var indexB = legendOrdered.indexOf(b['bucket']);
+
+      if (indexA > indexB) return 1;
+      if (indexA < indexB) return -1;
+
+      return 0
+    })
   }
 
   return ['$rootScope', '$timeout', function ($rootScope, $timeout) {
@@ -50478,17 +50514,39 @@ define('directives/d3-pie-chart',[
           if (!data) return;
           if (renderTimeout) $timeout.cancel(renderTimeout);
 
+
+          data = sortData(data);
+
           renderTimeout = $timeout(function () {
             var g = svg.selectAll('.arc')
                 .data(pie(data))
               .enter().append('g')
                 .attr('class', 'arc')
-                .attr('transform', 'translate(45,0)'); // push left to make room for legend
+                .attr('transform', 'translate(45,0)') // push left to make room for legend
+                .on('mouseover', function (d) {
+                  d3.select(this)
+                    .classed('active', true);
+                })
+                .on('mouseout', function (d) {
+                  d3.select(this)
+                    .classed('active', false);
+                });
 
             g.append('path')
               .attr('d', arc)
               .style('fill', function (d) {
                 return color(d.data[bucket]);
+              });
+
+
+            g.append('text')
+              .attr('transform', function (d) {
+                var c = arc.centroid(d);
+                return 'translate(' + c[0] * 1.3 + ',' + c[1] + ')';
+              })
+              .attr('text-anchor', 'middle')
+              .text(function (d) {
+                return d.data[count];
               });
 
             // add legend

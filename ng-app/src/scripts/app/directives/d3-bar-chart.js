@@ -61,12 +61,17 @@ define([
                 .attr('class', 'axis helpline');
             });
 
-            var bars = svg.selectAll('.bar')
+            var barContainers = svg.selectAll('.bar')
                   .data(data)
-                .enter().append('rect')
+                .enter().append('g')
                   .attr('class', 'bar')
                   .attr('y', svg.height())
                   .attr('height', 0);
+
+            var bars = barContainers.append('rect')
+              .attr('class', 'bar')
+              .attr('y', svg.height())
+              .attr('height', 0);
 
             bars.transition()
               .duration( 500 )
@@ -76,7 +81,20 @@ define([
               .attr('x', function(d) { return x(d[0]); })
               .attr('width', x.rangeBand())
               .attr('y', function(d) { return y(d[1]); })
-              .attr('height', function(d) { return svg.height() - y(d[1]); });
+              .attr('height', function(d) { return svg.height() - y(d[1]) });
+
+            var barValueLabel = svg.append('g')
+                .attr('transform', 'translate(' + svg.width() / 2 + ', 10)')
+              .append('text')
+                .attr('class', 'bar-value-label')
+                .style('text-anchor', 'middle');
+
+            barContainers.on('mouseover', function (d) {
+                barValueLabel.text(d[0])
+              })
+              .on('mouseout', function (d) {
+                barValueLabel.text('')
+              });
 
           }, 200); // renderTimeout
         };

@@ -6271,6 +6271,10 @@ th.hide-for-touch {
   fill: #E47B51; }
 [data-theme=theme-four] .augur-accuracy .chart.bar-chart .bar {
   fill: #33B46F; }
+.augur-accuracy .chart.bar-chart .bar text {
+  display: none; }
+.augur-accuracy .chart.bar-chart .bar.active text {
+  display: block; }
 [data-theme=theme-one] .augur-accuracy .chart.bar-chart .bar:hover {
   fill: #7B30B7; }
 [data-theme=theme-two] .augur-accuracy .chart.bar-chart .bar:hover {
@@ -6289,6 +6293,12 @@ th.hide-for-touch {
   fill: none; }
 .augur-accuracy .chart.pie-chart .arc path {
   stroke: #fff; }
+.augur-accuracy .chart.pie-chart .arc text {
+  font-size: 1.1rem;
+  display: none;
+  text-shadow: 1px 0 0 #fff, -1px 0 0 #fff, 0 1px 0 #fff, 0 -1px 0 #fff, 1px 1px #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff; }
+.augur-accuracy .chart.pie-chart .arc.active text {
+  display: block; }
 
 .augur-influencers {
   position: relative; }

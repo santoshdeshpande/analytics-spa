@@ -82,11 +82,29 @@
         stroke-width: 1;
         fill: none;
       }
+
+      text.bar-value-label {
+        @include themes ( $light10: fill );
+        font-size: 1.1rem;
+        text-shadow: 1px 0 0 #fff, -1px 0 0 #fff, 0 1px 0 #fff, 0 -1px 0 #fff, 1px 1px #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff;
+      }
     }
 
     &.pie-chart {
       .arc path {
         stroke: #fff;
+      }
+
+      .arc {
+        text {
+          font-size: 1.1rem;
+          display: none;
+          text-shadow: 1px 0 0 #fff, -1px 0 0 #fff, 0 1px 0 #fff, 0 -1px 0 #fff, 1px 1px #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff;
+        }
+
+        &.active text {
+          display: block;
+        }
       }
     }
   }
