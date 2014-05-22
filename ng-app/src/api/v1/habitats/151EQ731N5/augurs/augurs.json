@@ -7,7 +7,8 @@
     "dashboardChartData": null,
     "learningKpi": "misclassification_rate",
     "learningThreshold": 0.9,
-    "latestEvaluationTimestamp": " - "
+    "learningStatus": "pending",
+    "latestEvaluationTimestamp": ""
   },
   {
     "id": "15J2YR31P9",

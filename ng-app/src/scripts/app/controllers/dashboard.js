@@ -17,16 +17,41 @@ define([
     return arr;
   }
 
-  function controller ($scope, $stateParams, $timeout, $q, Augur, DataSource, FactTable, FlashMessages, Habitat) {
+  function AugurStatusPoller(Augur, $interval, augur) {
+    var timeoutId = $interval(function () {
+      Augur.status({
+        habitatId: augur.habitatId,
+        augurId: augur.id
+      }, function (updatedAugur) {
+        if (updatedAugur.learningStatus === 'complete') {
+          augur.learningStatus = 'complete';
+          $interval.cancel(timeoutId);
+        }
+      });
+
+    }, 1000 * 10, 60);
+
+    this.cancel = function () {
+      $interval.cancel(timeoutId);
+    }
+  }
+
+  function controller ($scope, $stateParams, $timeout, $interval, $q, Augur, DataSource, FactTable, FlashMessages, Habitat) {
     $scope.artifacts = [];
     $scope.selectedArtifactTypes = { augur: true, habitat: true, factTable: true };
     $scope.artifactsQuery = '';
+
+    $scope.pendingAgurus = [];
+    $scope.$on('$destroy', function() {
+      angular.forEach($scope.pendingAgurus, function ( pendingAugur ) {
+        pendingAugur.cancel()
+      })
+    });
 
     $scope.flash = FlashMessages.getMessage();
     $timeout(function () {
       $scope.flash = '';
     }, 1500);
-
 
     $scope.artifactsFilter = function (artifact) {
       var queryMatch = true;
@@ -69,6 +94,9 @@ define([
             if (!augur.dashboardChartData)
               augur.dashboardChartData = randomDashboardChartData();
 
+            if (augur.learningStatus === 'pending')
+              $scope.pendingAgurus.push(new AugurStatusPoller( Augur, $interval, augur ));
+
             $scope.artifacts.push(augur);
           });
         }
@@ -76,5 +104,5 @@ define([
     });
   }
 
-  return ['$scope', '$stateParams', '$timeout', '$q', 'Augur', 'DataSource', 'FactTable', 'FlashMessages', 'Habitat', controller];
+  return ['$scope', '$stateParams', '$timeout', '$interval', '$q', 'Augur', 'DataSource', 'FactTable', 'FlashMessages', 'Habitat', controller];
 });

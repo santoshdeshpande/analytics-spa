@@ -5848,11 +5848,17 @@ th.hide-for-touch {
       stroke: #ddd;
       stroke-width: 1;
       fill: none; }
-  .dashboard.container .tile.augur .title .icon {
-    right: 0rem;
-    font-size: 2.5rem;
-    position: absolute;
-    top: -0.5rem; }
+  .dashboard.container .tile.augur .title {
+    position: relative; }
+    .dashboard.container .tile.augur .title .icon {
+      right: 0rem;
+      font-size: 2.5rem;
+      position: absolute;
+      top: -0.5rem; }
+    .dashboard.container .tile.augur .title span {
+      position: absolute;
+      top: 1rem;
+      right: 4rem; }
   .dashboard.container .tile .title {
     margin: 0;
     padding: 0.2em 0.35em;
@@ -6271,10 +6277,6 @@ th.hide-for-touch {
   fill: #E47B51; }
 [data-theme=theme-four] .augur-accuracy .chart.bar-chart .bar {
   fill: #33B46F; }
-.augur-accuracy .chart.bar-chart .bar text {
-  display: none; }
-.augur-accuracy .chart.bar-chart .bar.active text {
-  display: block; }
 [data-theme=theme-one] .augur-accuracy .chart.bar-chart .bar:hover {
   fill: #7B30B7; }
 [data-theme=theme-two] .augur-accuracy .chart.bar-chart .bar:hover {
@@ -6291,6 +6293,17 @@ th.hide-for-touch {
   stroke: #ddd;
   stroke-width: 1;
   fill: none; }
+.augur-accuracy .chart.bar-chart text.bar-value-label {
+  font-size: 1.1rem;
+  text-shadow: 1px 0 0 #fff, -1px 0 0 #fff, 0 1px 0 #fff, 0 -1px 0 #fff, 1px 1px #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff; }
+  [data-theme=theme-one] .augur-accuracy .chart.bar-chart text.bar-value-label {
+    fill: #9559C5; }
+  [data-theme=theme-two] .augur-accuracy .chart.bar-chart text.bar-value-label {
+    fill: #33B4DC; }
+  [data-theme=theme-three] .augur-accuracy .chart.bar-chart text.bar-value-label {
+    fill: #E47B51; }
+  [data-theme=theme-four] .augur-accuracy .chart.bar-chart text.bar-value-label {
+    fill: #33B46F; }
 .augur-accuracy .chart.pie-chart .arc path {
   stroke: #fff; }
 .augur-accuracy .chart.pie-chart .arc text {

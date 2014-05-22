@@ -8,7 +8,7 @@ define([
 ], function (_, Constants) {
   'use strict';
 
-  return  ['$state', '$scope', 'Augur', 'FactTable', 'Habitat', function ($state, $scope, Augur, FactTable, Habitat) {
+  function controller ($state, $scope, Augur, FactTable, FlashMessages, Habitat) {
     $scope.KEY_PERFORMANCE_INDICATORS = Constants.KEY_PERFORMANCE_INDICATORS;
 
     $scope.habitats = [];
@@ -147,11 +147,14 @@ define([
 
       Augur.save({ habitatId: $scope.augur.habitatId }, { augur: augurNewAttributes },
         function (augur) {
-          $state.transitionTo('augur.performance.learning', { habitatId: $scope.augur.habitatId, augurId: augur.id });
+          FlashMessages.setMessage('Augur ' + augur.name + ' has been scheduled for learning');
+          $state.transitionTo('dashboard');
         }, function (httpResponse) {
           console.log("There was an error saving the new Augur  ", httpResponse);
         });
     }
-  }];
+  }
+
+  return  ['$state', '$scope', 'Augur', 'FactTable', 'FlashMessages', 'Habitat', controller]
 });
 

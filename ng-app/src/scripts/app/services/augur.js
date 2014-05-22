@@ -12,6 +12,10 @@ define([
       augurId: '@id',
       habitatId: '@habitatId'
     }, {
+      status: {
+        method: 'GET',
+        url: '/api/v1/habitats/:habitatId/augurs/:augurId/status'
+      },
       update: {
         method: 'PUT'
       }

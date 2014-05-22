@@ -25,6 +25,13 @@ require.config({
       ]
     },
 
+    'angular.spinner' : {
+      deps : [
+        'angular',
+        'spinjs'
+      ]
+    },
+
     'angular.ui.router' : {
       deps : [
         'angular'
@@ -54,12 +61,14 @@ require.config({
     'angular'            : '../lib/angular-1.2.9/angular',
     'angular.animate'    : '../lib/angular-1.2.9/angular-animate',
     'angular.resource'   : '../lib/angular-1.2.9/angular-resource',
+    'angular.spinner'    : '../lib/angular-spinner-0.4.0/angular-spinner',
     'angular.ui.router'  : '../lib/angular-ui-router-0.2.10/angular-ui-router',
     'mm-foundation-tpls' : '../lib/angular-foundation-0.1.0/mm-foundation-tpls',
     'd3js'               : '../lib/d3-3.4.4/d3',
     'domReady'           : '../lib/domReady-2.0.1/domReady',
     'jquery'             : '../lib/jquery-1.10.2/jquery',
     'lodash'             : '../lib/lodash-2.4.1/lodash',
+    'spinjs'             : '../lib/spinjs/spin',
     'main'               : '../main'
   }
 });

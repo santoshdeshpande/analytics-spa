@@ -17,6 +17,7 @@ define([
   'directives/dropdown',
   'directives/unique-augur-name',
   'directives/threshold-in-range',
+  'angular.spinner',
   'mm-foundation-tpls'
 ], function ( ng,
               AugurSettings,
@@ -34,7 +35,7 @@ define([
               ThresholdInRange) {
   'use strict';
 
-  return ng.module('dejalyticsDirectives', ['mm.foundation'])
+  return ng.module('dejalyticsDirectives', ['angularSpinner', 'mm.foundation'])
     .directive('augurSettings', AugurSettings)
     .directive('availableEvent', AvailableEvent)
     .directive('d3BarChart', D3BarChart)
