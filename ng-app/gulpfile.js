@@ -21,6 +21,7 @@ var gulp = require('gulp'),
   Q = require('q'),
   requirejs = require('requirejs'),
   http = require('http'),
+  errorhandler = require('errorhandler')
   express = require('express');
 
 //////////////////////////////
@@ -37,19 +38,12 @@ gulp.task('default', ['dist', 'watch', 'serve']);
 
 gulp.task('serve', function () {
   var app = express();
-  app.configure(function () {
-    app.use(function (req, res, next) {
-      res.setHeader("Access-Control-Allow-Origin", "*");
-      return next();
-    });
-
 //    app.use(function(req, res, next){
 //      console.log('%s %s', req.method, req.url);
 //      next();
 //    });
 
     app.get('/api/v1/*', function (req, res) {
-
       var json = '';
       switch (true) {
         case (!!req.url.match(/fact_tables$/)):
@@ -76,9 +70,7 @@ gulp.task('serve', function () {
     app.use('/scripts', express.static(__dirname + '/src/scripts'));
 
     app.use(express.static(__dirname + '/dist'));
-    app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
-  });
-
+    app.use(errorhandler({ dumpExceptions: true, showStack: true }));
   app.listen(serverport, function () {
     console.log('Started server on: ' + serverport);
     lrserver.listen(livereloadport, function () {
