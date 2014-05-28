@@ -1,5 +1,6 @@
 {"id": "15J31X31PA", "name": "Augur 15J31X31PA :)", "description": null, "code": "15J31X31PA",
   "learningKpi": "cumulative_lift_top_25", "learningThreshold": 10.0,
+  "modelDownloadPath": "/api/v1/habitats/151EQ731N5/augurs/15J31X31PA/pmml",
   "predictionTargets": null, "learningReport": {
   "lift": {
     "timestamp": "2014-05-04T02:53:06-04:00",

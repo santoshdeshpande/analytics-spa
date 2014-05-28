@@ -1,0 +1,531 @@
+<?xml version="1.0"?>
+<PMML version="4.1" xmlns="http://www.dmg.org/PMML-4_1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.dmg.org/PMML-4_1 http://www.dmg.org/v4-1/pmml-4-1.xsd">
+ <Header copyright="Copyright (c) 2014 juwalter" description="RPart Decision Tree Model">
+  <Extension name="user" value="juwalter" extender="Rattle/PMML"/>
+  <Application name="Rattle/PMML" version="1.4"/>
+  <Timestamp>2014-05-26 11:22:08.094902</Timestamp>
+ </Header>
+ <DataDictionary numberOfFields="22">
+  <DataField name="target" optype="categorical" dataType="string">
+   <Value value="0"/>
+   <Value value="1"/>
+  </DataField>
+  <DataField name="nr_sessions_l7d" optype="continuous" dataType="double"/>
+  <DataField name="nr_sessions_l14d" optype="continuous" dataType="double"/>
+  <DataField name="nr_sessions_l28d" optype="continuous" dataType="double"/>
+  <DataField name="nr_sessions_l70d" optype="continuous" dataType="double"/>
+  <DataField name="country_first" optype="categorical" dataType="string">
+   <Value value="Albania"/>
+   <Value value="Algeria"/>
+   <Value value="American Samoa"/>
+   <Value value="Angola"/>
+   <Value value="Argentina"/>
+   <Value value="Armenia"/>
+   <Value value="Aruba"/>
+   <Value value="Australia"/>
+   <Value value="Austria"/>
+   <Value value="Azerbaijan"/>
+   <Value value="Bahamas"/>
+   <Value value="Belgium"/>
+   <Value value="Belize"/>
+   <Value value="Bolivia"/>
+   <Value value="Bosnia and Herzegovina"/>
+   <Value value="Botswana"/>
+   <Value value="Brazil"/>
+   <Value value="Bulgaria"/>
+   <Value value="Canada"/>
+   <Value value="Chile"/>
+   <Value value="China"/>
+   <Value value="Colombia"/>
+   <Value value="Costa Rica"/>
+   <Value value="Croatia"/>
+   <Value value="Cyprus"/>
+   <Value value="Czech Republic"/>
+   <Value value="Denmark"/>
+   <Value value="Egypt"/>
+   <Value value="Estonia"/>
+   <Value value="Europe"/>
+   <Value value="Finland"/>
+   <Value value="France"/>
+   <Value value="Georgia"/>
+   <Value value="Germany"/>
+   <Value value="Ghana"/>
+   <Value value="Greece"/>
+   <Value value="Hong Kong SAR China"/>
+   <Value value="Hungary"/>
+   <Value value="Iceland"/>
+   <Value value="India"/>
+   <Value value="Indonesia"/>
+   <Value value="Iran"/>
+   <Value value="Iraq"/>
+   <Value value="Ireland"/>
+   <Value value="Israel"/>
+   <Value value="Italy"/>
+   <Value value="Jamaica"/>
+   <Value value="Japan"/>
+   <Value value="Jordan"/>
+   <Value value="Kazakhstan"/>
+   <Value value="Kuwait"/>
+   <Value value="Laos"/>
+   <Value value="Latin America"/>
+   <Value value="Latvia"/>
+   <Value value="Lithuania"/>
+   <Value value="Malaysia"/>
+   <Value value="Malta"/>
+   <Value value="Mexico"/>
+   <Value value="Montenegro"/>
+   <Value value="Mozambique"/>
+   <Value value="Namibia"/>
+   <Value value="Nepal"/>
+   <Value value="Netherlands"/>
+   <Value value="New Zealand"/>
+   <Value value="Nigeria"/>
+   <Value value="Norway"/>
+   <Value value="Oman"/>
+   <Value value="Pakistan"/>
+   <Value value="Palestinian Territories"/>
+   <Value value="Panama"/>
+   <Value value="Peru"/>
+   <Value value="Philippines"/>
+   <Value value="Poland"/>
+   <Value value="Portugal"/>
+   <Value value="Puerto Rico"/>
+   <Value value="Qatar"/>
+   <Value value="Romania"/>
+   <Value value="Russia"/>
+   <Value value="Saudi Arabia"/>
+   <Value value="Serbia"/>
+   <Value value="Singapore"/>
+   <Value value="Slovakia"/>
+   <Value value="Slovenia"/>
+   <Value value="South Africa"/>
+   <Value value="South Korea"/>
+   <Value value="Spain"/>
+   <Value value="Sri Lanka"/>
+   <Value value="Sweden"/>
+   <Value value="Switzerland"/>
+   <Value value="Taiwan"/>
+   <Value value="Tanzania"/>
+   <Value value="Thailand"/>
+   <Value value="Trinidad and Tobago"/>
+   <Value value="Turkey"/>
+   <Value value="U.S. Outlying Islands"/>
+   <Value value="U.S. Virgin Islands"/>
+   <Value value="Ukraine"/>
+   <Value value="United Arab Emirates"/>
+   <Value value="United Kingdom"/>
+   <Value value="United States"/>
+   <Value value="Uruguay"/>
+   <Value value="Vietnam"/>
+   <Value value="Yemen"/>
+  </DataField>
+  <DataField name="nr_diff_countries" optype="continuous" dataType="double"/>
+  <DataField name="device_first" optype="categorical" dataType="string">
+   <Value value="iPad"/>
+   <Value value="iPad Simulator"/>
+   <Value value="iPhone"/>
+   <Value value="iPhone Simulator"/>
+   <Value value="iPod touch"/>
+  </DataField>
+  <DataField name="nr_diff_device_types" optype="continuous" dataType="double"/>
+  <DataField name="platform_first" optype="categorical" dataType="string">
+   <Value value="6.0"/>
+   <Value value="6.0.1"/>
+   <Value value="6.0.2"/>
+   <Value value="6.1"/>
+   <Value value="6.1.1"/>
+   <Value value="6.1.2"/>
+   <Value value="6.1.3"/>
+   <Value value="6.1.4"/>
+   <Value value="6.1.5"/>
+   <Value value="6.1.6"/>
+   <Value value="7.0"/>
+   <Value value="7.0.2"/>
+   <Value value="7.0.3"/>
+   <Value value="7.0.4"/>
+   <Value value="7.0.5"/>
+   <Value value="7.0.6"/>
+   <Value value="7.1"/>
+  </DataField>
+  <DataField name="nr_diff_version" optype="continuous" dataType="double"/>
+  <DataField name="platform_last" optype="categorical" dataType="string">
+   <Value value="6.0"/>
+   <Value value="6.0.1"/>
+   <Value value="6.0.2"/>
+   <Value value="6.1"/>
+   <Value value="6.1.1"/>
+   <Value value="6.1.2"/>
+   <Value value="6.1.3"/>
+   <Value value="6.1.4"/>
+   <Value value="6.1.5"/>
+   <Value value="6.1.6"/>
+   <Value value="7.0"/>
+   <Value value="7.0.2"/>
+   <Value value="7.0.3"/>
+   <Value value="7.0.4"/>
+   <Value value="7.0.5"/>
+   <Value value="7.0.6"/>
+   <Value value="7.1"/>
+  </DataField>
+  <DataField name="avg_duration" optype="continuous" dataType="double"/>
+  <DataField name="avg_days_since_start" optype="continuous" dataType="double"/>
+  <DataField name="nr_diff_weekdays" optype="continuous" dataType="double"/>
+  <DataField name="nr_diff_hours" optype="continuous" dataType="double"/>
+  <DataField name="nr_diff_timezones" optype="continuous" dataType="double"/>
+  <DataField name="timezone_first" optype="categorical" dataType="string">
+   <Value value="Africa/Accra"/>
+   <Value value="Africa/Algiers"/>
+   <Value value="Africa/Cairo"/>
+   <Value value="Africa/Casablanca"/>
+   <Value value="Africa/Dar_es_Salaam"/>
+   <Value value="Africa/Gaborone"/>
+   <Value value="Africa/Johannesburg"/>
+   <Value value="Africa/Lagos"/>
+   <Value value="Africa/Luanda"/>
+   <Value value="Africa/Nairobi"/>
+   <Value value="Africa/Tripoli"/>
+   <Value value="Africa/Tunis"/>
+   <Value value="America/Anchorage"/>
+   <Value value="America/Argentina/Buenos_Aires"/>
+   <Value value="America/Argentina/Catamarca"/>
+   <Value value="America/Argentina/Cordoba"/>
+   <Value value="America/Aruba"/>
+   <Value value="America/Bahia"/>
+   <Value value="America/Bogota"/>
+   <Value value="America/Boise"/>
+   <Value value="America/Buenos_Aires"/>
+   <Value value="America/Cancun"/>
+   <Value value="America/Caracas"/>
+   <Value value="America/Chicago"/>
+   <Value value="America/Chihuahua"/>
+   <Value value="America/Costa_Rica"/>
+   <Value value="America/Creston"/>
+   <Value value="America/Dawson_Creek"/>
+   <Value value="America/Denver"/>
+   <Value value="America/Detroit"/>
+   <Value value="America/Edmonton"/>
+   <Value value="America/Fortaleza"/>
+   <Value value="America/Guatemala"/>
+   <Value value="America/Halifax"/>
+   <Value value="America/Indiana/Indianapolis"/>
+   <Value value="America/Indianapolis"/>
+   <Value value="America/La_Paz"/>
+   <Value value="America/Lima"/>
+   <Value value="America/Los_Angeles"/>
+   <Value value="America/Managua"/>
+   <Value value="America/Matamoros"/>
+   <Value value="America/Mazatlan"/>
+   <Value value="America/Merida"/>
+   <Value value="America/Mexico_City"/>
+   <Value value="America/Moncton"/>
+   <Value value="America/Monterrey"/>
+   <Value value="America/Montevideo"/>
+   <Value value="America/Montreal"/>
+   <Value value="America/Nassau"/>
+   <Value value="America/New_York"/>
+   <Value value="America/North_Dakota/Center"/>
+   <Value value="America/North_Dakota/New_Salem"/>
+   <Value value="America/Ojinaga"/>
+   <Value value="America/Panama"/>
+   <Value value="America/Paramaribo"/>
+   <Value value="America/Phoenix"/>
+   <Value value="America/Port_of_Spain"/>
+   <Value value="America/Puerto_Rico"/>
+   <Value value="America/Recife"/>
+   <Value value="America/Regina"/>
+   <Value value="America/Santiago"/>
+   <Value value="America/Sao_Paulo"/>
+   <Value value="America/Thunder_Bay"/>
+   <Value value="America/Tijuana"/>
+   <Value value="America/Toronto"/>
+   <Value value="America/Vancouver"/>
+   <Value value="America/Winnipeg"/>
+   <Value value="Asia/Amman"/>
+   <Value value="Asia/Aqtau"/>
+   <Value value="Asia/Baghdad"/>
+   <Value value="Asia/Bahrain"/>
+   <Value value="Asia/Baku"/>
+   <Value value="Asia/Bangkok"/>
+   <Value value="Asia/Beirut"/>
+   <Value value="Asia/Brunei"/>
+   <Value value="Asia/Calcutta"/>
+   <Value value="Asia/Chongqing"/>
+   <Value value="Asia/Dhaka"/>
+   <Value value="Asia/Dubai"/>
+   <Value value="Asia/Gaza"/>
+   <Value value="Asia/Hebron"/>
+   <Value value="Asia/Ho_Chi_Minh"/>
+   <Value value="Asia/Hong_Kong"/>
+   <Value value="Asia/Jakarta"/>
+   <Value value="Asia/Jerusalem"/>
+   <Value value="Asia/Kabul"/>
+   <Value value="Asia/Karachi"/>
+   <Value value="Asia/Kathmandu"/>
+   <Value value="Asia/Kolkata"/>
+   <Value value="Asia/Kuala_Lumpur"/>
+   <Value value="Asia/Kuching"/>
+   <Value value="Asia/Kuwait"/>
+   <Value value="Asia/Makassar"/>
+   <Value value="Asia/Manila"/>
+   <Value value="Asia/Muscat"/>
+   <Value value="Asia/Nicosia"/>
+   <Value value="Asia/Qatar"/>
+   <Value value="Asia/Riyadh"/>
+   <Value value="Asia/Seoul"/>
+   <Value value="Asia/Shanghai"/>
+   <Value value="Asia/Singapore"/>
+   <Value value="Asia/Taipei"/>
+   <Value value="Asia/Tbilisi"/>
+   <Value value="Asia/Tehran"/>
+   <Value value="Asia/Tokyo"/>
+   <Value value="Asia/Vientiane"/>
+   <Value value="Asia/Vladivostok"/>
+   <Value value="Asia/Yekaterinburg"/>
+   <Value value="Atlantic/Bermuda"/>
+   <Value value="Atlantic/Reykjavik"/>
+   <Value value="Australia/Adelaide"/>
+   <Value value="Australia/Brisbane"/>
+   <Value value="Australia/Hobart"/>
+   <Value value="Australia/Melbourne"/>
+   <Value value="Australia/Perth"/>
+   <Value value="Australia/Sydney"/>
+   <Value value="Europe/Amsterdam"/>
+   <Value value="Europe/Athens"/>
+   <Value value="Europe/Belgrade"/>
+   <Value value="Europe/Berlin"/>
+   <Value value="Europe/Brussels"/>
+   <Value value="Europe/Bucharest"/>
+   <Value value="Europe/Budapest"/>
+   <Value value="Europe/Copenhagen"/>
+   <Value value="Europe/Dublin"/>
+   <Value value="Europe/Guernsey"/>
+   <Value value="Europe/Helsinki"/>
+   <Value value="Europe/Istanbul"/>
+   <Value value="Europe/Kiev"/>
+   <Value value="Europe/Lisbon"/>
+   <Value value="Europe/Ljubljana"/>
+   <Value value="Europe/London"/>
+   <Value value="Europe/Madrid"/>
+   <Value value="Europe/Malta"/>
+   <Value value="Europe/Minsk"/>
+   <Value value="Europe/Moscow"/>
+   <Value value="Europe/Oslo"/>
+   <Value value="Europe/Paris"/>
+   <Value value="Europe/Prague"/>
+   <Value value="Europe/Riga"/>
+   <Value value="Europe/Rome"/>
+   <Value value="Europe/Sofia"/>
+   <Value value="Europe/Stockholm"/>
+   <Value value="Europe/Tallinn"/>
+   <Value value="Europe/Vienna"/>
+   <Value value="Europe/Vilnius"/>
+   <Value value="Europe/Warsaw"/>
+   <Value value="Europe/Zagreb"/>
+   <Value value="Europe/Zurich"/>
+   <Value value="Indian/Mauritius"/>
+   <Value value="Pacific/Auckland"/>
+   <Value value="Pacific/Honolulu"/>
+   <Value value="US/Central"/>
+   <Value value="US/Eastern"/>
+   <Value value="US/Mountain"/>
+   <Value value="US/Pacific"/>
+  </DataField>
+  <DataField name="activity_pattern" optype="categorical" dataType="string">
+   <Value value="0-0-0-0"/>
+   <Value value="0-0-0-1"/>
+   <Value value="0-0-1-0"/>
+   <Value value="0-0-1-1"/>
+   <Value value="0-1-0-0"/>
+   <Value value="0-1-0-1"/>
+   <Value value="0-1-1-0"/>
+   <Value value="0-1-1-1"/>
+   <Value value="1-0-0-0"/>
+   <Value value="1-0-0-1"/>
+   <Value value="1-0-1-0"/>
+   <Value value="1-0-1-1"/>
+   <Value value="1-1-0-0"/>
+   <Value value="1-1-0-1"/>
+   <Value value="1-1-1-0"/>
+   <Value value="1-1-1-1"/>
+  </DataField>
+  <DataField name="diff_see_create" optype="continuous" dataType="double"/>
+  <DataField name="hour_create" optype="continuous" dataType="double"/>
+  <DataField name="weekday_create" optype="categorical" dataType="string">
+   <Value value="Friday"/>
+   <Value value="Monday"/>
+   <Value value="Saturday"/>
+   <Value value="Sunday"/>
+   <Value value="Thursday"/>
+   <Value value="Tuesday"/>
+   <Value value="Wednesday"/>
+  </DataField>
+ </DataDictionary>
+ <TreeModel modelName="RPart_Model" functionName="classification" algorithmName="rpart" splitCharacteristic="binarySplit" missingValueStrategy="defaultChild">
+  <MiningSchema>
+   <MiningField name="target" usageType="predicted"/>
+   <MiningField name="nr_sessions_l7d" usageType="active"/>
+   <MiningField name="nr_sessions_l14d" usageType="active"/>
+   <MiningField name="nr_sessions_l28d" usageType="active"/>
+   <MiningField name="nr_sessions_l70d" usageType="active"/>
+   <MiningField name="country_first" usageType="active"/>
+   <MiningField name="nr_diff_countries" usageType="active"/>
+   <MiningField name="device_first" usageType="active"/>
+   <MiningField name="nr_diff_device_types" usageType="active"/>
+   <MiningField name="platform_first" usageType="active"/>
+   <MiningField name="nr_diff_version" usageType="active"/>
+   <MiningField name="platform_last" usageType="active"/>
+   <MiningField name="avg_duration" usageType="active"/>
+   <MiningField name="avg_days_since_start" usageType="active"/>
+   <MiningField name="nr_diff_weekdays" usageType="active"/>
+   <MiningField name="nr_diff_hours" usageType="active"/>
+   <MiningField name="nr_diff_timezones" usageType="active"/>
+   <MiningField name="timezone_first" usageType="active"/>
+   <MiningField name="activity_pattern" usageType="active"/>
+   <MiningField name="diff_see_create" usageType="active"/>
+   <MiningField name="hour_create" usageType="active"/>
+   <MiningField name="weekday_create" usageType="active"/>
+  </MiningSchema>
+  <Output>
+   <OutputField name="Predicted_target" optype="categorical" dataType="string" feature="predictedValue"/>
+   <OutputField name="Probability_0" optype="continuous" dataType="double" feature="probability" value="0"/>
+   <OutputField name="Probability_1" optype="continuous" dataType="double" feature="probability" value="1"/>
+  </Output>
+  <Node id="1" score="0" recordCount="4586" defaultChild="3">
+   <True/>
+   <ScoreDistribution value="0" recordCount="2293" confidence="0.5"/>
+   <ScoreDistribution value="1" recordCount="2293" confidence="0.5"/>
+   <Node id="2" score="0" recordCount="1409">
+    <SimpleSetPredicate field="activity_pattern" booleanOperator="isIn">
+     <Array n="6" type="string">&quot;1-0-0-0&quot; &quot;1-0-1-1&quot; &quot;1-1-0-0&quot; &quot;1-1-0-1&quot; &quot;1-1-1-0&quot; &quot;1-1-1-1&quot;</Array>
+    </SimpleSetPredicate>
+    <ScoreDistribution value="0" recordCount="1210" confidence="0.858765081618169"/>
+    <ScoreDistribution value="1" recordCount="199" confidence="0.141234918381831"/>
+   </Node>
+   <Node id="3" score="1" recordCount="3177" defaultChild="6">
+    <SimpleSetPredicate field="activity_pattern" booleanOperator="isIn">
+     <Array n="10" type="string">&quot;0-0-0-0&quot; &quot;0-0-0-1&quot; &quot;0-0-1-0&quot; &quot;0-0-1-1&quot; &quot;0-1-0-0&quot; &quot;0-1-0-1&quot; &quot;0-1-1-0&quot; &quot;0-1-1-1&quot; &quot;1-0-0-1&quot; &quot;1-0-1-0&quot;</Array>
+    </SimpleSetPredicate>
+    <ScoreDistribution value="0" recordCount="1083" confidence="0.340887629839471"/>
+    <ScoreDistribution value="1" recordCount="2094" confidence="0.659112370160529"/>
+    <Node id="6" score="1" recordCount="1657" defaultChild="12">
+     <SimpleSetPredicate field="activity_pattern" booleanOperator="isIn">
+      <Array n="9" type="string">&quot;0-0-0-1&quot; &quot;0-0-1-0&quot; &quot;0-0-1-1&quot; &quot;0-1-0-0&quot; &quot;0-1-0-1&quot; &quot;0-1-1-0&quot; &quot;0-1-1-1&quot; &quot;1-0-0-1&quot; &quot;1-0-1-0&quot;</Array>
+     </SimpleSetPredicate>
+     <ScoreDistribution value="0" recordCount="746" confidence="0.450211225105613"/>
+     <ScoreDistribution value="1" recordCount="911" confidence="0.549788774894387"/>
+     <Node id="12" score="1" recordCount="1433" defaultChild="25">
+      <SimpleSetPredicate field="timezone_first" booleanOperator="isIn">
+       <Array n="64" type="string">&quot;Africa/Accra&quot; &quot;Africa/Cairo&quot; &quot;Africa/Johannesburg&quot; &quot;America/Argentina/Buenos_Aires&quot; &quot;America/Bogota&quot; &quot;America/Buenos_Aires&quot; &quot;America/Cancun&quot; &quot;America/Chicago&quot; &quot;America/Denver&quot; &quot;America/Detroit&quot; &quot;America/Edmonton&quot; &quot;America/Fortaleza&quot; &quot;America/Indiana/Indianapolis&quot; &quot;America/Merida&quot; &quot;America/Mexico_City&quot; &quot;America/New_York&quot; &quot;America/Phoenix&quot; &quot;America/Port_of_Spain&quot; &quot;America/Santiago&quot; &quot;America/Sao_Paulo&quot; &quot;America/Toronto&quot; &quot;America/Vancouver&quot; &quot;Asia/Baghdad&quot; &quot;Asia/Bahrain&quot; &quot;Asia/Baku&quot; &quot;Asia/Chongqing&quot; &quot;Asia/Dubai&quot; &quot;Asia/Jakarta&quot; &quot;Asia/Jerusalem&quot; &quot;Asia/Karachi&quot; &quot;Asia/Kolkata&quot; &quot;Asia/Kuala_Lumpur&quot; &quot;Asia/Kuwait&quot; &quot;Asia/Qatar&quot; &quot;Asia/Riyadh&quot; &quot;Asia/Shanghai&quot; &quot;Asia/Taipei&quot; &quot;Asia/Vientiane&quot; &quot;Asia/Yekaterinburg&quot; &quot;Atlantic/Bermuda&quot; &quot;Australia/Brisbane&quot; &quot;Australia/Hobart&quot; &quot;Australia/Melbourne&quot; &quot;Australia/Perth&quot; &quot;Australia/Sydney&quot; &quot;Europe/Amsterdam&quot; &quot;Europe/Athens&quot; &quot;Europe/Berlin&quot; &quot;Europe/Brussels&quot; &quot;Europe/Bucharest&quot; &quot;Europe/Budapest&quot; &quot;Europe/Copenhagen&quot; &quot;Europe/Istanbul&quot; &quot;Europe/Lisbon&quot; &quot;Europe/London&quot; &quot;Europe/Moscow&quot; &quot;Europe/Oslo&quot; &quot;Europe/Prague&quot; &quot;Europe/Rome&quot; &quot;Europe/Warsaw&quot; &quot;Pacific/Auckland&quot; &quot;Pacific/Honolulu&quot; &quot;US/Eastern&quot; &quot;US/Pacific&quot;</Array>
+      </SimpleSetPredicate>
+      <ScoreDistribution value="0" recordCount="684" confidence="0.477320307048151"/>
+      <ScoreDistribution value="1" recordCount="749" confidence="0.522679692951849"/>
+      <Node id="24" score="0" recordCount="196">
+       <SimpleSetPredicate field="timezone_first" booleanOperator="isIn">
+        <Array n="29" type="string">&quot;Africa/Accra&quot; &quot;America/Bogota&quot; &quot;America/Buenos_Aires&quot; &quot;America/Fortaleza&quot; &quot;America/Indiana/Indianapolis&quot; &quot;America/Merida&quot; &quot;America/Port_of_Spain&quot; &quot;America/Santiago&quot; &quot;America/Sao_Paulo&quot; &quot;America/Toronto&quot; &quot;Asia/Baku&quot; &quot;Asia/Chongqing&quot; &quot;Asia/Dubai&quot; &quot;Asia/Kuwait&quot; &quot;Asia/Taipei&quot; &quot;Asia/Vientiane&quot; &quot;Asia/Yekaterinburg&quot; &quot;Atlantic/Bermuda&quot; &quot;Australia/Hobart&quot; &quot;Europe/Athens&quot; &quot;Europe/Brussels&quot; &quot;Europe/Budapest&quot; &quot;Europe/Moscow&quot; &quot;Europe/Oslo&quot; &quot;Europe/Warsaw&quot; &quot;Pacific/Auckland&quot; &quot;Pacific/Honolulu&quot; &quot;US/Eastern&quot; &quot;US/Pacific&quot;</Array>
+       </SimpleSetPredicate>
+       <ScoreDistribution value="0" recordCount="123" confidence="0.627551020408163"/>
+       <ScoreDistribution value="1" recordCount="73" confidence="0.372448979591837"/>
+      </Node>
+      <Node id="25" score="1" recordCount="1237" defaultChild="50">
+       <SimpleSetPredicate field="timezone_first" booleanOperator="isIn">
+        <Array n="35" type="string">&quot;Africa/Cairo&quot; &quot;Africa/Johannesburg&quot; &quot;America/Argentina/Buenos_Aires&quot; &quot;America/Cancun&quot; &quot;America/Chicago&quot; &quot;America/Denver&quot; &quot;America/Detroit&quot; &quot;America/Edmonton&quot; &quot;America/Mexico_City&quot; &quot;America/New_York&quot; &quot;America/Phoenix&quot; &quot;America/Vancouver&quot; &quot;Asia/Baghdad&quot; &quot;Asia/Bahrain&quot; &quot;Asia/Jakarta&quot; &quot;Asia/Jerusalem&quot; &quot;Asia/Karachi&quot; &quot;Asia/Kolkata&quot; &quot;Asia/Kuala_Lumpur&quot; &quot;Asia/Qatar&quot; &quot;Asia/Riyadh&quot; &quot;Asia/Shanghai&quot; &quot;Australia/Brisbane&quot; &quot;Australia/Melbourne&quot; &quot;Australia/Perth&quot; &quot;Australia/Sydney&quot; &quot;Europe/Amsterdam&quot; &quot;Europe/Berlin&quot; &quot;Europe/Bucharest&quot; &quot;Europe/Copenhagen&quot; &quot;Europe/Istanbul&quot; &quot;Europe/Lisbon&quot; &quot;Europe/London&quot; &quot;Europe/Prague&quot; &quot;Europe/Rome&quot;</Array>
+       </SimpleSetPredicate>
+       <ScoreDistribution value="0" recordCount="561" confidence="0.453516572352466"/>
+       <ScoreDistribution value="1" recordCount="676" confidence="0.546483427647534"/>
+       <Node id="50" score="0" recordCount="384" defaultChild="101">
+        <SimplePredicate field="nr_sessions_l28d" operator="greaterOrEqual" value="1.5"/>
+        <ScoreDistribution value="0" recordCount="198" confidence="0.515625"/>
+        <ScoreDistribution value="1" recordCount="186" confidence="0.484375"/>
+        <Node id="100" score="0" recordCount="103">
+         <SimpleSetPredicate field="timezone_first" booleanOperator="isIn">
+          <Array n="13" type="string">&quot;Africa/Johannesburg&quot; &quot;America/Cancun&quot; &quot;America/Phoenix&quot; &quot;America/Vancouver&quot; &quot;Asia/Jerusalem&quot; &quot;Asia/Kuala_Lumpur&quot; &quot;Asia/Qatar&quot; &quot;Australia/Brisbane&quot; &quot;Australia/Melbourne&quot; &quot;Australia/Sydney&quot; &quot;Europe/Amsterdam&quot; &quot;Europe/London&quot; &quot;Europe/Rome&quot;</Array>
+         </SimpleSetPredicate>
+         <ScoreDistribution value="0" recordCount="64" confidence="0.621359223300971"/>
+         <ScoreDistribution value="1" recordCount="39" confidence="0.378640776699029"/>
+        </Node>
+        <Node id="101" score="1" recordCount="281" defaultChild="203">
+         <SimpleSetPredicate field="timezone_first" booleanOperator="isIn">
+          <Array n="16" type="string">&quot;Africa/Cairo&quot; &quot;America/Argentina/Buenos_Aires&quot; &quot;America/Chicago&quot; &quot;America/Denver&quot; &quot;America/Detroit&quot; &quot;America/Mexico_City&quot; &quot;America/New_York&quot; &quot;Asia/Karachi&quot; &quot;Asia/Kolkata&quot; &quot;Asia/Riyadh&quot; &quot;Australia/Perth&quot; &quot;Europe/Berlin&quot; &quot;Europe/Bucharest&quot; &quot;Europe/Copenhagen&quot; &quot;Europe/Istanbul&quot; &quot;Europe/Lisbon&quot;</Array>
+         </SimpleSetPredicate>
+         <ScoreDistribution value="0" recordCount="134" confidence="0.476868327402135"/>
+         <ScoreDistribution value="1" recordCount="147" confidence="0.523131672597865"/>
+         <Node id="202" score="0" recordCount="149">
+          <SimplePredicate field="avg_duration" operator="lessThan" value="21.97156"/>
+          <ScoreDistribution value="0" recordCount="80" confidence="0.536912751677852"/>
+          <ScoreDistribution value="1" recordCount="69" confidence="0.463087248322148"/>
+         </Node>
+         <Node id="203" score="1" recordCount="132">
+          <SimplePredicate field="avg_duration" operator="greaterOrEqual" value="21.97156"/>
+          <ScoreDistribution value="0" recordCount="54" confidence="0.409090909090909"/>
+          <ScoreDistribution value="1" recordCount="78" confidence="0.590909090909091"/>
+         </Node>
+        </Node>
+       </Node>
+       <Node id="51" score="1" recordCount="853" defaultChild="102">
+        <SimplePredicate field="nr_sessions_l28d" operator="lessThan" value="1.5"/>
+        <ScoreDistribution value="0" recordCount="363" confidence="0.425556858147714"/>
+        <ScoreDistribution value="1" recordCount="490" confidence="0.574443141852286"/>
+        <Node id="102" score="1" recordCount="647" defaultChild="205">
+         <SimpleSetPredicate field="timezone_first" booleanOperator="isIn">
+          <Array n="23" type="string">&quot;America/Argentina/Buenos_Aires&quot; &quot;America/Chicago&quot; &quot;America/Denver&quot; &quot;America/Detroit&quot; &quot;America/Edmonton&quot; &quot;America/New_York&quot; &quot;America/Phoenix&quot; &quot;America/Vancouver&quot; &quot;Asia/Baghdad&quot; &quot;Asia/Bahrain&quot; &quot;Asia/Jakarta&quot; &quot;Asia/Karachi&quot; &quot;Asia/Kolkata&quot; &quot;Asia/Qatar&quot; &quot;Asia/Riyadh&quot; &quot;Asia/Shanghai&quot; &quot;Australia/Perth&quot; &quot;Europe/Amsterdam&quot; &quot;Europe/Berlin&quot; &quot;Europe/Copenhagen&quot; &quot;Europe/Lisbon&quot; &quot;Europe/Prague&quot; &quot;Europe/Rome&quot;</Array>
+         </SimpleSetPredicate>
+         <ScoreDistribution value="0" recordCount="292" confidence="0.451313755795981"/>
+         <ScoreDistribution value="1" recordCount="355" confidence="0.548686244204019"/>
+         <Node id="204" score="0" recordCount="211">
+          <SimpleSetPredicate field="device_first" booleanOperator="isIn">
+           <Array n="2" type="string">&quot;iPad&quot; &quot;iPhone Simulator&quot;</Array>
+          </SimpleSetPredicate>
+          <ScoreDistribution value="0" recordCount="109" confidence="0.516587677725118"/>
+          <ScoreDistribution value="1" recordCount="102" confidence="0.483412322274882"/>
+         </Node>
+         <Node id="205" score="1" recordCount="436" defaultChild="411">
+          <SimpleSetPredicate field="device_first" booleanOperator="isIn">
+           <Array n="2" type="string">&quot;iPhone&quot; &quot;iPod touch&quot;</Array>
+          </SimpleSetPredicate>
+          <ScoreDistribution value="0" recordCount="183" confidence="0.419724770642202"/>
+          <ScoreDistribution value="1" recordCount="253" confidence="0.580275229357798"/>
+          <Node id="410" score="0" recordCount="93">
+           <SimpleSetPredicate field="timezone_first" booleanOperator="isIn">
+            <Array n="12" type="string">&quot;America/Argentina/Buenos_Aires&quot; &quot;America/Denver&quot; &quot;America/Detroit&quot; &quot;America/Edmonton&quot; &quot;America/Phoenix&quot; &quot;America/Vancouver&quot; &quot;Asia/Baghdad&quot; &quot;Asia/Bahrain&quot; &quot;Asia/Riyadh&quot; &quot;Asia/Shanghai&quot; &quot;Europe/Amsterdam&quot; &quot;Europe/Berlin&quot;</Array>
+           </SimpleSetPredicate>
+           <ScoreDistribution value="0" recordCount="49" confidence="0.526881720430108"/>
+           <ScoreDistribution value="1" recordCount="44" confidence="0.473118279569892"/>
+          </Node>
+          <Node id="411" score="1" recordCount="343">
+           <SimpleSetPredicate field="timezone_first" booleanOperator="isIn">
+            <Array n="7" type="string">&quot;America/Chicago&quot; &quot;America/New_York&quot; &quot;Asia/Kolkata&quot; &quot;Asia/Qatar&quot; &quot;Australia/Perth&quot; &quot;Europe/Lisbon&quot; &quot;Europe/Rome&quot;</Array>
+           </SimpleSetPredicate>
+           <ScoreDistribution value="0" recordCount="134" confidence="0.39067055393586"/>
+           <ScoreDistribution value="1" recordCount="209" confidence="0.60932944606414"/>
+          </Node>
+         </Node>
+        </Node>
+        <Node id="103" score="1" recordCount="206">
+         <SimpleSetPredicate field="timezone_first" booleanOperator="isIn">
+          <Array n="12" type="string">&quot;Africa/Cairo&quot; &quot;Africa/Johannesburg&quot; &quot;America/Cancun&quot; &quot;America/Mexico_City&quot; &quot;Asia/Jerusalem&quot; &quot;Asia/Kuala_Lumpur&quot; &quot;Australia/Brisbane&quot; &quot;Australia/Melbourne&quot; &quot;Australia/Sydney&quot; &quot;Europe/Bucharest&quot; &quot;Europe/Istanbul&quot; &quot;Europe/London&quot;</Array>
+         </SimpleSetPredicate>
+         <ScoreDistribution value="0" recordCount="71" confidence="0.344660194174757"/>
+         <ScoreDistribution value="1" recordCount="135" confidence="0.655339805825243"/>
+        </Node>
+       </Node>
+      </Node>
+     </Node>
+     <Node id="13" score="1" recordCount="224">
+      <SimpleSetPredicate field="timezone_first" booleanOperator="isIn">
+       <Array n="34" type="string">&quot;Africa/Algiers&quot; &quot;Africa/Casablanca&quot; &quot;Africa/Lagos&quot; &quot;America/Anchorage&quot; &quot;America/Aruba&quot; &quot;America/Boise&quot; &quot;America/Dawson_Creek&quot; &quot;America/Halifax&quot; &quot;America/Lima&quot; &quot;America/Los_Angeles&quot; &quot;America/Matamoros&quot; &quot;America/Monterrey&quot; &quot;America/Montreal&quot; &quot;America/Tijuana&quot; &quot;Asia/Bangkok&quot; &quot;Asia/Beirut&quot; &quot;Asia/Brunei&quot; &quot;Asia/Gaza&quot; &quot;Asia/Ho_Chi_Minh&quot; &quot;Asia/Hong_Kong&quot; &quot;Asia/Kabul&quot; &quot;Asia/Singapore&quot; &quot;Asia/Tehran&quot; &quot;Asia/Tokyo&quot; &quot;Australia/Adelaide&quot; &quot;Europe/Belgrade&quot; &quot;Europe/Dublin&quot; &quot;Europe/Helsinki&quot; &quot;Europe/Kiev&quot; &quot;Europe/Madrid&quot; &quot;Europe/Paris&quot; &quot;Europe/Sofia&quot; &quot;Europe/Vienna&quot; &quot;US/Central&quot;</Array>
+      </SimpleSetPredicate>
+      <ScoreDistribution value="0" recordCount="62" confidence="0.276785714285714"/>
+      <ScoreDistribution value="1" recordCount="162" confidence="0.723214285714286"/>
+     </Node>
+    </Node>
+    <Node id="7" score="1" recordCount="1520">
+     <SimpleSetPredicate field="activity_pattern" booleanOperator="isIn">
+      <Array n="1" type="string">&quot;0-0-0-0&quot;</Array>
+     </SimpleSetPredicate>
+     <ScoreDistribution value="0" recordCount="337" confidence="0.221710526315789"/>
+     <ScoreDistribution value="1" recordCount="1183" confidence="0.778289473684211"/>
+    </Node>
+   </Node>
+  </Node>
+ </TreeModel>
+</PMML>

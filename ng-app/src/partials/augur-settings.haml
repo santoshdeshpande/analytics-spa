@@ -24,3 +24,11 @@
           .right
             %a.button.radius.cancel{ ng: { click: 'initialize()' } } Cancel
             %input.submit.button.radius{ type: 'submit', value: 'Update augur', ng: { disabled: '!form.$valid' } }
+    .row{ ng: { if: 'augur.modelDownloadPath' } }
+      .columns.small-12
+        .right
+          %a.download-button{ ng: { href: '{{ augur.modelDownloadPath }}' } }
+            %span.download
+              %i.icon.icon-download
+            Download PMML
+
