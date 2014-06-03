@@ -18,6 +18,10 @@ define([
       },
       update: {
         method: 'PUT'
+      },
+      schedule: {
+        method: 'POST',
+        url: '/api/v1/habitats/:habitatId/augurs/:augurId/schedule/:stuff'
       }
     })
   }];

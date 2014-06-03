@@ -76,7 +76,7 @@
                     {{ artifact.learningKpiLabel }}
                   %dt Latest evaluation
                   %dd
-                    {{ artifact.latestEvaluationTimestamp }}
+                    {{ artifact.latestEvaluationTimestamp | date: 'yyyy-MM-dd HH:mm' }}
               .chart
                 %d3-line-chart-dashboard{ data: 'artifact.dashboardChartData', height: '30' }
 

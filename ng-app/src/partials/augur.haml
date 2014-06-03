@@ -5,7 +5,7 @@
         .row
           .small-3.columns.habitat-name
             {{augur.name}}
-          .small-4.columns.info
+          .small-3.columns.info
             %dl
               %dt Type
               %dd Decision Tree
@@ -15,18 +15,28 @@
               %dt Threshold
               %dd
                 {{ augur.learningThresholdLabel }}
-          .small-5.columns.actions
+          .small-6.columns.actions
             %ul.no-bullet
               %li.action
-                %a.action-button
+                %a.action-button{ ng: { click: 'schedulePrediction()' }}
                   %span.calculate
                     %i.icon.icon-calculator
-                  Calculate new prediction
+                  %span.action-label
+                    Calculate new prediction
+                    %br
+                    %span.timestamp
+                      (scheduled: {{ augur.prediction.nextTimestamp | date: 'yyyy-MM-dd HH:mm' }})
               %li.action
-                %a.action-button
+                %a.action-button{ ng: { href: '{{ augur.prediction.downloadPath }}' } }
                   %span.download
                     %i.icon.icon-download
-                  Download latest prediction
+                  %span.action-label
+                    Download latest prediction
+                    %br
+                    %span.timestamp{ ng: { if: 'augur.prediction.timestamp' }}
+                      (from: {{ augur.prediction.timestamp | date: 'yyyy-MM-dd HH:mm Z' }})
+                    %span{ ng: { if: '!augur.prediction.timestamp' }}
+                      (no prediction yet)
       .small-1.columns.back
         %a{ ui: { sref: 'dashboard' } }
           %span.download

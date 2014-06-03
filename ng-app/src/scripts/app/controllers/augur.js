@@ -35,6 +35,7 @@ define([
     function trackCurrentState(currentChildState) {
       $scope.statePerformance = currentChildState;
     }
+
     function activatePerformanceState() {
       $state.go($scope.statePerformance, {
         habitatId: $stateParams.habitatId,
@@ -42,8 +43,18 @@ define([
       });
     }
 
+    function schedulePrediction() {
+      Augur.schedule({
+        habitatId: $scope.habitat.id,
+        id: $scope.augur.id
+      }, function ( prediction ) {
+        $scope.augur.prediction.nextTimestamp = prediction.nextTimestamp;
+      });
+    }
+
     $scope.trackCurrentState = trackCurrentState;
     $scope.activatePerformanceState = activatePerformanceState;
+    $scope.schedulePrediction = schedulePrediction;
   }
 
   return  ['$state', '$scope', '$stateParams', '$rootScope', 'Augur', 'Habitat', controller];
