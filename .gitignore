@@ -1,3 +1,5 @@
 .idea/
+.ruby-version
 ng-app/node_modules
 ng-app/dist/*
+vendor/ruby

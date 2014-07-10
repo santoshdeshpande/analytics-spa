@@ -6,12 +6,10 @@ var gulp = require('gulp'),
   ngHtml2Js = require('gulp-ng-html2js'),
   cleanhtml = require('gulp-cleanhtml'),
   jshint = require('gulp-jshint'),
-  uglify = require('gulp-uglify'),
   rename = require('gulp-rename'),
-  clean = require('gulp-clean'),
+  rimraf = require('gulp-rimraf'),
   concat = require('gulp-concat'),
   notify = require('gulp-notify'),
-  plumber = require('gulp-plumber'),
   cache = require('gulp-cache'),
   embedlr = require('gulp-embedlr'),
   livereload = require('gulp-livereload'),
@@ -21,7 +19,7 @@ var gulp = require('gulp'),
   Q = require('q'),
   requirejs = require('requirejs'),
   http = require('http'),
-  errorhandler = require('errorhandler')
+  errorhandler = require('errorhandler'),
   express = require('express');
 
 //////////////////////////////
@@ -37,40 +35,36 @@ var livereloadport = 35729,
 gulp.task('default', ['dist', 'watch', 'serve']);
 
 gulp.task('serve', function () {
+  var json = '';
+
   var app = express();
-//    app.use(function(req, res, next){
-//      console.log('%s %s', req.method, req.url);
-//      next();
-//    });
+  app.get('/api/v1/*', function (req, res) {
+    switch (true) {
+      case (!!req.url.match(/fact_tables$/)):
+        json = '/fact_tables.json';
+        break;
+      case (!!req.url.match(/augurs$/)):
+        json = '/augurs.json';
+        break;
+      case (!!req.url.match(/augurs\/.+$/)):
+        json = '/augur.json';
+        break;
+      case (!!req.url.match(/habitats$/)):
+        json = '/habitats.json';
+        break;
+      case (!!req.url.match(/habitats\/.+$/)):
+        json = '/habitat.json';
+        break;
+    }
 
-    app.get('/api/v1/*', function (req, res) {
-      var json = '';
-      switch (true) {
-        case (!!req.url.match(/fact_tables$/)):
-          json = '/fact_tables.json';
-          break;
-        case (!!req.url.match(/augurs$/)):
-          json = '/augurs.json';
-          break;
-        case (!!req.url.match(/augurs\/.+$/)):
-          json = '/augur.json';
-          break;
-        case (!!req.url.match(/habitats$/)):
-          json = '/habitats.json';
-          break;
-        case (!!req.url.match(/habitats\/.+$/)):
-          json = '/habitat.json';
-          break;
-      }
+    // console.log('-API- %s %s %s', req.method, req.url, json);
+    res.sendfile(__dirname + '/src/' + req.url + json)
+  });
 
-      // console.log('-API- %s %s %s', req.method, req.url, json);
-      res.sendfile(__dirname + '/src/' + req.url + json)
-    });
+  app.use('/scripts', express.static(__dirname + '/src/scripts'));
 
-    app.use('/scripts', express.static(__dirname + '/src/scripts'));
-
-    app.use(express.static(__dirname + '/dist'));
-    app.use(errorhandler({ dumpExceptions: true, showStack: true }));
+  app.use(express.static(__dirname + '/dist'));
+  app.use(errorhandler({ dumpExceptions: true, showStack: true }));
   app.listen(serverport, function () {
     console.log('Started server on: ' + serverport);
     lrserver.listen(livereloadport, function () {
@@ -84,12 +78,16 @@ gulp.task('build', ['styles', 'requirejs'], function () {
 });
 
 gulp.task('dist', ['clean-styles'], function () {
-  gulp.start('index', 'haml', 'styles');
+  gulp.start('index', 'haml-build', 'styles');
 });
 
 gulp.task('watch', function () {
   gulp.watch(['src/index-dist.html'], ['index']);
-  gulp.watch(['src/partials*/**/*.haml'], ['haml']);
+  gulp.src(['src/partials*/**/*.haml'], { read: false }).
+        pipe(watch()).
+        pipe(haml()).
+        pipe(gulp.dest('dist/')).
+        pipe(livereload(lrserver));
 
   gulp.watch(['src/styles/**/*'], ['styles']);
   gulp.watch(['src/scripts/main.js', 'src/scripts/app/**/*.js'], function(){
@@ -138,19 +136,6 @@ gulp.task('index', function () {
     .pipe(notify({ message: 'Index html task complete' }));
 });
 
-gulp.task('haml', function () {
-  return gulp
-    .src(['src/partials*/**/*.haml'])
-    .pipe(watch(function(files) {
-                return files.pipe(haml())
-                    .pipe(gulp.dest('dist/'))
-            }))
-    .pipe(haml())
-    .pipe(gulp.dest('dist/'))
-    .pipe(livereload(lrserver))
-    .pipe(notify({ message: 'Haml task complete' }));
-});
-
 gulp.task('haml-build', function () {
   return gulp
     .src(['src/partials*/**/*.haml'])
@@ -175,7 +160,7 @@ gulp.task('templates', ['haml-build'], function () {
 gulp.task('clean-styles', function () {
   return gulp
     .src(['dist/styles/**/*', 'dist/fonts/*'], { read: false })
-    .pipe(clean());
+    .pipe(rimraf());
 });
 
 gulp.task('styles', ['glyphicons-bootstrap'], function () {
