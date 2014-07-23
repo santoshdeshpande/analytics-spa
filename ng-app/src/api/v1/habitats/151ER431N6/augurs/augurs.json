@@ -3,12 +3,14 @@
     "id": "15F04431P5",
     "name": "IWishIKnew2",
     "description": null,
-    "code": "15F04431P5"
+    "code": "15F04431P5",
+      "augurType": "classification"
   },
   {
     "id": "15EWGM31P3",
     "name": "IWishIKnew",
     "description": null,
-    "code": "15EWGM31P3"
+    "code": "15EWGM31P3",
+      "augurType": "classification"
   }
 ]
