@@ -38,47 +38,53 @@ define([
           templateUrl: 'partials/augur-new.html',
           controller: 'AugurNewCtrl'
         }).
-        state('augur', {
+      state('augur', {
           url: '/habitat/:habitatId/augurs/:augurId',
+          template: '<ui-view/>',
+          abstract: true,
+          controller: 'AugurCtrl'
+      }).
+        state('augur.classification', {
+          url: '/classification',
           templateUrl: 'partials/augur.html',
           controller: 'AugurCtrl'
         }).
-        state('augur.influencers', {
+        state('augur.classification.influencers', {
           url: '/influencers',
           templateUrl: 'partials/augur-influencers.html',
           controller: 'AugurInfluencersCtrl'
         }).
-        state('augur.accuracy', {
+        state('augur.classification.accuracy', {
           url: '/accuracy',
           templateUrl: 'partials/augur-accuracy.html',
           controller: 'AugurAccuracyCtrl'
         }).
-        state('augur.accuracy-detail', {
+        state('augur.classification.accuracy-detail', {
           url: '/detail/:chartType',
           templateUrl: 'partials/augur-accuracy-detail.html',
           controller: 'AugurAccuracyDetailCtrl'
         }).
-        state('augur.performance', {
+        state('augur.classification.performance', {
           abstract: true,
           url: '/performance',
           template: '<ui-view/>'
         }).
-        state('augur.performance.learning', {
+        state('augur.classification.performance.learning', {
           url: '/learning',
           templateUrl: 'partials/augur-performance-learning.html',
           controller: 'AugurPerformanceCtrl'
         }).
-        state('augur.performance.evaluation', {
+        state('augur.classification.performance.evaluation', {
           url: '/evaluation',
           templateUrl: 'partials/augur-performance-evaluation.html',
           controller: 'AugurPerformanceCtrl'
         }).
-        state('augur.tree', {
-          url: '/tree',
+        state('augur.classification.home', {
+          url: '/home',
           templateUrl: 'partials/augur-tree.html',
           controller: 'AugurTreeCtrl'
         }).
-        state('augur.settings', {
+        state('augur.classification.settings', {
           url: '/settings',
           templateUrl: 'partials/augur-settings.html',
           controller: 'AugurSettingsCtrl'

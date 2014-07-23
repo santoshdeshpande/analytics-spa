@@ -46,25 +46,25 @@
   .side-nav-container
     %ul.side-nav
       %li{ ui: { sref: { active: 'active' } } }
-        %a{ ui: { sref: 'augur.tree' } }
+        %a{ ui: { sref: 'augur.classification.home' } }
           %span.model-viewer
             %i.icon.icon-decisiontree
           %br
           Model Viewer
       %li{ ui: { sref: { active: 'active' } } }
-        %a{ ui: { sref: 'augur.influencers' } }
+        %a{ ui: { sref: 'augur.classification.influencers' } }
           %span.influencer
             %i.icon.icon-influencer
           %br
           Influencers
       %li{ ui: { sref: { active: 'active' } } }
-        %a{ ui: { sref: 'augur.accuracy' } }
+        %a{ ui: { sref: 'augur.classification.accuracy' } }
           %span.accuracy
             %i.icon.icon-target
           %br
           Accuracy
       %li{ ui: { sref: { active: 'active' } } }
-        %a{ ui: { sref: 'augur.performance' }, style: 'display:none;', fyi: 'only to get sref-active working' }
+        %a{ ui: { sref: 'augur.classification.performance' }, style: 'display:none;', fyi: 'only to get sref-active working' }
 
         %a{ ng: { click: 'activatePerformanceState()' } }
           %span.performance-drift
@@ -75,11 +75,11 @@
         .side-nav-sub
           %ul.no-bullet.inline-list
             %li.first{ ui: { sref: { active: 'active' } } }
-              %a{ ui: { sref: 'augur.performance.learning' } }
+              %a{ ui: { sref: 'augur.classification.performance.learning' } }
                 %span.performance-drift-learning
                   %i.icon.icon-gamepad
             %li{ ui: { sref: { active: 'active' } } }
-              %a{ ui: { sref: 'augur.performance.evaluation' } }
+              %a{ ui: { sref: 'augur.classification.performance.evaluation' } }
                 %span.performance-drift-evaluation
                   %i.icon.icon-suitcase
 
@@ -87,7 +87,7 @@
             Performance Drift
 
       %li{ ui: { sref: { active: 'active' } } }
-        %a{ ui: { sref: 'augur.settings' } }
+        %a{ ui: { sref: 'augur.classification.settings' } }
           %span.settings
             %icon.icon-settings
           %br

@@ -63,7 +63,7 @@
 
 
         %div{ ng: { if: 'artifact.type == "augur"' } }
-          %a{ ui: { sref: 'augur.tree({ habitatId: artifact.habitatId, augurId: artifact.id })' } }
+          %a{ ui: { sref: 'augur.{{artifact.augurType}}.home({ habitatId: artifact.habitatId, augurId: artifact.id })' } }
             .tile.augur{ ng: { attr: { data: { theme: '{{ artifact.colorScheme }}' }}} }
               %h5.title
                 {{ artifact.name }}

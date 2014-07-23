@@ -9,7 +9,7 @@ define([
   'use strict';
 
   function controller($state, $scope, $stateParams, $rootScope, Augur, Habitat) {
-    $scope.statePerformance = 'augur.performance.learning'; // start state for first visit
+    $scope.statePerformance = 'augur.classification.performance.learning'; // start state for first visit
 
     $scope.augur = Augur.get({
       habitatId: $stateParams.habitatId,
