@@ -8,7 +8,8 @@
     "learningKpi": "misclassification_rate",
     "learningThreshold": 0.9,
     "learningStatus": "pending",
-    "latestEvaluationTimestamp": ""
+    "latestEvaluationTimestamp": "",
+    "augurType": "classification"
   },
   {
     "id": "15J2YR31P9",
@@ -18,7 +19,8 @@
     "dashboardChartData": null,
     "learningKpi": "true_negative_rate",
     "learningThreshold": 0.1,
-    "latestEvaluationTimestamp": " - "
+    "latestEvaluationTimestamp": " - ",
+      "augurType": "classification"
   },
   {
     "id": "15EQ5H31NV",
@@ -28,7 +30,8 @@
     "dashboardChartData": null,
     "learningKpi": "cumulative_response_top_25",
     "learningThreshold": 1.5,
-    "latestEvaluationTimestamp": " - "
+    "latestEvaluationTimestamp": " - ",
+      "augurType": "classification"
 
   },
   {
@@ -39,7 +42,8 @@
     "dashboardChartData": null,
     "learningKpi": "gini_coefficient",
     "learningThreshold": 1.1,
-    "latestEvaluationTimestamp": " - "
+    "latestEvaluationTimestamp": " - ",
+      "augurType": "clustering"
   },
   {
     "id": "15CWYM31NS",
@@ -49,7 +53,8 @@
     "dashboardChartData": null,
     "learningKpi": "true_negative_rate",
     "learningThreshold": 0.7,
-    "latestEvaluationTimestamp": " - "
+    "latestEvaluationTimestamp": " - ",
+      "augurType": "clustering"
   },
   {
     "id": "15CWP831NQ",
@@ -59,6 +64,7 @@
     "dashboardChartData": null,
     "learningKpi": "area_under_the_curve",
     "learningThreshold": 0.6,
-    "latestEvaluationTimestamp": " - "
+    "latestEvaluationTimestamp": " - ",
+      "augurType": "classification"
   }
 ]
