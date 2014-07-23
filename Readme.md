@@ -16,9 +16,7 @@ Some of the gulp plugins - ```gulp-haml``` and ```gulp-sass``` - require and ins
 
 ### Installation instructions ###
 
-## NPM modules and Bower plugins ##
-
-Simply navigate into ```ng-app``` and run ```npm install```. Test the installation by running ```gulp``` and navigate to ```http://localhost:4000``` - please watch the console output where gulp runs and look for possible error messages.
+First, Ruby and HAML is required, after that, install npm and gulp - see the following instructions. Please read all to the end!
 
 ## Ruby runtime ###
 
@@ -108,3 +106,8 @@ ruby -v
 > Do not forget to add it to your .bash_profile (Mac, Ubuntu Server) or .bashrc (Ubuntu Desktop)
 > ```echo 'if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi' >> ~/.bash_profile```
 > This step is included in the above instructions.
+
+## NPM modules ##
+
+Simply navigate into ```ng-app``` and run ```npm install```. Test the installation by running ```gulp``` and navigate to ```http://localhost:4000``` - please watch the console output where gulp runs and look for possible error messages.
+
