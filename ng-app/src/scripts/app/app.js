@@ -49,6 +49,26 @@ define([
           templateUrl: 'partials/augur.html',
           controller: 'AugurCtrl'
         }).
+        state('augur.clustering', {
+          abstract: true,
+          url: '/clustering',
+          template: '<ui-view/>',
+          controller: 'AugurCtrl'
+        }).
+        state('augur.clustering.home', {
+             url: '/profile',
+              templateUrl: 'partials/augur-clustering.html'
+          }).
+          state('augur.clustering.landscape', {
+             url: '/landscape',
+              abstract: true,
+              template: '<ui-view/>'
+          }).
+          state('augur.clustering.settings', {
+             url: '/settings',
+              abstract: true,
+              template: '<ui-view/>'
+          }).
         state('augur.classification.influencers', {
           url: '/influencers',
           templateUrl: 'partials/augur-influencers.html',
