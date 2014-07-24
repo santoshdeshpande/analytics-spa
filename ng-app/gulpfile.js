@@ -58,7 +58,7 @@ gulp.task('serve', function () {
     }
 
     // console.log('-API- %s %s %s', req.method, req.url, json);
-    res.sendfile(__dirname + '/src/' + req.url + json)
+    res.sendfile(__dirname + '/src' + req.url + json)
   });
 
   app.use('/scripts', express.static(__dirname + '/src/scripts'));

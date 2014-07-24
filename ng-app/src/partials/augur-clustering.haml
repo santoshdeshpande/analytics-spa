@@ -1,3 +1,40 @@
-.row
-  .columns.large-12
-    %h1='Clustering will come here'
+.row.augur.action-bar{ ng: { attr: { data: { theme: '{{ habitat.colorScheme }}' } } }}
+  .small-12.columns
+    .row
+      .small-11.columns
+        .row
+          .small-6.columns.habitat-name
+            Clustering #1
+          .small-6.columns.actions
+            %ul.no-bullet
+              %li.action
+              %li.action
+      .small-1.columns.back
+        %a{ ui: { sref: 'dashboard' } }
+          %span.download
+            %i.icon.icon-exit
+
+.row.augur.container
+  .side-nav-container
+    %ul.side-nav
+      %li{ ui: { sref: { active: 'active' } } }
+        %a{ ui: { sref: 'augur.clustering.home' } }
+          %span.clustering-profile
+            %i.icon.icon-decisiontree
+          %br
+          Cluster Profile
+      %li{ ui: { sref: { active: 'active' } } }
+        %a{ ui: { sref: 'augur.clustering.landscape' } }
+          %span.landscape
+            %i.icon.icon-influencer
+          %br
+          Cluster Landscape
+      %li{ ui: { sref: { active: 'active' } } }
+        %a{ ui: { sref: 'augur.clustering.settings' } }
+          %span.settings
+            %icon.icon-settings
+          %br
+          Settings
+
+  .main
+    %div{ ui: { view: '' } }
