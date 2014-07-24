@@ -109,5 +109,6 @@ ruby -v
 
 ## NPM modules ##
 
-Simply navigate into ```ng-app``` and run ```npm install```. Test the installation by running ```gulp``` and navigate to ```http://localhost:4000``` - please watch the console output where gulp runs and look for possible error messages.
-
+Simply navigate into ```ng-app``` and run ```npm install```. Test the installation by 
+running ```gulp``` and navigate to ```http://localhost:4000``` - please watch the 
+console output where gulp runs and look for possible error messages.

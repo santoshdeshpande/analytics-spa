@@ -8,21 +8,7 @@
           .small-6.columns.actions
             %ul.no-bullet
               %li.action
-                %a.action-button{ ng: { click: 'schedulePrediction()' }}
-                  %span.calculate
-                    %i.icon.icon-calculator
-                  %span.action-label
-                    Calculate new cluster model
-                    %br
-                    %span.timestamp
-
               %li.action
-                %a.action-button{ ng: { href: '{{ augur.prediction.downloadPath }}' } }
-                  %span.download
-                    %i.icon.icon-download
-                  %span.action-label
-                    Download Clusters
-                    %br
       .small-1.columns.back
         %a{ ui: { sref: 'dashboard' } }
           %span.download
