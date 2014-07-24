@@ -154,7 +154,15 @@
           &.model-viewer .icon {
             right: .5rem;
           }
+          &.clustering-profile .icon {
+            right: .5rem;
+          }
           &.influencer .icon {
+            right: -.2rem;
+            top: .1rem;
+            font-size: 2.5rem;
+          }
+          &.landscape .icon {
             right: -.2rem;
             top: .1rem;
             font-size: 2.5rem;

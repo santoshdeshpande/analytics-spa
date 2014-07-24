@@ -1,3 +1,58 @@
-.row
-  .columns.large-12
-    %h1='Clustering will come here'
+.row.augur.action-bar{ ng: { attr: { data: { theme: '{{ habitat.colorScheme }}' } } }}
+  .small-12.columns
+    .row
+      .small-11.columns
+        .row
+          .small-6.columns.habitat-name
+            Clustering #1
+          .small-6.columns.actions
+            %ul.no-bullet
+              %li.action
+                %a.action-button{ ng: { click: 'schedulePrediction()' }}
+                  %span.calculate
+                    %i.icon.icon-calculator
+                  %span.action-label
+                    Calculate new cluster model
+                    %br
+                    %span.timestamp
+                      (scheduled: {{ augur.prediction.nextTimestamp | date: 'yyyy-MM-dd HH:mm' }})
+              %li.action
+                %a.action-button{ ng: { href: '{{ augur.prediction.downloadPath }}' } }
+                  %span.download
+                    %i.icon.icon-download
+                  %span.action-label
+                    Download Clusters
+                    %br
+                    %span.timestamp{ ng: { if: 'augur.prediction.timestamp' }}
+                      (from: {{ augur.prediction.timestamp | date: 'yyyy-MM-dd HH:mm Z' }})
+                    %span{ ng: { if: '!augur.prediction.timestamp' }}
+                      (no prediction yet)
+      .small-1.columns.back
+        %a{ ui: { sref: 'dashboard' } }
+          %span.download
+            %i.icon.icon-exit
+
+.row.augur.container
+  .side-nav-container
+    %ul.side-nav
+      %li{ ui: { sref: { active: 'active' } } }
+        %a{ ui: { sref: 'augur.clustering.home' } }
+          %span.clustering-profile
+            %i.icon.icon-decisiontree
+          %br
+          Cluster Profile
+      %li{ ui: { sref: { active: 'active' } } }
+        %a{ ui: { sref: 'augur.clustering.landscape' } }
+          %span.landscape
+            %i.icon.icon-influencer
+          %br
+          Cluster Landscape
+      %li{ ui: { sref: { active: 'active' } } }
+        %a{ ui: { sref: 'augur.clustering.settings' } }
+          %span.settings
+            %icon.icon-settings
+          %br
+          Settings
+
+  .main
+    %div{ ui: { view: '' } }

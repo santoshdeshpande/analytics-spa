@@ -52,22 +52,20 @@ define([
                 state('augur.clustering', {
                     abstract: true,
                     url: '/clustering',
-                    template: '<ui-view/>',
+                    templateUrl: 'partials/augur-clustering.html',
                     controller: 'AugurCtrl'
                 }).
                 state('augur.clustering.home', {
                     url: '/profile',
-                    templateUrl: 'partials/augur-clustering.html'
+                    template: '<h1>Profile</h1>'
                 }).
                 state('augur.clustering.landscape', {
                     url: '/landscape',
-                    abstract: true,
-                    template: '<ui-view/>'
+                    template: '<h1>Landscape</h1>'
                 }).
                 state('augur.clustering.settings', {
                     url: '/settings',
-                    abstract: true,
-                    template: '<ui-view/>'
+                    template: '<h1>Settings</h1>'
                 }).
                 state('augur.classification.influencers', {
                     url: '/influencers',
