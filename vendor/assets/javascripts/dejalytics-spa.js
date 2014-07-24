@@ -39803,7 +39803,7 @@ define('controllers/augur',[
   
 
   function controller($state, $scope, $stateParams, $rootScope, Augur, Habitat) {
-    $scope.statePerformance = 'augur.performance.learning'; // start state for first visit
+    $scope.statePerformance = 'augur.classification.performance.learning'; // start state for first visit
 
     $scope.augur = Augur.get({
       habitatId: $stateParams.habitatId,
@@ -39890,7 +39890,6 @@ define('controllers/augur-influencers',[], function () {
 
   return  ['$scope', '$stateParams', 'Augur', 'Habitat', function ($scope) {
     $scope.data = { nodes: [] };
-    
     $scope.augur.$promise.then(function(augur){
       $scope.data = { nodes: augur['learningReport']['featureImportance'] };
     });
@@ -57387,6 +57386,18 @@ try {
   module = angular.module('dejalyticsPartials', []);
 }
 module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('partials/augur-clustering.html',
+    '<div class=\'row augur action-bar\' ng-attr-data-theme=\'{{ habitat.colorScheme }}\'><div class=\'small-12 columns\'><div class=\'row\'><div class=\'small-11 columns\'><div class=\'row\'><div class=\'small-6 columns habitat-name\'> Clustering #1</div><div class=\'small-6 columns actions\'><ul class=\'no-bullet\'><li class=\'action\'><a class=\'action-button\' ng-click=\'schedulePrediction()\'><span class=\'calculate\'><i class=\'icon icon-calculator\'></i></span> <span class=\'action-label\'>Calculate new cluster model<br> <span class=\'timestamp\'>(scheduled: {{ augur.prediction.nextTimestamp | date: \'yyyy-MM-dd HH:mm\' }})</span></span></a></li><li class=\'action\'><a class=\'action-button\' ng-href=\'{{ augur.prediction.downloadPath }}\'><span class=\'download\'><i class=\'icon icon-download\'></i></span> <span class=\'action-label\'>Download Clusters<br> <span class=\'timestamp\' ng-if=\'augur.prediction.timestamp\'>(from: {{ augur.prediction.timestamp | date: \'yyyy-MM-dd HH:mm Z\' }})</span> <span ng-if=\'!augur.prediction.timestamp\'>(no prediction yet)</span></span></a></li></ul></div></div></div><div class=\'small-1 columns back\'><a ui-sref=\'dashboard\'><span class=\'download\'><i class=\'icon icon-exit\'></i></span></a></div></div></div></div><div class=\'row augur container\'><div class=\'side-nav-container\'><ul class=\'side-nav\'><li ui-sref-active=\'active\'><a ui-sref=\'augur.clustering.home\'><span class=\'clustering-profile\'><i class=\'icon icon-decisiontree\'></i></span><br> Cluster Profile</a></li><li ui-sref-active=\'active\'><a ui-sref=\'augur.clustering.landscape\'><span class=\'landscape\'><i class=\'icon icon-influencer\'></i></span><br> Cluster Landscape</a></li><li ui-sref-active=\'active\'><a ui-sref=\'augur.clustering.settings\'><span class=\'settings\'><icon class=\'icon-settings\'></icon></span><br> Settings</a></li></ul></div><div class=\'main\'><div ui-view=\'\'></div></div></div>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('dejalyticsPartials');
+} catch (e) {
+  module = angular.module('dejalyticsPartials', []);
+}
+module.run(['$templateCache', function($templateCache) {
   $templateCache.put('partials/augur-influencers.html',
     '<div class=\'row augur-influencers\'><div class=\'columns small-12\'><div class=\'heading\'><h1>Influencers</h1><h6 class=\'subheader\'>Shows up to 40 most important influencers</h6></div><d3-influencer-chart data=\'data\'></d3-influencer-chart></div></div>');
 }]);
@@ -57435,18 +57446,6 @@ try {
   module = angular.module('dejalyticsPartials', []);
 }
 module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('partials/augur-performance.html',
-    '<div class=\'row augur-performance\'><div class=\'columns small-12\'> I am the performance page</div></div>');
-}]);
-})();
-
-(function(module) {
-try {
-  module = angular.module('dejalyticsPartials');
-} catch (e) {
-  module = angular.module('dejalyticsPartials', []);
-}
-module.run(['$templateCache', function($templateCache) {
   $templateCache.put('partials/augur-settings.html',
     '<div class=\'augur-settings\'><div class=\'row\'><div class=\'columns small-12\'><div class=\'heading\'><h1>Augur Settings</h1><h6 class=\'subheader\'>Update the settings for this Augur</h6></div></div></div><form class=\'update\' name=\'form\' ng-submit=\'form.$valid &amp;&amp; submit()\' novalidate=\'\'><div class=\'row\'><div class=\'columns small-12\'><div class=\'form-body\'><augur-settings augur=\'augurSettings\' form=\'form\'></augur-settings></div></div></div><div class=\'row\'><div class=\'columns small-12\'><div class=\'alert-box alert\' ng-if=\'error\'> {{ error }}</div><div class=\'alert-box success\' ng-if=\'success\'> {{ success }}</div></div></div><div class=\'row\'><div class=\'columns small-12\'><div class=\'form-buttons\'><div class=\'left\'> <a class=\'button radius delete\' ng-click=\'delete()\'>Delete augur</a></div><div class=\'right\'> <a class=\'button radius cancel\' ng-click=\'initialize()\'>Cancel</a> <input class=\'submit button radius\' ng-disabled=\'!form.$valid\' type=\'submit\' value=\'Update augur\'></div></div></div></div><div class=\'row\' ng-if=\'augur.modelDownloadPath\'><div class=\'columns small-12\'><div class=\'right\'><a class=\'download-button\' ng-href=\'{{ augur.modelDownloadPath }}\'><span class=\'download\'><i class=\'icon icon-download\'></i></span> Download PMML</a></div></div></div></form></div>');
 }]);
@@ -57472,7 +57471,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('partials/augur.html',
-    '<div class=\'row augur action-bar\' ng-attr-data-theme=\'{{ habitat.colorScheme }}\'><div class=\'small-12 columns\'><div class=\'row\'><div class=\'small-11 columns\'><div class=\'row\'><div class=\'small-3 columns habitat-name\'> {{augur.name}}</div><div class=\'small-3 columns info\'><dl><dt>Type</dt><dd>Decision Tree</dd><dt>KPI</dt><dd> {{ augur.learningKpiLabel }}</dd><dt>Threshold</dt><dd> {{ augur.learningThresholdLabel }}</dd></dl></div><div class=\'small-6 columns actions\'><ul class=\'no-bullet\'><li class=\'action\'><a class=\'action-button\' ng-click=\'schedulePrediction()\'><span class=\'calculate\'><i class=\'icon icon-calculator\'></i></span> <span class=\'action-label\'>Calculate new prediction<br> <span class=\'timestamp\'>(scheduled: {{ augur.prediction.nextTimestamp | date: \'yyyy-MM-dd HH:mm\' }})</span></span></a></li><li class=\'action\'><a class=\'action-button\' ng-href=\'{{ augur.prediction.downloadPath }}\'><span class=\'download\'><i class=\'icon icon-download\'></i></span> <span class=\'action-label\'>Download latest prediction<br> <span class=\'timestamp\' ng-if=\'augur.prediction.timestamp\'>(from: {{ augur.prediction.timestamp | date: \'yyyy-MM-dd HH:mm Z\' }})</span> <span ng-if=\'!augur.prediction.timestamp\'>(no prediction yet)</span></span></a></li></ul></div></div></div><div class=\'small-1 columns back\'><a ui-sref=\'dashboard\'><span class=\'download\'><i class=\'icon icon-exit\'></i></span></a></div></div></div></div><div class=\'row augur container\'><div class=\'side-nav-container\'><ul class=\'side-nav\'><li ui-sref-active=\'active\'><a ui-sref=\'augur.tree\'><span class=\'model-viewer\'><i class=\'icon icon-decisiontree\'></i></span><br> Model Viewer</a></li><li ui-sref-active=\'active\'><a ui-sref=\'augur.influencers\'><span class=\'influencer\'><i class=\'icon icon-influencer\'></i></span><br> Influencers</a></li><li ui-sref-active=\'active\'><a ui-sref=\'augur.accuracy\'><span class=\'accuracy\'><i class=\'icon icon-target\'></i></span><br> Accuracy</a></li><li ui-sref-active=\'active\'><a fyi=\'only to get sref-active working\' style=\'display:none;\' ui-sref=\'augur.performance\'></a><a ng-click=\'activatePerformanceState()\'><span class=\'performance-drift\'><i class=\'icon icon-drift\'></i></span><div class=\'label-main\'> Performance Drift</div></a><div class=\'side-nav-sub\'><ul class=\'no-bullet inline-list\'><li class=\'first\' ui-sref-active=\'active\'><a ui-sref=\'augur.performance.learning\'><span class=\'performance-drift-learning\'><i class=\'icon icon-gamepad\'></i></span></a></li><li ui-sref-active=\'active\'><a ui-sref=\'augur.performance.evaluation\'><span class=\'performance-drift-evaluation\'><i class=\'icon icon-suitcase\'></i></span></a></li></ul><div class=\'label-sub\'> Performance Drift</div></div></li><li ui-sref-active=\'active\'><a ui-sref=\'augur.settings\'><span class=\'settings\'><icon class=\'icon-settings\'></icon></span><br> Settings</a></li></ul></div><div class=\'main\'><div ui-view=\'\'></div></div></div>');
+    '<div class=\'row augur action-bar\' ng-attr-data-theme=\'{{ habitat.colorScheme }}\'><div class=\'small-12 columns\'><div class=\'row\'><div class=\'small-11 columns\'><div class=\'row\'><div class=\'small-3 columns habitat-name\'> {{augur.name}}</div><div class=\'small-3 columns info\'><dl><dt>Type</dt><dd>Decision Tree</dd><dt>KPI</dt><dd> {{ augur.learningKpiLabel }}</dd><dt>Threshold</dt><dd> {{ augur.learningThresholdLabel }}</dd></dl></div><div class=\'small-6 columns actions\'><ul class=\'no-bullet\'><li class=\'action\'><a class=\'action-button\' ng-click=\'schedulePrediction()\'><span class=\'calculate\'><i class=\'icon icon-calculator\'></i></span> <span class=\'action-label\'>Calculate new prediction<br> <span class=\'timestamp\'>(scheduled: {{ augur.prediction.nextTimestamp | date: \'yyyy-MM-dd HH:mm\' }})</span></span></a></li><li class=\'action\'><a class=\'action-button\' ng-href=\'{{ augur.prediction.downloadPath }}\'><span class=\'download\'><i class=\'icon icon-download\'></i></span> <span class=\'action-label\'>Download latest prediction<br> <span class=\'timestamp\' ng-if=\'augur.prediction.timestamp\'>(from: {{ augur.prediction.timestamp | date: \'yyyy-MM-dd HH:mm Z\' }})</span> <span ng-if=\'!augur.prediction.timestamp\'>(no prediction yet)</span></span></a></li></ul></div></div></div><div class=\'small-1 columns back\'><a ui-sref=\'dashboard\'><span class=\'download\'><i class=\'icon icon-exit\'></i></span></a></div></div></div></div><div class=\'row augur container\'><div class=\'side-nav-container\'><ul class=\'side-nav\'><li ui-sref-active=\'active\'><a ui-sref=\'augur.classification.home\'><span class=\'model-viewer\'><i class=\'icon icon-decisiontree\'></i></span><br> Model Viewer</a></li><li ui-sref-active=\'active\'><a ui-sref=\'augur.classification.influencers\'><span class=\'influencer\'><i class=\'icon icon-influencer\'></i></span><br> Influencers</a></li><li ui-sref-active=\'active\'><a ui-sref=\'augur.classification.accuracy\'><span class=\'accuracy\'><i class=\'icon icon-target\'></i></span><br> Accuracy</a></li><li ui-sref-active=\'active\'><a fyi=\'only to get sref-active working\' style=\'display:none;\' ui-sref=\'augur.classification.performance\'></a><a ng-click=\'activatePerformanceState()\'><span class=\'performance-drift\'><i class=\'icon icon-drift\'></i></span><div class=\'label-main\'> Performance Drift</div></a><div class=\'side-nav-sub\'><ul class=\'no-bullet inline-list\'><li class=\'first\' ui-sref-active=\'active\'><a ui-sref=\'augur.classification.performance.learning\'><span class=\'performance-drift-learning\'><i class=\'icon icon-gamepad\'></i></span></a></li><li ui-sref-active=\'active\'><a ui-sref=\'augur.classification.performance.evaluation\'><span class=\'performance-drift-evaluation\'><i class=\'icon icon-suitcase\'></i></span></a></li></ul><div class=\'label-sub\'> Performance Drift</div></div></li><li ui-sref-active=\'active\'><a ui-sref=\'augur.classification.settings\'><span class=\'settings\'><icon class=\'icon-settings\'></icon></span><br> Settings</a></li></ul></div><div class=\'main\'><div ui-view=\'\'></div></div></div>');
 }]);
 })();
 
@@ -57484,7 +57483,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('partials/dashboard.html',
-    '<div class=\'row dashboard action-bar\'><div class=\'columns small-12\'><ul class=\'left action-bar-breadcrumb\'><li> Dashboard</li></ul><ul class=\'right action-bar-filter\'><li class=\'divider\'></li><li ng-class=\'{"active" : selectedArtifactTypes.augur}\'> <input id=\'selected-artifact-types-augur\' ng-model=\'selectedArtifactTypes.augur\' type=\'checkbox\'> <label for=\'selected-artifact-types-augur\'>Augurs</label></li><li ng-class=\'{"active" : selectedArtifactTypes.factTable}\'> <input id=\'selected-artifact-types-fact-table\' ng-model=\'selectedArtifactTypes.factTable\' type=\'checkbox\'> <label for=\'selected-artifact-types-fact-table\'>Event tables</label></li><li ng-class=\'{"active" : selectedArtifactTypes.habitat}\'> <input id=\'selected-artifact-types-habitat\' ng-model=\'selectedArtifactTypes.habitat\' type=\'checkbox\'> <label for=\'selected-artifact-types-habitat\'>DataSpaces</label></li><li class=\'divider\'></li><li class=\'action-bar-search\'> <input ng-model=\'artifactsQuery\' placeholder=\'Type to search\' type=\'text\'></li></ul></div></div><div class=\'row dashboard flash\' ng-animate=\'animate\' ng-if=\'flash\'><div class=\'columns small-12\'><div class=\'alert-box success radius\'> {{ flash }}</div></div></div><div class=\'row dashboard container\'><div class=\'columns small-12\'><ul class=\'small-block-grid-2 medium-block-grid-3 large-block-grid-4\'><li><div class=\'tile\'><a href=\'#/augurs/new\'><div class=\'artefact-body add-augur\'><p> Add augur</p><p class=\'icon\'><span class=\'glyphicon glyphicon-plus\'></span></p></div></a></div></li><li ng-repeat=\'artifact in artifacts | filter: artifactsFilter\'><div ng-if=\'artifact.type == "habitat"\'><a href=\'#/habitat/{{habitat.id}}\'><div class=\'tile habitat\' ng-attr-data-theme=\'{{ artifact.colorScheme }}\'><h5 class=\'title\'> {{ artifact.name }}<i class=\'icon icon-dataspace\'></i></h5><div class=\'artefact-body\'><p ng-if=\'artifact.augurCount &lt; 1\'> No Augurs</p><p ng-if=\'artifact.augurCount === 1\'> One Augur</p><p ng-if=\'artifact.augurCount &gt; 1\'> {{ artifact.augurCount }} Augurs</p></div></div></a></div><div ng-if=\'artifact.type == "factTable"\'><a href=\'#/habitat/{{artifact.habitatId}}/factTables/{{factTable.id}}\'><div class=\'tile fact-table\' ng-attr-data-theme=\'{{ artifact.colorScheme }}\'><h5 class=\'title\'> {{artifact.name}}<span class=\'icon glyphicon glyphicon-list-alt\'></span></h5><div class=\'artefact-body\'><p class=\'description\'> {{artifact.description}}<br> {{artifact.observationCount | number:0 }} Observations</p></div></div></a></div><div ng-if=\'artifact.type == "augur"\'><a ui-sref=\'augur.tree({ habitatId: artifact.habitatId, augurId: artifact.id })\'><div class=\'tile augur\' ng-attr-data-theme=\'{{ artifact.colorScheme }}\'><h5 class=\'title\'> {{ artifact.name }}<span ng-if=\'artifact.learningStatus === "pending"\' spinner=\'{ radius: 5, width: 3, length: 4 }\'></span><i class=\'icon icon-telescope\'></i></h5><div class=\'artefact-body\'><dl class=\'description\'><dt>KPI</dt><dd> {{ artifact.learningKpiLabel }}</dd><dt>Latest evaluation</dt><dd> {{ artifact.latestEvaluationTimestamp | date: \'yyyy-MM-dd HH:mm\' }}</dd></dl></div><div class=\'chart\'><d3-line-chart-dashboard data=\'artifact.dashboardChartData\' height=\'30\'></d3-line-chart-dashboard></div></div></a></div></li></ul></div></div>');
+    '<div class=\'row dashboard action-bar\'><div class=\'columns small-12\'><ul class=\'left action-bar-breadcrumb\'><li> Dashboard</li></ul><ul class=\'right action-bar-filter\'><li class=\'divider\'></li><li ng-class=\'{"active" : selectedArtifactTypes.augur}\'> <input id=\'selected-artifact-types-augur\' ng-model=\'selectedArtifactTypes.augur\' type=\'checkbox\'> <label for=\'selected-artifact-types-augur\'>Augurs</label></li><li ng-class=\'{"active" : selectedArtifactTypes.factTable}\'> <input id=\'selected-artifact-types-fact-table\' ng-model=\'selectedArtifactTypes.factTable\' type=\'checkbox\'> <label for=\'selected-artifact-types-fact-table\'>Event tables</label></li><li ng-class=\'{"active" : selectedArtifactTypes.habitat}\'> <input id=\'selected-artifact-types-habitat\' ng-model=\'selectedArtifactTypes.habitat\' type=\'checkbox\'> <label for=\'selected-artifact-types-habitat\'>DataSpaces</label></li><li class=\'divider\'></li><li class=\'action-bar-search\'> <input ng-model=\'artifactsQuery\' placeholder=\'Type to search\' type=\'text\'></li></ul></div></div><div class=\'row dashboard flash\' ng-animate=\'animate\' ng-if=\'flash\'><div class=\'columns small-12\'><div class=\'alert-box success radius\'> {{ flash }}</div></div></div><div class=\'row dashboard container\'><div class=\'columns small-12\'><ul class=\'small-block-grid-2 medium-block-grid-3 large-block-grid-4\'><li><div class=\'tile\'><a href=\'#/augurs/new\'><div class=\'artefact-body add-augur\'><p> Add augur</p><p class=\'icon\'><span class=\'glyphicon glyphicon-plus\'></span></p></div></a></div></li><li ng-repeat=\'artifact in artifacts | filter: artifactsFilter\'><div ng-if=\'artifact.type == "habitat"\'><a href=\'#/habitat/{{habitat.id}}\'><div class=\'tile habitat\' ng-attr-data-theme=\'{{ artifact.colorScheme }}\'><h5 class=\'title\'> {{ artifact.name }}<i class=\'icon icon-dataspace\'></i></h5><div class=\'artefact-body\'><p ng-if=\'artifact.augurCount &lt; 1\'> No Augurs</p><p ng-if=\'artifact.augurCount === 1\'> One Augur</p><p ng-if=\'artifact.augurCount &gt; 1\'> {{ artifact.augurCount }} Augurs</p></div></div></a></div><div ng-if=\'artifact.type == "factTable"\'><a href=\'#/habitat/{{artifact.habitatId}}/factTables/{{factTable.id}}\'><div class=\'tile fact-table\' ng-attr-data-theme=\'{{ artifact.colorScheme }}\'><h5 class=\'title\'> {{artifact.name}}<span class=\'icon glyphicon glyphicon-list-alt\'></span></h5><div class=\'artefact-body\'><p class=\'description\'> {{artifact.description}}<br> {{artifact.observationCount | number:0 }} Observations</p></div></div></a></div><div ng-if=\'artifact.type == "augur"\'><a ui-sref=\'augur.{{artifact.augurType}}.home({ habitatId: artifact.habitatId, augurId: artifact.id })\'><div class=\'tile augur\' ng-attr-data-theme=\'{{ artifact.colorScheme }}\'><h5 class=\'title\'> {{ artifact.name }}<span ng-if=\'artifact.learningStatus === "pending"\' spinner=\'{ radius: 5, width: 3, length: 4 }\'></span><i class=\'icon icon-telescope\'></i></h5><div class=\'artefact-body\'><dl class=\'description\'><dt>KPI</dt><dd> {{ artifact.learningKpiLabel }}</dd><dt>Latest evaluation</dt><dd> {{ artifact.latestEvaluationTimestamp | date: \'yyyy-MM-dd HH:mm\' }}</dd></dl></div><div class=\'chart\'><d3-line-chart-dashboard data=\'artifact.dashboardChartData\' height=\'30\'></d3-line-chart-dashboard></div></div></a></div></li></ul></div></div>');
 }]);
 })();
 
@@ -57519,96 +57518,120 @@ define("partials-tpls.min", function(){});
  console: false
  */
 define('app',[
-  'angular',
-  'animations',
-  'controllers',
-  'directives',
-  'filters',
-  'services',
-  'angular.ui.router',
-  'partials-tpls.min'
+    'angular',
+    'animations',
+    'controllers',
+    'directives',
+    'filters',
+    'services',
+    'angular.ui.router',
+    'partials-tpls.min'
 ], function (ng, animations, controllers, directives, filters, services) {
-  
+    
 
-  return ng
-    .module('dejalyticsApp', [
-      'ui.router',
-      'dejalyticsPartials',
-      animations.name,
-      controllers.name,
-      directives.name,
-      filters.name,
-      services.name
-    ])
-    .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
-      $urlRouterProvider.otherwise('/dashboard');
+    return ng
+        .module('dejalyticsApp', [
+            'ui.router',
+            'dejalyticsPartials',
+            animations.name,
+            controllers.name,
+            directives.name,
+            filters.name,
+            services.name
+        ])
+        .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
+            $urlRouterProvider.otherwise('/dashboard');
 
-      $stateProvider.
-        state('dashboard', {
-          url: '/dashboard',
-          templateUrl: 'partials/dashboard.html',
-          controller: 'DashboardCtrl'
-        }).
-        state('augur-new', {
-          url: '/augurs/new',
-          templateUrl: 'partials/augur-new.html',
-          controller: 'AugurNewCtrl'
-        }).
-        state('augur', {
-          url: '/habitat/:habitatId/augurs/:augurId',
-          templateUrl: 'partials/augur.html',
-          controller: 'AugurCtrl'
-        }).
-        state('augur.influencers', {
-          url: '/influencers',
-          templateUrl: 'partials/augur-influencers.html',
-          controller: 'AugurInfluencersCtrl'
-        }).
-        state('augur.accuracy', {
-          url: '/accuracy',
-          templateUrl: 'partials/augur-accuracy.html',
-          controller: 'AugurAccuracyCtrl'
-        }).
-        state('augur.accuracy-detail', {
-          url: '/detail/:chartType',
-          templateUrl: 'partials/augur-accuracy-detail.html',
-          controller: 'AugurAccuracyDetailCtrl'
-        }).
-        state('augur.performance', {
-          abstract: true,
-          url: '/performance',
-          template: '<ui-view/>'
-        }).
-        state('augur.performance.learning', {
-          url: '/learning',
-          templateUrl: 'partials/augur-performance-learning.html',
-          controller: 'AugurPerformanceCtrl'
-        }).
-        state('augur.performance.evaluation', {
-          url: '/evaluation',
-          templateUrl: 'partials/augur-performance-evaluation.html',
-          controller: 'AugurPerformanceCtrl'
-        }).
-        state('augur.tree', {
-          url: '/tree',
-          templateUrl: 'partials/augur-tree.html',
-          controller: 'AugurTreeCtrl'
-        }).
-        state('augur.settings', {
-          url: '/settings',
-          templateUrl: 'partials/augur-settings.html',
-          controller: 'AugurSettingsCtrl'
-        })
-    }]).run(['$rootScope', '$state', function ($rootScope, $state) {
-      var root = angular.element(document.documentElement);
+            $stateProvider.
+                state('dashboard', {
+                    url: '/dashboard',
+                    templateUrl: 'partials/dashboard.html',
+                    controller: 'DashboardCtrl'
+                }).
+                state('augur-new', {
+                    url: '/augurs/new',
+                    templateUrl: 'partials/augur-new.html',
+                    controller: 'AugurNewCtrl'
+                }).
+                state('augur', {
+                    url: '/habitat/:habitatId/augurs/:augurId',
+                    template: '<ui-view/>',
+                    abstract: true,
+                    controller: 'AugurCtrl'
+                }).
+                state('augur.classification', {
+                    url: '/classification',
+                    templateUrl: 'partials/augur.html',
+                    controller: 'AugurCtrl'
+                }).
+                state('augur.clustering', {
+                    abstract: true,
+                    url: '/clustering',
+                    templateUrl: 'partials/augur-clustering.html',
+                    controller: 'AugurCtrl'
+                }).
+                state('augur.clustering.home', {
+                    url: '/profile',
+                    template: '<h1>Profile</h1>'
+                }).
+                state('augur.clustering.landscape', {
+                    url: '/landscape',
+                    template: '<h1>Landscape</h1>'
+                }).
+                state('augur.clustering.settings', {
+                    url: '/settings',
+                    template: '<h1>Settings</h1>'
+                }).
+                state('augur.classification.influencers', {
+                    url: '/influencers',
+                    templateUrl: 'partials/augur-influencers.html',
+                    controller: 'AugurInfluencersCtrl'
+                }).
+                state('augur.classification.accuracy', {
+                    url: '/accuracy',
+                    templateUrl: 'partials/augur-accuracy.html',
+                    controller: 'AugurAccuracyCtrl'
+                }).
+                state('augur.classification.accuracy-detail', {
+                    url: '/detail/:chartType',
+                    templateUrl: 'partials/augur-accuracy-detail.html',
+                    controller: 'AugurAccuracyDetailCtrl'
+                }).
+                state('augur.classification.performance', {
+                    abstract: true,
+                    url: '/performance',
+                    template: '<ui-view/>'
+                }).
+                state('augur.classification.performance.learning', {
+                    url: '/learning',
+                    templateUrl: 'partials/augur-performance-learning.html',
+                    controller: 'AugurPerformanceCtrl'
+                }).
+                state('augur.classification.performance.evaluation', {
+                    url: '/evaluation',
+                    templateUrl: 'partials/augur-performance-evaluation.html',
+                    controller: 'AugurPerformanceCtrl'
+                }).
+                state('augur.classification.home', {
+                    url: '/home',
+                    templateUrl: 'partials/augur-tree.html',
+                    controller: 'AugurTreeCtrl'
+                }).
+                state('augur.classification.settings', {
+                    url: '/settings',
+                    templateUrl: 'partials/augur-settings.html',
+                    controller: 'AugurSettingsCtrl'
+                })
+        }]).run(['$rootScope', '$state', function ($rootScope, $state) {
+            var root = angular.element(document.documentElement);
 
-      $rootScope.$on('theme', function(ev, theme){
-        $rootScope.theme = theme;
-        root.attr('data-theme', theme);
+            $rootScope.$on('theme', function (ev, theme) {
+                $rootScope.theme = theme;
+                root.attr('data-theme', theme);
 
-        $rootScope.$broadcast('themeChanged', theme);
-      });
-    }]);
+                $rootScope.$broadcast('themeChanged', theme);
+            });
+        }]);
 });
 
 /* global

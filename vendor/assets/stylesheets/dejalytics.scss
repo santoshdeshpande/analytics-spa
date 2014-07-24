@@ -6154,7 +6154,13 @@ th.hide-for-touch {
           position: absolute; }
         .augur.container .side-nav-container a span.model-viewer .icon {
           right: 0.5rem; }
+        .augur.container .side-nav-container a span.clustering-profile .icon {
+          right: 0.5rem; }
         .augur.container .side-nav-container a span.influencer .icon {
+          right: -0.2rem;
+          top: 0.1rem;
+          font-size: 2.5rem; }
+        .augur.container .side-nav-container a span.landscape .icon {
           right: -0.2rem;
           top: 0.1rem;
           font-size: 2.5rem; }
