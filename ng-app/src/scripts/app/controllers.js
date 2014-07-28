@@ -13,8 +13,9 @@ define([
   'controllers/augur-performance',
   'controllers/augur-settings',
   'controllers/augur-tree',
+  'controllers/augur-profile',
   'controllers/dashboard'
-], function (ng, services, AugurNewCtrl, AugurCtrl, AugurAccuracyCtrl, AugurAccuracyDetailCtrl, AugurInfluencersCtrl, AugurPerformanceCtrl, AugurSettingsCtrl, AugurTreeCtrl, DashboardCtrl) {
+], function (ng, services, AugurNewCtrl, AugurCtrl, AugurAccuracyCtrl, AugurAccuracyDetailCtrl, AugurInfluencersCtrl, AugurPerformanceCtrl, AugurSettingsCtrl, AugurTreeCtrl, AugurProfileCtrl, DashboardCtrl) {
   'use strict';
 
   return ng.module('MainControllers', [ services.name ])
@@ -26,5 +27,6 @@ define([
       .controller('AugurPerformanceCtrl', AugurPerformanceCtrl)
       .controller('AugurSettingsCtrl', AugurSettingsCtrl)
       .controller('AugurTreeCtrl', AugurTreeCtrl)
+      .controller('AugurProfileCtrl', AugurProfileCtrl)
       .controller('DashboardCtrl', DashboardCtrl);
 });

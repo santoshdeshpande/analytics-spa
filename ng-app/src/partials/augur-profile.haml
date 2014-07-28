@@ -1,1 +1,12 @@
-%h3="Profile"
+.row
+  .columns.small-12
+    %h4="Cluster Profile"
+.row
+  .columns.large-12.augur-clustering-profile
+    %table.large-12
+      %thead
+        %tr
+          %th.text-center{'ng-repeat' => 'header in headers'}
+            {{header.name}}
+            %br
+            %span.count{ ng: { if: 'header.count' } }="Count: {{header.count}}"
