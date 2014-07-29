@@ -10,3 +10,11 @@
             {{header.name}}
             %br
             %span.count{ ng: { if: 'header.count' } }="Count: {{header.count}}"
+      %tbody
+        %tr{'ng-repeat' => 'result in results'}
+          %td.text-center{'ng-repeat' => 'r in result'}
+            %div{'ng-switch' => 'r.type'}
+              %div{'ng-switch-when' => 'none'}
+                {{r.data}}
+              %div{'ng-switch-when' => 'categorical'}
+                %d3-profile-bar-chart{ data: 'r.data' }

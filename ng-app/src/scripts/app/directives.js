@@ -7,6 +7,7 @@ define([
   'directives/augur-settings',
   'directives/available-event',
   'directives/d3-bar-chart',
+  'directives/d3-profile-bar-chart',
   'directives/d3-decision-tree-chart',
   'directives/d3-influencer-chart',
   'directives/d3-line-chart',
@@ -23,6 +24,7 @@ define([
               AugurSettings,
               AvailableEvent,
               D3BarChart,
+              D3ProfileBarChart,
               D3DecisionTreeChart,
               D3InfluencerChart,
               D3LineChart,
@@ -39,6 +41,7 @@ define([
     .directive('augurSettings', AugurSettings)
     .directive('availableEvent', AvailableEvent)
     .directive('d3BarChart', D3BarChart)
+    .directive('d3ProfileBarChart', D3ProfileBarChart)
     .directive('d3DecisionTreeChart', D3DecisionTreeChart)
     .directive('d3InfluencerChart', D3InfluencerChart)
     .directive('d3LineChart', D3LineChart)
