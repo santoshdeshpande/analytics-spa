@@ -10,7 +10,6 @@ define([], function () {
 
         $scope.augur.$promise.then(function (augur) {
             var profile = augur["clustering"]['clusterProfile'];
-            console.log(profile);
             $scope.headers = [
                 {name: 'Variable'},
                 {name: 'Total', count: profile.DataDictionary.Population.count},

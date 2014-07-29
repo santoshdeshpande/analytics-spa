@@ -21,6 +21,10 @@ define([
                     width: 30,
                     height: 60
                 };
+                var tooltip = d3.select(ele[0]).append('div')
+                    .attr('class', 'tree-tooltip')
+                    .style('background-color', 'rgba(0, 0, 0, 0.70)')
+                    .style('opacity', 0);
 
                 var svg = d3.select(ele[0])
                     .append("svg:svg")
@@ -50,10 +54,9 @@ define([
                         for (var k in data)
                             headers.push(k);
                         var datum = [data];
-                        console.log(datum);
                         var stacked = d3.layout.stack()(headers.map(function(cause){
                             return datum.map(function(d){
-                                return {x: 'C1', y: +d[cause]};
+                                return {x: 'C1', y: +d[cause], type: cause};
                             })
                         }));
                         x.domain(stacked[0].map(function(d){return d.x}));
@@ -65,7 +68,7 @@ define([
                             .append('svg:g')
                             .attr('class', 'bar-fact')
                             .style("fill", function(d, i) { return z(i); })
-                            .style("stroke", function(d, i) { return d3.rgb(z(i)).darker(); });
+                            .style("stroke", function(d, i) { return d3.rgb(z(i)).darker(); })
 
                         var rect = c.selectAll("rect")
                             .data(Object)
@@ -73,7 +76,30 @@ define([
                             .attr('x', function(d) { return x(d.x)})
                             .attr('y', function(d) { return -y(d.y0) - y(d.y)})
                             .attr("height", function(d) { return y(d.y); })
-                            .attr("width", x.rangeBand());
+                            .attr("width", x.rangeBand())
+                            .on("mouseover", function(d, e){
+                                var position = d3.mouse(this);
+                                var tooltipHTML = ["<dl>"];
+                                angular.forEach(headers, function(h) {
+                                    tooltipHTML.push("<dt>" + h + ": </dt>" + "<dd>" + data[h] + "</dd>");
+                                });
+                                tooltipHTML.push("</dl>");
+                                tooltipHTML = tooltipHTML.join(" ");
+                                tooltip.transition()
+                                    .duration(100)
+                                    .style('opacity', .9);
+                                tooltip.html(tooltipHTML)
+                                    .style('left', (x(position[0])) + 'px')
+                                    .style('top', (y(position[1])) + 'px');
+                            })
+                            .on("mouseout", function(d){
+                                tooltip.transition()
+                                    .duration(100)
+                                    .style('opacity', 0)
+                            });
+
+
+
 
 
                     }, 200); // renderTimeout
