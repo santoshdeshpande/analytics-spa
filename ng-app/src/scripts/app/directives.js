@@ -8,6 +8,7 @@ define([
   'directives/available-event',
   'directives/d3-bar-chart',
   'directives/d3-profile-bar-chart',
+  'directives/d3-profile-diamond-chart',
   'directives/d3-decision-tree-chart',
   'directives/d3-influencer-chart',
   'directives/d3-line-chart',
@@ -25,6 +26,7 @@ define([
               AvailableEvent,
               D3BarChart,
               D3ProfileBarChart,
+              D3ProfileDiamondChart,
               D3DecisionTreeChart,
               D3InfluencerChart,
               D3LineChart,
@@ -42,6 +44,7 @@ define([
     .directive('availableEvent', AvailableEvent)
     .directive('d3BarChart', D3BarChart)
     .directive('d3ProfileBarChart', D3ProfileBarChart)
+    .directive('d3ProfileDiamondChart', D3ProfileDiamondChart)
     .directive('d3DecisionTreeChart', D3DecisionTreeChart)
     .directive('d3InfluencerChart', D3InfluencerChart)
     .directive('d3LineChart', D3LineChart)

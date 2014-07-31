@@ -3055,11 +3055,11 @@
                         {
                             "key": "field_2",
                             "standard_deviation": 21.58,
-                            "median": 25,
+                            "median": 40,
                             "minimum": 29,
                             "maximum": 72,
                             "variance": 856.123,
-                            "mean": 30.3
+                            "mean": 40.3
                         },
                         {
                             "key": "field_3",
@@ -3090,7 +3090,7 @@
                         {
                             "key": "field_2",
                             "standard_deviation": 21.58,
-                            "median": 35,
+                            "median": 60,
                             "minimum": 39,
                             "maximum": 92,
                             "variance": 1256.123,

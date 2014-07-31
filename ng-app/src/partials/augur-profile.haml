@@ -18,3 +18,5 @@
                 {{r.data}}
               %div{'ng-switch-when' => 'categorical'}
                 %d3-profile-bar-chart{ data: 'r.data' }
+              %div{'ng-switch-when' => 'continuous'}
+                %d3-profile-diamond-chart{ data: 'r.data' }

@@ -18,8 +18,8 @@ define([
                 var renderTimeout;
                 var dimensions = {
                     margins: { top: 10, right: 10, bottom: 10, left: 10 },
-                    width: 30,
-                    height: 60
+                    width: 50,
+                    height: 80
                 };
                 var tooltip = d3.select(ele[0]).append('div')
                     .attr('class', 'tree-tooltip')
@@ -68,7 +68,7 @@ define([
                             .append('svg:g')
                             .attr('class', 'bar-fact')
                             .style("fill", function(d, i) { return z(i); })
-                            .style("stroke", function(d, i) { return d3.rgb(z(i)).darker(); })
+                            .style("stroke", function(d, i) { return d3.rgb(z(i)).darker(); });
 
                         var rect = c.selectAll("rect")
                             .data(Object)
