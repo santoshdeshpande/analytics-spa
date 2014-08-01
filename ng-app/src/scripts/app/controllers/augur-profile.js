@@ -26,6 +26,7 @@ define([], function () {
                     res['data'] = {'mean':field.mean,'max':field.maximum,'min':field.minimum}
                 }
                 res['type'] = field.data_type;
+                res['showLegend'] = true;
 
                 var name = {'type': 'none', data:field.name};
 
@@ -44,11 +45,13 @@ define([], function () {
                         res['data'] = {'mean':field.mean,'max':field.maximum,'min':field.minimum}
                     }
                     res['type'] = type;
+                    res['showLegend'] = false;
                     $scope.results[field.key].push(res);
                 });
             });
 
 //            $scope.transformedData = results;
+            console.log($scope.results);
         });
     }];
 });
