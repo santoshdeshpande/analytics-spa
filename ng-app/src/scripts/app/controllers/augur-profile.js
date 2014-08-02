@@ -49,9 +49,6 @@ define([], function () {
                     $scope.results[field.key].push(res);
                 });
             });
-
-//            $scope.transformedData = results;
-            console.log($scope.results);
         });
     }];
 });

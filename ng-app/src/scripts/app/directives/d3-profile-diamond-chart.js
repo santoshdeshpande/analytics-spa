@@ -49,9 +49,6 @@ define([
                 scope.$watch('data', function (data) {
                     if (data != null) scope.render(data);
                 }, true);
-                scope.$watch('legend', function (legend) {
-                    console.log(legend);
-                }, true);
 
                 scope.render = function (data) {
                     svg.selectAll('*').remove();

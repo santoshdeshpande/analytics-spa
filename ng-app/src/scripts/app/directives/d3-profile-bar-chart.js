@@ -59,11 +59,8 @@ define([
 
                         var tooltipHTML = ["<dl>"];
                         var length = headers.length - 1;
-                        console.log("Length", length);
                         for(var i=length;i>=0;i--) {
-                            console.log(i);
                             var h = headers[i];
-                            console.log(h);
                             tooltipHTML.push("<dt style='background-color:" + z(i) + "'>" + h + ": </dt>" + "<dd>" + data[h] + "</dd>");
                         }
                         tooltipHTML.push("</dl>");
