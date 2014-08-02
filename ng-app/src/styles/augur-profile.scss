@@ -4,6 +4,10 @@
   }
 }
 
+.chart-container {
+  position: relative;
+}
+
 .tree-tooltip {
   position: absolute;
   text-align: center;
@@ -21,7 +25,7 @@
   dt, dd {
     font-size: 80%;
     float: left;
-    margin: -.1em .1em;
+    margin: .1em .1em;
   }
   dt {
     clear: both;

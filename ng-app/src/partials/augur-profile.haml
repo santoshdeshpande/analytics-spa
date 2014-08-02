@@ -16,7 +16,7 @@
             %div{'ng-switch' => 'r.type'}
               %div{'ng-switch-when' => 'none'}
                 {{r.data}}
-              %div{'ng-switch-when' => 'categorical'}
+              %div.chart-container{'ng-switch-when' => 'categorical'}
                 %d3-profile-bar-chart{ data: 'r.data' }
-              %div{'ng-switch-when' => 'continuous'}
+              %div.chart-container{'ng-switch-when' => 'continuous'}
                 %d3-profile-diamond-chart{ data: 'r.data', legend: 'r.showLegend' }

@@ -5,7 +5,7 @@
 define([
     'd3js',
     './chart'
-], function (d3, Chart) {
+], function (d3) {
     'use strict';
 
     return ['$timeout', function ($timeout) {
@@ -15,7 +15,7 @@ define([
                 data: '=',
                 legend: '='
             },
-            link: function (scope, ele, attrs) {
+            link: function (scope, ele) {
                 var rightMargin = scope.legend ? 50 : 10;
                 var renderTimeout;
                 var dimensions = {
@@ -24,6 +24,15 @@ define([
                     height: 120
                 };
                 var id = "diamond-" + new Date().getTime();
+                var tooltip = d3.select(ele[0])
+                    .append('div')
+                    .attr('id', 'tooltip-' + new Date().getTime())
+                    .attr('class', 'tree-tooltip')
+                    .style('background-color', 'rgba(0, 0, 0, 0.70)')
+                    .style('position', 'absolute')
+                    .style('visibility', "hidden");
+
+
                 var svg = d3.select(ele[0])
                     .append("svg:svg")
                     .attr('class', 'bar-chart')
@@ -33,18 +42,9 @@ define([
                     .attr('transform', 'translate(' + dimensions.margins.bottom + ',' + (dimensions.height - dimensions.margins.bottom) + ')')
                     .attr('id', id);
 
-                var tooltip = d3.select(ele[0])
-                    .append('div')
-                    .attr('id', 'tooltip-' + new Date().getTime())
-                    .attr('class', 'tree-tooltip')
-                    .style('background-color', 'rgba(0, 0, 0, 0.70)')
-                    .style('position', 'absolute')
-                    .style('visibility', "hidden");
-
                 var w = dimensions.width - dimensions.margins.left - dimensions.margins.right;
                 var x = d3.scale.linear().range([0, w ]);
                 var y = d3.scale.linear().range([0, dimensions.height - dimensions.margins.top - dimensions.margins.bottom]);
-                var z = d3.scale.category10();
 
                 scope.$watch('data', function (data) {
                     if (data != null) scope.render(data);
@@ -53,7 +53,6 @@ define([
                     console.log(legend);
                 }, true);
 
-                var bodyNode = d3.select('body').node();
                 scope.render = function (data) {
                     svg.selectAll('*').remove();
 
@@ -69,8 +68,19 @@ define([
                         var middleX = w / 2;
                         var rightX = w;
                         var xpos = middleX;
+                        var format = d3.format(".02f");
+                        var html = [
+                            "<dl>",
+                            "<dt>Minimum</dt>",
+                                "<dd>" + format(data.min) + "</dd>",
+                            "<dt>Mean</dt>",
+                                "<dd>" + format(data.mean) + "</dd>",
+                            "<dt>Maximum</dt>",
+                                "<dd>" + format(data.max) + "</dd>"
+                        ].join('');
+                        tooltip.html(html);
 
-                        var line = svg.append("line")
+                        svg.append("line")
                             .attr("x1", x(xpos))
                             .attr("y1", -y(min))
                             .attr("x2", x(xpos))
@@ -86,8 +96,9 @@ define([
                             .attr("cy", function (d) {
                                 return -y(d)
                             })
-                            .attr("r", 1)
-                            .style("stroke", "black");
+                            .attr("r", 2)
+                            .style("stroke", "blue")
+                            .style("fill", "none");
 
 
                         var yMean = y(data.mean);
@@ -107,7 +118,7 @@ define([
                             [middleX  , data.min]
                         ];
 
-                        line = d3.svg.line()
+                        var line = d3.svg.line()
                             .x(function (d) {
                                 return x(d[0])
                             })
@@ -118,27 +129,33 @@ define([
                         var path = svg.append("path")
                             .attr("d", line(paths))
                             .attr("stroke", "blue")
-                            .attr("fill", "lightblue");
+                            .attr("fill", "lightblue")
+                            .on("mouseover", function () {
+                                return tooltip.style("visibility", "visible");
+                            })
+                            .on("mousemove", function () {
+                                var position = d3.mouse(this);
+                                tooltip.style("left", (position[0] - 30) + "px");
+                                tooltip.style("top", (position[1] - 5) + "px");
+                            })
+                            .on("mouseout", function () {
+                                return   tooltip.style("visibility", "hidden");
+                            });
 
-                        if(scope.legend) {
-                            var textPositions = [
-                                {position: min, value: data.min},
-                                {position: max, value: data.max},
-                                {position: data.mean, value: data.mean}
-                            ];
-                            var format = d3.format(".02f");
+                        if (scope.legend) {
+
                             var text = svg.selectAll("text")
-                                .data(textPositions)
+                                .data(datum)
                                 .enter()
                                 .append("svg:text")
                                 .attr("x", x(dimensions.margins.right))
                                 .attr("y", function (d) {
-                                    return -y(d.value)
+                                    return -y(d)
                                 })
                                 .attr("dy", ".35em")
                                 .attr("font-size", "10px")
                                 .text(function (d) {
-                                    return format(d.value);
+                                    return format(d);
                                 });
                         }
 
