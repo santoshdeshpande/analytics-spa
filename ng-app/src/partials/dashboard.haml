@@ -26,13 +26,22 @@
   .columns.small-12
     %ul.small-block-grid-2.medium-block-grid-3.large-block-grid-4
       %li
-        .tile
-          %a{ href: '#/augurs/new' }
-            .artefact-body.add-augur
-              %p
-                Add augur
-              %p.icon
-                %span.glyphicon.glyphicon-plus
+        .tile.add-tile{ng: {mouseenter: 'hover=true', mouseleave: 'hover=false'}}
+          .artefact-body.add-augur
+            .main-view{ng: {class: '{\'hidden\': hover}'}}
+              %a{ href: '#/augurs/new' }
+                .artefact-body.add-augur
+                  %p
+                    Add augur
+                  %p.icon
+                    %span.glyphicon.glyphicon-plus
+            .hover-view.hidden{ng: {class: '{\'shown\': hover}'}}
+              .row
+                .small-12.columns.text-center
+                  %a.button.tiny{ui:{sref:'augur-clustering-new'}} New Clustering Augur
+              .row
+                .small-12.columns.text-center
+                  %a.button.tiny{ui:{sref:'augur-new'}} New Classification Augur
 
       %li{'ng-repeat' => 'artifact in artifacts | filter: artifactsFilter'}
         %div{ ng: { if: 'artifact.type == "habitat"' } }

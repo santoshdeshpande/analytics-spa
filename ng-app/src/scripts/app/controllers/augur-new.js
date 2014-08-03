@@ -28,6 +28,8 @@ define([
       habitat: '',
       factTable: {},
       eventIds: '',
+      augurType: 'classification',
+      algorithm: 'decision_tree',
       learning: {
         kpi: { }
       },
@@ -138,7 +140,7 @@ define([
     };
 
     $scope.submit = function (augurNewAttributes) {
-      augurNewAttributes = _.pick($scope.augur, ['name', 'factTableId']);
+      augurNewAttributes = _.pick($scope.augur, ['name', 'factTableId', 'augurType', 'algorithm']);
       augurNewAttributes.learningKpi = $scope.augur.learning.kpi.key;
       augurNewAttributes.learningThreshold = $scope.augur.learning.threshold;
       augurNewAttributes.predictionTargets = $scope.augur.eventIds.split(',');

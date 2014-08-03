@@ -1,0 +1,117 @@
+.row.new-augur-wizard.action-bar
+  .columns.small-12
+    %ul.left.action-bar-breadcrumb
+      %li
+        Set up a new Clustering Augur
+.row.container.new-augur-wizard
+  .small-12.columns
+    %form{ name: 'form', novalidate: '', ng: { submit: 'form.$valid && submit()' } }
+      .row.step.step-1{ ng: { class: '(currentStep==1) ? "active" : ""' } }
+        .small-12.columns
+          %a{ href: '', ng: { click: 'currentStep=1' } }
+            %h5.subheader.title
+              Step 1 - Name and Habitat
+          .body{ ng: { show: 'currentStep==1' } }
+            %h6.subheader.subtitle
+              Give your augur a unique name and select a Habitat
+            .row.augur-name
+              .small-1.columns
+                %label.right.inline{ for: 'augur-name' } Name
+              .small-3.columns.end{ ng: { class: '{"error" : form.augurName.$error.uniqueAugurName}' } }
+                %input#augur-name{ name: 'augurName', required: true, placeholder: 'Please enter a name', type: 'text', ng: { model: 'augur.name' }, 'unique-augur-name' => '' }
+                %small.error{ ng: { show: 'form.augurName.$error.uniqueAugurName' } } This name already exists
+            .row.augur-habitat
+              .small-1.columns
+                %label.right.inline{ for: 'augur-habitat' } DataSpace
+              .small-3.columns.end
+                %input#augur-habitat{ name: 'augurHabitat', required: true, placeholder: 'Type to search', type: 'text', ng: { model: 'augur.habitat' }, typeahead: 'habitat as habitat.name for habitat in habitats' }
+          .next-button
+            .next-button-wrap
+              %a.tiny.button.radius{ href: '', ng: { disabled: '!validSteps.one || form.augurName.$error.uniqueAugurName', click: 'validSteps.one && (currentStep=2)' } } Next step >
+      .row.step.step-1{ ng: { class: '(currentStep==2) ? "active" : ""' } }
+        .small-12.columns
+          %a{ href: '', ng: { click: 'currentStep=2' } }
+            %h5.subheader.title
+              Step 2 - Missing Value Treatment
+          .body{ ng: { show: 'currentStep==2' } }
+            %h6.subheader.subtitle
+              How should missing values be treated ?
+            .small-6
+              .small-12.columns
+                .row{ ng: { class: '{"error" : form.missingTreatFixedValInput.$dirty && form.missingTreatFixedValInput.$error.required && augur.missingValueTreatment == \'fixed_value\'}' } }
+                  .small-4.columns.input-text-row
+                    %input{"ng-model" => "augur.missingValueTreatment", type: "radio", value: "fixed_value", id:"fixed-value-treat"}
+                    %label{for: "fixed-value-treat"} Impute to fixed value
+                  .small-2.columns
+                    %input{"dj-focus-on-select" => "augur.missingValueTreatment", "value-to-watch" => "fixed_value", "ng-model" => "augur.fixedValue", type: "text", ng: {required: "augur.missingValueTreatment == 'fixed_value'"}, id:"fixed-value-input-treat",name:"missingTreatFixedValInput"}
+                    %small.error{"ng-show" => "form.missingTreatFixedValInput.$dirty && form.missingTreatFixedValInput.$error.required && augur.missingValueTreatment == 'fixed_value'"} Required field.
+                  .small-6.columns
+                .row
+                  .small-4.columns.radio-btn-row
+                    %input{"ng-model" => "augur.missingValueTreatment", type: "radio", value: "mean_value", id:"mean-value-treat"}
+                    %label{for: "mean-value-treat"} Impute to mean
+                .row
+                  .small-4.columns.radio-btn-row
+                    %input{"ng-model" => "augur.missingValueTreatment", type: "radio", value: "ignore_value", id:"ignore-value-treat"}
+                    %label{for: "ignore-value-treat"} Ignore row
+          .next-button
+            .next-button-wrap
+              %a.tiny.button.radius{ href: '', ng: { disabled: '!validSteps.two', click: 'validSteps.two && (currentStep=3)' } } Next step >
+      .row.step.step-1{ ng: { class: '(currentStep==3) ? "active" : ""' } }
+        .small-12.columns
+          %a{ href: '', ng: { click: 'currentStep=3' } }
+            %h5.subheader.title
+              Step 3 - Normalization Method
+          .body{ ng: { show: 'currentStep==3' } }
+            %h6.subheader.subtitle
+              Normalize Values
+            .small-8
+              .small-12.columns
+                .row{ng:{repeat: 'type in normalizationTypes'}}
+                  .small-3.columns.radio-btn-row
+                    %input{"ng-model" => "augur.normalizationMethod", type: "radio", value: "{{type.key}}", id: '{{type.key}}'}
+                    %label{for: "{{type.key}}"} {{type.label}}
+                  .small-9.columns
+                    %p.help-tooltip="{{type.helpText}}"
+          .next-button
+            .next-button-wrap
+              %a.tiny.button.radius{ href: '', ng: { disabled: '!validSteps.three', click: 'validSteps.three && (currentStep=4)' } } Next step >
+      .row.step.step-1{ ng: { class: '(currentStep==4) ? "active" : ""' } }
+        .small-12.columns
+          %a{ href: '', ng: { click: 'currentStep=4' } }
+            %h5.subheader.title
+              Step 4 - Cluster Settings
+          .body{ ng: { show: 'currentStep==4' } }
+            %h6.subheader.subtitle
+            .row.num-clusters
+              .small-2.columns
+                %label.right.inline{ for: 'augur-cluster-count' } Number of Clusters
+              .small-2.columns.end{ ng: { class: '{"error" : form.numClusters.$invalid}' } }
+                %input#augur-cluster-count{ name: 'numClusters', placeholder: '999', type: 'number', min: '1', max: '999', required: true, ng: { model: 'augur.numberOfClusters', min: '1', max: '999' } }
+                %small.error{ ng: { show: 'form.numClusters.$dirty && form.numClusters.$invalid' } } Please provide a number between 1 and 999
+            .row.num-iterations
+              .small-2.columns
+                %label.right.inline{ for: 'augur-cluster-count' } Number of Iterations
+              .small-2.columns.end{ ng: { class: '{"error" : form.numIterations.$invalid}' } }
+                %input#augur-cluster-count{ name: 'numIterations', placeholder: '999', type: 'number', min: '1', max: '999', required: true, ng: { model: 'augur.numberOfIterations' } }
+                %small.error{ ng: { show: 'form.numIterations.$dirty && form.numIterations.$invalid' } } Please provide a number between 1 and 999
+          .next-button
+            .next-button-wrap
+              %a.tiny.button.radius{ href: '', ng: { disabled: '!validSteps.four', click: 'validSteps.four && (currentStep=5)' } } Next step >
+      .row.step.step-5.step-last{ ng: { class: '(currentStep==5) ? "active" : ""' } }
+        .small-12.columns
+          %a{ href: '', ng: { click: 'validSteps.four && (currentStep=5)' } }
+            %h5.subheader.title
+              Step 5 - Schedule Settings
+          .body{ ng: { show: 'currentStep==5' } }
+            %h6.subheader.subtitle
+              Set schedule
+            .row
+              .small-4.columns
+                %augur-scheduler{ schedule: 'augur.schedule', form: 'form', prefix: 'predictionSchedule' }
+          .next-button
+            .next-button-wrap
+              %input.tiny.button.radius{ type: 'submit', value: 'Activate Augur >', ng: { disabled: '!validSteps.four || !form.$valid' } }
+
+
+

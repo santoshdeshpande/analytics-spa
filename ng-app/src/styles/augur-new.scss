@@ -1,3 +1,12 @@
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+input[type='number'] {
+  -moz-appearance:textfield;
+}
+
 .new-augur-wizard {
   padding: 0;
 
@@ -63,6 +72,22 @@
       border-bottom: 1px solid #ddd;
       padding: 0.5em 0;
     }
+
+    .row {
+      .input-text-row {
+        padding-top: 7px;
+      }
+
+      .radio-btn-row {
+        margin-top: 8px;
+      }
+
+      .help-tooltip {
+        font-size: 0.8em;
+        padding-top: 7px;
+      }
+    }
+
     &.step-last .title {
       border-bottom: 0;
     }

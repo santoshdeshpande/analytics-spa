@@ -5,6 +5,7 @@
 define([
   'angular',
   'directives/augur-settings',
+  'directives/augur-scheduler',
   'directives/available-event',
   'directives/d3-bar-chart',
   'directives/d3-profile-bar-chart',
@@ -19,10 +20,13 @@ define([
   'directives/dropdown',
   'directives/unique-augur-name',
   'directives/threshold-in-range',
+    'directives/util/drop_down_hover',
+    'directives/util/dj-focus-on-select',
   'angular.spinner',
   'mm-foundation-tpls'
 ], function ( ng,
               AugurSettings,
+              AugurScheduler,
               AvailableEvent,
               D3BarChart,
               D3ProfileBarChart,
@@ -36,11 +40,15 @@ define([
               D3RocChart,
               Dropdown,
               UniqueAugurName,
-              ThresholdInRange) {
+              ThresholdInRange,
+              DropDownHover,
+              DJFocusOnSelect
+            ) {
   'use strict';
 
   return ng.module('dejalyticsDirectives', ['angularSpinner', 'mm.foundation'])
     .directive('augurSettings', AugurSettings)
+    .directive('augurScheduler', AugurScheduler)
     .directive('availableEvent', AvailableEvent)
     .directive('d3BarChart', D3BarChart)
     .directive('d3ProfileBarChart', D3ProfileBarChart)
@@ -54,5 +62,7 @@ define([
     .directive('d3RocChart', D3RocChart)
     .directive('dropdown', Dropdown)
     .directive('uniqueAugurName', UniqueAugurName)
-    .directive('thresholdInRange', ThresholdInRange);
+    .directive('thresholdInRange', ThresholdInRange)
+    .directive('dropdownHover', DropDownHover)
+    .directive('djFocusOnSelect', DJFocusOnSelect);
 });

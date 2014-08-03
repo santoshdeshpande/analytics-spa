@@ -5,56 +5,12 @@
       .content
         %p.description
           Set your prediction schedule here. Please note that calculating predictions may take some time.
-          You can start predictions manually too.
+          You can start predictions manually too {{augur.prediction}}.
         .row
           .small-12.columns
             %label.main-label Select schedule
         .row
-          .small-4.columns
-            %select{ name: 'prediction-schedule-frequency', ng: { model: 'augur.prediction.schedule.frequency' } }
-              %option{ value: 'hourly' } hourly
-              %option{ value: 'daily' } daily
-              %option{ value: 'weekly' } weekly
-              %option{ value: 'monthly' } monthly
-          .small-8.columns
-
-            .row.hourly{ ng: { if: 'augur.prediction.schedule.frequency == "hourly"' } }
-              .small-1.columns
-                %label.inline at
-              .small-3.columns{ ng: { class: '{"error" : form.predictionScheduleHourlyMinuteOfHour.$error.pattern}' }}
-                %input{ type: 'text', name: 'predictionScheduleHourlyMinuteOfHour', id: 'prediction-schedule-hourly-time', ng: { model: 'augur.prediction.schedule.minuteOfHour', pattern: '/(^(0?[0-9])|([1-5][0-9]))$/' } }
-                %small.error{ ng: { show: 'form.predictionScheduleHourlyMinuteOfHour.$error.pattern' } } Not a valid time
-              .small-8.columns
-                %label.inline minutes of the hour
-
-            .row.daily{ ng: { if: 'augur.prediction.schedule.frequency == "daily"' } }
-              .small-1.columns
-                %label.inline at
-              .small-6.columns.end{ ng: { class: '{"error" : form.predictionScheduleDailyTimeOfDay.$error.pattern}' }}
-                %input{ type: 'text', name: 'predictionScheduleDailyTimeOfDay', id: 'prediction-schedule-daily-time', placeholder: 'e.g. 10:30 am', ng: { model: 'augur.prediction.schedule.timeOfDay', pattern: '/^0?((1[012])|([1-9])):[0-5][0-9](\s)?(am|pm|AM|PM)$/' } }
-                %small.error{ ng: { show: 'form.predictionScheduleDailyTimeOfDay.$error.pattern' } } Not a valid time
-
-            .row.weekly{ ng: { if: 'augur.prediction.schedule.frequency == "weekly"' } }
-              .small-6.columns
-                %select{ name: 'prediction-schedule-weekly-day', ng: { model: 'augur.prediction.schedule.dayOfWeek' } }
-                  %option{ value: 'monday' }    Mon
-                  %option{ value: 'tuesday' }   Tue
-                  %option{ value: 'wednesday' } Wed
-                  %option{ value: 'thursday' }  Thu
-                  %option{ value: 'friday' }    Fri
-                  %option{ value: 'saturday' }  Sat
-                  %option{ value: 'sunday' }    Sun
-              .small-6.columns{ ng: { class: '{"error" : form.predictionScheduleWeeklyTimeOfDay.$error.pattern}' }}
-                %input{ type: 'text', name: 'predictionScheduleWeeklyTimeOfDay', id: 'prediction-schedule-weekly-time', placeholder: 'e.g. 10:30 am', ng: { model: 'augur.prediction.schedule.timeOfDay', pattern: '/^0?((1[012])|([1-9])):[0-5][0-9](\s)?(am|pm|AM|PM)$/' } }
-                %small.error{ ng: { show: 'form.predictionScheduleWeeklyTimeOfDay.$error.pattern' } } Not a valid time
-
-            .row.monthly{ ng: { if: 'augur.prediction.schedule.frequency == "monthly"' } }
-              .small-6.columns
-                %select{ name: 'prediction-schedule-monthly-day', ng: { model: 'augur.prediction.schedule.dayOfMonth', options: 'day.key as day.label for day in DAYS_IN_MONTH' } }
-              .small-6.columns{ ng: { class: '{"error" : form.predictionScheduleMonthlyTimeOfDay.$error.pattern}' }}
-                %input{ type: 'text', name: 'predictionScheduleMonthlyTimeOfDay', id: 'prediction-schedule-monthly-time', placeholder: 'e.g. 10:30 am', ng: { model: 'augur.prediction.schedule.timeOfDay', pattern: '/^0?((1[012])|([1-9])):[0-5][0-9](\s)?(am|pm|AM|PM)$/' } }
-                %small.error{ ng: { show: 'form.predictionScheduleMonthlyTimeOfDay.$error.pattern' } } Not a valid time
-
+          %augur-scheduler{ schedule: 'augur.prediction.schedule', form: 'form', prefix: 'predictionSchedule' }
   .small-4.columns
     .evaluation
       %h6.title Evaluation Schedule
@@ -65,49 +21,7 @@
           .small-12.columns
             %label.main-label Select schedule
         .row
-          .small-4.columns
-            %select{ name: 'evaluation-schedule-type', ng: { model: 'augur.evaluation.schedule.frequency' } }
-              %option{ value: 'hourly' } hourly
-              %option{ value: 'daily' } daily
-              %option{ value: 'weekly' } weekly
-              %option{ value: 'monthly' } monthly
-          .small-8.columns
-
-            .row.hourly{ ng: { if: 'augur.evaluation.schedule.frequency == "hourly"' } }
-              .small-1.columns
-                %label.inline at
-              .small-3.columns{ ng: { class: '{"error" : form.evaluationScheduleHourlyMinuteOfHour.$error.pattern}' }}
-                %input{ type: 'text', name: 'evaluationScheduleHourlyMinuteOfHour', id: 'evaluation-schedule-daily-time', ng: { model: 'augur.evaluation.schedule.minuteOfHour', pattern: '/(^(0?[0-9])|([1-5][0-9]))$/' } }
-                %small.error{ ng: { show: 'form.evaluationScheduleHourlyMinuteOfHour.$error.pattern' } } Not a valid time
-              .small-8.columns
-                %label.inline minutes of the hour
-
-            .row.daily{ ng: { if: 'augur.evaluation.schedule.frequency == "daily"' } }
-              .small-1.columns
-                %label.inline at
-              .small-6.columns.end{ ng: { class: '{"error" : form.evaluationScheduleDailyTimeOfDay.$error.pattern}' }}
-                %input{ type: 'text', name: 'evaluationScheduleDailyTimeOfDay', id: 'evaluation-schedule-daily-time', placeholder: 'e.g. 10:30 am', ng: { model: 'augur.evaluation.schedule.timeOfDay', pattern: '/^0?((1[012])|([1-9])):[0-5][0-9](\s)?(am|pm|AM|PM)$/' } }
-                %small.error{ ng: { show: 'form.evaluationScheduleDailyTimeOfDay.$error.pattern' } } Not a valid time
-            .row.weekly{ ng: { if: 'augur.evaluation.schedule.frequency == "weekly"' } }
-              .small-6.columns
-                %select{ name: 'evaluation-schedule-weekly-day', ng: { model: 'augur.evaluation.schedule.dayOfWeek' } }
-                  %option{ value: 'monday' }    Mon
-                  %option{ value: 'tuesday' }   Tue
-                  %option{ value: 'wednesday' } Wed
-                  %option{ value: 'thursday' }  Thu
-                  %option{ value: 'friday' }    Fri
-                  %option{ value: 'saturday' }  Sat
-                  %option{ value: 'sunday' }    Sun
-              .small-6.columns{ ng: { class: '{"error" : form.evaluationScheduleWeeklyTimeOfDay.$error.pattern}' }}
-                %input{ type: 'text', name: 'evaluationScheduleWeeklyTimeOfDay', id: 'evaluation-schedule-weekly-time', placeholder: 'e.g. 10:30 am', ng: { model: 'augur.evaluation.schedule.timeOfDay', pattern: '/^0?((1[012])|([1-9])):[0-5][0-9](\s)?(am|pm|AM|PM)$/' } }
-                %small.error{ ng: { show: 'form.evaluationScheduleWeeklyTimeOfDay.$error.pattern' } } Not a valid time
-            .row.monthly{ ng: { if: 'augur.evaluation.schedule.frequency == "monthly"' } }
-              .small-6.columns
-                %select{ name: 'evaluation-schedule-monthly-day', ng: { model: 'augur.evaluation.schedule.dayOfMonth', options: 'day.key as day.label for day in DAYS_IN_MONTH' } }
-              .small-6.columns{ ng: { class: '{"error" : form.evaluationScheduleMonthlyTimeOfDay.$error.pattern}' }}
-                %input{ type: 'text', name: 'evaluationScheduleMonthlyTimeOfDay', id: 'evaluation-schedule-monthly-time', placeholder: 'e.g. 10:30 am', ng: { model: 'augur.evaluation.schedule.timeOfDay', pattern: '/^0?((1[012])|([1-9])):[0-5][0-9](\s)?(am|pm|AM|PM)$/' } }
-                %small.error{ ng: { show: 'form.evaluationScheduleMonthlyTimeOfDay.$error.pattern' } } Not a valid time
-
+          %augur-scheduler{ schedule: 'augur.evaluation.schedule', form: 'form', prefix: 'predictionSchedule' }
   .small-4.columns
     .learning
       %h6.title Automatic Learning

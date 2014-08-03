@@ -6,6 +6,16 @@ define(['angular'], function (ng) {
   'use strict';
 
   var constants = {
+    SCHEDULE_TYPES : ["hourly", "daily", "weekly","monthly"],
+    DAYS_OF_WEEK: [
+        {"key": "monday", label: "Mon"},
+        {"key": "tuesday", label: "Tue"},
+        {"key": "wednesday", label: "Wed"},
+        {"key": "thursday", label: "Thu"},
+        {"key": "friday", label: "Fri"},
+        {"key": "saturday", label: "Sat"},
+        {"key": "sunday", label: "Sun"}
+    ],
     KEY_PERFORMANCE_INDICATORS: [
       {"key": "average_squared_error", "label": "Average Squared Error", "min": 0.0001, "max": 1, "comparator": "gt"},
       {"key": "area_under_the_curve", "label": "Area Under the Curve", "min": 0.0001, "max": 1, "comparator": "lt"},

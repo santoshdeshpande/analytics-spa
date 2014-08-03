@@ -22,7 +22,8 @@ define([
             controllers.name,
             directives.name,
             filters.name,
-            services.name
+            services.name,
+            'mm.foundation'
         ])
         .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
             $urlRouterProvider.otherwise('/dashboard');
@@ -37,6 +38,11 @@ define([
                     url: '/augurs/new',
                     templateUrl: 'partials/augur-new.html',
                     controller: 'AugurNewCtrl'
+                }).
+                state('augur-clustering-new', {
+                    url: '/augurs/clustering/new',
+                    templateUrl: 'partials/clustering/augur-create.html',
+                    controller: 'AugurNewClusteringCtrl'
                 }).
                 state('augur', {
                     url: '/habitat/:habitatId/augurs/:augurId',
