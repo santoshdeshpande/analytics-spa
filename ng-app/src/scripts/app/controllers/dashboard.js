@@ -86,6 +86,9 @@ define([
             augur.type = 'augur';
             augur.habitatId = habitat.code;
             augur.colorScheme = habitat.colorScheme;
+            if (!augur.augurType) {
+              augur.augurType = 'classification';
+            }
 
             augur.learningKpiLabel =
               Constants.KEY_PERFORMANCE_INDICATORS_HASH[augur.learningKpi]

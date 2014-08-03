@@ -6841,3 +6841,44 @@ th.hide-for-touch {
       color: #DD5A26; }
     [data-theme=theme-four] .augur-settings .download-button .download {
       color: #00A14B; }
+
+.augur-clustering-profile .count {
+  font-size: 0.8em; }
+
+.chart-container {
+  position: relative; }
+
+.tree-tooltip {
+  position: absolute;
+  text-align: center;
+  padding: 0.5em;
+  border: 0px;
+  border-radius: 5px;
+  color: #fff;
+  pointer-events: none; }
+  .tree-tooltip dl {
+    *zoom: 1;
+    margin-bottom: 0.5em;
+    width: 130px; }
+    .tree-tooltip dl:before, .tree-tooltip dl:after {
+      content: " ";
+      display: table; }
+    .tree-tooltip dl:after {
+      clear: both; }
+  .tree-tooltip dt, .tree-tooltip dd {
+    font-size: 80%;
+    float: left;
+    margin: 0.1em 0.1em; }
+  .tree-tooltip dt {
+    clear: both;
+    text-align: right;
+    width: 50%; }
+  .tree-tooltip dt:after {
+    content: ':'; }
+  .tree-tooltip .summary {
+    font-size: 80%;
+    border-top: 1px solid #fff;
+    padding-top: 0.5em; }
+    .tree-tooltip .summary span {
+      display: block;
+      margin: -0.3em 0; }

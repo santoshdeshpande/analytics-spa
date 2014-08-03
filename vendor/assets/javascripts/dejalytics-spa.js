@@ -40041,6 +40041,61 @@ define('controllers/augur-tree',[], function () {
  define: false,
  console: false
  */
+define('controllers/augur-profile',[], function () {
+    
+
+    return  ['$scope', '$stateParams', function ($scope) {
+        $scope.data = {};
+
+        $scope.augur.$promise.then(function (augur) {
+            var profile = augur["clustering"]['clusterProfile'];
+            $scope.headers = [
+                {name: 'Variable'},
+                {name: 'Total', count: profile.DataDictionary.Population.count},
+            ];
+
+            $scope.results = {};
+            var types = [];
+
+            angular.forEach(profile.DataDictionary.Population.fields, function(field, i){
+                var res = {};
+                if(field.data_type === 'categorical') {
+                    res['data'] = field.instances[0];
+                } else {
+                    res['data'] = {'mean':field.mean,'max':field.maximum,'min':field.minimum}
+                }
+                res['type'] = field.data_type;
+                res['showLegend'] = true;
+
+                var name = {'type': 'none', data:field.name};
+
+                $scope.results[field.key] = [name, res];
+                types.push(field.data_type);
+            });
+
+            angular.forEach(profile.Clusters, function(cluster) {
+                $scope.headers.push({name: cluster.Name, count: cluster.count});
+                angular.forEach(cluster.fields, function(field, i) {
+                    var type = types[i];
+                    var res = {};
+                    if(type === 'categorical') {
+                        res['data'] = field.instances[0];
+                    } else {
+                        res['data'] = {'mean':field.mean,'max':field.maximum,'min':field.minimum}
+                    }
+                    res['type'] = type;
+                    res['showLegend'] = false;
+                    $scope.results[field.key].push(res);
+                });
+            });
+        });
+    }];
+});
+
+/* global
+ define: false,
+ console: false
+ */
 define('controllers/dashboard',[
   '../constants'
 ], function (Constants) {
@@ -40125,6 +40180,9 @@ define('controllers/dashboard',[
             augur.type = 'augur';
             augur.habitatId = habitat.code;
             augur.colorScheme = habitat.colorScheme;
+            if (!augur.augurType) {
+              augur.augurType = 'classification';
+            }
 
             augur.learningKpiLabel =
               Constants.KEY_PERFORMANCE_INDICATORS_HASH[augur.learningKpi]
@@ -40161,8 +40219,9 @@ define('controllers',[
   'controllers/augur-performance',
   'controllers/augur-settings',
   'controllers/augur-tree',
+  'controllers/augur-profile',
   'controllers/dashboard'
-], function (ng, services, AugurNewCtrl, AugurCtrl, AugurAccuracyCtrl, AugurAccuracyDetailCtrl, AugurInfluencersCtrl, AugurPerformanceCtrl, AugurSettingsCtrl, AugurTreeCtrl, DashboardCtrl) {
+], function (ng, services, AugurNewCtrl, AugurCtrl, AugurAccuracyCtrl, AugurAccuracyDetailCtrl, AugurInfluencersCtrl, AugurPerformanceCtrl, AugurSettingsCtrl, AugurTreeCtrl, AugurProfileCtrl, DashboardCtrl) {
   
 
   return ng.module('MainControllers', [ services.name ])
@@ -40174,6 +40233,7 @@ define('controllers',[
       .controller('AugurPerformanceCtrl', AugurPerformanceCtrl)
       .controller('AugurSettingsCtrl', AugurSettingsCtrl)
       .controller('AugurTreeCtrl', AugurTreeCtrl)
+      .controller('AugurProfileCtrl', AugurProfileCtrl)
       .controller('DashboardCtrl', DashboardCtrl);
 });
 
@@ -49703,6 +49763,302 @@ define('directives/d3-bar-chart',[
  define: false,
  console: false
  */
+define('directives/d3-profile-bar-chart',[
+    'd3js',
+    './chart'
+], function (d3) {
+    
+
+    return ['$timeout', function ($timeout) {
+        return {
+            restrict: 'E',
+            scope: {
+                data: '='
+            },
+            link: function (scope, ele) {
+                var renderTimeout;
+                var dimensions = {
+                    margins: { top: 10, right: 10, bottom: 10, left: 10 },
+                    width: 50,
+                    height: 80
+                };
+                var tooltip = d3.select(ele[0]).append('div')
+                    .attr('class', 'tree-tooltip')
+                    .style('background-color', 'rgba(0, 0, 0, 0.70)')
+                    .style('opacity', 0);
+
+                var svg = d3.select(ele[0])
+                    .append("svg:svg")
+                    .attr('class', 'bar-chart')
+                    .attr('width', dimensions.width)
+                    .attr('height', dimensions.height)
+                    .append("svg:g")
+                    .attr('transform', 'translate(' + dimensions.margins.bottom + ',' + (dimensions.height - dimensions.margins.bottom) + ')');
+
+
+                var x = d3.scale.ordinal().rangeRoundBands([0, dimensions.width - dimensions.margins.left - dimensions.margins.right]);
+                var y = d3.scale.linear().range([0, dimensions.height - dimensions.margins.top - dimensions.margins.bottom]);
+                var z = d3.scale.category10();
+
+                scope.$watch('data', function (data) {
+                    if (data != null) scope.render(data);
+                }, true);
+
+                scope.render = function (data) {
+                    svg.selectAll('*').remove();
+
+                    if (!data) return;
+                    if (renderTimeout) $timeout.cancel(renderTimeout);
+
+                    renderTimeout = $timeout(function () {
+                        var headers = [];
+                        for (var k in data) {
+                            headers.push(k);
+                        }
+
+                        var datum = [data];
+
+                        var tooltipHTML = ["<dl>"];
+                        var length = headers.length - 1;
+                        for(var i=length;i>=0;i--) {
+                            var h = headers[i];
+                            tooltipHTML.push("<dt style='background-color:" + z(i) + "'>" + h + ": </dt>" + "<dd>" + data[h] + "</dd>");
+                        }
+                        tooltipHTML.push("</dl>");
+                        tooltipHTML = tooltipHTML.join(" ");
+                        tooltip.html(tooltipHTML);
+
+                        var stacked = d3.layout.stack()(headers.map(function (cause) {
+                            return datum.map(function (d) {
+                                return {x: 'C1', y: +d[cause], type: cause};
+                            })
+                        }));
+                        x.domain(stacked[0].map(function (d) {
+                            return d.x
+                        }));
+                        y.domain([0, d3.max(stacked[stacked.length - 1], function (d) {
+                            return d.y0 + d.y;
+                        })]);
+
+                        var c = svg.selectAll("g.fact")
+                            .data(stacked)
+                            .enter()
+                            .append('svg:g')
+                            .attr('class', 'bar-fact')
+                            .style("fill", function (d, i) {
+                                return z(i);
+                            })
+                            .style("stroke", function (d, i) {
+                                return d3.rgb(z(i)).darker();
+                            });
+
+                        var rect = c.selectAll("rect")
+                            .data(Object)
+                            .enter().append('svg:rect')
+                            .attr('x', function (d) {
+                                return x(d.x)
+                            })
+                            .attr('y', function (d) {
+                                return -y(d.y0) - y(d.y)
+                            })
+                            .attr("height", function (d) {
+                                return y(d.y);
+                            })
+                            .attr("width", x.rangeBand())
+                            .on("mouseover", function () {
+                                tooltip.transition()
+                                    .duration(100)
+                                    .style('opacity', .9);
+                            })
+                            .on("mousemove", function () {
+                                var position = d3.mouse(this);
+                                tooltip.style('left', position[0] + 'px')
+                                    .style('top', (position[1] - 30) + 'px');
+
+                            })
+                            .on("mouseout", function () {
+                                tooltip.transition()
+                                    .duration(100)
+                                    .style('opacity', 0)
+                            });
+
+
+                    }, 200); // renderTimeout
+                };
+            }
+        };
+    }]
+});
+
+/* global
+ define: false,
+ console: false
+ */
+define('directives/d3-profile-diamond-chart',[
+    'd3js',
+    './chart'
+], function (d3) {
+    
+
+    return ['$timeout', function ($timeout) {
+        return {
+            restrict: 'E',
+            scope: {
+                data: '=',
+                legend: '='
+            },
+            link: function (scope, ele) {
+                var rightMargin = scope.legend ? 50 : 10;
+                var renderTimeout;
+                var dimensions = {
+                    margins: { top: 10, right: rightMargin, bottom: 10, left: 10 },
+                    width: 50 + rightMargin,
+                    height: 120
+                };
+                var id = "diamond-" + new Date().getTime();
+                var tooltip = d3.select(ele[0])
+                    .append('div')
+                    .attr('id', 'tooltip-' + new Date().getTime())
+                    .attr('class', 'tree-tooltip')
+                    .style('background-color', 'rgba(0, 0, 0, 0.70)')
+                    .style('position', 'absolute')
+                    .style('visibility', "hidden");
+
+
+                var svg = d3.select(ele[0])
+                    .append("svg:svg")
+                    .attr('class', 'bar-chart')
+                    .attr('width', dimensions.width)
+                    .attr('height', dimensions.height)
+                    .append("svg:g")
+                    .attr('transform', 'translate(' + dimensions.margins.bottom + ',' + (dimensions.height - dimensions.margins.bottom) + ')')
+                    .attr('id', id);
+
+                var w = dimensions.width - dimensions.margins.left - dimensions.margins.right;
+                var x = d3.scale.linear().range([0, w ]);
+                var y = d3.scale.linear().range([0, dimensions.height - dimensions.margins.top - dimensions.margins.bottom]);
+
+                scope.$watch('data', function (data) {
+                    if (data != null) scope.render(data);
+                }, true);
+
+                scope.render = function (data) {
+                    svg.selectAll('*').remove();
+
+                    if (!data) return;
+                    if (renderTimeout) $timeout.cancel(renderTimeout);
+                    var max = Math.ceil(data.max + 0.2 * data.max);
+                    var min = 0; //Math.floor(data.min - 0.2 * data.min);
+
+                    renderTimeout = $timeout(function () {
+                        y.domain([min, max]);
+                        x.domain([0, dimensions.width - dimensions.margins.left - dimensions.margins.right]);
+                        var leftX = 0;
+                        var middleX = w / 2;
+                        var rightX = w;
+                        var xpos = middleX;
+                        var format = d3.format(".02f");
+                        var html = [
+                            "<dl>",
+                            "<dt>Minimum</dt>",
+                                "<dd>" + format(data.min) + "</dd>",
+                            "<dt>Mean</dt>",
+                                "<dd>" + format(data.mean) + "</dd>",
+                            "<dt>Maximum</dt>",
+                                "<dd>" + format(data.max) + "</dd>"
+                        ].join('');
+                        tooltip.html(html);
+
+                        svg.append("line")
+                            .attr("x1", x(xpos))
+                            .attr("y1", -y(min))
+                            .attr("x2", x(xpos))
+                            .attr("y2", -y(max))
+                            .style("stroke", "black");
+                        var datum = [data.min, data.mean, data.max];
+
+                        var circle = svg.selectAll("circle")
+                            .data(datum)
+                            .enter()
+                            .append("svg:circle")
+                            .attr("cx", xpos)
+                            .attr("cy", function (d) {
+                                return -y(d)
+                            })
+                            .attr("r", 2)
+                            .style("stroke", "blue")
+                            .style("fill", "none");
+
+
+                        var yMean = y(data.mean);
+
+                        svg.append("line")
+                            .attr("x1", x(leftX))
+                            .attr("y1", -yMean)
+                            .attr("x2", x(rightX))
+                            .attr("y2", -yMean)
+                            .style("stroke", "black");
+
+                        var paths = [
+                            [middleX, data.min],
+                            [leftX, data.mean],
+                            [middleX, data.max],
+                            [rightX, data.mean],
+                            [middleX  , data.min]
+                        ];
+
+                        var line = d3.svg.line()
+                            .x(function (d) {
+                                return x(d[0])
+                            })
+                            .y(function (d) {
+                                return -y(d[1])
+                            });
+
+                        var path = svg.append("path")
+                            .attr("d", line(paths))
+                            .attr("stroke", "blue")
+                            .attr("fill", "lightblue")
+                            .on("mouseover", function () {
+                                return tooltip.style("visibility", "visible");
+                            })
+                            .on("mousemove", function () {
+                                var position = d3.mouse(this);
+                                tooltip.style("left", (position[0] - 30) + "px");
+                                tooltip.style("top", (position[1] - 5) + "px");
+                            })
+                            .on("mouseout", function () {
+                                return   tooltip.style("visibility", "hidden");
+                            });
+
+                        if (scope.legend) {
+
+                            var text = svg.selectAll("text")
+                                .data(datum)
+                                .enter()
+                                .append("svg:text")
+                                .attr("x", x(dimensions.margins.right))
+                                .attr("y", function (d) {
+                                    return -y(d)
+                                })
+                                .attr("dy", ".35em")
+                                .attr("font-size", "10px")
+                                .text(function (d) {
+                                    return format(d);
+                                });
+                        }
+
+                    }, 200); // renderTimeout
+                };
+            }
+        };
+    }]
+});
+
+/* global
+ define: false,
+ console: false
+ */
 define('directives/d3-decision-tree-chart',['d3js'], function (d3) {
   
 
@@ -53966,6 +54322,8 @@ define('directives',[
   'directives/augur-settings',
   'directives/available-event',
   'directives/d3-bar-chart',
+  'directives/d3-profile-bar-chart',
+  'directives/d3-profile-diamond-chart',
   'directives/d3-decision-tree-chart',
   'directives/d3-influencer-chart',
   'directives/d3-line-chart',
@@ -53982,6 +54340,8 @@ define('directives',[
               AugurSettings,
               AvailableEvent,
               D3BarChart,
+              D3ProfileBarChart,
+              D3ProfileDiamondChart,
               D3DecisionTreeChart,
               D3InfluencerChart,
               D3LineChart,
@@ -53998,6 +54358,8 @@ define('directives',[
     .directive('augurSettings', AugurSettings)
     .directive('availableEvent', AvailableEvent)
     .directive('d3BarChart', D3BarChart)
+    .directive('d3ProfileBarChart', D3ProfileBarChart)
+    .directive('d3ProfileDiamondChart', D3ProfileDiamondChart)
     .directive('d3DecisionTreeChart', D3DecisionTreeChart)
     .directive('d3InfluencerChart', D3InfluencerChart)
     .directive('d3LineChart', D3LineChart)
@@ -57386,6 +57748,18 @@ try {
   module = angular.module('dejalyticsPartials', []);
 }
 module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('partials/augur-clustering-settings.html',
+    '<h3>Settings</h3>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('dejalyticsPartials');
+} catch (e) {
+  module = angular.module('dejalyticsPartials', []);
+}
+module.run(['$templateCache', function($templateCache) {
   $templateCache.put('partials/augur-clustering.html',
     '<div class=\'row augur action-bar\' ng-attr-data-theme=\'{{ habitat.colorScheme }}\'><div class=\'small-12 columns\'><div class=\'row\'><div class=\'small-11 columns\'><div class=\'row\'><div class=\'small-6 columns habitat-name\'> Clustering #1</div><div class=\'small-6 columns actions\'><ul class=\'no-bullet\'><li class=\'action\'></li><li class=\'action\'></li></ul></div></div></div><div class=\'small-1 columns back\'><a ui-sref=\'dashboard\'><span class=\'download\'><i class=\'icon icon-exit\'></i></span></a></div></div></div></div><div class=\'row augur container\'><div class=\'side-nav-container\'><ul class=\'side-nav\'><li ui-sref-active=\'active\'><a ui-sref=\'augur.clustering.home\'><span class=\'clustering-profile\'><i class=\'icon icon-decisiontree\'></i></span><br> Cluster Profile</a></li><li ui-sref-active=\'active\'><a ui-sref=\'augur.clustering.landscape\'><span class=\'landscape\'><i class=\'icon icon-influencer\'></i></span><br> Cluster Landscape</a></li><li ui-sref-active=\'active\'><a ui-sref=\'augur.clustering.settings\'><span class=\'settings\'><icon class=\'icon-settings\'></icon></span><br> Settings</a></li></ul></div><div class=\'main\'><div ui-view=\'\'></div></div></div>');
 }]);
@@ -57400,6 +57774,18 @@ try {
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('partials/augur-influencers.html',
     '<div class=\'row augur-influencers\'><div class=\'columns small-12\'><div class=\'heading\'><h1>Influencers</h1><h6 class=\'subheader\'>Shows up to 40 most important influencers</h6></div><d3-influencer-chart data=\'data\'></d3-influencer-chart></div></div>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('dejalyticsPartials');
+} catch (e) {
+  module = angular.module('dejalyticsPartials', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('partials/augur-landscape.html',
+    '<h3>Landscape</h3>');
 }]);
 })();
 
@@ -57460,6 +57846,18 @@ try {
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('partials/augur-performance.html',
     '<div class=\'row augur-performance\'><div class=\'columns small-12\'> I am the performance page</div></div>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('dejalyticsPartials');
+} catch (e) {
+  module = angular.module('dejalyticsPartials', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('partials/augur-profile.html',
+    '<div class=\'row\'><div class=\'columns small-12\'><h4>Cluster Profile</h4></div></div><div class=\'row\'><div class=\'columns large-12 augur-clustering-profile\'><table class=\'large-12\'><thead><tr><th class=\'text-center\' ng-repeat=\'header in headers\'> {{header.name}}<br> <span class=\'count\' ng-if=\'header.count\'>Count: {{header.count}}</span></th></tr></thead><tbody><tr ng-repeat=\'result in results\'><td class=\'text-center\' ng-repeat=\'r in result\'><div ng-switch=\'r.type\'><div ng-switch-when=\'none\'> {{r.data}}</div><div class=\'chart-container\' ng-switch-when=\'categorical\'><d3-profile-bar-chart data=\'r.data\'></d3-profile-bar-chart></div><div class=\'chart-container\' ng-switch-when=\'continuous\'><d3-profile-diamond-chart data=\'r.data\' legend=\'r.showLegend\'></d3-profile-diamond-chart></div></div></td></tr></tbody></table></div></div>');
 }]);
 })();
 
@@ -57613,24 +58011,23 @@ define('app',[
                     controller: 'AugurCtrl'
                 }).
                 state('augur.clustering', {
-                    abstract: true,
                     url: '/clustering',
-                    template: '<ui-view/>',
+                    abstract: true,
+                    templateUrl: 'partials/augur-clustering.html',
                     controller: 'AugurCtrl'
                 }).
                 state('augur.clustering.home', {
                     url: '/profile',
-                    templateUrl: 'partials/augur-clustering.html'
+                    templateUrl: 'partials/augur-profile.html',
+                    controller: 'AugurProfileCtrl'
                 }).
                 state('augur.clustering.landscape', {
                     url: '/landscape',
-                    abstract: true,
-                    template: '<ui-view/>'
+                    templateUrl: 'partials/augur-landscape.html'
                 }).
                 state('augur.clustering.settings', {
                     url: '/settings',
-                    abstract: true,
-                    template: '<ui-view/>'
+                    templateUrl: 'partials/augur-clustering-settings.html'
                 }).
                 state('augur.classification.influencers', {
                     url: '/influencers',
