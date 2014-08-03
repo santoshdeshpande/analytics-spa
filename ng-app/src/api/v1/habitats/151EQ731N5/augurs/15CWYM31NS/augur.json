@@ -1,0 +1,209 @@
+{"id": "15CXX331NT", "name": "Augur 15CXX331NT", "description": null, "code": "15CXX331NT",
+    "clustering": {
+        "clusterProfile": {
+            "Header": {
+                "Algorithm": "k-means",
+                "Copyright": "Copyright (c) 2014 Dejalytics Inc.",
+                "Description": "K-Means Cluster Report",
+                "Application": {
+                    "name": "Dejalytics Foundry",
+                    "version": "1.4"
+                },
+                "Timestamp": "2014-07-25 12:07:35"
+            },
+            "DataDictionary": {
+                "FieldTypes": {
+                    "categorical": 1,
+                    "continuous": 2,
+                    "total": 3
+                },
+                "Population": {
+                    "count": 1000,
+                    "count_comment": "fyi- just during draft design: equals sum of counts from all clusters",
+                    "fields": [
+                        {
+                            "key": "field_1",
+                            "data_type": "categorical",
+                            "name": "Favorite Color",
+                            "missing": 12,
+                            "instances": [
+                                {
+                                    "red": 100,
+                                    "blue": 200,
+                                    "green": 200,
+                                    "black": 488
+                                }
+                            ]
+                        },
+                        {
+                            "key": "field_2",
+                            "data_type": "continuous",
+                            "name": "Age",
+                            "missing": 7,
+                            "standard_deviation": 23.58,
+                            "median": 55,
+                            "minimum": 19,
+                            "maximum": 101,
+                            "variance": 556.123,
+                            "mean": 40.3
+                        },
+                        {
+                            "key": "field_3",
+                            "data_type": "continuous",
+                            "name": "Income",
+                            "missing": 2,
+                            "standard_deviation": 26520.48,
+                            "median": 55139.06,
+                            "mean": 55317.18,
+                            "maximum": 97856.19,
+                            "minimum": 12109.38,
+                            "variance": 703335987
+                        }
+                    ]
+                }
+            },
+            "Clusters": [
+                {
+                    "Name": "Cluster_1",
+                    "count": 200,
+                    "fields": [
+                        {
+                            "key": "field_1",
+                            "instances": [
+                                {
+                                    "red": 50,
+                                    "blue": 100,
+                                    "green": 30,
+                                    "black": 20
+                                }
+                            ]
+                        },
+                        {
+                            "key": "field_2",
+                            "standard_deviation": 21.58,
+                            "median": 40,
+                            "minimum": 29,
+                            "maximum": 72,
+                            "variance": 856.123,
+                            "mean": 40.3
+                        },
+                        {
+                            "key": "field_3",
+                            "standard_deviation": 26520.48,
+                            "median": 35139.06,
+                            "mean": 25317.18,
+                            "maximum": 67856.19,
+                            "minimum": 22109.38,
+                            "variance": 103335987
+                        }
+                    ]
+                },
+                {
+                    "Name": "Cluster_2",
+                    "count": 600,
+                    "fields": [
+                        {
+                            "key": "field_1",
+                            "instances": [
+                                {
+                                    "red": 500,
+                                    "blue": 10,
+                                    "green": 10,
+                                    "black": 80
+                                }
+                            ]
+                        },
+                        {
+                            "key": "field_2",
+                            "standard_deviation": 21.58,
+                            "median": 60,
+                            "minimum": 39,
+                            "maximum": 92,
+                            "variance": 1256.123,
+                            "mean": 40.3
+                        },
+                        {
+                            "key": "field_3",
+                            "standard_deviation": 66520.48,
+                            "median": 25139.06,
+                            "mean": 45317.18,
+                            "maximum": 87856.19,
+                            "minimum": 12109.38,
+                            "variance": 303335987
+                        }
+                    ]
+                },
+                {
+                    "Name": "Cluster_3",
+                    "count": 180,
+                    "fields": [
+                        {
+                            "key": "field_1",
+                            "instances": [
+                                {
+                                    "red": 100,
+                                    "blue": 60,
+                                    "green": 10,
+                                    "black": 7
+                                }
+                            ]
+                        },
+                        {
+                            "key": "field_2",
+                            "standard_deviation": 21.58,
+                            "median": 35,
+                            "minimum": 39,
+                            "maximum": 92,
+                            "variance": 1256.123,
+                            "mean": 40.3
+                        },
+                        {
+                            "key": "field_3",
+                            "standard_deviation": 66520.48,
+                            "median": 25139.06,
+                            "mean": 45317.18,
+                            "maximum": 87856.19,
+                            "minimum": 12109.38,
+                            "variance": 303335987
+                        }
+                    ]
+                },
+                {
+                    "Name": "Cluster_4",
+                    "count": 20,
+                    "fields": [
+                        {
+                            "key": "field_1",
+                            "instances": [
+                                {
+                                    "red": 1,
+                                    "blue": 2,
+                                    "green": 3,
+                                    "black": 11
+                                }
+                            ]
+                        },
+                        {
+                            "key": "field_2",
+                            "standard_deviation": 21.58,
+                            "median": 35,
+                            "minimum": 39,
+                            "maximum": 92,
+                            "variance": 1256.123,
+                            "mean": 40.3
+                        },
+                        {
+                            "key": "field_3",
+                            "standard_deviation": 66520.48,
+                            "median": 25139.06,
+                            "mean": 45317.18,
+                            "maximum": 87856.19,
+                            "minimum": 12109.38,
+                            "variance": 303335987
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

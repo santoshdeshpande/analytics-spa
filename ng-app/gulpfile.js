@@ -67,6 +67,7 @@ gulp.task('serve', function () {
   app.use(errorhandler({ dumpExceptions: true, showStack: true }));
   app.listen(serverport, function () {
     console.log('Started server on: ' + serverport);
+    console.log("server started on http://localhost:"+serverport);
     lrserver.listen(livereloadport, function () {
       console.log('Started livereload server on: ' + livereloadport);
     });

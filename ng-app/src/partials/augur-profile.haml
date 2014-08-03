@@ -1,0 +1,22 @@
+.row
+  .columns.small-12
+    %h4="Cluster Profile"
+.row
+  .columns.large-12.augur-clustering-profile
+    %table.large-12
+      %thead
+        %tr
+          %th.text-center{'ng-repeat' => 'header in headers'}
+            {{header.name}}
+            %br
+            %span.count{ ng: { if: 'header.count' } }="Count: {{header.count}}"
+      %tbody
+        %tr{'ng-repeat' => 'result in results'}
+          %td.text-center{'ng-repeat' => 'r in result'}
+            %div{'ng-switch' => 'r.type'}
+              %div{'ng-switch-when' => 'none'}
+                {{r.data}}
+              %div.chart-container{'ng-switch-when' => 'categorical'}
+                %d3-profile-bar-chart{ data: 'r.data' }
+              %div.chart-container{'ng-switch-when' => 'continuous'}
+                %d3-profile-diamond-chart{ data: 'r.data', legend: 'r.showLegend' }
