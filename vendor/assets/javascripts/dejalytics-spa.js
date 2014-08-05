@@ -39561,6 +39561,16 @@ define('constants',['angular'], function (ng) {
   
 
   var constants = {
+    SCHEDULE_TYPES : ["hourly", "daily", "weekly","monthly"],
+    DAYS_OF_WEEK: [
+        {"key": "monday", label: "Mon"},
+        {"key": "tuesday", label: "Tue"},
+        {"key": "wednesday", label: "Wed"},
+        {"key": "thursday", label: "Thu"},
+        {"key": "friday", label: "Fri"},
+        {"key": "saturday", label: "Sat"},
+        {"key": "sunday", label: "Sun"}
+    ],
     KEY_PERFORMANCE_INDICATORS: [
       {"key": "average_squared_error", "label": "Average Squared Error", "min": 0.0001, "max": 1, "comparator": "gt"},
       {"key": "area_under_the_curve", "label": "Area Under the Curve", "min": 0.0001, "max": 1, "comparator": "lt"},
@@ -39661,6 +39671,8 @@ define('controllers/augur-new',[
       habitat: '',
       factTable: {},
       eventIds: '',
+      augurType: 'classification',
+      algorithm: 'decision_tree',
       learning: {
         kpi: { }
       },
@@ -39771,7 +39783,7 @@ define('controllers/augur-new',[
     };
 
     $scope.submit = function (augurNewAttributes) {
-      augurNewAttributes = _.pick($scope.augur, ['name', 'factTableId']);
+      augurNewAttributes = _.pick($scope.augur, ['name', 'factTableId', 'augurType', 'algorithm']);
       augurNewAttributes.learningKpi = $scope.augur.learning.kpi.key;
       augurNewAttributes.learningThreshold = $scope.augur.learning.threshold;
       augurNewAttributes.predictionTargets = $scope.augur.eventIds.split(',');
@@ -39792,6 +39804,116 @@ define('controllers/augur-new',[
 });
 
 
+/* global
+ define: false,
+ console: false
+ */
+define('controllers/clustering/augur-create',[
+    'lodash',
+    '../../constants'
+], function (_, Constants) {
+    
+
+    function controller($state, $scope, Augur, FactTable, FlashMessages, Habitat) {
+
+        $scope.habitats = [];
+        $scope.currentStep = 1;
+
+        Habitat.query(function (habitats) {
+            $scope.habitats = habitats;
+        });
+
+        $scope.validSteps = {
+            one: false, two: false, three: false, four: false
+        };
+
+
+        $scope.normalizationTypes = [
+            {key:"do_nothing", label: "Do Nothing", helpText:''},
+            {key:"feature_scaling", label: "Feature Scaling", helpText:'Feature Scaling will bring all values into the range 0.1'},
+            {key:"student-tstatic", label: "Student's t-statistic", helpText:'Normalizing residuals when population parameters are unknown (estimated)'}
+        ];
+
+        $scope.augur = {
+            name: '',
+            augurType: 'clustering',
+            habitat: '',
+            missingValueTreatment: 'mean_value',
+            fixedValue: '',
+            normalizationMethod: 'feature_scaling',
+            numberOfClusters: '',
+            numberOfIterations: '',
+            schedule: {
+                frequency: 'daily',
+                timeOfDay: '02:00 AM',
+                dayOfWeek: 'wednesday',
+                dayOfMonth: 1
+            }
+        };
+
+        var validateStepOne = function () {
+            $scope.validSteps.one =  false;
+            var name = $scope.augur.name || "";
+            var habitat = $scope.augur.habitat || "";
+            if (($scope.habitats && $scope.habitats.indexOf(habitat) > -1) && ((name).length > 0)) {
+                console.log($scope.augur);
+                $scope.validSteps.one = true;
+            }
+
+        };
+
+        var validateStepTwo = function() {
+          $scope.validSteps.two = false;
+            var type = $scope.augur.missingValueTreatment;
+            var value = $scope.augur.fixedValue || "";
+            if(type.length > 0) {
+                if((type == 'fixed_value' && value.length > 0) || type == 'mean_value' || type == 'ignore_value') {
+                    $scope.validSteps.two = true;
+                }
+            }
+        };
+
+        var validateStepThree = function() {
+            console.log($scope.augur);
+            $scope.validSteps.three = false;
+            var value = $scope.augur.normalizationMethod || "";
+            if(value.length > 0) {
+                console.log($scope.augur);
+                $scope.validSteps.three = true;
+            }
+        };
+
+        var _inValidRange = function(inputValue) {
+            return inputValue && inputValue >= 1 && inputValue <= 999;
+        };
+
+        var validateStepFour = function() {
+            var numClusters = $scope.augur.numberOfClusters || 0;
+            var numIterations = $scope.augur.numberOfIterations || 0;
+
+            $scope.validSteps.four = _inValidRange(numClusters) && _inValidRange(numIterations);
+        };
+
+        $scope.submit = function() {
+            var augurNewAttributes = _.pick($scope.augur, ['name', 'augurType','missingValueTreatment','fixedValue','normalizationMethod','numberOfClusters','numberOfIterations']);
+            augurNewAttributes.schedule = $scope.augur.schedule;
+            console.log(augurNewAttributes);
+            Augur.save({habitatId: $scope.augur.habitat.id},{augur: augurNewAttributes}, function(augur){
+                FlashMessages.setMessage('Augur ' + augur.name + ' has been created.');
+                $state.transitionTo('dashboard');
+            }, function(httpResponse){
+                console.log("There was an error saving the new Augur  ", httpResponse);
+            });
+
+        };
+        $scope.$watchCollection('[augur.name, augur.habitat]', validateStepOne);
+        $scope.$watchCollection('[augur.missingValueTreatment, augur.fixedValue]', validateStepTwo);
+        $scope.$watchCollection('[augur.normalizationMethod]', validateStepThree);
+        $scope.$watchCollection('[augur.numberOfClusters, augur.numberOfIterations]', validateStepFour);
+    }
+
+    return  ['$state', '$scope', 'Augur', 'FactTable', 'FlashMessages', 'Habitat', controller]
+});
 /* global
  define: false,
  console: false
@@ -40212,6 +40334,7 @@ define('controllers',[
   'angular',
   'services',
   'controllers/augur-new',
+  'controllers/clustering/augur-create',
   'controllers/augur',
   'controllers/augur-accuracy',
   'controllers/augur-accuracy-detail',
@@ -40221,12 +40344,13 @@ define('controllers',[
   'controllers/augur-tree',
   'controllers/augur-profile',
   'controllers/dashboard'
-], function (ng, services, AugurNewCtrl, AugurCtrl, AugurAccuracyCtrl, AugurAccuracyDetailCtrl, AugurInfluencersCtrl, AugurPerformanceCtrl, AugurSettingsCtrl, AugurTreeCtrl, AugurProfileCtrl, DashboardCtrl) {
+], function (ng, services, AugurNewCtrl, AugurNewClusteringCtrl, AugurCtrl, AugurAccuracyCtrl, AugurAccuracyDetailCtrl, AugurInfluencersCtrl, AugurPerformanceCtrl, AugurSettingsCtrl, AugurTreeCtrl, AugurProfileCtrl, DashboardCtrl) {
   
 
   return ng.module('MainControllers', [ services.name ])
       .controller('AugurCtrl', AugurCtrl)
       .controller('AugurNewCtrl', AugurNewCtrl)
+      .controller('AugurNewClusteringCtrl', AugurNewClusteringCtrl)
       .controller('AugurAccuracyCtrl', AugurAccuracyCtrl)
       .controller('AugurAccuracyDetailCtrl', AugurAccuracyDetailCtrl)
       .controller('AugurInfluencersCtrl', AugurInfluencersCtrl)
@@ -40267,6 +40391,38 @@ define('directives/augur-settings',[
   return directive;
 });
 
+/* global
+ define: false,
+ console: false
+ */
+
+define('directives/augur-scheduler',[
+    '../constants'
+], function (Constants) {
+    
+
+    function directive($compile) {
+        return {
+            restrict: 'E',
+            replace: false,
+            templateUrl: 'partials/directives/augur-scheduler.html',
+            scope: {
+                schedule: "=",
+                form: "=",
+                prefix: "@"
+            },
+            link: function(scope, element, attrs) {
+                scope.DAYS_OF_WEEK = Constants.DAYS_OF_WEEK;
+                scope.SCHEDULE_TYPES = Constants.SCHEDULE_TYPES;
+                scope.DAYS_IN_MONTH = Constants.DAYS_IN_MONTH;
+                scope.name = scope.prefix + "-schedule-frequency";
+                scope.hourlyName = scope.prefix + "HourlyField";
+            }
+        }
+    }
+
+    return directive;
+});
 /* global
  define: false,
  console: false
@@ -51263,6 +51419,100 @@ define('directives/threshold-in-range',[], function () {
   }
 });
 
+/* global
+ define: false,
+ console: false
+ */
+
+define('directives/util/drop_down_hover',[
+], function () {
+    
+
+    function directive($document, $location, $position) {
+        var openElement = null,
+            closeMenu   = angular.noop;
+        return {
+            restrict: 'CA',
+            scope: {
+                dropdownHover: '@'
+            },
+            link: function (scope, element, attrs) {
+                var dropdown = angular.element($document[0].querySelector(scope.dropdownHover));
+
+                scope.$watch('$location.path', function () {
+                    closeMenu();
+                });
+                dropdown.css('display', 'none').bind('click', function () {
+                    closeMenu();
+                });
+                element.bind('mouseenter', function (event) {
+                    console.log("Mouse entered...");
+                    var elementWasOpen = (element === openElement);
+
+                    event.preventDefault();
+                    event.stopPropagation();
+
+                    if (!elementWasOpen && !element.hasClass('disabled') && !element.prop('disabled')) {
+                        dropdown.css('display', 'block');
+
+                        var offset = $position.offset(element);
+                        var parentOffset = $position.offset(angular.element(dropdown[0].offsetParent));
+
+                        dropdown.css({
+                            left: offset.left - parentOffset.left + 'px',
+                            top: offset.top - parentOffset.top + offset.height + 'px'
+                        });
+
+                        openElement = element;
+                        closeMenu = function (event) {
+                            if (event) {
+                                event.preventDefault();
+                                event.stopPropagation();
+                            }
+                            $document.unbind('click', closeMenu);
+                            dropdown.css('display', 'none');
+                            closeMenu = angular.noop;
+                            openElement = null;
+                        };
+                        $document.bind('mouseleave', closeMenu);
+                        $document.bind('click', closeMenu);
+                    }
+                });
+            }
+        };
+    }
+
+    return ['$document', '$location', '$position', directive];
+});
+/* global
+ define: false,
+ console: false
+ */
+
+define('directives/util/dj-focus-on-select',[
+], function () {
+    
+    function directive($timeout) {
+        return {
+            restrict: 'A',
+            link: function(scope, element, attrs) {
+                console.log(attrs.djFocusOnSelect);
+                scope.$watch(attrs.djFocusOnSelect, function(newValue) {
+                    console.log(attrs.valueToWatch);
+                    if(newValue && newValue == attrs.valueToWatch) {
+                        $timeout(function() {
+                            element.focus();
+                        }, 100);
+                    }
+                })
+            }
+
+        }
+    }
+
+    return directive;
+});
+
 /**
  * Copyright (c) 2011-2014 Felix Gnass
  * Licensed under the MIT license
@@ -54320,6 +54570,7 @@ define("mm-foundation-tpls", ["angular"], function(){});
 define('directives',[
   'angular',
   'directives/augur-settings',
+  'directives/augur-scheduler',
   'directives/available-event',
   'directives/d3-bar-chart',
   'directives/d3-profile-bar-chart',
@@ -54334,10 +54585,13 @@ define('directives',[
   'directives/dropdown',
   'directives/unique-augur-name',
   'directives/threshold-in-range',
+    'directives/util/drop_down_hover',
+    'directives/util/dj-focus-on-select',
   'angular.spinner',
   'mm-foundation-tpls'
 ], function ( ng,
               AugurSettings,
+              AugurScheduler,
               AvailableEvent,
               D3BarChart,
               D3ProfileBarChart,
@@ -54351,11 +54605,15 @@ define('directives',[
               D3RocChart,
               Dropdown,
               UniqueAugurName,
-              ThresholdInRange) {
+              ThresholdInRange,
+              DropDownHover,
+              DJFocusOnSelect
+            ) {
   
 
   return ng.module('dejalyticsDirectives', ['angularSpinner', 'mm.foundation'])
     .directive('augurSettings', AugurSettings)
+    .directive('augurScheduler', AugurScheduler)
     .directive('availableEvent', AvailableEvent)
     .directive('d3BarChart', D3BarChart)
     .directive('d3ProfileBarChart', D3ProfileBarChart)
@@ -54369,7 +54627,9 @@ define('directives',[
     .directive('d3RocChart', D3RocChart)
     .directive('dropdown', Dropdown)
     .directive('uniqueAugurName', UniqueAugurName)
-    .directive('thresholdInRange', ThresholdInRange);
+    .directive('thresholdInRange', ThresholdInRange)
+    .directive('dropdownHover', DropDownHover)
+    .directive('djFocusOnSelect', DJFocusOnSelect);
 });
 
 /* global
@@ -57796,18 +58056,6 @@ try {
   module = angular.module('dejalyticsPartials', []);
 }
 module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('partials/augur-new-clustering.html',
-    '<div class=\'row new-augur-wizard action-bar\'><div class=\'columns small-12\'><ul class=\'left action-bar-breadcrumb\'><li> Set up a new Clustering Augur</li></ul></div></div><div class=\'row container new-augur-wizard\'><div class=\'small-12 columns\'><form name=\'form\' ng-submit=\'form.$valid &amp;&amp; submit()\' novalidate=\'\'><div class=\'row step step-1\' ng-class=\'(step==1) ? "active" : ""\'><select-augur-name-and-dataspace steptitle=\'Name and Habitat\'></select-augur-name-and-dataspace></div><div class=\'row step step-2\' ng-class=\'(step==2) ? "active" : ""\'><div class=\'small-12 columns\'><a ng-click=\'stepValid.one &amp;&amp; (step=2)\'><h5 class=\'subheader title\'> Step 2 - Missing value treatment</h5></a><div class=\'body body-content-wrap\' ng-show=\'step==2\'><div class=\'small-6\'><div class=\'row error\' ng-show=\'form.missingValTreatment.$dirty &amp;&amp; (augur.missingValTreatment+"").length==0\'><div class=\'small-6\'> <small class=\'error\'>Please select option</small></div></div><div class=\'row\' ng-class=\'{"error" : form.missingValTreatFixedVal.$error.required &amp;&amp; augur.missingValTreatment == &#x0027;fixed value&#x0027;}\'><div class=\'small-4 columns row-with-inputtext\'> <input id=\'fixed-value-treat\' name=\'missingValTreatment\' ng-model=\'augur.missingValTreatment\' type=\'radio\' value=\'fixed value\'> <label for=\'fixed-value-treat\'>Impute to fixed value</label></div><div class=\'small-8 columns\'><div class=\'row\'><div class=\'small-3 columns\'> <input id=\'missingValTreatFixedVal\' name=\'missingValTreatFixedVal\' ng-disabled="augur.missingValTreatment != \'fixed value\'" ng-model=\'augur.missingValTreatFixedVal\' ng-required="augur.missingValTreatment == \'fixed value\'" type=\'text\'></div><div class=\'small-6 columns pull-3\'> <small class=\'error\' ng-show="augur.missingValTreatment == \'fixed value\' &amp;&amp; form.missingValTreatFixedVal.$error.required">Required field.</small></div></div></div></div><div class=\'row radio-btn-row\'><div class=\'small-4 columns\'> <input id=\'mean-value-treat\' name=\'missingValTreatment\' ng-model=\'augur.missingValTreatment\' type=\'radio\' value=\'mean value\'> <label for=\'mean-value-treat\'>Impute to mean</label></div></div><div class=\'row radio-btn-row\'><div class=\'small-4 columns\'> <input id=\'ignore-value-treat\' name=\'missingValTreatment\' ng-model=\'augur.missingValTreatment\' type=\'radio\' value=\'ignore value\'> <label for=\'ignore-value-treat\'>Ignore row</label></div></div></div></div><div class=\'next-button\'><div class=\'next-button-wrap\'> <a class=\'tiny button radius\' href=\'\' ng-click=\'validateStepTwo() &amp;&amp; stepValid.two &amp;&amp; (step=3)\'>Next step ></a></div></div></div></div><div class=\'row step step-3\' ng-class=\'(step==3) ? "active" : ""\'><div class=\'small-12 columns\'><a href=\'\' ng-click=\'stepValid.two &amp;&amp; (step=3)\'><h5 class=\'subheader title\'> Step 3 - Normalization Method</h5></a><div class=\'body body-content-wrap\' ng-show=\'step==3\'><div class=\'row error\' ng-show=\'form.normalizeMethod.$dirty &amp;&amp; (augur.normalizeMethod+"").length==0\'><div class=\'small-3\'> <small class=\'error\'>Please select option</small></div></div><div class=\'small-8\'><div class=\'row\'><div class=\'small-3 columns\'> <input id=\'normalizeMethodDoNothing\' name=\'normalizeMethod\' ng-model=\'augur.normalizeMethod\' type=\'radio\' value=\'do-nothing\'> <label for=\'normalizeMethodDoNothing\'>Do nothing</label></div></div><div class=\'row\'><div class=\'small-3 columns\'> <input id=\'normalizeMethodFeatScaling\' name=\'normalizeMethod\' ng-model=\'augur.normalizeMethod\' type=\'radio\' value=\'feature-scaling\'> <label for=\'normalizeMethodFeatScaling\'>Feature scaling</label></div><div class=\'small-9 columns\'> Feature scaling will brings all values in the the range <span class=\'has-tip\' tooltip-html-unsafe=\'"Feature scaling ..." belongs to "Feature scaling"&lt;br/&gt;"Normalizing residuals ..." belongs to "Students&#x0027;s t-statistic"\'>0 , 1</span></div></div><div class=\'row\'><div class=\'small-3 columns\'> <input id=\'normalizeMethodStuTStat\' name=\'normalizeMethod\' ng-model=\'augur.normalizeMethod\' type=\'radio\' value=\'students-t-statistic\'> <label for=\'normalizeMethodStuTStat\'>Student\'s t-statistic</label></div><div class=\'small-9 columns\'> Normalizing residuals when population parameters is unknown (estimated)</div></div></div></div><div class=\'next-button\'><div class=\'next-button-wrap\'> <a class=\'tiny button radius\' href=\'\' ng-click=\'validateStepThree() &amp;&amp; stepValid.three &amp;&amp; (step=4)\'>Next step ></a></div></div></div></div><div class=\'row step step-4\' ng-class=\'(step==4) ? "active" : ""\'><div class=\'small-12 columns\'><a href=\'\' ng-click=\'stepValid.three &amp;&amp; (step=4)\'><h5 class=\'subheader title\'> Step 4 - Cluster Settings</h5></a><div class=\'body body-content-wrap\' ng-show=\'step==4\'><div class=\'small-8\'><div class=\'row\'><div class=\'small-4 columns\'>Number of clusters</div><div class=\'small-6 columns\' ng-class=\'{"error" : form.numberOfClusters.$invalid}\'><div class=\'row\'><div class=\'small-4 columns\'> <input id=\'numberOfClusters\' max=\'999\' min=\'1\' name=\'numberOfClusters\' ng-model=\'augur.numberOfClusters\' placeholder=\'999\' required=\'true\' type=\'number\'></div><div class=\'small-8 columns\'> <small class=\'error\' ng-show=\'form.numberOfClusters.$dirty &amp;&amp; (form.numberOfClusters.$error.required || form.numberOfClusters.$error.min || form.numberOfClusters.$error.max)\'>Please provide a number between 1 and 999</small></div></div></div><div class=\'clearfix\'></div></div><div class=\'row\'><div class=\'small-4 columns\'>Number of iterations</div><div class=\'small-6 columns\' ng-class=\'{"error" : form.numberOfIterations.$invalid}\'><div class=\'row\'><div class=\'small-4 columns\'> <input id=\'numberOfIterations\' max=\'999\' min=\'1\' name=\'numberOfIterations\' ng-model=\'augur.numberOfIterations\' placeholder=\'999\' required=\'true\' type=\'number\'></div><div class=\'small-8 columns\'> <small class=\'error\' ng-show=\'form.numberOfIterations.$dirty &amp;&amp; ( form.numberOfIterations.$error.required || form.numberOfIterations.$error.min || form.numberOfIterations.$error.max)\'>Please provide a number between 1 and 999</small></div></div></div><div class=\'clearfix\'></div></div></div></div><div class=\'next-button\'><div class=\'next-button-wrap\'> <a class=\'tiny button radius\' href=\'\' ng-click=\'validateStepFour() &amp;&amp; stepValid.four &amp;&amp; (step=5)\'>Next step ></a></div></div></div></div><div class=\'row step step-5 step-last\' ng-class=\'(step==5) ? "active" : ""\'><div class=\'small-12 columns\'><a href=\'\' ng-click=\'stepValid.four &amp;&amp; (step=5)\'><h5 class=\'subheader title\'> Step 5 - Schedule</h5></a><div class=\'body body-content-wrap\' ng-show=\'step==5\'><div class=\'row\'><div class=\'small-4\'><div class=\'row\'><div class=\'small-4 columns\'> <select name=\'scheduleFrequency\' ng-model=\'augur.scheduleFrequency\'><option value=\'hourly\'>hourly</option><option value=\'daily\'>daily</option><option value=\'weekly\'>weekly</option><option value=\'monthly\'>monthly</option></select></div><div class=\'small-8 columns\'><div class=\'row\'><div class=\'small-1 columns\'> <label class=\'inline\'>at</label></div><div class=\'small-6 columns\' ng-class=\'{"error" : form.scheduleTime.$invalid}\'> <input id=\'scheduleTime\' name=\'scheduleTime\' ng-model=\'augur.scheduleTime\' ng-pattern=\'/^0?((1[012])|([1-9])):[0-5][0-9]( )?(am|pm|AM|PM)$/\' placeholder=\'e.g. 9:00 PM\' required=\'true\' type=\'text\'> <small class=\'error\' ng-show=\'form.scheduleTime.$dirty &amp;&amp; form.scheduleTime.$error.pattern\'>Not a valid time</small> <small class=\'error\' ng-show=\'form.scheduleTime.$dirty &amp;&amp; form.scheduleTime.$error.required\'>Required field.</small></div><div class=\'small-5\'></div></div></div></div></div><div class=\'small-4\'></div><div class=\'small-4\'><div class=\'clearfix\'></div></div></div></div><div class=\'next-button\'><div class=\'next-button-wrap\'> <input class=\'tiny button radius\' ng-click=\'validateStepFive() &amp;&amp; stepValid.five &amp;&amp; form.$valid\' type=\'submit\' value=\'Activate Augur &gt;\'></div></div></div></div></form></div></div>');
-}]);
-})();
-
-(function(module) {
-try {
-  module = angular.module('dejalyticsPartials');
-} catch (e) {
-  module = angular.module('dejalyticsPartials', []);
-}
-module.run(['$templateCache', function($templateCache) {
   $templateCache.put('partials/augur-new.html',
     '<div class=\'row new-augur-wizard action-bar\'><div class=\'columns small-12\'><ul class=\'left action-bar-breadcrumb\'><li> Set up a new Augur</li></ul></div></div><div class=\'row container new-augur-wizard\'><div class=\'small-12 columns\'><form name=\'form\' ng-submit=\'form.$valid &amp;&amp; submit()\' novalidate=\'\'><div class=\'row step step-1\' ng-class=\'(step==1) ? "active" : ""\'><div class=\'small-12 columns\'><a href=\'\' ng-click=\'step=1\'><h5 class=\'subheader title\'> Step 1 - Name and DataSpace</h5></a><div class=\'body\' ng-show=\'step==1\'><h6 class=\'subheader subtitle\'> Give your augur a unique name and select a DataSpace</h6><div class=\'row augur-name\'><div class=\'small-1 columns\'> <label class=\'right inline\' for=\'augur-name\'>Name</label></div><div class=\'small-3 columns end\' ng-class=\'{"error" : form.augurName.$error.uniqueAugurName}\'> <input id=\'augur-name\' name=\'augurName\' ng-model=\'augur.name\' placeholder=\'Please enter a name\' type=\'text\' unique-augur-name=\'\'> <small class=\'error\' ng-show=\'form.augurName.$error.uniqueAugurName\'>This name already exists</small></div></div><div class=\'row augur-habitat\'><div class=\'small-1 columns\'> <label class=\'right inline\' for=\'augur-habitat\'>DataSpace</label></div><div class=\'small-3 columns end\'> <input id=\'augur-habitat\' name=\'augurHabitat\' ng-model=\'augur.habitat\' placeholder=\'Type to search\' type=\'text\' typeahead=\'habitat as habitat.name for habitat in habitats\'></div></div></div><div class=\'next-button\'><div class=\'next-button-wrap\'> <a class=\'tiny button radius\' href=\'\' ng-click=\'stepValid.one &amp;&amp; (step=2)\' ng-disabled=\'!stepValid.one || form.augurName.$error.uniqueAugurName\'>Next step ></a></div></div></div></div><div class=\'row step step-2\' ng-class=\'(step==2) ? "active" : ""\'><div class=\'small-12 columns\'><a ng-click=\'stepValid.one &amp;&amp; (step=2)\'><h5 class=\'subheader title\'> Step 2 - Select an event table</h5></a><div class=\'body\' ng-show=\'step==2\'><h6 class=\'subheader subtitle\'>Select the events table that contains the prediction target</h6><div class=\'row\'><div class=\'small-12 columns\'><ul class=\'small-block-grid-2 medium-block-grid-3 large-block-grid-4 fact-tables\'><li ng-repeat=\'factTable in factTables\'> <label for=\'{{ factTable.id }}\'><input id=\'{{ factTable.id }}\' ng-model=\'augur.factTable\' ng-value=\'factTable\' type=\'radio\'><div class=\'th\' ng-class=\'(augur.factTable==factTable) ? "selected" : ""\'><div class=\'fact-body\'><h8 class=\'subheader\'> {{factTable.name}}<span class=\'check-status glyphicon glyphicon-check\' ng-show=\'augur.factTable==factTable\'></span></h8><p> {{factTable.description}}</p></div></div></label></li></ul></div></div></div><div class=\'next-button\'><div class=\'next-button-wrap\'> <a class=\'tiny button radius\' href=\'\' ng-click=\'stepValid.two &amp;&amp; (step=3)\' ng-disabled=\'!stepValid.two\'>Next step ></a></div></div></div></div><div class=\'row step step-3\' ng-class=\'(step==3) ? "active" : ""\'><div class=\'small-12 columns\'><a href=\'\' ng-click=\'stepValid.two &amp;&amp; (step=3)\'><h5 class=\'subheader title\'> Step 3 - Define prediction target</h5></a><div class=\'body\' ng-show=\'step==3\'><h6 class=\'subheader subtitle\'> Enter a comma separated list of IDs to define the prediction events<div class=\'row events\'><div class=\'small-9 columns input\'><textarea available-event=\'\' name=\'eventIds\' ng-model=\'augur.eventIds\' placeholder=\'{{ augur.factTable.suggestedIds }}\'></textarea></div><div class=\'small-3 columns\'><div class=\'validation\'><h5 class=\'subheader\'>Validation</h5><div class=\'validation-message-show-hide not-validated\' ng-show=\'!eventIdsValidated\'><h6>You need to validate your prediction target before continuing</h6></div><div class=\'validation-message-show-hide validated\' ng-show=\'eventIdsValidated\'><div class=\'valid validation-elements\' ng-show=\'stepValid.three\'> Your Prediction Target IDs have been verified.<div class=\'verified validation-icon\'><span class=\'glyphicon glyphicon-ok-circle\'></span></div></div><div class=\'invalid validation-elements\' ng-show=\'!stepValid.three\'><div class=\'error\' ng-show=\'form.eventIds.$error.recognized\'> The following Prediction Target IDs do not exist in the events table: {{ unrecognizedEventIds.join(\', \') }}</div><div class=\'error\' ng-show=\'form.eventIds.$error.present\'> You need to provide one or more Prediction Target IDs</div><div class=\'error validation-icon\'><span class=\'glyphicon glyphicon-remove-circle\'></span></div></div></div><div class=\'validation-elements validate-action\'> <a class=\'button small radius\' ng-click=\'validateEventIds()\' ng-show=\'!stepValid.three\'>Validate</a></div></div></div></div></h6></div><div class=\'next-button\'><div class=\'next-button-wrap\'> <a class=\'tiny button radius\' href=\'\' ng-click=\'stepValid.three &amp;&amp; (step=4)\' ng-disabled=\'!stepValid.three\'>Next step ></a></div></div></div></div><div class=\'row step step-4 step-last\' ng-class=\'(step==4) ? "active" : ""\'><div class=\'small-12 columns\'><a href=\'\' ng-click=\'stepValid.three &amp;&amp; (step=4)\'><h5 class=\'subheader title\'> Step 4 - Schedule and trigger settings</h5></a><div class=\'body\' ng-show=\'step==4\'><h6 class=\'subheader subtitle\'> Set prediction and evaluation schedule, set a key performance indicator and set the automatic learning threshold</h6><augur-settings augur=\'augur\' form=\'form\'></augur-settings></div><div class=\'next-button\'><div class=\'next-button-wrap\'> <input class=\'tiny button radius\' ng-disabled=\'!stepValid.four || !form.$valid\' type=\'submit\' value=\'Activate Augur &gt;\'></div></div></div></div></form></div></div>');
 }]);
@@ -57834,18 +58082,6 @@ try {
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('partials/augur-performance-learning.html',
     '<div class=\'augur-performance\'><div class=\'row\'><div class=\'columns small-12\'><div class=\'heading\'><h3 class=\'title\'> Performance Drift (Learning) —<dropdown label=\'learning.activeIndicator.label\'><div class=\'row selection\' id=\'selection\'><div class=\'columns small-12\'><div class=\'options\' id=\'options\'><ul class=\'no-bullet inline-list\'><li class=\'left\'><ul class=\'no-bullet indicators\'><li ng-class=\'{active: learning.activeIndicator.key===indicator.key, kpi: augur.learningKpi===indicator.key}\' ng-repeat=\'indicator in indicators[0]\'> <label><input ng-model=\'$parent.learning.activeIndicator\' ng-value=\'indicator\' type=\'radio\'> {{ indicator.label }}<span class=\'glyphicon glyphicon-ok-circle\'></span></label></li></ul></li><li class=\'middle\'><ul class=\'no-bullet indicators\'><li ng-class=\'{active: learning.activeIndicator.key===indicator.key, kpi: augur.learningKpi===indicator.key}\' ng-repeat=\'indicator in indicators[1]\'> <label><input ng-model=\'$parent.learning.activeIndicator\' ng-value=\'indicator\' type=\'radio\'> {{ indicator.label }}<span class=\'glyphicon glyphicon-ok-circle\'></span></label></li></ul></li><li class=\'right\'><ul class=\'no-bullet indicators\'><li ng-class=\'{active: learning.activeIndicator.key===indicator.key, kpi: augur.learningKpi===indicator.key}\' ng-repeat=\'indicator in indicators[2]\'> <label><input ng-model=\'$parent.learning.activeIndicator\' ng-value=\'indicator\' type=\'radio\'> {{ indicator.label }}<span class=\'glyphicon glyphicon-ok-circle\'></span></label></li></ul></li></ul></div></div></div></dropdown></h3><h6 class=\'subheader\'>Changes in the learning data runs over the last 30 days</h6></div></div></div><div class=\'row\'><div class=\'columns small-12\'><div class=\'chart\'><d3-performance-chart data=\'learning.data\' mode=\'learning\'></d3-performance-chart></div></div></div></div>');
-}]);
-})();
-
-(function(module) {
-try {
-  module = angular.module('dejalyticsPartials');
-} catch (e) {
-  module = angular.module('dejalyticsPartials', []);
-}
-module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('partials/augur-performance.html',
-    '<div class=\'row augur-performance\'><div class=\'columns small-12\'> I am the performance page</div></div>');
 }]);
 })();
 
@@ -57905,7 +58141,31 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('partials/dashboard.html',
-    '<div class=\'row dashboard action-bar\'><div class=\'columns small-12\'><ul class=\'left action-bar-breadcrumb\'><li> Dashboard</li></ul><ul class=\'right action-bar-filter\'><li class=\'divider\'></li><li ng-class=\'{"active" : selectedArtifactTypes.augur}\'> <input id=\'selected-artifact-types-augur\' ng-model=\'selectedArtifactTypes.augur\' type=\'checkbox\'> <label for=\'selected-artifact-types-augur\'>Augurs</label></li><li ng-class=\'{"active" : selectedArtifactTypes.factTable}\'> <input id=\'selected-artifact-types-fact-table\' ng-model=\'selectedArtifactTypes.factTable\' type=\'checkbox\'> <label for=\'selected-artifact-types-fact-table\'>Event tables</label></li><li ng-class=\'{"active" : selectedArtifactTypes.habitat}\'> <input id=\'selected-artifact-types-habitat\' ng-model=\'selectedArtifactTypes.habitat\' type=\'checkbox\'> <label for=\'selected-artifact-types-habitat\'>DataSpaces</label></li><li class=\'divider\'></li><li class=\'action-bar-search\'> <input ng-model=\'artifactsQuery\' placeholder=\'Type to search\' type=\'text\'></li></ul></div></div><div class=\'row dashboard flash\' ng-animate=\'animate\' ng-if=\'flash\'><div class=\'columns small-12\'><div class=\'alert-box success radius\'> {{ flash }}</div></div></div><div class=\'row dashboard container\'><div class=\'columns small-12\'><ul class=\'small-block-grid-2 medium-block-grid-3 large-block-grid-4\'><li><div class=\'tile\'><a href=\'#/augurs/new\'><div class=\'artefact-body add-augur\'><p> Add augur</p><p class=\'icon\'><span class=\'glyphicon glyphicon-plus\'></span></p></div></a></div></li><li ng-repeat=\'artifact in artifacts | filter: artifactsFilter\'><div ng-if=\'artifact.type == "habitat"\'><a href=\'#/habitat/{{habitat.id}}\'><div class=\'tile habitat\' ng-attr-data-theme=\'{{ artifact.colorScheme }}\'><h5 class=\'title\'> {{ artifact.name }}<i class=\'icon icon-dataspace\'></i></h5><div class=\'artefact-body\'><p ng-if=\'artifact.augurCount &lt; 1\'> No Augurs</p><p ng-if=\'artifact.augurCount === 1\'> One Augur</p><p ng-if=\'artifact.augurCount &gt; 1\'> {{ artifact.augurCount }} Augurs</p></div></div></a></div><div ng-if=\'artifact.type == "factTable"\'><a href=\'#/habitat/{{artifact.habitatId}}/factTables/{{factTable.id}}\'><div class=\'tile fact-table\' ng-attr-data-theme=\'{{ artifact.colorScheme }}\'><h5 class=\'title\'> {{artifact.name}}<span class=\'icon glyphicon glyphicon-list-alt\'></span></h5><div class=\'artefact-body\'><p class=\'description\'> {{artifact.description}}<br> {{artifact.observationCount | number:0 }} Observations</p></div></div></a></div><div ng-if=\'artifact.type == "augur"\'><a ui-sref=\'augur.{{artifact.augurType}}.home({ habitatId: artifact.habitatId, augurId: artifact.id })\'><div class=\'tile augur\' ng-attr-data-theme=\'{{ artifact.colorScheme }}\'><h5 class=\'title\'> {{ artifact.name }}<span ng-if=\'artifact.learningStatus === "pending"\' spinner=\'{ radius: 5, width: 3, length: 4 }\'></span><i class=\'icon icon-telescope\'></i></h5><div class=\'artefact-body\'><dl class=\'description\'><dt>KPI</dt><dd> {{ artifact.learningKpiLabel }}</dd><dt>Latest evaluation</dt><dd> {{ artifact.latestEvaluationTimestamp | date: \'yyyy-MM-dd HH:mm\' }}</dd></dl></div><div class=\'chart\'><d3-line-chart-dashboard data=\'artifact.dashboardChartData\' height=\'30\'></d3-line-chart-dashboard></div></div></a></div></li></ul></div></div>');
+    '<div class=\'row dashboard action-bar\'><div class=\'columns small-12\'><ul class=\'left action-bar-breadcrumb\'><li> Dashboard</li></ul><ul class=\'right action-bar-filter\'><li class=\'divider\'></li><li ng-class=\'{"active" : selectedArtifactTypes.augur}\'> <input id=\'selected-artifact-types-augur\' ng-model=\'selectedArtifactTypes.augur\' type=\'checkbox\'> <label for=\'selected-artifact-types-augur\'>Augurs</label></li><li ng-class=\'{"active" : selectedArtifactTypes.factTable}\'> <input id=\'selected-artifact-types-fact-table\' ng-model=\'selectedArtifactTypes.factTable\' type=\'checkbox\'> <label for=\'selected-artifact-types-fact-table\'>Event tables</label></li><li ng-class=\'{"active" : selectedArtifactTypes.habitat}\'> <input id=\'selected-artifact-types-habitat\' ng-model=\'selectedArtifactTypes.habitat\' type=\'checkbox\'> <label for=\'selected-artifact-types-habitat\'>DataSpaces</label></li><li class=\'divider\'></li><li class=\'action-bar-search\'> <input ng-model=\'artifactsQuery\' placeholder=\'Type to search\' type=\'text\'></li></ul></div></div><div class=\'row dashboard flash\' ng-animate=\'animate\' ng-if=\'flash\'><div class=\'columns small-12\'><div class=\'alert-box success radius\'> {{ flash }}</div></div></div><div class=\'row dashboard container\'><div class=\'columns small-12\'><ul class=\'small-block-grid-2 medium-block-grid-3 large-block-grid-4\'><li><div class=\'tile add-tile\' ng-mouseenter=\'hover=true\' ng-mouseleave=\'hover=false\'><div class=\'artefact-body add-augur\'><div class=\'main-view\' ng-class="{\'hidden\': hover}"><a href=\'#/augurs/new\'><div class=\'artefact-body add-augur\'><p> Add augur</p><p class=\'icon\'><span class=\'glyphicon glyphicon-plus\'></span></p></div></a></div><div class=\'hover-view hidden\' ng-class="{\'shown\': hover}"><div class=\'row\'><div class=\'small-12 columns text-center\'> <a class=\'button tiny\' ui-sref=\'augur-clustering-new\'>New Clustering Augur</a></div></div><div class=\'row\'><div class=\'small-12 columns text-center\'> <a class=\'button tiny\' ui-sref=\'augur-new\'>New Classification Augur</a></div></div></div></div></div></li><li ng-repeat=\'artifact in artifacts | filter: artifactsFilter\'><div ng-if=\'artifact.type == "habitat"\'><a href=\'#/habitat/{{habitat.id}}\'><div class=\'tile habitat\' ng-attr-data-theme=\'{{ artifact.colorScheme }}\'><h5 class=\'title\'> {{ artifact.name }}<i class=\'icon icon-dataspace\'></i></h5><div class=\'artefact-body\'><p ng-if=\'artifact.augurCount &lt; 1\'> No Augurs</p><p ng-if=\'artifact.augurCount === 1\'> One Augur</p><p ng-if=\'artifact.augurCount &gt; 1\'> {{ artifact.augurCount }} Augurs</p></div></div></a></div><div ng-if=\'artifact.type == "factTable"\'><a href=\'#/habitat/{{artifact.habitatId}}/factTables/{{factTable.id}}\'><div class=\'tile fact-table\' ng-attr-data-theme=\'{{ artifact.colorScheme }}\'><h5 class=\'title\'> {{artifact.name}}<span class=\'icon glyphicon glyphicon-list-alt\'></span></h5><div class=\'artefact-body\'><p class=\'description\'> {{artifact.description}}<br> {{artifact.observationCount | number:0 }} Observations</p></div></div></a></div><div ng-if=\'artifact.type == "augur"\'><a ui-sref=\'augur.{{artifact.augurType}}.home({ habitatId: artifact.habitatId, augurId: artifact.id })\'><div class=\'tile augur\' ng-attr-data-theme=\'{{ artifact.colorScheme }}\'><h5 class=\'title\'> {{ artifact.name }}<span ng-if=\'artifact.learningStatus === "pending"\' spinner=\'{ radius: 5, width: 3, length: 4 }\'></span><i class=\'icon icon-telescope\'></i></h5><div class=\'artefact-body\'><dl class=\'description\'><dt>KPI</dt><dd> {{ artifact.learningKpiLabel }}</dd><dt>Latest evaluation</dt><dd> {{ artifact.latestEvaluationTimestamp | date: \'yyyy-MM-dd HH:mm\' }}</dd></dl></div><div class=\'chart\'><d3-line-chart-dashboard data=\'artifact.dashboardChartData\' height=\'30\'></d3-line-chart-dashboard></div></div></a></div></li></ul></div></div>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('dejalyticsPartials');
+} catch (e) {
+  module = angular.module('dejalyticsPartials', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('partials/clustering/augur-create.html',
+    '<div class=\'row new-augur-wizard action-bar\'><div class=\'columns small-12\'><ul class=\'left action-bar-breadcrumb\'><li> Set up a new Clustering Augur</li></ul></div></div><div class=\'row container new-augur-wizard\'><div class=\'small-12 columns\'><form name=\'form\' ng-submit=\'form.$valid &amp;&amp; submit()\' novalidate=\'\'><div class=\'row step step-1\' ng-class=\'(currentStep==1) ? "active" : ""\'><div class=\'small-12 columns\'><a href=\'\' ng-click=\'currentStep=1\'><h5 class=\'subheader title\'> Step 1 - Name and Habitat</h5></a><div class=\'body\' ng-show=\'currentStep==1\'><h6 class=\'subheader subtitle\'> Give your augur a unique name and select a Habitat</h6><div class=\'row augur-name\'><div class=\'small-1 columns\'> <label class=\'right inline\' for=\'augur-name\'>Name</label></div><div class=\'small-3 columns end\' ng-class=\'{"error" : form.augurName.$error.uniqueAugurName}\'> <input id=\'augur-name\' name=\'augurName\' ng-model=\'augur.name\' placeholder=\'Please enter a name\' required type=\'text\' unique-augur-name=\'\'> <small class=\'error\' ng-show=\'form.augurName.$error.uniqueAugurName\'>This name already exists</small></div></div><div class=\'row augur-habitat\'><div class=\'small-1 columns\'> <label class=\'right inline\' for=\'augur-habitat\'>DataSpace</label></div><div class=\'small-3 columns end\'> <input id=\'augur-habitat\' name=\'augurHabitat\' ng-model=\'augur.habitat\' placeholder=\'Type to search\' required type=\'text\' typeahead=\'habitat as habitat.name for habitat in habitats\'></div></div></div><div class=\'next-button\'><div class=\'next-button-wrap\'> <a class=\'tiny button radius\' href=\'\' ng-click=\'validSteps.one &amp;&amp; (currentStep=2)\' ng-disabled=\'!validSteps.one || form.augurName.$error.uniqueAugurName\'>Next step ></a></div></div></div></div><div class=\'row step step-1\' ng-class=\'(currentStep==2) ? "active" : ""\'><div class=\'small-12 columns\'><a href=\'\' ng-click=\'currentStep=2\'><h5 class=\'subheader title\'> Step 2 - Missing Value Treatment</h5></a><div class=\'body\' ng-show=\'currentStep==2\'><h6 class=\'subheader subtitle\'> How should missing values be treated ?</h6><div class=\'small-6\'><div class=\'small-12 columns\'><div class=\'row\' ng-class=\'{"error" : form.missingTreatFixedValInput.$dirty &amp;&amp; form.missingTreatFixedValInput.$error.required &amp;&amp; augur.missingValueTreatment == &#x0027;fixed_value&#x0027;}\'><div class=\'small-4 columns input-text-row\'> <input id=\'fixed-value-treat\' ng-model=\'augur.missingValueTreatment\' type=\'radio\' value=\'fixed_value\'> <label for=\'fixed-value-treat\'>Impute to fixed value</label></div><div class=\'small-2 columns\'> <input dj-focus-on-select=\'augur.missingValueTreatment\' id=\'fixed-value-input-treat\' name=\'missingTreatFixedValInput\' ng-model=\'augur.fixedValue\' ng-required="augur.missingValueTreatment == \'fixed_value\'" type=\'text\' value-to-watch=\'fixed_value\'> <small class=\'error\' ng-show="form.missingTreatFixedValInput.$dirty &amp;&amp; form.missingTreatFixedValInput.$error.required &amp;&amp; augur.missingValueTreatment == \'fixed_value\'">Required field.</small></div><div class=\'small-6 columns\'></div></div><div class=\'row\'><div class=\'small-4 columns radio-btn-row\'> <input id=\'mean-value-treat\' ng-model=\'augur.missingValueTreatment\' type=\'radio\' value=\'mean_value\'> <label for=\'mean-value-treat\'>Impute to mean</label></div></div><div class=\'row\'><div class=\'small-4 columns radio-btn-row\'> <input id=\'ignore-value-treat\' ng-model=\'augur.missingValueTreatment\' type=\'radio\' value=\'ignore_value\'> <label for=\'ignore-value-treat\'>Ignore row</label></div></div></div></div></div><div class=\'next-button\'><div class=\'next-button-wrap\'> <a class=\'tiny button radius\' href=\'\' ng-click=\'validSteps.two &amp;&amp; (currentStep=3)\' ng-disabled=\'!validSteps.two\'>Next step ></a></div></div></div></div><div class=\'row step step-1\' ng-class=\'(currentStep==3) ? "active" : ""\'><div class=\'small-12 columns\'><a href=\'\' ng-click=\'currentStep=3\'><h5 class=\'subheader title\'> Step 3 - Normalization Method</h5></a><div class=\'body\' ng-show=\'currentStep==3\'><h6 class=\'subheader subtitle\'> Normalize Values</h6><div class=\'small-8\'><div class=\'small-12 columns\'><div class=\'row\' ng-repeat=\'type in normalizationTypes\'><div class=\'small-3 columns radio-btn-row\'> <input id=\'{{type.key}}\' ng-model=\'augur.normalizationMethod\' type=\'radio\' value=\'{{type.key}}\'> <label for=\'{{type.key}}\'>{{type.label}}</label></div><div class=\'small-9 columns\'><p class=\'help-tooltip\'>{{type.helpText}}</p></div></div></div></div></div><div class=\'next-button\'><div class=\'next-button-wrap\'> <a class=\'tiny button radius\' href=\'\' ng-click=\'validSteps.three &amp;&amp; (currentStep=4)\' ng-disabled=\'!validSteps.three\'>Next step ></a></div></div></div></div><div class=\'row step step-1\' ng-class=\'(currentStep==4) ? "active" : ""\'><div class=\'small-12 columns\'><a href=\'\' ng-click=\'currentStep=4\'><h5 class=\'subheader title\'> Step 4 - Cluster Settings</h5></a><div class=\'body\' ng-show=\'currentStep==4\'><h6 class=\'subheader subtitle\'></h6><div class=\'row num-clusters\'><div class=\'small-2 columns\'> <label class=\'right inline\' for=\'augur-cluster-count\'>Number of Clusters</label></div><div class=\'small-2 columns end\' ng-class=\'{"error" : form.numClusters.$invalid}\'> <input id=\'augur-cluster-count\' max=\'999\' min=\'1\' name=\'numClusters\' ng-max=\'999\' ng-min=\'1\' ng-model=\'augur.numberOfClusters\' placeholder=\'999\' required type=\'number\'> <small class=\'error\' ng-show=\'form.numClusters.$dirty &amp;&amp; form.numClusters.$invalid\'>Please provide a number between 1 and 999</small></div></div><div class=\'row num-iterations\'><div class=\'small-2 columns\'> <label class=\'right inline\' for=\'augur-cluster-count\'>Number of Iterations</label></div><div class=\'small-2 columns end\' ng-class=\'{"error" : form.numIterations.$invalid}\'> <input id=\'augur-cluster-count\' max=\'999\' min=\'1\' name=\'numIterations\' ng-model=\'augur.numberOfIterations\' placeholder=\'999\' required type=\'number\'> <small class=\'error\' ng-show=\'form.numIterations.$dirty &amp;&amp; form.numIterations.$invalid\'>Please provide a number between 1 and 999</small></div></div></div><div class=\'next-button\'><div class=\'next-button-wrap\'> <a class=\'tiny button radius\' href=\'\' ng-click=\'validSteps.four &amp;&amp; (currentStep=5)\' ng-disabled=\'!validSteps.four\'>Next step ></a></div></div></div></div><div class=\'row step step-5 step-last\' ng-class=\'(currentStep==5) ? "active" : ""\'><div class=\'small-12 columns\'><a href=\'\' ng-click=\'validSteps.four &amp;&amp; (currentStep=5)\'><h5 class=\'subheader title\'> Step 5 - Schedule Settings</h5></a><div class=\'body\' ng-show=\'currentStep==5\'><h6 class=\'subheader subtitle\'> Set schedule</h6><div class=\'row\'><div class=\'small-4 columns\'><augur-scheduler form=\'form\' prefix=\'predictionSchedule\' schedule=\'augur.schedule\'></augur-scheduler></div></div></div><div class=\'next-button\'><div class=\'next-button-wrap\'> <input class=\'tiny button radius\' ng-disabled=\'!validSteps.four || !form.$valid\' type=\'submit\' value=\'Activate Augur &gt;\'></div></div></div></div></form></div></div>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('dejalyticsPartials');
+} catch (e) {
+  module = angular.module('dejalyticsPartials', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('partials/directives/augur-scheduler.html',
+    '<div class=\'schedule-container\' ng-form=\'subForm\'><div class=\'small-4 columns\'> <select name=\'{{name}}\' ng-model=\'schedule.frequency\' ng-options=\'type as type for type in SCHEDULE_TYPES\'></select></div><div class=\'small-8 columns\'><div class=\'row hourly\' ng-if=\'schedule.frequency == "hourly"\'><div class=\'small-1 columns\'> <label class=\'inline\'>at</label></div><div class=\'small-3 columns\' ng-class=\'{"error" : subForm.hourlyInput.$error.pattern}\'> <input id=\'prediction-schedule-hourly-time\' name=\'hourlyInput\' ng-model=\'schedule.minuteOfHour\' ng-pattern=\'/(^(0?[0-9])|([1-5][0-9]))$/\' ng-required=\'schedule.frequency == "hourly"\' required type=\'text\'> <small class=\'error\' ng-show=\'subForm.hourlyInput.$error.pattern\'>Not a valid time</small></div><div class=\'small-8 columns\'> <label class=\'inline\'>minutes of the hour</label></div></div><div class=\'row daily\' ng-if=\'schedule.frequency == "daily"\'><div class=\'small-1 columns\'> <label class=\'inline\'>at</label></div><div class=\'small-6 columns end\' ng-class=\'{"error" : subForm.timeOfDayInput.$error.pattern}\'> <input id=\'prediction-schedule-daily-time\' name=\'timeOfDayInput\' ng-model=\'schedule.timeOfDay\' ng-pattern=\'/^0?((1[012])|([1-9])):[0-5][0-9](\\s)?(am|pm|AM|PM)$/\' ng-required=\'schedule.frequency == "daily"\' placeholder=\'e.g. 10:30 am\' required type=\'text\'> <small class=\'error\' ng-show=\'subForm.timeOfDayInput.$error.pattern\'>Not a valid time</small></div></div><div class=\'row weekly\' ng-if=\'schedule.frequency == "weekly"\'><div class=\'small-6 columns\'> <select name=\'prediction-schedule-weekly-day\' ng-model=\'schedule.dayOfWeek\' ng-options=\'day.key as day.label for day in DAYS_OF_WEEK\'></select></div><div class=\'small-6 columns\' ng-class=\'{"error" : subForm.weeklyTimeOfDayInput.$error.pattern}\'> <input id=\'prediction-schedule-weekly-time\' name=\'weeklyTimeOfDayInput\' ng-model=\'schedule.timeOfDay\' ng-pattern=\'/^0?((1[012])|([1-9])):[0-5][0-9](\\s)?(am|pm|AM|PM)$/\' ng-required=\'schedule.frequency == "weekly"\' placeholder=\'e.g. 10:30 am\' required type=\'text\'> <small class=\'error\' ng-show=\'subForm.weeklyTimeOfDayInput.$error.pattern\'>Not a valid time</small></div></div><div class=\'row monthly\' ng-if=\'schedule.frequency == "monthly"\'><div class=\'small-6 columns\'> <select name=\'prediction-schedule-monthly-day\' ng-model=\'schedule.dayOfMonth\' ng-options=\'day.key as day.label for day in DAYS_IN_MONTH\'></select></div><div class=\'small-6 columns\' ng-class=\'{"error" : subForm.monthlyTimeOfDayInput.$error.pattern}\'> <input id=\'prediction-schedule-monthly-time\' name=\'monthlyTimeOfDayInput\' ng-model=\'schedule.timeOfDay\' ng-pattern=\'/^0?((1[012])|([1-9])):[0-5][0-9](\\s)?(am|pm|AM|PM)$/\' ng-required=\'schedule.frequency == "monthly"\' placeholder=\'e.g. 10:30 am\' required type=\'text\'> <small class=\'error\' ng-show=\'subForm.monthlyTimeOfDayInput.$error.pattern\'>Not a valid time</small></div></div></div></div>');
 }]);
 })();
 
@@ -57917,19 +58177,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('partials/directives/augur-settings.html',
-    '<div class=\'row settings\'><div class=\'small-4 columns\'><div class=\'prediction\'><h6 class=\'title\'>Prediction Schedule</h6><div class=\'content\'><p class=\'description\'> Set your prediction schedule here. Please note that calculating predictions may take some time. You can start predictions manually too.</p><div class=\'row\'><div class=\'small-12 columns\'> <label class=\'main-label\'>Select schedule</label></div></div><div class=\'row\'><div class=\'small-4 columns\'> <select name=\'prediction-schedule-frequency\' ng-model=\'augur.prediction.schedule.frequency\'><option value=\'hourly\'>hourly</option><option value=\'daily\'>daily</option><option value=\'weekly\'>weekly</option><option value=\'monthly\'>monthly</option></select></div><div class=\'small-8 columns\'><div class=\'row hourly\' ng-if=\'augur.prediction.schedule.frequency == "hourly"\'><div class=\'small-1 columns\'> <label class=\'inline\'>at</label></div><div class=\'small-3 columns\' ng-class=\'{"error" : form.predictionScheduleHourlyMinuteOfHour.$error.pattern}\'> <input id=\'prediction-schedule-hourly-time\' name=\'predictionScheduleHourlyMinuteOfHour\' ng-model=\'augur.prediction.schedule.minuteOfHour\' ng-pattern=\'/(^(0?[0-9])|([1-5][0-9]))$/\' type=\'text\'> <small class=\'error\' ng-show=\'form.predictionScheduleHourlyMinuteOfHour.$error.pattern\'>Not a valid time</small></div><div class=\'small-8 columns\'> <label class=\'inline\'>minutes of the hour</label></div></div><div class=\'row daily\' ng-if=\'augur.prediction.schedule.frequency == "daily"\'><div class=\'small-1 columns\'> <label class=\'inline\'>at</label></div><div class=\'small-6 columns end\' ng-class=\'{"error" : form.predictionScheduleDailyTimeOfDay.$error.pattern}\'> <input id=\'prediction-schedule-daily-time\' name=\'predictionScheduleDailyTimeOfDay\' ng-model=\'augur.prediction.schedule.timeOfDay\' ng-pattern=\'/^0?((1[012])|([1-9])):[0-5][0-9](\\s)?(am|pm|AM|PM)$/\' placeholder=\'e.g. 10:30 am\' type=\'text\'> <small class=\'error\' ng-show=\'form.predictionScheduleDailyTimeOfDay.$error.pattern\'>Not a valid time</small></div></div><div class=\'row weekly\' ng-if=\'augur.prediction.schedule.frequency == "weekly"\'><div class=\'small-6 columns\'> <select name=\'prediction-schedule-weekly-day\' ng-model=\'augur.prediction.schedule.dayOfWeek\'><option value=\'monday\'>Mon</option><option value=\'tuesday\'>Tue</option><option value=\'wednesday\'>Wed</option><option value=\'thursday\'>Thu</option><option value=\'friday\'>Fri</option><option value=\'saturday\'>Sat</option><option value=\'sunday\'>Sun</option></select></div><div class=\'small-6 columns\' ng-class=\'{"error" : form.predictionScheduleWeeklyTimeOfDay.$error.pattern}\'> <input id=\'prediction-schedule-weekly-time\' name=\'predictionScheduleWeeklyTimeOfDay\' ng-model=\'augur.prediction.schedule.timeOfDay\' ng-pattern=\'/^0?((1[012])|([1-9])):[0-5][0-9](\\s)?(am|pm|AM|PM)$/\' placeholder=\'e.g. 10:30 am\' type=\'text\'> <small class=\'error\' ng-show=\'form.predictionScheduleWeeklyTimeOfDay.$error.pattern\'>Not a valid time</small></div></div><div class=\'row monthly\' ng-if=\'augur.prediction.schedule.frequency == "monthly"\'><div class=\'small-6 columns\'> <select name=\'prediction-schedule-monthly-day\' ng-model=\'augur.prediction.schedule.dayOfMonth\' ng-options=\'day.key as day.label for day in DAYS_IN_MONTH\'></select></div><div class=\'small-6 columns\' ng-class=\'{"error" : form.predictionScheduleMonthlyTimeOfDay.$error.pattern}\'> <input id=\'prediction-schedule-monthly-time\' name=\'predictionScheduleMonthlyTimeOfDay\' ng-model=\'augur.prediction.schedule.timeOfDay\' ng-pattern=\'/^0?((1[012])|([1-9])):[0-5][0-9](\\s)?(am|pm|AM|PM)$/\' placeholder=\'e.g. 10:30 am\' type=\'text\'> <small class=\'error\' ng-show=\'form.predictionScheduleMonthlyTimeOfDay.$error.pattern\'>Not a valid time</small></div></div></div></div></div></div></div><div class=\'small-4 columns\'><div class=\'evaluation\'><h6 class=\'title\'>Evaluation Schedule</h6><div class=\'content\'><p class=\'description\'> Set your evaluation schedule here. Automatic learning is based on evaluation results.</p><div class=\'row\'><div class=\'small-12 columns\'> <label class=\'main-label\'>Select schedule</label></div></div><div class=\'row\'><div class=\'small-4 columns\'> <select name=\'evaluation-schedule-type\' ng-model=\'augur.evaluation.schedule.frequency\'><option value=\'hourly\'>hourly</option><option value=\'daily\'>daily</option><option value=\'weekly\'>weekly</option><option value=\'monthly\'>monthly</option></select></div><div class=\'small-8 columns\'><div class=\'row hourly\' ng-if=\'augur.evaluation.schedule.frequency == "hourly"\'><div class=\'small-1 columns\'> <label class=\'inline\'>at</label></div><div class=\'small-3 columns\' ng-class=\'{"error" : form.evaluationScheduleHourlyMinuteOfHour.$error.pattern}\'> <input id=\'evaluation-schedule-daily-time\' name=\'evaluationScheduleHourlyMinuteOfHour\' ng-model=\'augur.evaluation.schedule.minuteOfHour\' ng-pattern=\'/(^(0?[0-9])|([1-5][0-9]))$/\' type=\'text\'> <small class=\'error\' ng-show=\'form.evaluationScheduleHourlyMinuteOfHour.$error.pattern\'>Not a valid time</small></div><div class=\'small-8 columns\'> <label class=\'inline\'>minutes of the hour</label></div></div><div class=\'row daily\' ng-if=\'augur.evaluation.schedule.frequency == "daily"\'><div class=\'small-1 columns\'> <label class=\'inline\'>at</label></div><div class=\'small-6 columns end\' ng-class=\'{"error" : form.evaluationScheduleDailyTimeOfDay.$error.pattern}\'> <input id=\'evaluation-schedule-daily-time\' name=\'evaluationScheduleDailyTimeOfDay\' ng-model=\'augur.evaluation.schedule.timeOfDay\' ng-pattern=\'/^0?((1[012])|([1-9])):[0-5][0-9](\\s)?(am|pm|AM|PM)$/\' placeholder=\'e.g. 10:30 am\' type=\'text\'> <small class=\'error\' ng-show=\'form.evaluationScheduleDailyTimeOfDay.$error.pattern\'>Not a valid time</small></div></div><div class=\'row weekly\' ng-if=\'augur.evaluation.schedule.frequency == "weekly"\'><div class=\'small-6 columns\'> <select name=\'evaluation-schedule-weekly-day\' ng-model=\'augur.evaluation.schedule.dayOfWeek\'><option value=\'monday\'>Mon</option><option value=\'tuesday\'>Tue</option><option value=\'wednesday\'>Wed</option><option value=\'thursday\'>Thu</option><option value=\'friday\'>Fri</option><option value=\'saturday\'>Sat</option><option value=\'sunday\'>Sun</option></select></div><div class=\'small-6 columns\' ng-class=\'{"error" : form.evaluationScheduleWeeklyTimeOfDay.$error.pattern}\'> <input id=\'evaluation-schedule-weekly-time\' name=\'evaluationScheduleWeeklyTimeOfDay\' ng-model=\'augur.evaluation.schedule.timeOfDay\' ng-pattern=\'/^0?((1[012])|([1-9])):[0-5][0-9](\\s)?(am|pm|AM|PM)$/\' placeholder=\'e.g. 10:30 am\' type=\'text\'> <small class=\'error\' ng-show=\'form.evaluationScheduleWeeklyTimeOfDay.$error.pattern\'>Not a valid time</small></div></div><div class=\'row monthly\' ng-if=\'augur.evaluation.schedule.frequency == "monthly"\'><div class=\'small-6 columns\'> <select name=\'evaluation-schedule-monthly-day\' ng-model=\'augur.evaluation.schedule.dayOfMonth\' ng-options=\'day.key as day.label for day in DAYS_IN_MONTH\'></select></div><div class=\'small-6 columns\' ng-class=\'{"error" : form.evaluationScheduleMonthlyTimeOfDay.$error.pattern}\'> <input id=\'evaluation-schedule-monthly-time\' name=\'evaluationScheduleMonthlyTimeOfDay\' ng-model=\'augur.evaluation.schedule.timeOfDay\' ng-pattern=\'/^0?((1[012])|([1-9])):[0-5][0-9](\\s)?(am|pm|AM|PM)$/\' placeholder=\'e.g. 10:30 am\' type=\'text\'> <small class=\'error\' ng-show=\'form.evaluationScheduleMonthlyTimeOfDay.$error.pattern\'>Not a valid time</small></div></div></div></div></div></div></div><div class=\'small-4 columns\'><div class=\'learning\'><h6 class=\'title\'>Automatic Learning</h6><div class=\'content\'><p class=\'description\'> Choose your key performance indicator (KPI) from the list of available indicators and set the threshold that triggers automatic learning.</p><div class=\'row\'><div class=\'small-12 columns\'> <label class=\'main-label\'>Choose KPI and set threshold</label></div></div><div class=\'row\'><div class=\'small-6 columns\'> <select name=\'learning-kpi\' ng-model=\'augur.learning.kpi\' ng-options=\'indicator as indicator.label for indicator in KEY_PERFORMANCE_INDICATORS\'></select></div><div class=\'small-6 columns\' ng-show=\'augur.learning.kpi.key\'><div class=\'row\'><div class=\'small-6 columns\' id=\'comparator\'> <label class=\'inline\' for=\'learning-threshold\'><span ng-if=\'augur.learning.kpi.comparator == "lt"\'>less than</span> <span ng-if=\'augur.learning.kpi.comparator == "gt"\'>greater than</span></label></div><div class=\'small-6 columns\'> <input id=\'learning-threshold\' max=\'{{augur.learning.kpi.max}}\' min=\'{{augur.learning.kpi.min}}\' name=\'learningThreshold\' ng-model=\'augur.learning.threshold\' threshold-in-range=\'\' type=\'text\'></div></div></div></div><div class=\'row\'><div class=\'small-12 columns\' ng-class=\'{"error" : form.learningThreshold.$error.thresholdInRange}\'> <small class=\'error\' ng-show=\'form.learningThreshold.$error.thresholdInRange\'>Value not in range. Min: {{augur.learning.kpi.min}}, Max: {{augur.learning.kpi.max}}</small></div></div></div></div></div></div>');
-}]);
-})();
-
-(function(module) {
-try {
-  module = angular.module('dejalyticsPartials');
-} catch (e) {
-  module = angular.module('dejalyticsPartials', []);
-}
-module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('partials/directives/augur-wiz-stepone.html',
-    '<div class=\'small-12 columns\'><a href=\'\' ng-click=\'step=1\'><h5 class=\'subheader title\'> Step 1 - Name and DataSpace</h5></a><div class=\'body\' ng-show=\'step==1\'><h6 class=\'subheader subtitle\'> Give your augur a unique name and select a DataSpace</h6><div class=\'row augur-name\'><div class=\'small-1 columns\'> <label class=\'right inline\' for=\'augur-name\'>Name</label></div><div class=\'small-3 columns end\' ng-class=\'{"error" : form.augurName.$error.uniqueAugurName}\'> <input id=\'augur-name\' name=\'augurName\' ng-model=\'augur.name\' placeholder=\'Please enter a name\' type=\'text\' unique-augur-name=\'\'> <small class=\'error\' ng-show=\'form.augurName.$error.uniqueAugurName\'>This name already exists</small></div></div><div class=\'row augur-habitat\'><div class=\'small-1 columns\'> <label class=\'right inline\' for=\'augur-habitat\'>DataSpace</label></div><div class=\'small-3 columns end\'> <input id=\'augur-habitat\' name=\'augurHabitat\' ng-model=\'augur.habitat\' placeholder=\'Type to search\' type=\'text\' typeahead=\'habitat as habitat.name for habitat in habitats\'></div></div></div><div class=\'next-button\'><div class=\'next-button-wrap\'></div> <a class=\'tiny button radius\' href=\'\' ng-click=\'stepValid.one &amp;&amp; (step=2)\' ng-disabled=\'!stepValid.one || form.augurName.$error.uniqueAugurName\'>Next step ></a></div></div>');
+    '<div class=\'row settings\'><div class=\'small-4 columns\'><div class=\'prediction\'><h6 class=\'title\'>Prediction Schedule</h6><div class=\'content\'><p class=\'description\'> Set your prediction schedule here. Please note that calculating predictions may take some time. You can start predictions manually too {{augur.prediction}}.</p><div class=\'row\'><div class=\'small-12 columns\'> <label class=\'main-label\'>Select schedule</label></div></div><div class=\'row\'><augur-scheduler form=\'form\' prefix=\'predictionSchedule\' schedule=\'augur.prediction.schedule\'></augur-scheduler></div></div></div></div><div class=\'small-4 columns\'><div class=\'evaluation\'><h6 class=\'title\'>Evaluation Schedule</h6><div class=\'content\'><p class=\'description\'> Set your evaluation schedule here. Automatic learning is based on evaluation results.</p><div class=\'row\'><div class=\'small-12 columns\'> <label class=\'main-label\'>Select schedule</label></div></div><div class=\'row\'><augur-scheduler form=\'form\' prefix=\'predictionSchedule\' schedule=\'augur.evaluation.schedule\'></augur-scheduler></div></div></div></div><div class=\'small-4 columns\'><div class=\'learning\'><h6 class=\'title\'>Automatic Learning</h6><div class=\'content\'><p class=\'description\'> Choose your key performance indicator (KPI) from the list of available indicators and set the threshold that triggers automatic learning.</p><div class=\'row\'><div class=\'small-12 columns\'> <label class=\'main-label\'>Choose KPI and set threshold</label></div></div><div class=\'row\'><div class=\'small-6 columns\'> <select name=\'learning-kpi\' ng-model=\'augur.learning.kpi\' ng-options=\'indicator as indicator.label for indicator in KEY_PERFORMANCE_INDICATORS\'></select></div><div class=\'small-6 columns\' ng-show=\'augur.learning.kpi.key\'><div class=\'row\'><div class=\'small-6 columns\' id=\'comparator\'> <label class=\'inline\' for=\'learning-threshold\'><span ng-if=\'augur.learning.kpi.comparator == "lt"\'>less than</span> <span ng-if=\'augur.learning.kpi.comparator == "gt"\'>greater than</span></label></div><div class=\'small-6 columns\'> <input id=\'learning-threshold\' max=\'{{augur.learning.kpi.max}}\' min=\'{{augur.learning.kpi.min}}\' name=\'learningThreshold\' ng-model=\'augur.learning.threshold\' threshold-in-range=\'\' type=\'text\'></div></div></div></div><div class=\'row\'><div class=\'small-12 columns\' ng-class=\'{"error" : form.learningThreshold.$error.thresholdInRange}\'> <small class=\'error\' ng-show=\'form.learningThreshold.$error.thresholdInRange\'>Value not in range. Min: {{augur.learning.kpi.min}}, Max: {{augur.learning.kpi.max}}</small></div></div></div></div></div></div>');
 }]);
 })();
 
@@ -57942,18 +58190,6 @@ try {
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('partials/directives/dropdown.html',
     '<div class=\'dropdown\'> <a class=\'dropdown-trigger\' ng-class=\'{active: toggled }\' ng-click=\'toggle()\' ng-data-count=\'{{ counter }}\'><span>{{ label }}</span></a><div class=\'dropdown-content\' ng-if=\'toggled\' ng-transclude=\'\'></div></div>');
-}]);
-})();
-
-(function(module) {
-try {
-  module = angular.module('dejalyticsPartials');
-} catch (e) {
-  module = angular.module('dejalyticsPartials', []);
-}
-module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('partials/directives/select-augur-name-and-dataspace.html',
-    '<div class=\'small-12 columns\'><a href=\'\' ng-click=\'step=1\'><h5 class=\'subheader title\'> Step 1 - {{stepTitle}}</h5></a><div class=\'body\' ng-show=\'step==1\'><h6 class=\'subheader subtitle\'> Give your augur a unique name and select a DataSpace</h6><div class=\'row augur-name\'><div class=\'small-1 columns\'> <label class=\'right inline\' for=\'augur-name\'>Name</label></div><div class=\'small-3 columns end\' ng-class=\'{"error" : form.augurName.$error.uniqueAugurName}\'> <input id=\'augur-name\' name=\'augurName\' ng-model=\'augur.name\' placeholder=\'Please enter a name\' type=\'text\' unique-augur-name=\'\'> <small class=\'error\' ng-show=\'form.augurName.$error.uniqueAugurName\'>This name already exists</small></div></div><div class=\'row augur-habitat\'><div class=\'small-1 columns\'> <label class=\'right inline\' for=\'augur-habitat\'>DataSpace</label></div><div class=\'small-3 columns end\'> <input id=\'augur-habitat\' name=\'augurHabitat\' ng-model=\'augur.habitat\' placeholder=\'Type to search\' type=\'text\' typeahead=\'habitat as habitat.name for habitat in habitats\'></div></div></div><div class=\'next-button\'><div class=\'next-button-wrap\'></div> <a class=\'tiny button radius\' href=\'\' ng-click=\'stepValid.one &amp;&amp; (step=2)\' ng-disabled=\'!stepValid.one || form.augurName.$error.uniqueAugurName\'>Next step ></a></div></div>');
 }]);
 })();
 
@@ -57983,7 +58219,8 @@ define('app',[
             controllers.name,
             directives.name,
             filters.name,
-            services.name
+            services.name,
+            'mm.foundation'
         ])
         .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
             $urlRouterProvider.otherwise('/dashboard');
@@ -57998,6 +58235,11 @@ define('app',[
                     url: '/augurs/new',
                     templateUrl: 'partials/augur-new.html',
                     controller: 'AugurNewCtrl'
+                }).
+                state('augur-clustering-new', {
+                    url: '/augurs/clustering/new',
+                    templateUrl: 'partials/clustering/augur-create.html',
+                    controller: 'AugurNewClusteringCtrl'
                 }).
                 state('augur', {
                     url: '/habitat/:habitatId/augurs/:augurId',

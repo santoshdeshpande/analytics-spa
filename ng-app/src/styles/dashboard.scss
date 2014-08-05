@@ -87,6 +87,10 @@
   }
 
   &.container {
+    .add-tile {
+      max-height: 120px;
+    }
+
     .tile {
       @include themes($light30: border-color, $isolated: true);
 
@@ -95,6 +99,16 @@
       background: #fff;
 
       min-height: 120px;
+      cursor: pointer;
+
+      .hidden {
+        display: none;
+      }
+
+      .shown {
+        display: block;
+      }
+
 
       &.habitat {
         @include themes(background, $isolated: true);
@@ -199,6 +213,11 @@
         }
 
       }
+
+      .add-augur {
+        padding-top: 10px;
+      }
+
     }
   }
 }
