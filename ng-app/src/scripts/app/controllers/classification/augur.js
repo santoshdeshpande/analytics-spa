@@ -4,7 +4,7 @@
  */
 define([
   'angular',
-  '../constants'
+  '../../constants'
 ], function (ng, Constants) {
   'use strict';
 

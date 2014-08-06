@@ -3,7 +3,7 @@
  console: false
  */
 define([
-  '../constants'
+  '../../constants'
 ], function (Constants) {
   'use strict';
 

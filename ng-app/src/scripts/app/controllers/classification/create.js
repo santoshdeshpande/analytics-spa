@@ -4,7 +4,7 @@
  */
 define([
   'lodash',
-  '../constants'
+  '../../constants'
 ], function (_, Constants) {
   'use strict';
 
