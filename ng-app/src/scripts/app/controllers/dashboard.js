@@ -3,114 +3,118 @@
  console: false
  */
 define([
-  '../constants'
+    '../constants'
 ], function (Constants) {
-  'use strict';
+    'use strict';
 
-  function randomDashboardChartData () {
-    var arr = [];
+    function randomDashboardChartData() {
+        var arr = [];
 
-    for (var i=0; i< 30; i++) {
-      arr.push([i, Math.random()]);
+        for (var i = 0; i < 30; i++) {
+            arr.push([i, Math.random()]);
+        }
+
+        return arr;
     }
 
-    return arr;
-  }
+    function AugurStatusPoller(Augur, $interval, augur) {
+        var timeoutId = $interval(function () {
+            Augur.status({
+                habitatId: augur.habitatId,
+                augurId: augur.id
+            }, function (updatedAugur) {
+                if (updatedAugur.learningStatus === 'complete') {
+                    augur.learningStatus = 'complete';
+                    $interval.cancel(timeoutId);
+                }
+            });
 
-  function AugurStatusPoller(Augur, $interval, augur) {
-    var timeoutId = $interval(function () {
-      Augur.status({
-        habitatId: augur.habitatId,
-        augurId: augur.id
-      }, function (updatedAugur) {
-        if (updatedAugur.learningStatus === 'complete') {
-          augur.learningStatus = 'complete';
-          $interval.cancel(timeoutId);
-        }
-      });
+        }, 1000 * 10, 60);
 
-    }, 1000 * 10, 60);
+        this.cancel = function () {
+            $interval.cancel(timeoutId);
+        };
+    }
 
-    this.cancel = function () {
-      $interval.cancel(timeoutId);
-    };
-  }
+    function controller($scope, $stateParams, $timeout, $interval, $q, Augur, DataSource, FactTable, FlashMessages, Habitat) {
+        $scope.artifacts = [];
+        $scope.selectedArtifactTypes = { augur: true, habitat: true, factTable: true };
+        $scope.artifactsQuery = '';
 
-  function controller ($scope, $stateParams, $timeout, $interval, $q, Augur, DataSource, FactTable, FlashMessages, Habitat) {
-    $scope.artifacts = [];
-    $scope.selectedArtifactTypes = { augur: true, habitat: true, factTable: true };
-    $scope.artifactsQuery = '';
+        $scope.pendingAgurus = [];
+        $scope.$on('$destroy', function () {
+            angular.forEach($scope.pendingAgurus, function (pendingAugur) {
+                pendingAugur.cancel();
+            });
+        });
 
-    $scope.pendingAgurus = [];
-    $scope.$on('$destroy', function() {
-      angular.forEach($scope.pendingAgurus, function ( pendingAugur ) {
-        pendingAugur.cancel();
-      });
-    });
+        $scope.flash = FlashMessages.getMessage();
+        $timeout(function () {
+            $scope.flash = '';
+        }, 1500);
 
-    $scope.flash = FlashMessages.getMessage();
-    $timeout(function () {
-      $scope.flash = '';
-    }, 1500);
+        $scope.artifactsFilter = function (artifact) {
+            var queryMatch = true;
+            if ($scope.artifactsQuery.length > 0) {
+                queryMatch = artifact.name.toLowerCase().indexOf($scope.artifactsQuery.toLowerCase()) > -1;
+            }
+            return $scope.selectedArtifactTypes[artifact.type] && queryMatch;
+        };
 
-    $scope.artifactsFilter = function (artifact) {
-      var queryMatch = true;
-      if ($scope.artifactsQuery.length > 0) {
-        queryMatch = artifact.name.toLowerCase().indexOf($scope.artifactsQuery.toLowerCase()) > -1;
-      }
-      return $scope.selectedArtifactTypes[artifact.type] && queryMatch;
-    };
+        var createFactTable = function (factTable) {
+            factTable.type = 'factTable';
+            factTable.habitatId = habitat.code;
+            factTable.colorScheme = habitat.colorScheme;
+            $scope.artifacts.push(factTable);
+        };
 
-      var createFactTable = function(factTable) {
-          factTable.type = 'factTable';
-          factTable.habitatId = habitat.code;
-          factTable.colorScheme = habitat.colorScheme;
-          $scope.artifacts.push(factTable);
-      };
+        var createAugur = function (augur) {
+            augur.type = 'augur';
+            augur.habitatId = habitat.code;
+            augur.colorScheme = habitat.colorScheme;
+            if (!augur.augurType) {
+                augur.augurType = 'classification';
+            }
 
-      var createAugur = function(augur) {
-          augur.type = 'augur';
-          augur.habitatId = habitat.code;
-          augur.colorScheme = habitat.colorScheme;
-          if (!augur.augurType) {
-              augur.augurType = 'classification';
-          }
+            augur.learningKpiLabel =
+                Constants.KEY_PERFORMANCE_INDICATORS_HASH[augur.learningKpi] +
+                ' (' + parseFloat(augur.learningThreshold).toFixed(2) + ')';
 
-          augur.learningKpiLabel =
-              Constants.KEY_PERFORMANCE_INDICATORS_HASH[augur.learningKpi] +
-              ' (' + parseFloat(augur.learningThreshold).toFixed(2) + ')';
+            if (!augur.dashboardChartData)
+                augur.dashboardChartData = randomDashboardChartData();
 
-          if (!augur.dashboardChartData)
-              augur.dashboardChartData = randomDashboardChartData();
+            if (augur.learningStatus === 'pending')
+                $scope.pendingAgurus.push(new AugurStatusPoller(Augur, $interval, augur));
 
-          if (augur.learningStatus === 'pending')
-              $scope.pendingAgurus.push(new AugurStatusPoller( Augur, $interval, augur ));
+            $scope.artifacts.push(augur);
+        };
 
-          $scope.artifacts.push(augur);
-      };
+        Habitat.query(function (habitats) {
+            $q.all([
+                $q.all(habitats.map(function (habitat) {
+                    return FactTable.query({ habitatId: habitat.id }).$promise;
+                })),
+                $q.all(habitats.map(function (habitat) {
+                    return Augur.query({ habitatId: habitat.id }).$promise;
+                }))
+            ]).then(function (results) {
+                var factTables = results[0],
+                    augurs = results[1];
 
-    Habitat.query(function (habitats) {
-      $q.all([
-          $q.all(habitats.map(function(habitat){return FactTable.query({ habitatId: habitat.id }).$promise;})),
-          $q.all(habitats.map(function(habitat){return Augur.query({ habitatId: habitat.id }).$promise;}))
-        ]).then(function (results) {
-        var factTables = results[0],
-            augurs = results[1];
+                for (var i = 0; i < habitats.length; i++) {
+                    var habitat = habitats[i];
 
-        for (var i=0; i < habitats.length; i++) {
-          var habitat = habitats[i];
+                    habitat.type = 'habitat';
+                    habitat.augurCount = augurs[i].length;
+                    $scope.artifacts.push(habitat);
 
-          habitat.type = 'habitat';
-          habitat.augurCount = augurs[i].length;
-          $scope.artifacts.push(habitat);
+                    angular.forEach(factTables[i], createFactTable(factTable));
 
-          angular.forEach(factTables[i], createFactTable(factTable));
+                    angular.forEach(augurs[i], createAugur(augur));
+                }
+            });
+        });
+    }
 
-          angular.forEach(augurs[i], createAugur(augur));
-        }
-      });
-    });
-  }
-
-  return ['$scope', '$stateParams', '$timeout', '$interval', '$q', 'Augur', 'DataSource', 'FactTable', 'FlashMessages', 'Habitat', controller];
+    return ['$scope', '$stateParams', '$timeout', '$interval', '$q', 'Augur', 'DataSource', 'FactTable', 'FlashMessages', 'Habitat', controller];
 });
