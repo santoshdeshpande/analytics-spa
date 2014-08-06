@@ -62,7 +62,7 @@ require.config({
     'angular.animate'    : '../lib/angular-animate/angular-animate',
     'angular.resource'   : '../lib/angular-resource/angular-resource',
     'angular.spinner'    : '../lib/angular-spinner/angular-spinner',
-    'angular.ui.router'  : '../lib/angular-ui-router/release/angular-ui-router',
+    'angular.ui.router'  : '../lib/angular-ui-router-0.2.10/angular-ui-router',
     'mm-foundation-tpls' : '../lib/angular-foundation/mm-foundation-tpls',
     'd3js'               : '../lib/d3/d3',
     'domReady'           : '../lib/domReady/domReady',
