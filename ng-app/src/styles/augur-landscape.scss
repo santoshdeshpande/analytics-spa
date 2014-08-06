@@ -1,0 +1,33 @@
+.augur-landscape {
+
+  position: relative;
+
+  #landscape-chart {
+    border: 1px solid red;
+  }
+
+  d3-landscape-chart {
+    @include themes( $main: border-right-color, $light10: border-top-color);
+    @include themes( $light20: border-bottom-color, $light30: border-left-color);
+    @include themes( $light40: background-color, $light50: outline-color);
+  }
+
+  .slider-container {
+    height: 450px;
+
+    .slider {
+      -webkit-appearance: slider-vertical;
+      orient: vertical;
+      height: 100%;
+    }
+  }
+
+  .node-text {
+    font-size: 8pt;
+  }
+
+  line.link {
+//    stroke: #444;
+  }
+}
+

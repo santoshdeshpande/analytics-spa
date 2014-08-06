@@ -68,7 +68,8 @@ define([
                 }).
                 state('augur.clustering.landscape', {
                     url: '/landscape',
-                    templateUrl: 'partials/clustering/landscape.html'
+                    templateUrl: 'partials/clustering/landscape.html',
+                    controller: 'AugurLandscapeCtrl'
                 }).
                 state('augur.clustering.settings', {
                     url: '/settings',

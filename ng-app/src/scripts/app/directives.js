@@ -9,6 +9,7 @@ define([
   'directives/available-event',
   'directives/d3-bar-chart',
   'directives/d3-profile-bar-chart',
+  'directives/d3-landscape-chart',
   'directives/d3-profile-diamond-chart',
   'directives/d3-decision-tree-chart',
   'directives/d3-influencer-chart',
@@ -30,6 +31,7 @@ define([
               AvailableEvent,
               D3BarChart,
               D3ProfileBarChart,
+              D3LandscapeChart,
               D3ProfileDiamondChart,
               D3DecisionTreeChart,
               D3InfluencerChart,
@@ -64,5 +66,6 @@ define([
     .directive('uniqueAugurName', UniqueAugurName)
     .directive('thresholdInRange', ThresholdInRange)
     .directive('dropdownHover', DropDownHover)
+    .directive('d3LandscapeChart', D3LandscapeChart)
     .directive('djFocusOnSelect', DJFocusOnSelect);
 });

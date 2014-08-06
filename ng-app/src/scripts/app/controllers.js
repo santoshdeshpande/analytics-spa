@@ -15,8 +15,9 @@ define([
   'controllers/classification/settings',
   'controllers/classification/tree',
   'controllers/clustering/profile',
+  'controllers/clustering/landscape',
   'controllers/dashboard'
-], function (ng, services, AugurNewCtrl, AugurNewClusteringCtrl, AugurCtrl, AugurAccuracyCtrl, AugurAccuracyDetailCtrl, AugurInfluencersCtrl, AugurPerformanceCtrl, AugurSettingsCtrl, AugurTreeCtrl, AugurProfileCtrl, DashboardCtrl) {
+], function (ng, services, AugurNewCtrl, AugurNewClusteringCtrl, AugurCtrl, AugurAccuracyCtrl, AugurAccuracyDetailCtrl, AugurInfluencersCtrl, AugurPerformanceCtrl, AugurSettingsCtrl, AugurTreeCtrl, AugurProfileCtrl,AugurLandscapeCtrl, DashboardCtrl) {
   'use strict';
 
   return ng.module('MainControllers', [ services.name ])
@@ -30,5 +31,6 @@ define([
       .controller('AugurSettingsCtrl', AugurSettingsCtrl)
       .controller('AugurTreeCtrl', AugurTreeCtrl)
       .controller('AugurProfileCtrl', AugurProfileCtrl)
+      .controller('AugurLandscapeCtrl', AugurLandscapeCtrl)
       .controller('DashboardCtrl', DashboardCtrl);
 });
