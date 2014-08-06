@@ -4,3 +4,5 @@ ng-app/node_modules
 ng-app/dist/*
 vendor/ruby
 ng-app/src/scripts/lib/angular-1.2.9/docs/*
+bower_components
+ng-app/src/scripts/lib/*

@@ -91,7 +91,7 @@ gulp.task('watch', function () {
         pipe(livereload(lrserver));
 
   gulp.watch(['src/styles/**/*'], ['styles']);
-  gulp.watch(['src/scripts/main.js', 'src/scripts/app/**/*.js'], ['lint'], function(){
+  gulp.watch(['src/scripts/main.js', 'src/scripts/app/**/*.js'], function(){
     livereload(lrserver).changed('from-js-watch-task')
   });
 });

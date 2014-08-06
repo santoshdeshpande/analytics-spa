@@ -61,34 +61,6 @@ define([
             return $scope.selectedArtifactTypes[artifact.type] && queryMatch;
         };
 
-        var createFactTable = function (factTable) {
-            factTable.type = 'factTable';
-            factTable.habitatId = habitat.code;
-            factTable.colorScheme = habitat.colorScheme;
-            $scope.artifacts.push(factTable);
-        };
-
-        var createAugur = function (augur) {
-            augur.type = 'augur';
-            augur.habitatId = habitat.code;
-            augur.colorScheme = habitat.colorScheme;
-            if (!augur.augurType) {
-                augur.augurType = 'classification';
-            }
-
-            augur.learningKpiLabel =
-                Constants.KEY_PERFORMANCE_INDICATORS_HASH[augur.learningKpi] +
-                ' (' + parseFloat(augur.learningThreshold).toFixed(2) + ')';
-
-            if (!augur.dashboardChartData)
-                augur.dashboardChartData = randomDashboardChartData();
-
-            if (augur.learningStatus === 'pending')
-                $scope.pendingAgurus.push(new AugurStatusPoller(Augur, $interval, augur));
-
-            $scope.artifacts.push(augur);
-        };
-
         Habitat.query(function (habitats) {
             $q.all([
                 $q.all(habitats.map(function (habitat) {
@@ -101,6 +73,35 @@ define([
                 var factTables = results[0],
                     augurs = results[1];
 
+                var createFactTable = function (factTable) {
+                    factTable.type = 'factTable';
+                    factTable.habitatId = habitat.code;
+                    factTable.colorScheme = habitat.colorScheme;
+                    $scope.artifacts.push(factTable);
+                };
+
+                var createAugur = function (augur) {
+                    augur.type = 'augur';
+                    augur.habitatId = habitat.code;
+                    augur.colorScheme = habitat.colorScheme;
+                    if (!augur.augurType) {
+                        augur.augurType = 'classification';
+                    }
+
+                    augur.learningKpiLabel =
+                        Constants.KEY_PERFORMANCE_INDICATORS_HASH[augur.learningKpi] +
+                        ' (' + parseFloat(augur.learningThreshold).toFixed(2) + ')';
+
+                    if (!augur.dashboardChartData)
+                        augur.dashboardChartData = randomDashboardChartData();
+
+                    if (augur.learningStatus === 'pending')
+                        $scope.pendingAgurus.push(new AugurStatusPoller(Augur, $interval, augur));
+
+                    $scope.artifacts.push(augur);
+                };
+
+
                 for (var i = 0; i < habitats.length; i++) {
                     var habitat = habitats[i];
 
@@ -108,9 +109,9 @@ define([
                     habitat.augurCount = augurs[i].length;
                     $scope.artifacts.push(habitat);
 
-                    angular.forEach(factTables[i], createFactTable(factTable));
+                    angular.forEach(factTables[i], createFactTable);
 
-                    angular.forEach(augurs[i], createAugur(augur));
+                    angular.forEach(augurs[i], createAugur);
                 }
             });
         });
