@@ -36,12 +36,12 @@ define([
                 }).
                 state('augur-new', {
                     url: '/augurs/new',
-                    templateUrl: 'partials/augur-new.html',
+                    templateUrl: 'partials/classification/create.html',
                     controller: 'AugurNewCtrl'
                 }).
                 state('augur-clustering-new', {
                     url: '/augurs/clustering/new',
-                    templateUrl: 'partials/clustering/augur-create.html',
+                    templateUrl: 'partials/clustering/create.html',
                     controller: 'AugurNewClusteringCtrl'
                 }).
                 state('augur', {
@@ -52,41 +52,41 @@ define([
                 }).
                 state('augur.classification', {
                     url: '/classification',
-                    templateUrl: 'partials/augur.html',
+                    templateUrl: 'partials/classification/index.html',
                     controller: 'AugurCtrl'
                 }).
                 state('augur.clustering', {
                     url: '/clustering',
                     abstract: true,
-                    templateUrl: 'partials/augur-clustering.html',
+                    templateUrl: 'partials/clustering/index.html',
                     controller: 'AugurCtrl'
                 }).
                 state('augur.clustering.home', {
                     url: '/profile',
-                    templateUrl: 'partials/augur-profile.html',
+                    templateUrl: 'partials/clustering/profile.html',
                     controller: 'AugurProfileCtrl'
                 }).
                 state('augur.clustering.landscape', {
                     url: '/landscape',
-                    templateUrl: 'partials/augur-landscape.html'
+                    templateUrl: 'partials/clustering/landscape.html'
                 }).
                 state('augur.clustering.settings', {
                     url: '/settings',
-                    templateUrl: 'partials/augur-clustering-settings.html'
+                    templateUrl: 'partials/clustering/settings.html'
                 }).
                 state('augur.classification.influencers', {
                     url: '/influencers',
-                    templateUrl: 'partials/augur-influencers.html',
+                    templateUrl: 'partials/classification/influencers.html',
                     controller: 'AugurInfluencersCtrl'
                 }).
                 state('augur.classification.accuracy', {
                     url: '/accuracy',
-                    templateUrl: 'partials/augur-accuracy.html',
+                    templateUrl: 'partials/classification/accuracy.html',
                     controller: 'AugurAccuracyCtrl'
                 }).
                 state('augur.classification.accuracy-detail', {
                     url: '/detail/:chartType',
-                    templateUrl: 'partials/augur-accuracy-detail.html',
+                    templateUrl: 'partials/classification/accuracy-detail.html',
                     controller: 'AugurAccuracyDetailCtrl'
                 }).
                 state('augur.classification.performance', {
@@ -96,22 +96,22 @@ define([
                 }).
                 state('augur.classification.performance.learning', {
                     url: '/learning',
-                    templateUrl: 'partials/augur-performance-learning.html',
+                    templateUrl: 'partials/classification/performance-learning.html',
                     controller: 'AugurPerformanceCtrl'
                 }).
                 state('augur.classification.performance.evaluation', {
                     url: '/evaluation',
-                    templateUrl: 'partials/augur-performance-evaluation.html',
+                    templateUrl: 'partials/classification/performance-evaluation.html',
                     controller: 'AugurPerformanceCtrl'
                 }).
                 state('augur.classification.home', {
                     url: '/home',
-                    templateUrl: 'partials/augur-tree.html',
+                    templateUrl: 'partials/classification/tree.html',
                     controller: 'AugurTreeCtrl'
                 }).
                 state('augur.classification.settings', {
                     url: '/settings',
-                    templateUrl: 'partials/augur-settings.html',
+                    templateUrl: 'partials/classification/settings.html',
                     controller: 'AugurSettingsCtrl'
                 })
         }]).run(['$rootScope', '$state', function ($rootScope, $state) {
