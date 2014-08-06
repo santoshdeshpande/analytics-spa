@@ -32002,7 +32002,7 @@ define('animations/augur',[
           element.stop();
         }
       };
-    }
+    };
 
     var animateDown = function (element, className, done) {
       if (className != 'active') {
@@ -32023,13 +32023,13 @@ define('animations/augur',[
           element.stop();
         }
       };
-    }
+    };
 
     return {
       addClass: animateUp,
       removeClass: animateDown
     };
-  }
+  };
 });
 
 /* global
@@ -32670,7 +32670,7 @@ define('services/augur',[
         method: 'POST',
         url: '/api/v1/habitats/:habitatId/augurs/:augurId/schedule/:stuff'
       }
-    })
+    });
   }];
 });
 
@@ -32713,7 +32713,8 @@ define('services/flash-messages',[], function () {
     var message;
 
     this.setMessage = function (msg) {
-      return message = msg;
+      message = msg;
+      return message;
     };
 
     this.getMessage = function () {
@@ -32722,11 +32723,11 @@ define('services/flash-messages',[], function () {
       }, 1000);
 
       return message;
-    }
+    };
   }
 
   return ['$timeout', function ( $timeout ) {
-    return new FlashMessages($timeout)
+    return new FlashMessages($timeout);
   }];
 });
 
@@ -39635,7 +39636,7 @@ define('constants',['angular'], function (ng) {
     ng.forEach(constants.KEY_PERFORMANCE_INDICATORS, function (kpi) {
       constants.KEY_PERFORMANCE_INDICATORS_HASH[kpi.key] = kpi.label;
       constants.KEY_PERFORMANCE_INDICATORS_HASH_FULL[kpi.key] = kpi;
-    })
+    });
   })();
 
   return constants;
@@ -39645,9 +39646,9 @@ define('constants',['angular'], function (ng) {
  define: false,
  console: false
  */
-define('controllers/augur-new',[
+define('controllers/classification/create',[
   'lodash',
-  '../constants'
+  '../../constants'
 ], function (_, Constants) {
   
 
@@ -39797,10 +39798,10 @@ define('controllers/augur-new',[
         }, function (httpResponse) {
           console.log("There was an error saving the new Augur  ", httpResponse);
         });
-    }
+    };
   }
 
-  return  ['$state', '$scope', 'Augur', 'FactTable', 'FlashMessages', 'Habitat', controller]
+  return  ['$state', '$scope', 'Augur', 'FactTable', 'FlashMessages', 'Habitat', controller];
 });
 
 
@@ -39808,7 +39809,7 @@ define('controllers/augur-new',[
  define: false,
  console: false
  */
-define('controllers/clustering/augur-create',[
+define('controllers/clustering/create',[
     'lodash',
     '../../constants'
 ], function (_, Constants) {
@@ -39912,15 +39913,15 @@ define('controllers/clustering/augur-create',[
         $scope.$watchCollection('[augur.numberOfClusters, augur.numberOfIterations]', validateStepFour);
     }
 
-    return  ['$state', '$scope', 'Augur', 'FactTable', 'FlashMessages', 'Habitat', controller]
+    return  ['$state', '$scope', 'Augur', 'FactTable', 'FlashMessages', 'Habitat', controller];
 });
 /* global
  define: false,
  console: false
  */
-define('controllers/augur',[
+define('controllers/classification/augur',[
   'angular',
-  '../constants'
+  '../../constants'
 ], function (ng, Constants) {
   
 
@@ -39980,13 +39981,13 @@ define('controllers/augur',[
  define: false,
  console: false
  */
-define('controllers/augur-accuracy',[], function () {
+define('controllers/classification/accuracy',[], function () {
   
 
   return  ['$scope', '$stateParams', function ($scope) {
     $scope.charts = {};
     $scope.augur.$promise.then(function (augur) {
-      $scope.charts = augur['learningReport'];
+      $scope.charts = augur.learningReport;
     });
   }];
 });
@@ -39995,7 +39996,7 @@ define('controllers/augur-accuracy',[], function () {
  define: false,
  console: false
  */
-define('controllers/augur-accuracy-detail',[], function () {
+define('controllers/classification/accuracy-detail',[], function () {
   
 
   return  ['$scope', '$stateParams', function ($scope, $stateParams) {
@@ -40007,13 +40008,13 @@ define('controllers/augur-accuracy-detail',[], function () {
  define: false,
  console: false
  */
-define('controllers/augur-influencers',[], function () {
+define('controllers/classification/influencers',[], function () {
   
 
   return  ['$scope', '$stateParams', 'Augur', 'Habitat', function ($scope) {
     $scope.data = { nodes: [] };
     $scope.augur.$promise.then(function(augur){
-      $scope.data = { nodes: augur['learningReport']['featureImportance'] };
+      $scope.data = { nodes: augur.learningReport.featureImportance };
     });
   }];
 });
@@ -40022,8 +40023,8 @@ define('controllers/augur-influencers',[], function () {
  define: false,
  console: false
  */
-define('controllers/augur-performance',[
-  '../constants'
+define('controllers/classification/performance',[
+  '../../constants'
 ], function (Constants) {
   
 
@@ -40065,12 +40066,12 @@ define('controllers/augur-performance',[
 
     $scope.$watch('evaluation.activeIndicator', function(value){
       $scope.evaluation.data = $scope.evaluation.allData[camelize(value.key)];
-      $scope.evaluation.driftComparator = value.key && Constants.KEY_PERFORMANCE_INDICATORS_HASH_FULL[value.key]['comparator'];
+      $scope.evaluation.driftComparator = value.key && Constants.KEY_PERFORMANCE_INDICATORS_HASH_FULL[value.key].comparator;
     });
 
     $scope.augur.$promise.then(function(augur){
-      $scope.learning.allData = augur['learningReport']['performanceDrift'];
-      $scope.evaluation.allData = augur['evaluationReport']['performanceDrift'];
+      $scope.learning.allData = augur.learningReport.performanceDrift;
+      $scope.evaluation.allData = augur.evaluationReport.performanceDrift;
 
       $scope.learning.activeIndicator   = { key: augur.learningKpi, label: Constants.KEY_PERFORMANCE_INDICATORS_HASH[augur.learningKpi] };
       $scope.evaluation.activeIndicator = { key: augur.learningKpi, label: Constants.KEY_PERFORMANCE_INDICATORS_HASH[augur.learningKpi] };
@@ -40083,8 +40084,8 @@ define('controllers/augur-performance',[
  define: false,
  console: false
  */
-define('controllers/augur-settings',[
-  '../constants'
+define('controllers/classification/settings',[
+  '../../constants'
 ], function (Constants) {
   
 
@@ -40095,7 +40096,7 @@ define('controllers/augur-settings',[
       $scope.augur.$promise,
       $scope.habitat.$promise
     ]).then(function () {
-      $scope.initialize()
+      $scope.initialize();
     });
 
     $scope.initialize = function () {
@@ -40105,7 +40106,7 @@ define('controllers/augur-settings',[
 
       angular.forEach(Constants.KEY_PERFORMANCE_INDICATORS, function (indicator) {
         if (indicator.key === $scope.augur.learningKpi) {
-          $scope.augurSettings.learning.kpi = indicator
+          $scope.augurSettings.learning.kpi = indicator;
         }
       });
     };
@@ -40123,7 +40124,7 @@ define('controllers/augur-settings',[
           $scope.success = 'The new settings for the Augur have been saved';
         }, function (httpResponse) {
           $scope.success = null;
-          $scope.error = 'There was an error saving the new Augur: ' + httpResponse.data['error'];
+          $scope.error = 'There was an error saving the new Augur: ' + httpResponse.data.error;
         });
     };
 
@@ -40134,27 +40135,27 @@ define('controllers/augur-settings',[
           $state.transitionTo('dashboard');
         }, function (httpResponse) {
           $scope.success = null;
-          $scope.error = 'There was an error deleting the new Augur: ' + httpResponse.data['error'];
-        })
+          $scope.error = 'There was an error deleting the new Augur: ' + httpResponse.data.error;
+        });
     };
   }
 
-  return  ['$state', '$scope', '$stateParams', '$q', 'Augur', 'FlashMessages', controller]
+  return  ['$state', '$scope', '$stateParams', '$q', 'Augur', 'FlashMessages', controller];
 });
 
 /* global
  define: false,
  console: false
  */
-define('controllers/augur-tree',[], function () {
+define('controllers/classification/tree',[], function () {
   
 
   return  ['$scope', '$stateParams', function ($scope) {
     $scope.data = {};
 
     $scope.augur.$promise.then(function(augur){
-      var tree = augur['learningReport']['tree'];
-      if (tree) $scope.data = tree['data'];
+      var tree = augur.learningReport.tree;
+      if (tree) $scope.data = tree.data;
     });
   }];
 });
@@ -40163,14 +40164,14 @@ define('controllers/augur-tree',[], function () {
  define: false,
  console: false
  */
-define('controllers/augur-profile',[], function () {
+define('controllers/clustering/profile',[], function () {
     
 
     return  ['$scope', '$stateParams', function ($scope) {
         $scope.data = {};
 
         $scope.augur.$promise.then(function (augur) {
-            var profile = augur["clustering"]['clusterProfile'];
+            var profile = augur.clustering.clusterProfile;
             $scope.headers = [
                 {name: 'Variable'},
                 {name: 'Total', count: profile.DataDictionary.Population.count},
@@ -40182,12 +40183,12 @@ define('controllers/augur-profile',[], function () {
             angular.forEach(profile.DataDictionary.Population.fields, function(field, i){
                 var res = {};
                 if(field.data_type === 'categorical') {
-                    res['data'] = field.instances[0];
+                    res.data = field.instances[0];
                 } else {
-                    res['data'] = {'mean':field.mean,'max':field.maximum,'min':field.minimum}
+                    res.data = {'mean':field.mean,'max':field.maximum,'min':field.minimum};
                 }
-                res['type'] = field.data_type;
-                res['showLegend'] = true;
+                res.type = field.data_type;
+                res.showLegend = true;
 
                 var name = {'type': 'none', data:field.name};
 
@@ -40201,12 +40202,12 @@ define('controllers/augur-profile',[], function () {
                     var type = types[i];
                     var res = {};
                     if(type === 'categorical') {
-                        res['data'] = field.instances[0];
+                        res.data = field.instances[0];
                     } else {
-                        res['data'] = {'mean':field.mean,'max':field.maximum,'min':field.minimum}
+                        res.data = {'mean':field.mean,'max':field.maximum,'min':field.minimum};
                     }
-                    res['type'] = type;
-                    res['showLegend'] = false;
+                    res.type = type;
+                    res.showLegend = false;
                     $scope.results[field.key].push(res);
                 });
             });
@@ -40219,111 +40220,120 @@ define('controllers/augur-profile',[], function () {
  console: false
  */
 define('controllers/dashboard',[
-  '../constants'
+    '../constants'
 ], function (Constants) {
-  
+    
 
-  function randomDashboardChartData () {
-    var arr = [];
+    function randomDashboardChartData() {
+        var arr = [];
 
-    for (var i=0; i< 30; i++) {
-      arr.push([i, Math.random()])
-    }
-
-    return arr;
-  }
-
-  function AugurStatusPoller(Augur, $interval, augur) {
-    var timeoutId = $interval(function () {
-      Augur.status({
-        habitatId: augur.habitatId,
-        augurId: augur.id
-      }, function (updatedAugur) {
-        if (updatedAugur.learningStatus === 'complete') {
-          augur.learningStatus = 'complete';
-          $interval.cancel(timeoutId);
+        for (var i = 0; i < 30; i++) {
+            arr.push([i, Math.random()]);
         }
-      });
 
-    }, 1000 * 10, 60);
-
-    this.cancel = function () {
-      $interval.cancel(timeoutId);
+        return arr;
     }
-  }
 
-  function controller ($scope, $stateParams, $timeout, $interval, $q, Augur, DataSource, FactTable, FlashMessages, Habitat) {
-    $scope.artifacts = [];
-    $scope.selectedArtifactTypes = { augur: true, habitat: true, factTable: true };
-    $scope.artifactsQuery = '';
+    function AugurStatusPoller(Augur, $interval, augur) {
+        var timeoutId = $interval(function () {
+            Augur.status({
+                habitatId: augur.habitatId,
+                augurId: augur.id
+            }, function (updatedAugur) {
+                if (updatedAugur.learningStatus === 'complete') {
+                    augur.learningStatus = 'complete';
+                    $interval.cancel(timeoutId);
+                }
+            });
 
-    $scope.pendingAgurus = [];
-    $scope.$on('$destroy', function() {
-      angular.forEach($scope.pendingAgurus, function ( pendingAugur ) {
-        pendingAugur.cancel()
-      })
-    });
+        }, 1000 * 10, 60);
 
-    $scope.flash = FlashMessages.getMessage();
-    $timeout(function () {
-      $scope.flash = '';
-    }, 1500);
+        this.cancel = function () {
+            $interval.cancel(timeoutId);
+        };
+    }
 
-    $scope.artifactsFilter = function (artifact) {
-      var queryMatch = true;
-      if ($scope.artifactsQuery.length > 0) {
-        queryMatch = artifact.name.toLowerCase().indexOf($scope.artifactsQuery.toLowerCase()) > -1;
-      }
-      return $scope.selectedArtifactTypes[artifact.type] && queryMatch;
-    };
+    function controller($scope, $stateParams, $timeout, $interval, $q, Augur, DataSource, FactTable, FlashMessages, Habitat) {
+        $scope.artifacts = [];
+        $scope.selectedArtifactTypes = { augur: true, habitat: true, factTable: true };
+        $scope.artifactsQuery = '';
 
-    Habitat.query(function (habitats) {
-      $q.all([
-          $q.all(habitats.map(function(habitat){return FactTable.query({ habitatId: habitat.id }).$promise})),
-          $q.all(habitats.map(function(habitat){return Augur.query({ habitatId: habitat.id }).$promise}))
-        ]).then(function (results) {
-        var factTables = results[0],
-            augurs = results[1];
+        $scope.pendingAgurus = [];
+        $scope.$on('$destroy', function () {
+            angular.forEach($scope.pendingAgurus, function (pendingAugur) {
+                pendingAugur.cancel();
+            });
+        });
 
-        for (var i=0; i < habitats.length; i++) {
-          var habitat = habitats[i];
+        $scope.flash = FlashMessages.getMessage();
+        $timeout(function () {
+            $scope.flash = '';
+        }, 1500);
 
-          habitat.type = 'habitat';
-          habitat.augurCount = augurs[i].length;
-          $scope.artifacts.push(habitat);
+        $scope.artifactsFilter = function (artifact) {
+            var queryMatch = true;
+            if ($scope.artifactsQuery.length > 0) {
+                queryMatch = artifact.name.toLowerCase().indexOf($scope.artifactsQuery.toLowerCase()) > -1;
+            }
+            return $scope.selectedArtifactTypes[artifact.type] && queryMatch;
+        };
 
-          angular.forEach(factTables[i], function(factTable) {
+        var createFactTable = function (factTable) {
             factTable.type = 'factTable';
             factTable.habitatId = habitat.code;
             factTable.colorScheme = habitat.colorScheme;
             $scope.artifacts.push(factTable);
-          });
-          angular.forEach(augurs[i], function(augur) {
+        };
+
+        var createAugur = function (augur) {
             augur.type = 'augur';
             augur.habitatId = habitat.code;
             augur.colorScheme = habitat.colorScheme;
             if (!augur.augurType) {
-              augur.augurType = 'classification';
+                augur.augurType = 'classification';
             }
 
             augur.learningKpiLabel =
-              Constants.KEY_PERFORMANCE_INDICATORS_HASH[augur.learningKpi]
-              + ' (' + parseFloat(augur.learningThreshold).toFixed(2) + ')';
+                Constants.KEY_PERFORMANCE_INDICATORS_HASH[augur.learningKpi] +
+                ' (' + parseFloat(augur.learningThreshold).toFixed(2) + ')';
 
             if (!augur.dashboardChartData)
-              augur.dashboardChartData = randomDashboardChartData();
+                augur.dashboardChartData = randomDashboardChartData();
 
             if (augur.learningStatus === 'pending')
-              $scope.pendingAgurus.push(new AugurStatusPoller( Augur, $interval, augur ));
+                $scope.pendingAgurus.push(new AugurStatusPoller(Augur, $interval, augur));
 
             $scope.artifacts.push(augur);
-          });
-        }
-      });
-    });
-  }
+        };
 
-  return ['$scope', '$stateParams', '$timeout', '$interval', '$q', 'Augur', 'DataSource', 'FactTable', 'FlashMessages', 'Habitat', controller];
+        Habitat.query(function (habitats) {
+            $q.all([
+                $q.all(habitats.map(function (habitat) {
+                    return FactTable.query({ habitatId: habitat.id }).$promise;
+                })),
+                $q.all(habitats.map(function (habitat) {
+                    return Augur.query({ habitatId: habitat.id }).$promise;
+                }))
+            ]).then(function (results) {
+                var factTables = results[0],
+                    augurs = results[1];
+
+                for (var i = 0; i < habitats.length; i++) {
+                    var habitat = habitats[i];
+
+                    habitat.type = 'habitat';
+                    habitat.augurCount = augurs[i].length;
+                    $scope.artifacts.push(habitat);
+
+                    angular.forEach(factTables[i], createFactTable(factTable));
+
+                    angular.forEach(augurs[i], createAugur(augur));
+                }
+            });
+        });
+    }
+
+    return ['$scope', '$stateParams', '$timeout', '$interval', '$q', 'Augur', 'DataSource', 'FactTable', 'FlashMessages', 'Habitat', controller];
 });
 
 /* global
@@ -40333,16 +40343,16 @@ define('controllers/dashboard',[
 define('controllers',[
   'angular',
   'services',
-  'controllers/augur-new',
-  'controllers/clustering/augur-create',
-  'controllers/augur',
-  'controllers/augur-accuracy',
-  'controllers/augur-accuracy-detail',
-  'controllers/augur-influencers',
-  'controllers/augur-performance',
-  'controllers/augur-settings',
-  'controllers/augur-tree',
-  'controllers/augur-profile',
+  'controllers/classification/create',
+  'controllers/clustering/create',
+  'controllers/classification/augur',
+  'controllers/classification/accuracy',
+  'controllers/classification/accuracy-detail',
+  'controllers/classification/influencers',
+  'controllers/classification/performance',
+  'controllers/classification/settings',
+  'controllers/classification/tree',
+  'controllers/clustering/profile',
   'controllers/dashboard'
 ], function (ng, services, AugurNewCtrl, AugurNewClusteringCtrl, AugurCtrl, AugurAccuracyCtrl, AugurAccuracyDetailCtrl, AugurInfluencersCtrl, AugurPerformanceCtrl, AugurSettingsCtrl, AugurTreeCtrl, AugurProfileCtrl, DashboardCtrl) {
   
@@ -40418,7 +40428,7 @@ define('directives/augur-scheduler',[
                 scope.name = scope.prefix + "-schedule-frequency";
                 scope.hourlyName = scope.prefix + "HourlyField";
             }
-        }
+        };
     }
 
     return directive;
@@ -40474,7 +40484,7 @@ define('directives/available-event',[
         });
       }
     };
-  }
+  };
 });
 
 !function() {
@@ -49834,12 +49844,12 @@ define('directives/d3-bar-chart',[
 
         var svg = new Chart(ele[0], dimensions);
 
-        var x = d3.scale.ordinal().rangeRoundBands([0, svg.width()], .1);
+        var x = d3.scale.ordinal().rangeRoundBands([0, svg.width()], 0.1);
         var y = d3.scale.linear().range([svg.height(), 0]);
         var yAxis = d3.svg.axis().scale(y).orient('left');
 
         scope.$watch('chart', function (newChart) {
-          if (newChart != null) scope.render(newChart.data);
+          if (newChart !== null) scope.render(newChart.data);
         }, true);
 
         scope.render = function (data) {
@@ -49849,8 +49859,8 @@ define('directives/d3-bar-chart',[
           if (renderTimeout) $timeout.cancel(renderTimeout);
 
           renderTimeout = $timeout(function () {
-            x.domain(data.map(function (d) { return d[0] }));
-            y.domain([0, d3.max(data, function (d) { return d[1] })]);
+            x.domain(data.map(function (d) { return d[0]; }));
+            y.domain([0, d3.max(data, function (d) { return d[1]; })]);
 
             var yTicks = [
               d3.min(y.ticks()),
@@ -49893,7 +49903,7 @@ define('directives/d3-bar-chart',[
               .attr('x', function(d) { return x(d[0]); })
               .attr('width', x.rangeBand())
               .attr('y', function(d) { return y(d[1]); })
-              .attr('height', function(d) { return svg.height() - y(d[1]) });
+              .attr('height', function(d) { return svg.height() - y(d[1]); });
 
             var barValueLabel = svg.append('g')
                 .attr('transform', 'translate(' + svg.width() / 2 + ', 10)')
@@ -49902,17 +49912,17 @@ define('directives/d3-bar-chart',[
                 .style('text-anchor', 'middle');
 
             barContainers.on('mouseover', function (d) {
-                barValueLabel.text(d[0])
+                barValueLabel.text(d[0]);
               })
               .on('mouseout', function (d) {
-                barValueLabel.text('')
+                barValueLabel.text('');
               });
 
           }, 200); // renderTimeout
         };
       }
     };
-  }]
+  }];
 });
 
 /* global
@@ -49957,7 +49967,7 @@ define('directives/d3-profile-bar-chart',[
                 var z = d3.scale.category10();
 
                 scope.$watch('data', function (data) {
-                    if (data != null) scope.render(data);
+                    if (data !== null) scope.render(data);
                 }, true);
 
                 scope.render = function (data) {
@@ -49987,10 +49997,10 @@ define('directives/d3-profile-bar-chart',[
                         var stacked = d3.layout.stack()(headers.map(function (cause) {
                             return datum.map(function (d) {
                                 return {x: 'C1', y: +d[cause], type: cause};
-                            })
+                            });
                         }));
                         x.domain(stacked[0].map(function (d) {
-                            return d.x
+                            return d.x;
                         }));
                         y.domain([0, d3.max(stacked[stacked.length - 1], function (d) {
                             return d.y0 + d.y;
@@ -50012,10 +50022,10 @@ define('directives/d3-profile-bar-chart',[
                             .data(Object)
                             .enter().append('svg:rect')
                             .attr('x', function (d) {
-                                return x(d.x)
+                                return x(d.x);
                             })
                             .attr('y', function (d) {
-                                return -y(d.y0) - y(d.y)
+                                return -y(d.y0) - y(d.y);
                             })
                             .attr("height", function (d) {
                                 return y(d.y);
@@ -50024,7 +50034,7 @@ define('directives/d3-profile-bar-chart',[
                             .on("mouseover", function () {
                                 tooltip.transition()
                                     .duration(100)
-                                    .style('opacity', .9);
+                                    .style('opacity', 0.9);
                             })
                             .on("mousemove", function () {
                                 var position = d3.mouse(this);
@@ -50035,7 +50045,7 @@ define('directives/d3-profile-bar-chart',[
                             .on("mouseout", function () {
                                 tooltip.transition()
                                     .duration(100)
-                                    .style('opacity', 0)
+                                    .style('opacity', 0);
                             });
 
 
@@ -50043,7 +50053,7 @@ define('directives/d3-profile-bar-chart',[
                 };
             }
         };
-    }]
+    }];
 });
 
 /* global
@@ -50095,7 +50105,7 @@ define('directives/d3-profile-diamond-chart',[
                 var y = d3.scale.linear().range([0, dimensions.height - dimensions.margins.top - dimensions.margins.bottom]);
 
                 scope.$watch('data', function (data) {
-                    if (data != null) scope.render(data);
+                    if (data !== null) scope.render(data);
                 }, true);
 
                 scope.render = function (data) {
@@ -50139,7 +50149,7 @@ define('directives/d3-profile-diamond-chart',[
                             .append("svg:circle")
                             .attr("cx", xpos)
                             .attr("cy", function (d) {
-                                return -y(d)
+                                return -y(d);
                             })
                             .attr("r", 2)
                             .style("stroke", "blue")
@@ -50165,10 +50175,10 @@ define('directives/d3-profile-diamond-chart',[
 
                         var line = d3.svg.line()
                             .x(function (d) {
-                                return x(d[0])
+                                return x(d[0]);
                             })
                             .y(function (d) {
-                                return -y(d[1])
+                                return -y(d[1]);
                             });
 
                         var path = svg.append("path")
@@ -50195,7 +50205,7 @@ define('directives/d3-profile-diamond-chart',[
                                 .append("svg:text")
                                 .attr("x", x(dimensions.margins.right))
                                 .attr("y", function (d) {
-                                    return -y(d)
+                                    return -y(d);
                                 })
                                 .attr("dy", ".35em")
                                 .attr("font-size", "10px")
@@ -50208,7 +50218,7 @@ define('directives/d3-profile-diamond-chart',[
                 };
             }
         };
-    }]
+    }];
 });
 
 /* global
@@ -50219,13 +50229,14 @@ define('directives/d3-decision-tree-chart',['d3js'], function (d3) {
   
 
   function parentNodes(node, arr) {
-    arr ? arr.push(node) : arr = [node];
+      arr = arr || [];
+      arr.push(node);
 
     if (node.parent) {
-      parentNodes(node.parent, arr)
+      parentNodes(node.parent, arr);
     }
 
-    return arr
+    return arr;
   }
 
   function buildPath(nodes) {
@@ -50247,7 +50258,7 @@ define('directives/d3-decision-tree-chart',['d3js'], function (d3) {
       }
 
       if (node.simpleSetPredicate) {
-        newPathElement.operation = node.simpleSetPredicate.booleanOperator + '(' + node.simpleSetPredicate.array + ')'
+        newPathElement.operation = node.simpleSetPredicate.booleanOperator + '(' + node.simpleSetPredicate.array + ')';
       }
 
       pathElements.push(newPathElement);
@@ -50313,15 +50324,15 @@ define('directives/d3-decision-tree-chart',['d3js'], function (d3) {
                 .enter().append("circle")
                 .attr("class", function(d) {
                   if (d.children && d.children.length > 0) {
-                    return 'node'
+                    return 'node';
                   } else {
                     var confidence = d.scoreDistribution && +d.scoreDistribution[1].confidence;
-                    return (confidence >  0.5) ? 'leaf happy' : 'leaf sad'
+                    return (confidence >  0.5) ? 'leaf happy' : 'leaf sad';
                   }
                 })
                 .attr("r", 12)
-                .attr("cx", function (d) { return d.x })
-                .attr("cy", function (d) { return d.y })
+                .attr("cx", function (d) { return d.x; })
+                .attr("cy", function (d) { return d.y; })
                 .on('mouseover', function (d) {
                   var pNodes = parentNodes(d);
                   var tooltipHTML;
@@ -50364,7 +50375,7 @@ define('directives/d3-decision-tree-chart',['d3js'], function (d3) {
                   ].join('');
                   tooltip.transition()
                     .duration(100)
-                    .style('opacity', .9);
+                    .style('opacity', 0.9);
                   tooltip.html(tooltipHTML)
                     .style('left', (d.x + 50) + 'px')
                     .style('top', (d.y + 30) + 'px');
@@ -50378,17 +50389,17 @@ define('directives/d3-decision-tree-chart',['d3js'], function (d3) {
 
                   tooltip.transition()
                     .duration(100)
-                    .style('opacity', 0)
+                    .style('opacity', 0);
                 }).on('click', function (d) {
-                    nodes.map(function(node){ node.stickyPath = false });
-                    d.stickyPath = true
+                    nodes.map(function(node){ node.stickyPath = false; });
+                    d.stickyPath = true;
               });
 
           }, 200); // renderTimeout
         };
       }
     };
-  }]
+  }];
 });
 
 /* global
@@ -50399,7 +50410,7 @@ define('directives/d3-influencer-chart',['d3js'], function (d3) {
   
 
   function nodeValues (nodes) {
-    return nodes.map(function (node) { return node.importance })
+    return nodes.map(function (node) { return node.importance; });
   }
 
   function colorScale(element) {
@@ -50443,10 +50454,10 @@ define('directives/d3-influencer-chart',['d3js'], function (d3) {
         var radius = d3.scale.linear();
 
         var pack = d3.layout.pack()
-            .value(function(d) { return d.importance })
+            .value(function(d) { return d.importance; })
             .radius(radius)
             .padding(20)
-            .sort(function(a, b) { return Math.log(a.importance * b.importance) })
+            .sort(function(a, b) { return Math.log(a.importance * b.importance); })
             .size([width + 120, height]);
 
         var svg = d3.select(ele[0]).append('svg')
@@ -50465,7 +50476,7 @@ define('directives/d3-influencer-chart',['d3js'], function (d3) {
 
           renderTimeout = $timeout(function () {
             var dataNodes = data.nodes
-              .sort(function (a, b) { return a.importance - b.importance })
+              .sort(function (a, b) { return a.importance - b.importance; })
               .reverse()
               .slice(0, maxNodes - 1)
               .map(function (node) {
@@ -50481,7 +50492,7 @@ define('directives/d3-influencer-chart',['d3js'], function (d3) {
                   node.dy_line2 = '0em';
                   node.dy_value = '.7em';
                 }
-                return node
+                return node;
               });
 
             var rMax = radiusMax(dataNodes.length);
@@ -50504,11 +50515,11 @@ define('directives/d3-influencer-chart',['d3js'], function (d3) {
             });
             
             var nodeEnter = svg.selectAll('.node')
-                 .data(nodes.filter(function(d) { return !!d.feature }))
+                 .data(nodes.filter(function(d) { return !!d.feature; }))
                .enter().append('g')
                  .attr('class', 'node')
                  .attr('transform', function(d) { return 'translate(' + d.x + ',' + d.y + ')'; })
-                 .style('font-size', function(d) { return fontSize(d.r/Math.log(Math.max(Math.min(d.feature.length, variableLengthMax), variableLengthMin))) + '%' });
+                 .style('font-size', function(d) { return fontSize(d.r/Math.log(Math.max(Math.min(d.feature.length, variableLengthMax), variableLengthMin))) + '%'; });
 
             nodeEnter.append('circle')
                 .attr('r', function(d) { return d.r; })
@@ -50516,24 +50527,24 @@ define('directives/d3-influencer-chart',['d3js'], function (d3) {
 
             nodeEnter.append('text')
               .style('text-anchor', 'middle')
-              .attr('dy', function(d) { return d.dy_line1 })
-              .text(function(d) { return d.line1 });
+              .attr('dy', function(d) { return d.dy_line1; })
+              .text(function(d) { return d.line1; });
 
             nodeEnter.append('text')
               .style('text-anchor', 'middle')
-              .attr('dy', function(d) { return d.dy_line2 })
-              .text(function(d) { return d.line2 });
+              .attr('dy', function(d) { return d.dy_line2; })
+              .text(function(d) { return d.line2; });
 
             nodeEnter.append('text')
-              .attr('dy', function(d) { return d.dy_value })
+              .attr('dy', function(d) { return d.dy_value; })
               .style('text-anchor', 'middle')
-              .text(function(d) { return format(d.value * 1000) });
+              .text(function(d) { return format(d.value * 1000); });
 
           }, 200); // renderTimeout
         };
       }
     };
-  }]
+  }];
 });
 
 /* global
@@ -50550,9 +50561,9 @@ define('directives/d3-line-chart',[
 
     function yScaleMin(dataMin, baseline) {
       if (!baseline || dataMin < baseline) {
-        return 0
+        return 0;
       } else {
-        return (Math.round(baseline * 10) - 1) / 10.0
+        return (Math.round(baseline * 10) - 1) / 10.0;
       }
     }
 
@@ -50571,7 +50582,7 @@ define('directives/d3-line-chart',[
         var graph = new Chart(ele[0], dimensions);
 
         scope.$watch('chart', function (newData) {
-          if (newData != null) scope.render(newData.data, newData.baseline);
+          if (newData !== null) scope.render(newData.data, newData.baseline);
         }, true);
 
         scope.render = function (data, baseline) {
@@ -50642,7 +50653,7 @@ define('directives/d3-line-chart',[
 
             // helpline
             var xValues = data.map(function (d) {
-              return d[0]
+              return d[0];
             });
             angular.forEach(yTicks, function (yValue) {
               var path = graph.append('path')
@@ -50680,7 +50691,7 @@ define('directives/d3-line-chart',[
         };
       }
     };
-  }]
+  }];
 });
 
 /* global
@@ -50791,7 +50802,7 @@ define('directives/d3-line-chart-dashboard',['d3js'], function (d3) {
         };
       }
     };
-  }]
+  }];
 });
 
 /* global
@@ -50820,7 +50831,7 @@ define('directives/d3-performance-chart',[
             height = ele[0].offsetHeight - margin.top - margin.bottom;
 
         var format = d3.format('.2f');
-        var x = d3.scale.ordinal().domain(d3.range(0,32)).rangeRoundBands([0, width], .35);
+        var x = d3.scale.ordinal().domain(d3.range(0,32)).rangeRoundBands([0, width], 0.35);
         var y = d3.scale.linear().range([height, 0]);
         var svg = d3.select(ele[0]).append('svg')
           .attr('width', width + margin.left + margin.right)
@@ -50861,19 +50872,19 @@ define('directives/d3-performance-chart',[
 
             y.domain([0, d3.max(data, function (d) {
               if (attrs.mode == 'learning') {
-                return d.drift
+                return d.drift;
               } else {
-                return d.threshold ? Math.max(d.drift, d.threshold * 1.1) : d.drift
+                return d.threshold ? Math.max(d.drift, d.threshold * 1.1) : d.drift;
               }
             })]);
 
 
             // helplines
-            var yHelplineTicks = _.filter(y.ticks(), function(ele, i){ return i % 2 == 0});
+            var yHelplineTicks = _.filter(y.ticks(), function(ele, i){ return i % 2 === 0;});
 
             var helpline = d3.svg.line()
-              .x(function (d) { return x(d[0]) - 15 })
-              .y(function (d) { return y(d[1]) });
+              .x(function (d) { return x(d[0]) - 15; })
+              .y(function (d) { return y(d[1]); });
 
             angular.forEach(yHelplineTicks, function(yValue){
               var path = graph.append('path')
@@ -50903,9 +50914,9 @@ define('directives/d3-performance-chart',[
                     if (attrs.mode == 'learning') return 'bar';
 
                     if (scope.comparator === 'lt') {
-                      return d.drift > d.threshold ? 'bar' : 'bar solid'
+                      return d.drift > d.threshold ? 'bar' : 'bar solid';
                     } else {
-                      return d.drift < d.threshold ? 'bar' : 'bar solid'
+                      return d.drift < d.threshold ? 'bar' : 'bar solid';
                     }
                   });
 
@@ -50914,9 +50925,9 @@ define('directives/d3-performance-chart',[
                 .delay( function ( d, i ) {
                   return i * 20;
                 })
-                .attr('x', function (d, i) { return x(i) })
+                .attr('x', function (d, i) { return x(i); })
                   .attr('width', x.rangeBand())
-                  .attr('y', function (d) { return y(d.drift) })
+                  .attr('y', function (d) { return y(d.drift); })
                   .attr('height', function (d) {
                     return height - y(d.drift);
                   });
@@ -50924,11 +50935,11 @@ define('directives/d3-performance-chart',[
             //////////////////////////////////
 
             if (attrs.mode == 'learning') {
-              return
+              return;
             }
 
             // threshold line
-            var thresholds = data.map(function(d) { return d.threshold });
+            var thresholds = data.map(function(d) { return d.threshold; });
             var thresholdChangeIndexes = [];
             var thresholdLineData = [];
             for (var i = 0; i < thresholds.length; i++) {
@@ -50942,8 +50953,8 @@ define('directives/d3-performance-chart',[
             }
 
             var thresholdLine = d3.svg.line()
-              .x(function (d) { return x(d[0]) - x.rangeBand()})
-              .y(function (d) { return y(d[1]) });
+              .x(function (d) { return x(d[0]) - x.rangeBand() ; })
+              .y(function (d) { return y(d[1]); });
 
             var path = graph.append('path')
               .attr('d', thresholdLine(thresholdLineData))
@@ -50951,7 +50962,7 @@ define('directives/d3-performance-chart',[
               .attr('class', 'threshold-line');
 
             var labelEnter = graph.selectAll('.threshold-label')
-              .data(data.filter(function(d, i) { return thresholdChangeIndexes.indexOf(i) > -1 }))
+              .data(data.filter(function(d, i) { return thresholdChangeIndexes.indexOf(i) > -1; }))
               .enter().append('g')
               .attr('class', 'threshold-label')
               .attr('transform', function(d) {
@@ -50968,7 +50979,7 @@ define('directives/d3-performance-chart',[
               .attr('dx', '2.1em')
               .attr('dy', '1.3em')
               .style('text-anchor', 'middle')
-              .text(function(d){ return format(d.threshold) });
+              .text(function(d){ return format(d.threshold); });
 
             var legend = graph.append('g')
                 .attr('transform', 'translate(' + (x(29)) + ',' + (y(0) - 15) + ')');
@@ -50990,7 +51001,7 @@ define('directives/d3-performance-chart',[
         };
       }
     };
-  }]
+  }];
 });
 
 /* global
@@ -51016,14 +51027,14 @@ define('directives/d3-pie-chart',[
     var legendOrdered = [ 'True Positives', 'True Negatives', 'False Positives',  'False Negatives' ];
 
     return data.sort( function ( a, b ) {
-      var indexA = legendOrdered.indexOf(a['bucket']);
-      var indexB = legendOrdered.indexOf(b['bucket']);
+      var indexA = legendOrdered.indexOf(a.bucket);
+      var indexB = legendOrdered.indexOf(b.bucket);
 
       if (indexA > indexB) return 1;
       if (indexA < indexB) return -1;
 
-      return 0
-    })
+      return 0;
+    });
   }
 
   return ['$rootScope', '$timeout', function ($rootScope, $timeout) {
@@ -51045,7 +51056,7 @@ define('directives/d3-pie-chart',[
         var $element = angular.element( ele[0] );
         var color = colorScale($element);
         $rootScope.$on('themeChanged', function () {
-          color = colorScale($element)
+          color = colorScale($element);
         });
 
         var arc = d3.svg.arc()
@@ -51062,7 +51073,7 @@ define('directives/d3-pie-chart',[
             count = attrs.count;
 
         scope.$watch('chart', function (newChart) {
-          if (newChart != null) scope.render(newChart.data);
+          if (newChart !== null) scope.render(newChart.data);
         }, true);
 
         scope.render = function (data) {
@@ -51094,7 +51105,7 @@ define('directives/d3-pie-chart',[
               });
 
 
-            var total = d3.sum(data, function(d) { return d['count'] });
+            var total = d3.sum(data, function(d) { return d.count; });
             var percentageScale = d3.scale.linear().domain([0, total]).range([0, 1]);
             var percentageFormat = d3.format('.0%');
 
@@ -51146,7 +51157,7 @@ define('directives/d3-pie-chart',[
         };
       }
     };
-  }]
+  }];
 });
 
 /* global
@@ -51179,7 +51190,7 @@ define('directives/d3-roc-chart',[
         var yScale = d3.scale.linear().range([svg.height(), 0]);
 
         scope.$watch('chart', function (newChart) {
-          if (newChart != null) scope.render(newChart.data);
+          if (newChart !== null) scope.render(newChart.data);
         }, true);
 
         scope.render = function (data) {
@@ -51189,8 +51200,8 @@ define('directives/d3-roc-chart',[
           if (renderTimeout) $timeout.cancel(renderTimeout);
 
           renderTimeout = $timeout(function () {
-            xScale.domain(data.map(function (d) { return d[0] + '' }));
-            yScale.domain([0, d3.max(data, function (d) { return d[1] })]);
+            xScale.domain(data.map(function (d) { return d[0] + ''; }));
+            yScale.domain([0, d3.max(data, function (d) { return d[1]; })]);
 
             // create left yAxis
             var yTicks = [0.0, 0.5, 1.0];
@@ -51224,7 +51235,7 @@ define('directives/d3-roc-chart',[
 
 
             // helpline
-            var xValues = data.map(function(d) { return d[0] });
+            var xValues = data.map(function(d) { return d[0]; });
             angular.forEach(yTicks, function(yValue){
               svg.append('path')
                 .attr('d', line([
@@ -51246,7 +51257,7 @@ define('directives/d3-roc-chart',[
         };
       }
     };
-  }]
+  }];
 });
 
 /* global
@@ -51387,7 +51398,7 @@ define('directives/unique-augur-name',[], function () {
         });
       }
     };
-  }]
+  }];
 });
 
 /* global
@@ -51416,7 +51427,7 @@ define('directives/threshold-in-range',[], function () {
         });
       }
     };
-  }
+  };
 });
 
 /* global
@@ -51504,10 +51515,9 @@ define('directives/util/dj-focus-on-select',[
                             element.focus();
                         }, 100);
                     }
-                })
+                });
             }
-
-        }
+        };
     }
 
     return directive;
@@ -54643,7 +54653,7 @@ define('filters/checkmark',[], function () {
     return function (input) {
       return input ? '\u2713' : '\u2718';
     };
-  }
+  };
 });
 
 /* global
@@ -58152,8 +58162,344 @@ try {
   module = angular.module('dejalyticsPartials', []);
 }
 module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('partials/classification/accuracy-detail.html',
+    '<div class=\'row augur-accuracy\'><div class=\'columns small-12\'> Detail<p> Chart time from controller: {{ chartType }}</p><p> Baseline for lift chart {{ charts.lift.baseline }}</p></div></div>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('dejalyticsPartials');
+} catch (e) {
+  module = angular.module('dejalyticsPartials', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('partials/classification/accuracy.html',
+    '<div class=\'row augur-accuracy\'><div class=\'columns small-12\'><ul class=\'small-block-grid-2 medium-block-grid-3\'><li class=\'tile\'><div class=\'tile-body\'><a ui-sref=\'augur.accuracy-detail({ chartType: "lift" })\'><h6 class=\'title\'>Lift</h6><div class=\'chart line-chart\'><d3-line-chart chart=\'charts.lift\'></d3-line-chart></div></a></div></li><li class=\'tile\'><div class=\'tile-body\'><a ui-sref=\'dashboard\'><h6 class=\'title\'>Cumulative Lift</h6><div class=\'chart line-chart\'><d3-line-chart chart=\'charts.cumulativeLift\'></d3-line-chart></div></a></div></li><li class=\'tile\'><div class=\'tile-body\'><a href=\'\'><h6 class=\'title\'>Response</h6><div class=\'chart line-chart\'><d3-line-chart chart=\'charts.response\'></d3-line-chart></div></a></div></li><li class=\'tile\'><div class=\'tile-body\'><a href=\'\'><h6 class=\'title\'>Cumulative Response</h6><div class=\'chart line-chart\'><d3-line-chart chart=\'charts.cumulativeResponse\'></d3-line-chart></div></a></div></li><li class=\'tile\'><div class=\'tile-body\'><a href=\'\'><h6 class=\'title\'>Captured Response</h6><div class=\'chart line-chart\'><d3-line-chart chart=\'charts.capturedResponse\'></d3-line-chart></div></a></div></li><li class=\'tile\'><div class=\'tile-body\'><a href=\'\'><h6 class=\'title\'>Cumulative Captured Response</h6><div class=\'chart line-chart\'><d3-line-chart chart=\'charts.cumulativeCapturedResponse\'></d3-line-chart></div></a></div></li><li class=\'tile\'><div class=\'tile-body\'><a href=\'\'><h6 class=\'title\'>ROC</h6><div class=\'chart roc-chart\'><d3-roc-chart chart=\'charts.roc\'></d3-roc-chart></div></a></div></li><li class=\'tile\'><div class=\'tile-body\'><a href=\'\'><h6 class=\'title\'>Misclassification</h6><div class=\'chart pie-chart\'><d3-pie-chart bucket=\'bucket\' chart=\'charts.misclassification\' count=\'count\'></d3-pie-chart></div></a></div></li><li class=\'tile\'><div class=\'tile-body\'><a href=\'\'><h6 class=\'title\'>Distribution of Predicted Values</h6><div class=\'chart bar-chart\'><d3-bar-chart chart=\'charts.predictedValuesDistribution\'></d3-bar-chart></div></a></div></li></ul></div></div>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('dejalyticsPartials');
+} catch (e) {
+  module = angular.module('dejalyticsPartials', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('partials/classification/augur-accuracy-detail.html',
+    '<div class=\'row augur-accuracy\'><div class=\'columns small-12\'> Detail<p> Chart time from controller: {{ chartType }}</p><p> Baseline for lift chart {{ charts.lift.baseline }}</p></div></div>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('dejalyticsPartials');
+} catch (e) {
+  module = angular.module('dejalyticsPartials', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('partials/classification/augur-accuracy.html',
+    '<div class=\'row augur-accuracy\'><div class=\'columns small-12\'><ul class=\'small-block-grid-2 medium-block-grid-3\'><li class=\'tile\'><div class=\'tile-body\'><a ui-sref=\'augur.accuracy-detail({ chartType: "lift" })\'><h6 class=\'title\'>Lift</h6><div class=\'chart line-chart\'><d3-line-chart chart=\'charts.lift\'></d3-line-chart></div></a></div></li><li class=\'tile\'><div class=\'tile-body\'><a ui-sref=\'dashboard\'><h6 class=\'title\'>Cumulative Lift</h6><div class=\'chart line-chart\'><d3-line-chart chart=\'charts.cumulativeLift\'></d3-line-chart></div></a></div></li><li class=\'tile\'><div class=\'tile-body\'><a href=\'\'><h6 class=\'title\'>Response</h6><div class=\'chart line-chart\'><d3-line-chart chart=\'charts.response\'></d3-line-chart></div></a></div></li><li class=\'tile\'><div class=\'tile-body\'><a href=\'\'><h6 class=\'title\'>Cumulative Response</h6><div class=\'chart line-chart\'><d3-line-chart chart=\'charts.cumulativeResponse\'></d3-line-chart></div></a></div></li><li class=\'tile\'><div class=\'tile-body\'><a href=\'\'><h6 class=\'title\'>Captured Response</h6><div class=\'chart line-chart\'><d3-line-chart chart=\'charts.capturedResponse\'></d3-line-chart></div></a></div></li><li class=\'tile\'><div class=\'tile-body\'><a href=\'\'><h6 class=\'title\'>Cumulative Captured Response</h6><div class=\'chart line-chart\'><d3-line-chart chart=\'charts.cumulativeCapturedResponse\'></d3-line-chart></div></a></div></li><li class=\'tile\'><div class=\'tile-body\'><a href=\'\'><h6 class=\'title\'>ROC</h6><div class=\'chart roc-chart\'><d3-roc-chart chart=\'charts.roc\'></d3-roc-chart></div></a></div></li><li class=\'tile\'><div class=\'tile-body\'><a href=\'\'><h6 class=\'title\'>Misclassification</h6><div class=\'chart pie-chart\'><d3-pie-chart bucket=\'bucket\' chart=\'charts.misclassification\' count=\'count\'></d3-pie-chart></div></a></div></li><li class=\'tile\'><div class=\'tile-body\'><a href=\'\'><h6 class=\'title\'>Distribution of Predicted Values</h6><div class=\'chart bar-chart\'><d3-bar-chart chart=\'charts.predictedValuesDistribution\'></d3-bar-chart></div></a></div></li></ul></div></div>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('dejalyticsPartials');
+} catch (e) {
+  module = angular.module('dejalyticsPartials', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('partials/classification/augur-influencers.html',
+    '<div class=\'row augur-influencers\'><div class=\'columns small-12\'><div class=\'heading\'><h1>Influencers</h1><h6 class=\'subheader\'>Shows up to 40 most important influencers</h6></div><d3-influencer-chart data=\'data\'></d3-influencer-chart></div></div>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('dejalyticsPartials');
+} catch (e) {
+  module = angular.module('dejalyticsPartials', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('partials/classification/augur-new.html',
+    '<div class=\'row new-augur-wizard action-bar\'><div class=\'columns small-12\'><ul class=\'left action-bar-breadcrumb\'><li> Set up a new Augur</li></ul></div></div><div class=\'row container new-augur-wizard\'><div class=\'small-12 columns\'><form name=\'form\' ng-submit=\'form.$valid &amp;&amp; submit()\' novalidate=\'\'><div class=\'row step step-1\' ng-class=\'(step==1) ? "active" : ""\'><div class=\'small-12 columns\'><a href=\'\' ng-click=\'step=1\'><h5 class=\'subheader title\'> Step 1 - Name and DataSpace</h5></a><div class=\'body\' ng-show=\'step==1\'><h6 class=\'subheader subtitle\'> Give your augur a unique name and select a DataSpace</h6><div class=\'row augur-name\'><div class=\'small-1 columns\'> <label class=\'right inline\' for=\'augur-name\'>Name</label></div><div class=\'small-3 columns end\' ng-class=\'{"error" : form.augurName.$error.uniqueAugurName}\'> <input id=\'augur-name\' name=\'augurName\' ng-model=\'augur.name\' placeholder=\'Please enter a name\' type=\'text\' unique-augur-name=\'\'> <small class=\'error\' ng-show=\'form.augurName.$error.uniqueAugurName\'>This name already exists</small></div></div><div class=\'row augur-habitat\'><div class=\'small-1 columns\'> <label class=\'right inline\' for=\'augur-habitat\'>DataSpace</label></div><div class=\'small-3 columns end\'> <input id=\'augur-habitat\' name=\'augurHabitat\' ng-model=\'augur.habitat\' placeholder=\'Type to search\' type=\'text\' typeahead=\'habitat as habitat.name for habitat in habitats\'></div></div></div><div class=\'next-button\'><div class=\'next-button-wrap\'> <a class=\'tiny button radius\' href=\'\' ng-click=\'stepValid.one &amp;&amp; (step=2)\' ng-disabled=\'!stepValid.one || form.augurName.$error.uniqueAugurName\'>Next step ></a></div></div></div></div><div class=\'row step step-2\' ng-class=\'(step==2) ? "active" : ""\'><div class=\'small-12 columns\'><a ng-click=\'stepValid.one &amp;&amp; (step=2)\'><h5 class=\'subheader title\'> Step 2 - Select an event table</h5></a><div class=\'body\' ng-show=\'step==2\'><h6 class=\'subheader subtitle\'>Select the events table that contains the prediction target</h6><div class=\'row\'><div class=\'small-12 columns\'><ul class=\'small-block-grid-2 medium-block-grid-3 large-block-grid-4 fact-tables\'><li ng-repeat=\'factTable in factTables\'> <label for=\'{{ factTable.id }}\'><input id=\'{{ factTable.id }}\' ng-model=\'augur.factTable\' ng-value=\'factTable\' type=\'radio\'><div class=\'th\' ng-class=\'(augur.factTable==factTable) ? "selected" : ""\'><div class=\'fact-body\'><h8 class=\'subheader\'> {{factTable.name}}<span class=\'check-status glyphicon glyphicon-check\' ng-show=\'augur.factTable==factTable\'></span></h8><p> {{factTable.description}}</p></div></div></label></li></ul></div></div></div><div class=\'next-button\'><div class=\'next-button-wrap\'> <a class=\'tiny button radius\' href=\'\' ng-click=\'stepValid.two &amp;&amp; (step=3)\' ng-disabled=\'!stepValid.two\'>Next step ></a></div></div></div></div><div class=\'row step step-3\' ng-class=\'(step==3) ? "active" : ""\'><div class=\'small-12 columns\'><a href=\'\' ng-click=\'stepValid.two &amp;&amp; (step=3)\'><h5 class=\'subheader title\'> Step 3 - Define prediction target</h5></a><div class=\'body\' ng-show=\'step==3\'><h6 class=\'subheader subtitle\'> Enter a comma separated list of IDs to define the prediction events<div class=\'row events\'><div class=\'small-9 columns input\'><textarea available-event=\'\' name=\'eventIds\' ng-model=\'augur.eventIds\' placeholder=\'{{ augur.factTable.suggestedIds }}\'></textarea></div><div class=\'small-3 columns\'><div class=\'validation\'><h5 class=\'subheader\'>Validation</h5><div class=\'validation-message-show-hide not-validated\' ng-show=\'!eventIdsValidated\'><h6>You need to validate your prediction target before continuing</h6></div><div class=\'validation-message-show-hide validated\' ng-show=\'eventIdsValidated\'><div class=\'valid validation-elements\' ng-show=\'stepValid.three\'> Your Prediction Target IDs have been verified.<div class=\'verified validation-icon\'><span class=\'glyphicon glyphicon-ok-circle\'></span></div></div><div class=\'invalid validation-elements\' ng-show=\'!stepValid.three\'><div class=\'error\' ng-show=\'form.eventIds.$error.recognized\'> The following Prediction Target IDs do not exist in the events table: {{ unrecognizedEventIds.join(\', \') }}</div><div class=\'error\' ng-show=\'form.eventIds.$error.present\'> You need to provide one or more Prediction Target IDs</div><div class=\'error validation-icon\'><span class=\'glyphicon glyphicon-remove-circle\'></span></div></div></div><div class=\'validation-elements validate-action\'> <a class=\'button small radius\' ng-click=\'validateEventIds()\' ng-show=\'!stepValid.three\'>Validate</a></div></div></div></div></h6></div><div class=\'next-button\'><div class=\'next-button-wrap\'> <a class=\'tiny button radius\' href=\'\' ng-click=\'stepValid.three &amp;&amp; (step=4)\' ng-disabled=\'!stepValid.three\'>Next step ></a></div></div></div></div><div class=\'row step step-4 step-last\' ng-class=\'(step==4) ? "active" : ""\'><div class=\'small-12 columns\'><a href=\'\' ng-click=\'stepValid.three &amp;&amp; (step=4)\'><h5 class=\'subheader title\'> Step 4 - Schedule and trigger settings</h5></a><div class=\'body\' ng-show=\'step==4\'><h6 class=\'subheader subtitle\'> Set prediction and evaluation schedule, set a key performance indicator and set the automatic learning threshold</h6><augur-settings augur=\'augur\' form=\'form\'></augur-settings></div><div class=\'next-button\'><div class=\'next-button-wrap\'> <input class=\'tiny button radius\' ng-disabled=\'!stepValid.four || !form.$valid\' type=\'submit\' value=\'Activate Augur &gt;\'></div></div></div></div></form></div></div>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('dejalyticsPartials');
+} catch (e) {
+  module = angular.module('dejalyticsPartials', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('partials/classification/augur-performance-evaluation.html',
+    '<div class=\'augur-performance\'><div class=\'row\'><div class=\'columns small-12\'><div class=\'heading\'><h3 class=\'title\'> Performance Drift (Evaluation) —<dropdown label=\'evaluation.activeIndicator.label\'><div class=\'row selection\' id=\'selection\'><div class=\'columns small-12\'><div class=\'options\' id=\'options\'><ul class=\'no-bullet inline-list\'><li class=\'left\'><ul class=\'no-bullet indicators\'><li ng-class=\'{active: evaluation.activeIndicator.key===indicator.key, kpi: augur.learningKpi===indicator.key}\' ng-repeat=\'indicator in indicators[0]\'> <label><input ng-model=\'$parent.evaluation.activeIndicator\' ng-value=\'indicator\' type=\'radio\'> {{ indicator.label }}<span class=\'glyphicon glyphicon-ok-circle\'></span></label></li></ul></li><li class=\'middle\'><ul class=\'no-bullet indicators\'><li ng-class=\'{active: evaluation.activeIndicator.key===indicator.key, kpi: augur.learningKpi===indicator.key}\' ng-repeat=\'indicator in indicators[1]\'> <label><input ng-model=\'$parent.evaluation.activeIndicator\' ng-value=\'indicator\' type=\'radio\'> {{ indicator.label }}<span class=\'glyphicon glyphicon-ok-circle\'></span></label></li></ul></li><li class=\'right\'><ul class=\'no-bullet indicators\'><li ng-class=\'{active: evaluation.activeIndicator.key===indicator.key, kpi: augur.learningKpi===indicator.key}\' ng-repeat=\'indicator in indicators[2]\'> <label><input ng-model=\'$parent.evaluation.activeIndicator\' ng-value=\'indicator\' type=\'radio\'> {{ indicator.label }}<span class=\'glyphicon glyphicon-ok-circle\'></span></label></li></ul></li></ul></div></div></div></dropdown></h3><h6 class=\'subheader\'>Changes in the evaluation data runs over the last 30 days</h6></div></div></div><div class=\'row\'><div class=\'columns small-12\'><div class=\'chart\'><d3-performance-chart comparator=\'evaluation.driftComparator\' data=\'evaluation.data\' mode=\'evaluation\'></d3-performance-chart></div></div></div></div>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('dejalyticsPartials');
+} catch (e) {
+  module = angular.module('dejalyticsPartials', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('partials/classification/augur-performance-learning.html',
+    '<div class=\'augur-performance\'><div class=\'row\'><div class=\'columns small-12\'><div class=\'heading\'><h3 class=\'title\'> Performance Drift (Learning) —<dropdown label=\'learning.activeIndicator.label\'><div class=\'row selection\' id=\'selection\'><div class=\'columns small-12\'><div class=\'options\' id=\'options\'><ul class=\'no-bullet inline-list\'><li class=\'left\'><ul class=\'no-bullet indicators\'><li ng-class=\'{active: learning.activeIndicator.key===indicator.key, kpi: augur.learningKpi===indicator.key}\' ng-repeat=\'indicator in indicators[0]\'> <label><input ng-model=\'$parent.learning.activeIndicator\' ng-value=\'indicator\' type=\'radio\'> {{ indicator.label }}<span class=\'glyphicon glyphicon-ok-circle\'></span></label></li></ul></li><li class=\'middle\'><ul class=\'no-bullet indicators\'><li ng-class=\'{active: learning.activeIndicator.key===indicator.key, kpi: augur.learningKpi===indicator.key}\' ng-repeat=\'indicator in indicators[1]\'> <label><input ng-model=\'$parent.learning.activeIndicator\' ng-value=\'indicator\' type=\'radio\'> {{ indicator.label }}<span class=\'glyphicon glyphicon-ok-circle\'></span></label></li></ul></li><li class=\'right\'><ul class=\'no-bullet indicators\'><li ng-class=\'{active: learning.activeIndicator.key===indicator.key, kpi: augur.learningKpi===indicator.key}\' ng-repeat=\'indicator in indicators[2]\'> <label><input ng-model=\'$parent.learning.activeIndicator\' ng-value=\'indicator\' type=\'radio\'> {{ indicator.label }}<span class=\'glyphicon glyphicon-ok-circle\'></span></label></li></ul></li></ul></div></div></div></dropdown></h3><h6 class=\'subheader\'>Changes in the learning data runs over the last 30 days</h6></div></div></div><div class=\'row\'><div class=\'columns small-12\'><div class=\'chart\'><d3-performance-chart data=\'learning.data\' mode=\'learning\'></d3-performance-chart></div></div></div></div>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('dejalyticsPartials');
+} catch (e) {
+  module = angular.module('dejalyticsPartials', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('partials/classification/augur-profile.html',
+    '<div class=\'row\'><div class=\'columns small-12\'><h4>Cluster Profile</h4></div></div><div class=\'row\'><div class=\'columns large-12 augur-clustering-profile\'><table class=\'large-12\'><thead><tr><th class=\'text-center\' ng-repeat=\'header in headers\'> {{header.name}}<br> <span class=\'count\' ng-if=\'header.count\'>Count: {{header.count}}</span></th></tr></thead><tbody><tr ng-repeat=\'result in results\'><td class=\'text-center\' ng-repeat=\'r in result\'><div ng-switch=\'r.type\'><div ng-switch-when=\'none\'> {{r.data}}</div><div class=\'chart-container\' ng-switch-when=\'categorical\'><d3-profile-bar-chart data=\'r.data\'></d3-profile-bar-chart></div><div class=\'chart-container\' ng-switch-when=\'continuous\'><d3-profile-diamond-chart data=\'r.data\' legend=\'r.showLegend\'></d3-profile-diamond-chart></div></div></td></tr></tbody></table></div></div>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('dejalyticsPartials');
+} catch (e) {
+  module = angular.module('dejalyticsPartials', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('partials/classification/augur-settings.html',
+    '<div class=\'augur-settings\'><div class=\'row\'><div class=\'columns small-12\'><div class=\'heading\'><h1>Augur Settings</h1><h6 class=\'subheader\'>Update the settings for this Augur</h6></div></div></div><form class=\'update\' name=\'form\' ng-submit=\'form.$valid &amp;&amp; submit()\' novalidate=\'\'><div class=\'row\'><div class=\'columns small-12\'><div class=\'form-body\'><augur-settings augur=\'augurSettings\' form=\'form\'></augur-settings></div></div></div><div class=\'row\'><div class=\'columns small-12\'><div class=\'alert-box alert\' ng-if=\'error\'> {{ error }}</div><div class=\'alert-box success\' ng-if=\'success\'> {{ success }}</div></div></div><div class=\'row\'><div class=\'columns small-12\'><div class=\'form-buttons\'><div class=\'left\'> <a class=\'button radius delete\' ng-click=\'delete()\'>Delete augur</a></div><div class=\'right\'> <a class=\'button radius cancel\' ng-click=\'initialize()\'>Cancel</a> <input class=\'submit button radius\' ng-disabled=\'!form.$valid\' type=\'submit\' value=\'Update augur\'></div></div></div></div><div class=\'row\' ng-if=\'augur.modelDownloadPath\'><div class=\'columns small-12\'><div class=\'right\'><a class=\'download-button\' ng-href=\'{{ augur.modelDownloadPath }}\'><span class=\'download\'><i class=\'icon icon-download\'></i></span> Download PMML</a></div></div></div></form></div>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('dejalyticsPartials');
+} catch (e) {
+  module = angular.module('dejalyticsPartials', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('partials/classification/augur-tree.html',
+    '<div class=\'row augur-decision-tree\'><div class=\'columns small-2 element-path\'><div class=\'heading\' ng-show=\'treePathElements\'><h4>Prediction Path</h4></div><dl><dt ng-repeat-start=\'pathElement in treePathElements track by $index\'> {{ pathElement.operation }}</dt><dd ng-repeat-end=\'\'> <span ng-class=\'pathElement.type\'>{{ pathElement.label }}</span></dd></dl></div><div class=\'columns small-10 tree\'><d3-decision-tree-chart data=\'data\' tree-path-elements=\'treePathElements\'></d3-decision-tree-chart></div></div>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('dejalyticsPartials');
+} catch (e) {
+  module = angular.module('dejalyticsPartials', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('partials/classification/augur.html',
+    '<div class=\'row augur action-bar\' ng-attr-data-theme=\'{{ habitat.colorScheme }}\'><div class=\'small-12 columns\'><div class=\'row\'><div class=\'small-11 columns\'><div class=\'row\'><div class=\'small-3 columns habitat-name\'> {{augur.name}}</div><div class=\'small-3 columns info\'><dl><dt>Type</dt><dd>Decision Tree</dd><dt>KPI</dt><dd> {{ augur.learningKpiLabel }}</dd><dt>Threshold</dt><dd> {{ augur.learningThresholdLabel }}</dd></dl></div><div class=\'small-6 columns actions\'><ul class=\'no-bullet\'><li class=\'action\'><a class=\'action-button\' ng-click=\'schedulePrediction()\'><span class=\'calculate\'><i class=\'icon icon-calculator\'></i></span> <span class=\'action-label\'>Calculate new prediction<br> <span class=\'timestamp\'>(scheduled: {{ augur.prediction.nextTimestamp | date: \'yyyy-MM-dd HH:mm\' }})</span></span></a></li><li class=\'action\'><a class=\'action-button\' ng-href=\'{{ augur.prediction.downloadPath }}\'><span class=\'download\'><i class=\'icon icon-download\'></i></span> <span class=\'action-label\'>Download latest prediction<br> <span class=\'timestamp\' ng-if=\'augur.prediction.timestamp\'>(from: {{ augur.prediction.timestamp | date: \'yyyy-MM-dd HH:mm Z\' }})</span> <span ng-if=\'!augur.prediction.timestamp\'>(no prediction yet)</span></span></a></li></ul></div></div></div><div class=\'small-1 columns back\'><a ui-sref=\'dashboard\'><span class=\'download\'><i class=\'icon icon-exit\'></i></span></a></div></div></div></div><div class=\'row augur container\'><div class=\'side-nav-container\'><ul class=\'side-nav\'><li ui-sref-active=\'active\'><a ui-sref=\'augur.classification.home\'><span class=\'model-viewer\'><i class=\'icon icon-decisiontree\'></i></span><br> Model Viewer</a></li><li ui-sref-active=\'active\'><a ui-sref=\'augur.classification.influencers\'><span class=\'influencer\'><i class=\'icon icon-influencer\'></i></span><br> Influencers</a></li><li ui-sref-active=\'active\'><a ui-sref=\'augur.classification.accuracy\'><span class=\'accuracy\'><i class=\'icon icon-target\'></i></span><br> Accuracy</a></li><li ui-sref-active=\'active\'><a fyi=\'only to get sref-active working\' style=\'display:none;\' ui-sref=\'augur.classification.performance\'></a><a ng-click=\'activatePerformanceState()\'><span class=\'performance-drift\'><i class=\'icon icon-drift\'></i></span><div class=\'label-main\'> Performance Drift</div></a><div class=\'side-nav-sub\'><ul class=\'no-bullet inline-list\'><li class=\'first\' ui-sref-active=\'active\'><a ui-sref=\'augur.classification.performance.learning\'><span class=\'performance-drift-learning\'><i class=\'icon icon-gamepad\'></i></span></a></li><li ui-sref-active=\'active\'><a ui-sref=\'augur.classification.performance.evaluation\'><span class=\'performance-drift-evaluation\'><i class=\'icon icon-suitcase\'></i></span></a></li></ul><div class=\'label-sub\'> Performance Drift</div></div></li><li ui-sref-active=\'active\'><a ui-sref=\'augur.classification.settings\'><span class=\'settings\'><icon class=\'icon-settings\'></icon></span><br> Settings</a></li></ul></div><div class=\'main\'><div ui-view=\'\'></div></div></div>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('dejalyticsPartials');
+} catch (e) {
+  module = angular.module('dejalyticsPartials', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('partials/classification/create.html',
+    '<div class=\'row new-augur-wizard action-bar\'><div class=\'columns small-12\'><ul class=\'left action-bar-breadcrumb\'><li> Set up a new Augur</li></ul></div></div><div class=\'row container new-augur-wizard\'><div class=\'small-12 columns\'><form name=\'form\' ng-submit=\'form.$valid &amp;&amp; submit()\' novalidate=\'\'><div class=\'row step step-1\' ng-class=\'(step==1) ? "active" : ""\'><div class=\'small-12 columns\'><a href=\'\' ng-click=\'step=1\'><h5 class=\'subheader title\'> Step 1 - Name and DataSpace</h5></a><div class=\'body\' ng-show=\'step==1\'><h6 class=\'subheader subtitle\'> Give your augur a unique name and select a DataSpace</h6><div class=\'row augur-name\'><div class=\'small-1 columns\'> <label class=\'right inline\' for=\'augur-name\'>Name</label></div><div class=\'small-3 columns end\' ng-class=\'{"error" : form.augurName.$error.uniqueAugurName}\'> <input id=\'augur-name\' name=\'augurName\' ng-model=\'augur.name\' placeholder=\'Please enter a name\' type=\'text\' unique-augur-name=\'\'> <small class=\'error\' ng-show=\'form.augurName.$error.uniqueAugurName\'>This name already exists</small></div></div><div class=\'row augur-habitat\'><div class=\'small-1 columns\'> <label class=\'right inline\' for=\'augur-habitat\'>DataSpace</label></div><div class=\'small-3 columns end\'> <input id=\'augur-habitat\' name=\'augurHabitat\' ng-model=\'augur.habitat\' placeholder=\'Type to search\' type=\'text\' typeahead=\'habitat as habitat.name for habitat in habitats\'></div></div></div><div class=\'next-button\'><div class=\'next-button-wrap\'> <a class=\'tiny button radius\' href=\'\' ng-click=\'stepValid.one &amp;&amp; (step=2)\' ng-disabled=\'!stepValid.one || form.augurName.$error.uniqueAugurName\'>Next step ></a></div></div></div></div><div class=\'row step step-2\' ng-class=\'(step==2) ? "active" : ""\'><div class=\'small-12 columns\'><a ng-click=\'stepValid.one &amp;&amp; (step=2)\'><h5 class=\'subheader title\'> Step 2 - Select an event table</h5></a><div class=\'body\' ng-show=\'step==2\'><h6 class=\'subheader subtitle\'>Select the events table that contains the prediction target</h6><div class=\'row\'><div class=\'small-12 columns\'><ul class=\'small-block-grid-2 medium-block-grid-3 large-block-grid-4 fact-tables\'><li ng-repeat=\'factTable in factTables\'> <label for=\'{{ factTable.id }}\'><input id=\'{{ factTable.id }}\' ng-model=\'augur.factTable\' ng-value=\'factTable\' type=\'radio\'><div class=\'th\' ng-class=\'(augur.factTable==factTable) ? "selected" : ""\'><div class=\'fact-body\'><h8 class=\'subheader\'> {{factTable.name}}<span class=\'check-status glyphicon glyphicon-check\' ng-show=\'augur.factTable==factTable\'></span></h8><p> {{factTable.description}}</p></div></div></label></li></ul></div></div></div><div class=\'next-button\'><div class=\'next-button-wrap\'> <a class=\'tiny button radius\' href=\'\' ng-click=\'stepValid.two &amp;&amp; (step=3)\' ng-disabled=\'!stepValid.two\'>Next step ></a></div></div></div></div><div class=\'row step step-3\' ng-class=\'(step==3) ? "active" : ""\'><div class=\'small-12 columns\'><a href=\'\' ng-click=\'stepValid.two &amp;&amp; (step=3)\'><h5 class=\'subheader title\'> Step 3 - Define prediction target</h5></a><div class=\'body\' ng-show=\'step==3\'><h6 class=\'subheader subtitle\'> Enter a comma separated list of IDs to define the prediction events<div class=\'row events\'><div class=\'small-9 columns input\'><textarea available-event=\'\' name=\'eventIds\' ng-model=\'augur.eventIds\' placeholder=\'{{ augur.factTable.suggestedIds }}\'></textarea></div><div class=\'small-3 columns\'><div class=\'validation\'><h5 class=\'subheader\'>Validation</h5><div class=\'validation-message-show-hide not-validated\' ng-show=\'!eventIdsValidated\'><h6>You need to validate your prediction target before continuing</h6></div><div class=\'validation-message-show-hide validated\' ng-show=\'eventIdsValidated\'><div class=\'valid validation-elements\' ng-show=\'stepValid.three\'> Your Prediction Target IDs have been verified.<div class=\'verified validation-icon\'><span class=\'glyphicon glyphicon-ok-circle\'></span></div></div><div class=\'invalid validation-elements\' ng-show=\'!stepValid.three\'><div class=\'error\' ng-show=\'form.eventIds.$error.recognized\'> The following Prediction Target IDs do not exist in the events table: {{ unrecognizedEventIds.join(\', \') }}</div><div class=\'error\' ng-show=\'form.eventIds.$error.present\'> You need to provide one or more Prediction Target IDs</div><div class=\'error validation-icon\'><span class=\'glyphicon glyphicon-remove-circle\'></span></div></div></div><div class=\'validation-elements validate-action\'> <a class=\'button small radius\' ng-click=\'validateEventIds()\' ng-show=\'!stepValid.three\'>Validate</a></div></div></div></div></h6></div><div class=\'next-button\'><div class=\'next-button-wrap\'> <a class=\'tiny button radius\' href=\'\' ng-click=\'stepValid.three &amp;&amp; (step=4)\' ng-disabled=\'!stepValid.three\'>Next step ></a></div></div></div></div><div class=\'row step step-4 step-last\' ng-class=\'(step==4) ? "active" : ""\'><div class=\'small-12 columns\'><a href=\'\' ng-click=\'stepValid.three &amp;&amp; (step=4)\'><h5 class=\'subheader title\'> Step 4 - Schedule and trigger settings</h5></a><div class=\'body\' ng-show=\'step==4\'><h6 class=\'subheader subtitle\'> Set prediction and evaluation schedule, set a key performance indicator and set the automatic learning threshold</h6><augur-settings augur=\'augur\' form=\'form\'></augur-settings></div><div class=\'next-button\'><div class=\'next-button-wrap\'> <input class=\'tiny button radius\' ng-disabled=\'!stepValid.four || !form.$valid\' type=\'submit\' value=\'Activate Augur &gt;\'></div></div></div></div></form></div></div>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('dejalyticsPartials');
+} catch (e) {
+  module = angular.module('dejalyticsPartials', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('partials/classification/index.html',
+    '<div class=\'row augur action-bar\' ng-attr-data-theme=\'{{ habitat.colorScheme }}\'><div class=\'small-12 columns\'><div class=\'row\'><div class=\'small-11 columns\'><div class=\'row\'><div class=\'small-3 columns habitat-name\'> {{augur.name}}</div><div class=\'small-3 columns info\'><dl><dt>Type</dt><dd>Decision Tree</dd><dt>KPI</dt><dd> {{ augur.learningKpiLabel }}</dd><dt>Threshold</dt><dd> {{ augur.learningThresholdLabel }}</dd></dl></div><div class=\'small-6 columns actions\'><ul class=\'no-bullet\'><li class=\'action\'><a class=\'action-button\' ng-click=\'schedulePrediction()\'><span class=\'calculate\'><i class=\'icon icon-calculator\'></i></span> <span class=\'action-label\'>Calculate new prediction<br> <span class=\'timestamp\'>(scheduled: {{ augur.prediction.nextTimestamp | date: \'yyyy-MM-dd HH:mm\' }})</span></span></a></li><li class=\'action\'><a class=\'action-button\' ng-href=\'{{ augur.prediction.downloadPath }}\'><span class=\'download\'><i class=\'icon icon-download\'></i></span> <span class=\'action-label\'>Download latest prediction<br> <span class=\'timestamp\' ng-if=\'augur.prediction.timestamp\'>(from: {{ augur.prediction.timestamp | date: \'yyyy-MM-dd HH:mm Z\' }})</span> <span ng-if=\'!augur.prediction.timestamp\'>(no prediction yet)</span></span></a></li></ul></div></div></div><div class=\'small-1 columns back\'><a ui-sref=\'dashboard\'><span class=\'download\'><i class=\'icon icon-exit\'></i></span></a></div></div></div></div><div class=\'row augur container\'><div class=\'side-nav-container\'><ul class=\'side-nav\'><li ui-sref-active=\'active\'><a ui-sref=\'augur.classification.home\'><span class=\'model-viewer\'><i class=\'icon icon-decisiontree\'></i></span><br> Model Viewer</a></li><li ui-sref-active=\'active\'><a ui-sref=\'augur.classification.influencers\'><span class=\'influencer\'><i class=\'icon icon-influencer\'></i></span><br> Influencers</a></li><li ui-sref-active=\'active\'><a ui-sref=\'augur.classification.accuracy\'><span class=\'accuracy\'><i class=\'icon icon-target\'></i></span><br> Accuracy</a></li><li ui-sref-active=\'active\'><a fyi=\'only to get sref-active working\' style=\'display:none;\' ui-sref=\'augur.classification.performance\'></a><a ng-click=\'activatePerformanceState()\'><span class=\'performance-drift\'><i class=\'icon icon-drift\'></i></span><div class=\'label-main\'> Performance Drift</div></a><div class=\'side-nav-sub\'><ul class=\'no-bullet inline-list\'><li class=\'first\' ui-sref-active=\'active\'><a ui-sref=\'augur.classification.performance.learning\'><span class=\'performance-drift-learning\'><i class=\'icon icon-gamepad\'></i></span></a></li><li ui-sref-active=\'active\'><a ui-sref=\'augur.classification.performance.evaluation\'><span class=\'performance-drift-evaluation\'><i class=\'icon icon-suitcase\'></i></span></a></li></ul><div class=\'label-sub\'> Performance Drift</div></div></li><li ui-sref-active=\'active\'><a ui-sref=\'augur.classification.settings\'><span class=\'settings\'><icon class=\'icon-settings\'></icon></span><br> Settings</a></li></ul></div><div class=\'main\'><div ui-view=\'\'></div></div></div>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('dejalyticsPartials');
+} catch (e) {
+  module = angular.module('dejalyticsPartials', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('partials/classification/influencers.html',
+    '<div class=\'row augur-influencers\'><div class=\'columns small-12\'><div class=\'heading\'><h1>Influencers</h1><h6 class=\'subheader\'>Shows up to 40 most important influencers</h6></div><d3-influencer-chart data=\'data\'></d3-influencer-chart></div></div>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('dejalyticsPartials');
+} catch (e) {
+  module = angular.module('dejalyticsPartials', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('partials/classification/performance-evaluation.html',
+    '<div class=\'augur-performance\'><div class=\'row\'><div class=\'columns small-12\'><div class=\'heading\'><h3 class=\'title\'> Performance Drift (Evaluation) —<dropdown label=\'evaluation.activeIndicator.label\'><div class=\'row selection\' id=\'selection\'><div class=\'columns small-12\'><div class=\'options\' id=\'options\'><ul class=\'no-bullet inline-list\'><li class=\'left\'><ul class=\'no-bullet indicators\'><li ng-class=\'{active: evaluation.activeIndicator.key===indicator.key, kpi: augur.learningKpi===indicator.key}\' ng-repeat=\'indicator in indicators[0]\'> <label><input ng-model=\'$parent.evaluation.activeIndicator\' ng-value=\'indicator\' type=\'radio\'> {{ indicator.label }}<span class=\'glyphicon glyphicon-ok-circle\'></span></label></li></ul></li><li class=\'middle\'><ul class=\'no-bullet indicators\'><li ng-class=\'{active: evaluation.activeIndicator.key===indicator.key, kpi: augur.learningKpi===indicator.key}\' ng-repeat=\'indicator in indicators[1]\'> <label><input ng-model=\'$parent.evaluation.activeIndicator\' ng-value=\'indicator\' type=\'radio\'> {{ indicator.label }}<span class=\'glyphicon glyphicon-ok-circle\'></span></label></li></ul></li><li class=\'right\'><ul class=\'no-bullet indicators\'><li ng-class=\'{active: evaluation.activeIndicator.key===indicator.key, kpi: augur.learningKpi===indicator.key}\' ng-repeat=\'indicator in indicators[2]\'> <label><input ng-model=\'$parent.evaluation.activeIndicator\' ng-value=\'indicator\' type=\'radio\'> {{ indicator.label }}<span class=\'glyphicon glyphicon-ok-circle\'></span></label></li></ul></li></ul></div></div></div></dropdown></h3><h6 class=\'subheader\'>Changes in the evaluation data runs over the last 30 days</h6></div></div></div><div class=\'row\'><div class=\'columns small-12\'><div class=\'chart\'><d3-performance-chart comparator=\'evaluation.driftComparator\' data=\'evaluation.data\' mode=\'evaluation\'></d3-performance-chart></div></div></div></div>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('dejalyticsPartials');
+} catch (e) {
+  module = angular.module('dejalyticsPartials', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('partials/classification/performance-learning.html',
+    '<div class=\'augur-performance\'><div class=\'row\'><div class=\'columns small-12\'><div class=\'heading\'><h3 class=\'title\'> Performance Drift (Learning) —<dropdown label=\'learning.activeIndicator.label\'><div class=\'row selection\' id=\'selection\'><div class=\'columns small-12\'><div class=\'options\' id=\'options\'><ul class=\'no-bullet inline-list\'><li class=\'left\'><ul class=\'no-bullet indicators\'><li ng-class=\'{active: learning.activeIndicator.key===indicator.key, kpi: augur.learningKpi===indicator.key}\' ng-repeat=\'indicator in indicators[0]\'> <label><input ng-model=\'$parent.learning.activeIndicator\' ng-value=\'indicator\' type=\'radio\'> {{ indicator.label }}<span class=\'glyphicon glyphicon-ok-circle\'></span></label></li></ul></li><li class=\'middle\'><ul class=\'no-bullet indicators\'><li ng-class=\'{active: learning.activeIndicator.key===indicator.key, kpi: augur.learningKpi===indicator.key}\' ng-repeat=\'indicator in indicators[1]\'> <label><input ng-model=\'$parent.learning.activeIndicator\' ng-value=\'indicator\' type=\'radio\'> {{ indicator.label }}<span class=\'glyphicon glyphicon-ok-circle\'></span></label></li></ul></li><li class=\'right\'><ul class=\'no-bullet indicators\'><li ng-class=\'{active: learning.activeIndicator.key===indicator.key, kpi: augur.learningKpi===indicator.key}\' ng-repeat=\'indicator in indicators[2]\'> <label><input ng-model=\'$parent.learning.activeIndicator\' ng-value=\'indicator\' type=\'radio\'> {{ indicator.label }}<span class=\'glyphicon glyphicon-ok-circle\'></span></label></li></ul></li></ul></div></div></div></dropdown></h3><h6 class=\'subheader\'>Changes in the learning data runs over the last 30 days</h6></div></div></div><div class=\'row\'><div class=\'columns small-12\'><div class=\'chart\'><d3-performance-chart data=\'learning.data\' mode=\'learning\'></d3-performance-chart></div></div></div></div>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('dejalyticsPartials');
+} catch (e) {
+  module = angular.module('dejalyticsPartials', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('partials/classification/settings.html',
+    '<div class=\'augur-settings\'><div class=\'row\'><div class=\'columns small-12\'><div class=\'heading\'><h1>Augur Settings</h1><h6 class=\'subheader\'>Update the settings for this Augur</h6></div></div></div><form class=\'update\' name=\'form\' ng-submit=\'form.$valid &amp;&amp; submit()\' novalidate=\'\'><div class=\'row\'><div class=\'columns small-12\'><div class=\'form-body\'><augur-settings augur=\'augurSettings\' form=\'form\'></augur-settings></div></div></div><div class=\'row\'><div class=\'columns small-12\'><div class=\'alert-box alert\' ng-if=\'error\'> {{ error }}</div><div class=\'alert-box success\' ng-if=\'success\'> {{ success }}</div></div></div><div class=\'row\'><div class=\'columns small-12\'><div class=\'form-buttons\'><div class=\'left\'> <a class=\'button radius delete\' ng-click=\'delete()\'>Delete augur</a></div><div class=\'right\'> <a class=\'button radius cancel\' ng-click=\'initialize()\'>Cancel</a> <input class=\'submit button radius\' ng-disabled=\'!form.$valid\' type=\'submit\' value=\'Update augur\'></div></div></div></div><div class=\'row\' ng-if=\'augur.modelDownloadPath\'><div class=\'columns small-12\'><div class=\'right\'><a class=\'download-button\' ng-href=\'{{ augur.modelDownloadPath }}\'><span class=\'download\'><i class=\'icon icon-download\'></i></span> Download PMML</a></div></div></div></form></div>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('dejalyticsPartials');
+} catch (e) {
+  module = angular.module('dejalyticsPartials', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('partials/classification/tree.html',
+    '<div class=\'row augur-decision-tree\'><div class=\'columns small-2 element-path\'><div class=\'heading\' ng-show=\'treePathElements\'><h4>Prediction Path</h4></div><dl><dt ng-repeat-start=\'pathElement in treePathElements track by $index\'> {{ pathElement.operation }}</dt><dd ng-repeat-end=\'\'> <span ng-class=\'pathElement.type\'>{{ pathElement.label }}</span></dd></dl></div><div class=\'columns small-10 tree\'><d3-decision-tree-chart data=\'data\' tree-path-elements=\'treePathElements\'></d3-decision-tree-chart></div></div>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('dejalyticsPartials');
+} catch (e) {
+  module = angular.module('dejalyticsPartials', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('partials/clustering/augur-clustering-settings.html',
+    '<h3>Settings</h3>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('dejalyticsPartials');
+} catch (e) {
+  module = angular.module('dejalyticsPartials', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('partials/clustering/augur-clustering.html',
+    '<div class=\'row augur action-bar\' ng-attr-data-theme=\'{{ habitat.colorScheme }}\'><div class=\'small-12 columns\'><div class=\'row\'><div class=\'small-11 columns\'><div class=\'row\'><div class=\'small-6 columns habitat-name\'> Clustering #1</div><div class=\'small-6 columns actions\'><ul class=\'no-bullet\'><li class=\'action\'></li><li class=\'action\'></li></ul></div></div></div><div class=\'small-1 columns back\'><a ui-sref=\'dashboard\'><span class=\'download\'><i class=\'icon icon-exit\'></i></span></a></div></div></div></div><div class=\'row augur container\'><div class=\'side-nav-container\'><ul class=\'side-nav\'><li ui-sref-active=\'active\'><a ui-sref=\'augur.clustering.home\'><span class=\'clustering-profile\'><i class=\'icon icon-decisiontree\'></i></span><br> Cluster Profile</a></li><li ui-sref-active=\'active\'><a ui-sref=\'augur.clustering.landscape\'><span class=\'landscape\'><i class=\'icon icon-influencer\'></i></span><br> Cluster Landscape</a></li><li ui-sref-active=\'active\'><a ui-sref=\'augur.clustering.settings\'><span class=\'settings\'><icon class=\'icon-settings\'></icon></span><br> Settings</a></li></ul></div><div class=\'main\'><div ui-view=\'\'></div></div></div>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('dejalyticsPartials');
+} catch (e) {
+  module = angular.module('dejalyticsPartials', []);
+}
+module.run(['$templateCache', function($templateCache) {
   $templateCache.put('partials/clustering/augur-create.html',
     '<div class=\'row new-augur-wizard action-bar\'><div class=\'columns small-12\'><ul class=\'left action-bar-breadcrumb\'><li> Set up a new Clustering Augur</li></ul></div></div><div class=\'row container new-augur-wizard\'><div class=\'small-12 columns\'><form name=\'form\' ng-submit=\'form.$valid &amp;&amp; submit()\' novalidate=\'\'><div class=\'row step step-1\' ng-class=\'(currentStep==1) ? "active" : ""\'><div class=\'small-12 columns\'><a href=\'\' ng-click=\'currentStep=1\'><h5 class=\'subheader title\'> Step 1 - Name and Habitat</h5></a><div class=\'body\' ng-show=\'currentStep==1\'><h6 class=\'subheader subtitle\'> Give your augur a unique name and select a Habitat</h6><div class=\'row augur-name\'><div class=\'small-1 columns\'> <label class=\'right inline\' for=\'augur-name\'>Name</label></div><div class=\'small-3 columns end\' ng-class=\'{"error" : form.augurName.$error.uniqueAugurName}\'> <input id=\'augur-name\' name=\'augurName\' ng-model=\'augur.name\' placeholder=\'Please enter a name\' required type=\'text\' unique-augur-name=\'\'> <small class=\'error\' ng-show=\'form.augurName.$error.uniqueAugurName\'>This name already exists</small></div></div><div class=\'row augur-habitat\'><div class=\'small-1 columns\'> <label class=\'right inline\' for=\'augur-habitat\'>DataSpace</label></div><div class=\'small-3 columns end\'> <input id=\'augur-habitat\' name=\'augurHabitat\' ng-model=\'augur.habitat\' placeholder=\'Type to search\' required type=\'text\' typeahead=\'habitat as habitat.name for habitat in habitats\'></div></div></div><div class=\'next-button\'><div class=\'next-button-wrap\'> <a class=\'tiny button radius\' href=\'\' ng-click=\'validSteps.one &amp;&amp; (currentStep=2)\' ng-disabled=\'!validSteps.one || form.augurName.$error.uniqueAugurName\'>Next step ></a></div></div></div></div><div class=\'row step step-1\' ng-class=\'(currentStep==2) ? "active" : ""\'><div class=\'small-12 columns\'><a href=\'\' ng-click=\'currentStep=2\'><h5 class=\'subheader title\'> Step 2 - Missing Value Treatment</h5></a><div class=\'body\' ng-show=\'currentStep==2\'><h6 class=\'subheader subtitle\'> How should missing values be treated ?</h6><div class=\'small-6\'><div class=\'small-12 columns\'><div class=\'row\' ng-class=\'{"error" : form.missingTreatFixedValInput.$dirty &amp;&amp; form.missingTreatFixedValInput.$error.required &amp;&amp; augur.missingValueTreatment == &#x0027;fixed_value&#x0027;}\'><div class=\'small-4 columns input-text-row\'> <input id=\'fixed-value-treat\' ng-model=\'augur.missingValueTreatment\' type=\'radio\' value=\'fixed_value\'> <label for=\'fixed-value-treat\'>Impute to fixed value</label></div><div class=\'small-2 columns\'> <input dj-focus-on-select=\'augur.missingValueTreatment\' id=\'fixed-value-input-treat\' name=\'missingTreatFixedValInput\' ng-model=\'augur.fixedValue\' ng-required="augur.missingValueTreatment == \'fixed_value\'" type=\'text\' value-to-watch=\'fixed_value\'> <small class=\'error\' ng-show="form.missingTreatFixedValInput.$dirty &amp;&amp; form.missingTreatFixedValInput.$error.required &amp;&amp; augur.missingValueTreatment == \'fixed_value\'">Required field.</small></div><div class=\'small-6 columns\'></div></div><div class=\'row\'><div class=\'small-4 columns radio-btn-row\'> <input id=\'mean-value-treat\' ng-model=\'augur.missingValueTreatment\' type=\'radio\' value=\'mean_value\'> <label for=\'mean-value-treat\'>Impute to mean</label></div></div><div class=\'row\'><div class=\'small-4 columns radio-btn-row\'> <input id=\'ignore-value-treat\' ng-model=\'augur.missingValueTreatment\' type=\'radio\' value=\'ignore_value\'> <label for=\'ignore-value-treat\'>Ignore row</label></div></div></div></div></div><div class=\'next-button\'><div class=\'next-button-wrap\'> <a class=\'tiny button radius\' href=\'\' ng-click=\'validSteps.two &amp;&amp; (currentStep=3)\' ng-disabled=\'!validSteps.two\'>Next step ></a></div></div></div></div><div class=\'row step step-1\' ng-class=\'(currentStep==3) ? "active" : ""\'><div class=\'small-12 columns\'><a href=\'\' ng-click=\'currentStep=3\'><h5 class=\'subheader title\'> Step 3 - Normalization Method</h5></a><div class=\'body\' ng-show=\'currentStep==3\'><h6 class=\'subheader subtitle\'> Normalize Values</h6><div class=\'small-8\'><div class=\'small-12 columns\'><div class=\'row\' ng-repeat=\'type in normalizationTypes\'><div class=\'small-3 columns radio-btn-row\'> <input id=\'{{type.key}}\' ng-model=\'augur.normalizationMethod\' type=\'radio\' value=\'{{type.key}}\'> <label for=\'{{type.key}}\'>{{type.label}}</label></div><div class=\'small-9 columns\'><p class=\'help-tooltip\'>{{type.helpText}}</p></div></div></div></div></div><div class=\'next-button\'><div class=\'next-button-wrap\'> <a class=\'tiny button radius\' href=\'\' ng-click=\'validSteps.three &amp;&amp; (currentStep=4)\' ng-disabled=\'!validSteps.three\'>Next step ></a></div></div></div></div><div class=\'row step step-1\' ng-class=\'(currentStep==4) ? "active" : ""\'><div class=\'small-12 columns\'><a href=\'\' ng-click=\'currentStep=4\'><h5 class=\'subheader title\'> Step 4 - Cluster Settings</h5></a><div class=\'body\' ng-show=\'currentStep==4\'><h6 class=\'subheader subtitle\'></h6><div class=\'row num-clusters\'><div class=\'small-2 columns\'> <label class=\'right inline\' for=\'augur-cluster-count\'>Number of Clusters</label></div><div class=\'small-2 columns end\' ng-class=\'{"error" : form.numClusters.$invalid}\'> <input id=\'augur-cluster-count\' max=\'999\' min=\'1\' name=\'numClusters\' ng-max=\'999\' ng-min=\'1\' ng-model=\'augur.numberOfClusters\' placeholder=\'999\' required type=\'number\'> <small class=\'error\' ng-show=\'form.numClusters.$dirty &amp;&amp; form.numClusters.$invalid\'>Please provide a number between 1 and 999</small></div></div><div class=\'row num-iterations\'><div class=\'small-2 columns\'> <label class=\'right inline\' for=\'augur-cluster-count\'>Number of Iterations</label></div><div class=\'small-2 columns end\' ng-class=\'{"error" : form.numIterations.$invalid}\'> <input id=\'augur-cluster-count\' max=\'999\' min=\'1\' name=\'numIterations\' ng-model=\'augur.numberOfIterations\' placeholder=\'999\' required type=\'number\'> <small class=\'error\' ng-show=\'form.numIterations.$dirty &amp;&amp; form.numIterations.$invalid\'>Please provide a number between 1 and 999</small></div></div></div><div class=\'next-button\'><div class=\'next-button-wrap\'> <a class=\'tiny button radius\' href=\'\' ng-click=\'validSteps.four &amp;&amp; (currentStep=5)\' ng-disabled=\'!validSteps.four\'>Next step ></a></div></div></div></div><div class=\'row step step-5 step-last\' ng-class=\'(currentStep==5) ? "active" : ""\'><div class=\'small-12 columns\'><a href=\'\' ng-click=\'validSteps.four &amp;&amp; (currentStep=5)\'><h5 class=\'subheader title\'> Step 5 - Schedule Settings</h5></a><div class=\'body\' ng-show=\'currentStep==5\'><h6 class=\'subheader subtitle\'> Set schedule</h6><div class=\'row\'><div class=\'small-4 columns\'><augur-scheduler form=\'form\' prefix=\'predictionSchedule\' schedule=\'augur.schedule\'></augur-scheduler></div></div></div><div class=\'next-button\'><div class=\'next-button-wrap\'> <input class=\'tiny button radius\' ng-disabled=\'!validSteps.four || !form.$valid\' type=\'submit\' value=\'Activate Augur &gt;\'></div></div></div></div></form></div></div>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('dejalyticsPartials');
+} catch (e) {
+  module = angular.module('dejalyticsPartials', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('partials/clustering/augur-landscape.html',
+    '<h3>Landscape</h3>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('dejalyticsPartials');
+} catch (e) {
+  module = angular.module('dejalyticsPartials', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('partials/clustering/augur-profile.html',
+    '<div class=\'row\'><div class=\'columns small-12\'><h4>Cluster Profile</h4></div></div><div class=\'row\'><div class=\'columns large-12 augur-clustering-profile\'><table class=\'large-12\'><thead><tr><th class=\'text-center\' ng-repeat=\'header in headers\'> {{header.name}}<br> <span class=\'count\' ng-if=\'header.count\'>Count: {{header.count}}</span></th></tr></thead><tbody><tr ng-repeat=\'result in results\'><td class=\'text-center\' ng-repeat=\'r in result\'><div ng-switch=\'r.type\'><div ng-switch-when=\'none\'> {{r.data}}</div><div class=\'chart-container\' ng-switch-when=\'categorical\'><d3-profile-bar-chart data=\'r.data\'></d3-profile-bar-chart></div><div class=\'chart-container\' ng-switch-when=\'continuous\'><d3-profile-diamond-chart data=\'r.data\' legend=\'r.showLegend\'></d3-profile-diamond-chart></div></div></td></tr></tbody></table></div></div>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('dejalyticsPartials');
+} catch (e) {
+  module = angular.module('dejalyticsPartials', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('partials/clustering/create.html',
+    '<div class=\'row new-augur-wizard action-bar\'><div class=\'columns small-12\'><ul class=\'left action-bar-breadcrumb\'><li> Set up a new Clustering Augur</li></ul></div></div><div class=\'row container new-augur-wizard\'><div class=\'small-12 columns\'><form name=\'form\' ng-submit=\'form.$valid &amp;&amp; submit()\' novalidate=\'\'><div class=\'row step step-1\' ng-class=\'(currentStep==1) ? "active" : ""\'><div class=\'small-12 columns\'><a href=\'\' ng-click=\'currentStep=1\'><h5 class=\'subheader title\'> Step 1 - Name and Habitat</h5></a><div class=\'body\' ng-show=\'currentStep==1\'><h6 class=\'subheader subtitle\'> Give your augur a unique name and select a Habitat</h6><div class=\'row augur-name\'><div class=\'small-1 columns\'> <label class=\'right inline\' for=\'augur-name\'>Name</label></div><div class=\'small-3 columns end\' ng-class=\'{"error" : form.augurName.$error.uniqueAugurName}\'> <input id=\'augur-name\' name=\'augurName\' ng-model=\'augur.name\' placeholder=\'Please enter a name\' required type=\'text\' unique-augur-name=\'\'> <small class=\'error\' ng-show=\'form.augurName.$error.uniqueAugurName\'>This name already exists</small></div></div><div class=\'row augur-habitat\'><div class=\'small-1 columns\'> <label class=\'right inline\' for=\'augur-habitat\'>DataSpace</label></div><div class=\'small-3 columns end\'> <input id=\'augur-habitat\' name=\'augurHabitat\' ng-model=\'augur.habitat\' placeholder=\'Type to search\' required type=\'text\' typeahead=\'habitat as habitat.name for habitat in habitats\'></div></div></div><div class=\'next-button\'><div class=\'next-button-wrap\'> <a class=\'tiny button radius\' href=\'\' ng-click=\'validSteps.one &amp;&amp; (currentStep=2)\' ng-disabled=\'!validSteps.one || form.augurName.$error.uniqueAugurName\'>Next step ></a></div></div></div></div><div class=\'row step step-1\' ng-class=\'(currentStep==2) ? "active" : ""\'><div class=\'small-12 columns\'><a href=\'\' ng-click=\'currentStep=2\'><h5 class=\'subheader title\'> Step 2 - Missing Value Treatment</h5></a><div class=\'body\' ng-show=\'currentStep==2\'><h6 class=\'subheader subtitle\'> How should missing values be treated ?</h6><div class=\'small-6\'><div class=\'small-12 columns\'><div class=\'row\' ng-class=\'{"error" : form.missingTreatFixedValInput.$dirty &amp;&amp; form.missingTreatFixedValInput.$error.required &amp;&amp; augur.missingValueTreatment == &#x0027;fixed_value&#x0027;}\'><div class=\'small-4 columns input-text-row\'> <input id=\'fixed-value-treat\' ng-model=\'augur.missingValueTreatment\' type=\'radio\' value=\'fixed_value\'> <label for=\'fixed-value-treat\'>Impute to fixed value</label></div><div class=\'small-2 columns\'> <input dj-focus-on-select=\'augur.missingValueTreatment\' id=\'fixed-value-input-treat\' name=\'missingTreatFixedValInput\' ng-model=\'augur.fixedValue\' ng-required="augur.missingValueTreatment == \'fixed_value\'" type=\'text\' value-to-watch=\'fixed_value\'> <small class=\'error\' ng-show="form.missingTreatFixedValInput.$dirty &amp;&amp; form.missingTreatFixedValInput.$error.required &amp;&amp; augur.missingValueTreatment == \'fixed_value\'">Required field.</small></div><div class=\'small-6 columns\'></div></div><div class=\'row\'><div class=\'small-4 columns radio-btn-row\'> <input id=\'mean-value-treat\' ng-model=\'augur.missingValueTreatment\' type=\'radio\' value=\'mean_value\'> <label for=\'mean-value-treat\'>Impute to mean</label></div></div><div class=\'row\'><div class=\'small-4 columns radio-btn-row\'> <input id=\'ignore-value-treat\' ng-model=\'augur.missingValueTreatment\' type=\'radio\' value=\'ignore_value\'> <label for=\'ignore-value-treat\'>Ignore row</label></div></div></div></div></div><div class=\'next-button\'><div class=\'next-button-wrap\'> <a class=\'tiny button radius\' href=\'\' ng-click=\'validSteps.two &amp;&amp; (currentStep=3)\' ng-disabled=\'!validSteps.two\'>Next step ></a></div></div></div></div><div class=\'row step step-1\' ng-class=\'(currentStep==3) ? "active" : ""\'><div class=\'small-12 columns\'><a href=\'\' ng-click=\'currentStep=3\'><h5 class=\'subheader title\'> Step 3 - Normalization Method</h5></a><div class=\'body\' ng-show=\'currentStep==3\'><h6 class=\'subheader subtitle\'> Normalize Values</h6><div class=\'small-8\'><div class=\'small-12 columns\'><div class=\'row\' ng-repeat=\'type in normalizationTypes\'><div class=\'small-3 columns radio-btn-row\'> <input id=\'{{type.key}}\' ng-model=\'augur.normalizationMethod\' type=\'radio\' value=\'{{type.key}}\'> <label for=\'{{type.key}}\'>{{type.label}}</label></div><div class=\'small-9 columns\'><p class=\'help-tooltip\'>{{type.helpText}}</p></div></div></div></div></div><div class=\'next-button\'><div class=\'next-button-wrap\'> <a class=\'tiny button radius\' href=\'\' ng-click=\'validSteps.three &amp;&amp; (currentStep=4)\' ng-disabled=\'!validSteps.three\'>Next step ></a></div></div></div></div><div class=\'row step step-1\' ng-class=\'(currentStep==4) ? "active" : ""\'><div class=\'small-12 columns\'><a href=\'\' ng-click=\'currentStep=4\'><h5 class=\'subheader title\'> Step 4 - Cluster Settings</h5></a><div class=\'body\' ng-show=\'currentStep==4\'><h6 class=\'subheader subtitle\'></h6><div class=\'row num-clusters\'><div class=\'small-2 columns\'> <label class=\'right inline\' for=\'augur-cluster-count\'>Number of Clusters</label></div><div class=\'small-2 columns end\' ng-class=\'{"error" : form.numClusters.$invalid}\'> <input id=\'augur-cluster-count\' max=\'999\' min=\'1\' name=\'numClusters\' ng-max=\'999\' ng-min=\'1\' ng-model=\'augur.numberOfClusters\' placeholder=\'999\' required type=\'number\'> <small class=\'error\' ng-show=\'form.numClusters.$dirty &amp;&amp; form.numClusters.$invalid\'>Please provide a number between 1 and 999</small></div></div><div class=\'row num-iterations\'><div class=\'small-2 columns\'> <label class=\'right inline\' for=\'augur-cluster-count\'>Number of Iterations</label></div><div class=\'small-2 columns end\' ng-class=\'{"error" : form.numIterations.$invalid}\'> <input id=\'augur-cluster-count\' max=\'999\' min=\'1\' name=\'numIterations\' ng-model=\'augur.numberOfIterations\' placeholder=\'999\' required type=\'number\'> <small class=\'error\' ng-show=\'form.numIterations.$dirty &amp;&amp; form.numIterations.$invalid\'>Please provide a number between 1 and 999</small></div></div></div><div class=\'next-button\'><div class=\'next-button-wrap\'> <a class=\'tiny button radius\' href=\'\' ng-click=\'validSteps.four &amp;&amp; (currentStep=5)\' ng-disabled=\'!validSteps.four\'>Next step ></a></div></div></div></div><div class=\'row step step-5 step-last\' ng-class=\'(currentStep==5) ? "active" : ""\'><div class=\'small-12 columns\'><a href=\'\' ng-click=\'validSteps.four &amp;&amp; (currentStep=5)\'><h5 class=\'subheader title\'> Step 5 - Schedule Settings</h5></a><div class=\'body\' ng-show=\'currentStep==5\'><h6 class=\'subheader subtitle\'> Set schedule</h6><div class=\'row\'><div class=\'small-4 columns\'><augur-scheduler form=\'form\' prefix=\'predictionSchedule\' schedule=\'augur.schedule\'></augur-scheduler></div></div></div><div class=\'next-button\'><div class=\'next-button-wrap\'> <input class=\'tiny button radius\' ng-disabled=\'!validSteps.four || !form.$valid\' type=\'submit\' value=\'Activate Augur &gt;\'></div></div></div></div></form></div></div>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('dejalyticsPartials');
+} catch (e) {
+  module = angular.module('dejalyticsPartials', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('partials/clustering/index.html',
+    '<div class=\'row augur action-bar\' ng-attr-data-theme=\'{{ habitat.colorScheme }}\'><div class=\'small-12 columns\'><div class=\'row\'><div class=\'small-11 columns\'><div class=\'row\'><div class=\'small-6 columns habitat-name\'> Clustering #1</div><div class=\'small-6 columns actions\'><ul class=\'no-bullet\'><li class=\'action\'></li><li class=\'action\'></li></ul></div></div></div><div class=\'small-1 columns back\'><a ui-sref=\'dashboard\'><span class=\'download\'><i class=\'icon icon-exit\'></i></span></a></div></div></div></div><div class=\'row augur container\'><div class=\'side-nav-container\'><ul class=\'side-nav\'><li ui-sref-active=\'active\'><a ui-sref=\'augur.clustering.home\'><span class=\'clustering-profile\'><i class=\'icon icon-decisiontree\'></i></span><br> Cluster Profile</a></li><li ui-sref-active=\'active\'><a ui-sref=\'augur.clustering.landscape\'><span class=\'landscape\'><i class=\'icon icon-influencer\'></i></span><br> Cluster Landscape</a></li><li ui-sref-active=\'active\'><a ui-sref=\'augur.clustering.settings\'><span class=\'settings\'><icon class=\'icon-settings\'></icon></span><br> Settings</a></li></ul></div><div class=\'main\'><div ui-view=\'\'></div></div></div>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('dejalyticsPartials');
+} catch (e) {
+  module = angular.module('dejalyticsPartials', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('partials/clustering/landscape.html',
+    '<h3>Landscape</h3>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('dejalyticsPartials');
+} catch (e) {
+  module = angular.module('dejalyticsPartials', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('partials/clustering/profile.html',
+    '<div class=\'row\'><div class=\'columns small-12\'><h4>Cluster Profile</h4></div></div><div class=\'row\'><div class=\'columns large-12 augur-clustering-profile\'><table class=\'large-12\'><thead><tr><th class=\'text-center\' ng-repeat=\'header in headers\'> {{header.name}}<br> <span class=\'count\' ng-if=\'header.count\'>Count: {{header.count}}</span></th></tr></thead><tbody><tr ng-repeat=\'result in results\'><td class=\'text-center\' ng-repeat=\'r in result\'><div ng-switch=\'r.type\'><div ng-switch-when=\'none\'> {{r.data}}</div><div class=\'chart-container\' ng-switch-when=\'categorical\'><d3-profile-bar-chart data=\'r.data\'></d3-profile-bar-chart></div><div class=\'chart-container\' ng-switch-when=\'continuous\'><d3-profile-diamond-chart data=\'r.data\' legend=\'r.showLegend\'></d3-profile-diamond-chart></div></div></td></tr></tbody></table></div></div>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('dejalyticsPartials');
+} catch (e) {
+  module = angular.module('dejalyticsPartials', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('partials/clustering/settings.html',
+    '<h3>Settings</h3>');
 }]);
 })();
 
@@ -58177,7 +58523,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('partials/directives/augur-settings.html',
-    '<div class=\'row settings\'><div class=\'small-4 columns\'><div class=\'prediction\'><h6 class=\'title\'>Prediction Schedule</h6><div class=\'content\'><p class=\'description\'> Set your prediction schedule here. Please note that calculating predictions may take some time. You can start predictions manually too {{augur.prediction}}.</p><div class=\'row\'><div class=\'small-12 columns\'> <label class=\'main-label\'>Select schedule</label></div></div><div class=\'row\'><augur-scheduler form=\'form\' prefix=\'predictionSchedule\' schedule=\'augur.prediction.schedule\'></augur-scheduler></div></div></div></div><div class=\'small-4 columns\'><div class=\'evaluation\'><h6 class=\'title\'>Evaluation Schedule</h6><div class=\'content\'><p class=\'description\'> Set your evaluation schedule here. Automatic learning is based on evaluation results.</p><div class=\'row\'><div class=\'small-12 columns\'> <label class=\'main-label\'>Select schedule</label></div></div><div class=\'row\'><augur-scheduler form=\'form\' prefix=\'predictionSchedule\' schedule=\'augur.evaluation.schedule\'></augur-scheduler></div></div></div></div><div class=\'small-4 columns\'><div class=\'learning\'><h6 class=\'title\'>Automatic Learning</h6><div class=\'content\'><p class=\'description\'> Choose your key performance indicator (KPI) from the list of available indicators and set the threshold that triggers automatic learning.</p><div class=\'row\'><div class=\'small-12 columns\'> <label class=\'main-label\'>Choose KPI and set threshold</label></div></div><div class=\'row\'><div class=\'small-6 columns\'> <select name=\'learning-kpi\' ng-model=\'augur.learning.kpi\' ng-options=\'indicator as indicator.label for indicator in KEY_PERFORMANCE_INDICATORS\'></select></div><div class=\'small-6 columns\' ng-show=\'augur.learning.kpi.key\'><div class=\'row\'><div class=\'small-6 columns\' id=\'comparator\'> <label class=\'inline\' for=\'learning-threshold\'><span ng-if=\'augur.learning.kpi.comparator == "lt"\'>less than</span> <span ng-if=\'augur.learning.kpi.comparator == "gt"\'>greater than</span></label></div><div class=\'small-6 columns\'> <input id=\'learning-threshold\' max=\'{{augur.learning.kpi.max}}\' min=\'{{augur.learning.kpi.min}}\' name=\'learningThreshold\' ng-model=\'augur.learning.threshold\' threshold-in-range=\'\' type=\'text\'></div></div></div></div><div class=\'row\'><div class=\'small-12 columns\' ng-class=\'{"error" : form.learningThreshold.$error.thresholdInRange}\'> <small class=\'error\' ng-show=\'form.learningThreshold.$error.thresholdInRange\'>Value not in range. Min: {{augur.learning.kpi.min}}, Max: {{augur.learning.kpi.max}}</small></div></div></div></div></div></div>');
+    '<div class=\'row settings\'><div class=\'small-4 columns\'><div class=\'prediction\'><h6 class=\'title\'>Prediction Schedule</h6><div class=\'content\'><p class=\'description\'> Set your prediction schedule here. Please note that calculating predictions may take some time. You can start predictions manually too.</p><div class=\'row\'><div class=\'small-12 columns\'> <label class=\'main-label\'>Select schedule</label></div></div><div class=\'row\'><augur-scheduler form=\'form\' prefix=\'predictionSchedule\' schedule=\'augur.prediction.schedule\'></augur-scheduler></div></div></div></div><div class=\'small-4 columns\'><div class=\'evaluation\'><h6 class=\'title\'>Evaluation Schedule</h6><div class=\'content\'><p class=\'description\'> Set your evaluation schedule here. Automatic learning is based on evaluation results.</p><div class=\'row\'><div class=\'small-12 columns\'> <label class=\'main-label\'>Select schedule</label></div></div><div class=\'row\'><augur-scheduler form=\'form\' prefix=\'predictionSchedule\' schedule=\'augur.evaluation.schedule\'></augur-scheduler></div></div></div></div><div class=\'small-4 columns\'><div class=\'learning\'><h6 class=\'title\'>Automatic Learning</h6><div class=\'content\'><p class=\'description\'> Choose your key performance indicator (KPI) from the list of available indicators and set the threshold that triggers automatic learning.</p><div class=\'row\'><div class=\'small-12 columns\'> <label class=\'main-label\'>Choose KPI and set threshold</label></div></div><div class=\'row\'><div class=\'small-6 columns\'> <select name=\'learning-kpi\' ng-model=\'augur.learning.kpi\' ng-options=\'indicator as indicator.label for indicator in KEY_PERFORMANCE_INDICATORS\'></select></div><div class=\'small-6 columns\' ng-show=\'augur.learning.kpi.key\'><div class=\'row\'><div class=\'small-6 columns\' id=\'comparator\'> <label class=\'inline\' for=\'learning-threshold\'><span ng-if=\'augur.learning.kpi.comparator == "lt"\'>less than</span> <span ng-if=\'augur.learning.kpi.comparator == "gt"\'>greater than</span></label></div><div class=\'small-6 columns\'> <input id=\'learning-threshold\' max=\'{{augur.learning.kpi.max}}\' min=\'{{augur.learning.kpi.min}}\' name=\'learningThreshold\' ng-model=\'augur.learning.threshold\' threshold-in-range=\'\' type=\'text\'></div></div></div></div><div class=\'row\'><div class=\'small-12 columns\' ng-class=\'{"error" : form.learningThreshold.$error.thresholdInRange}\'> <small class=\'error\' ng-show=\'form.learningThreshold.$error.thresholdInRange\'>Value not in range. Min: {{augur.learning.kpi.min}}, Max: {{augur.learning.kpi.max}}</small></div></div></div></div></div></div>');
 }]);
 })();
 
@@ -58233,12 +58579,12 @@ define('app',[
                 }).
                 state('augur-new', {
                     url: '/augurs/new',
-                    templateUrl: 'partials/augur-new.html',
+                    templateUrl: 'partials/classification/create.html',
                     controller: 'AugurNewCtrl'
                 }).
                 state('augur-clustering-new', {
                     url: '/augurs/clustering/new',
-                    templateUrl: 'partials/clustering/augur-create.html',
+                    templateUrl: 'partials/clustering/create.html',
                     controller: 'AugurNewClusteringCtrl'
                 }).
                 state('augur', {
@@ -58249,41 +58595,41 @@ define('app',[
                 }).
                 state('augur.classification', {
                     url: '/classification',
-                    templateUrl: 'partials/augur.html',
+                    templateUrl: 'partials/classification/index.html',
                     controller: 'AugurCtrl'
                 }).
                 state('augur.clustering', {
                     url: '/clustering',
                     abstract: true,
-                    templateUrl: 'partials/augur-clustering.html',
+                    templateUrl: 'partials/clustering/index.html',
                     controller: 'AugurCtrl'
                 }).
                 state('augur.clustering.home', {
                     url: '/profile',
-                    templateUrl: 'partials/augur-profile.html',
+                    templateUrl: 'partials/clustering/profile.html',
                     controller: 'AugurProfileCtrl'
                 }).
                 state('augur.clustering.landscape', {
                     url: '/landscape',
-                    templateUrl: 'partials/augur-landscape.html'
+                    templateUrl: 'partials/clustering/landscape.html'
                 }).
                 state('augur.clustering.settings', {
                     url: '/settings',
-                    templateUrl: 'partials/augur-clustering-settings.html'
+                    templateUrl: 'partials/clustering/settings.html'
                 }).
                 state('augur.classification.influencers', {
                     url: '/influencers',
-                    templateUrl: 'partials/augur-influencers.html',
+                    templateUrl: 'partials/classification/influencers.html',
                     controller: 'AugurInfluencersCtrl'
                 }).
                 state('augur.classification.accuracy', {
                     url: '/accuracy',
-                    templateUrl: 'partials/augur-accuracy.html',
+                    templateUrl: 'partials/classification/accuracy.html',
                     controller: 'AugurAccuracyCtrl'
                 }).
                 state('augur.classification.accuracy-detail', {
                     url: '/detail/:chartType',
-                    templateUrl: 'partials/augur-accuracy-detail.html',
+                    templateUrl: 'partials/classification/accuracy-detail.html',
                     controller: 'AugurAccuracyDetailCtrl'
                 }).
                 state('augur.classification.performance', {
@@ -58293,24 +58639,24 @@ define('app',[
                 }).
                 state('augur.classification.performance.learning', {
                     url: '/learning',
-                    templateUrl: 'partials/augur-performance-learning.html',
+                    templateUrl: 'partials/classification/performance-learning.html',
                     controller: 'AugurPerformanceCtrl'
                 }).
                 state('augur.classification.performance.evaluation', {
                     url: '/evaluation',
-                    templateUrl: 'partials/augur-performance-evaluation.html',
+                    templateUrl: 'partials/classification/performance-evaluation.html',
                     controller: 'AugurPerformanceCtrl'
                 }).
                 state('augur.classification.home', {
                     url: '/home',
-                    templateUrl: 'partials/augur-tree.html',
+                    templateUrl: 'partials/classification/tree.html',
                     controller: 'AugurTreeCtrl'
                 }).
                 state('augur.classification.settings', {
                     url: '/settings',
-                    templateUrl: 'partials/augur-settings.html',
+                    templateUrl: 'partials/classification/settings.html',
                     controller: 'AugurSettingsCtrl'
-                })
+                });
         }]).run(['$rootScope', '$state', function ($rootScope, $state) {
             var root = angular.element(document.documentElement);
 
