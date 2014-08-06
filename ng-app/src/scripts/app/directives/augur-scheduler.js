@@ -25,7 +25,7 @@ define([
                 scope.name = scope.prefix + "-schedule-frequency";
                 scope.hourlyName = scope.prefix + "HourlyField";
             }
-        }
+        };
     }
 
     return directive;

@@ -21,14 +21,14 @@ define([
     var legendOrdered = [ 'True Positives', 'True Negatives', 'False Positives',  'False Negatives' ];
 
     return data.sort( function ( a, b ) {
-      var indexA = legendOrdered.indexOf(a['bucket']);
-      var indexB = legendOrdered.indexOf(b['bucket']);
+      var indexA = legendOrdered.indexOf(a.bucket);
+      var indexB = legendOrdered.indexOf(b.bucket);
 
       if (indexA > indexB) return 1;
       if (indexA < indexB) return -1;
 
-      return 0
-    })
+      return 0;
+    });
   }
 
   return ['$rootScope', '$timeout', function ($rootScope, $timeout) {
@@ -50,7 +50,7 @@ define([
         var $element = angular.element( ele[0] );
         var color = colorScale($element);
         $rootScope.$on('themeChanged', function () {
-          color = colorScale($element)
+          color = colorScale($element);
         });
 
         var arc = d3.svg.arc()
@@ -67,7 +67,7 @@ define([
             count = attrs.count;
 
         scope.$watch('chart', function (newChart) {
-          if (newChart != null) scope.render(newChart.data);
+          if (newChart !== null) scope.render(newChart.data);
         }, true);
 
         scope.render = function (data) {
@@ -99,7 +99,7 @@ define([
               });
 
 
-            var total = d3.sum(data, function(d) { return d['count'] });
+            var total = d3.sum(data, function(d) { return d.count; });
             var percentageScale = d3.scale.linear().domain([0, total]).range([0, 1]);
             var percentageFormat = d3.format('.0%');
 
@@ -151,5 +151,5 @@ define([
         };
       }
     };
-  }]
+  }];
 });

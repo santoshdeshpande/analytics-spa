@@ -24,7 +24,7 @@ define([
             height = ele[0].offsetHeight - margin.top - margin.bottom;
 
         var format = d3.format('.2f');
-        var x = d3.scale.ordinal().domain(d3.range(0,32)).rangeRoundBands([0, width], .35);
+        var x = d3.scale.ordinal().domain(d3.range(0,32)).rangeRoundBands([0, width], 0.35);
         var y = d3.scale.linear().range([height, 0]);
         var svg = d3.select(ele[0]).append('svg')
           .attr('width', width + margin.left + margin.right)
@@ -65,19 +65,19 @@ define([
 
             y.domain([0, d3.max(data, function (d) {
               if (attrs.mode == 'learning') {
-                return d.drift
+                return d.drift;
               } else {
-                return d.threshold ? Math.max(d.drift, d.threshold * 1.1) : d.drift
+                return d.threshold ? Math.max(d.drift, d.threshold * 1.1) : d.drift;
               }
             })]);
 
 
             // helplines
-            var yHelplineTicks = _.filter(y.ticks(), function(ele, i){ return i % 2 == 0});
+            var yHelplineTicks = _.filter(y.ticks(), function(ele, i){ return i % 2 === 0;});
 
             var helpline = d3.svg.line()
-              .x(function (d) { return x(d[0]) - 15 })
-              .y(function (d) { return y(d[1]) });
+              .x(function (d) { return x(d[0]) - 15; })
+              .y(function (d) { return y(d[1]); });
 
             angular.forEach(yHelplineTicks, function(yValue){
               var path = graph.append('path')
@@ -107,9 +107,9 @@ define([
                     if (attrs.mode == 'learning') return 'bar';
 
                     if (scope.comparator === 'lt') {
-                      return d.drift > d.threshold ? 'bar' : 'bar solid'
+                      return d.drift > d.threshold ? 'bar' : 'bar solid';
                     } else {
-                      return d.drift < d.threshold ? 'bar' : 'bar solid'
+                      return d.drift < d.threshold ? 'bar' : 'bar solid';
                     }
                   });
 
@@ -118,9 +118,9 @@ define([
                 .delay( function ( d, i ) {
                   return i * 20;
                 })
-                .attr('x', function (d, i) { return x(i) })
+                .attr('x', function (d, i) { return x(i); })
                   .attr('width', x.rangeBand())
-                  .attr('y', function (d) { return y(d.drift) })
+                  .attr('y', function (d) { return y(d.drift); })
                   .attr('height', function (d) {
                     return height - y(d.drift);
                   });
@@ -128,11 +128,11 @@ define([
             //////////////////////////////////
 
             if (attrs.mode == 'learning') {
-              return
+              return;
             }
 
             // threshold line
-            var thresholds = data.map(function(d) { return d.threshold });
+            var thresholds = data.map(function(d) { return d.threshold; });
             var thresholdChangeIndexes = [];
             var thresholdLineData = [];
             for (var i = 0; i < thresholds.length; i++) {
@@ -146,8 +146,8 @@ define([
             }
 
             var thresholdLine = d3.svg.line()
-              .x(function (d) { return x(d[0]) - x.rangeBand()})
-              .y(function (d) { return y(d[1]) });
+              .x(function (d) { return x(d[0]) - x.rangeBand() ; })
+              .y(function (d) { return y(d[1]); });
 
             var path = graph.append('path')
               .attr('d', thresholdLine(thresholdLineData))
@@ -155,7 +155,7 @@ define([
               .attr('class', 'threshold-line');
 
             var labelEnter = graph.selectAll('.threshold-label')
-              .data(data.filter(function(d, i) { return thresholdChangeIndexes.indexOf(i) > -1 }))
+              .data(data.filter(function(d, i) { return thresholdChangeIndexes.indexOf(i) > -1; }))
               .enter().append('g')
               .attr('class', 'threshold-label')
               .attr('transform', function(d) {
@@ -172,7 +172,7 @@ define([
               .attr('dx', '2.1em')
               .attr('dy', '1.3em')
               .style('text-anchor', 'middle')
-              .text(function(d){ return format(d.threshold) });
+              .text(function(d){ return format(d.threshold); });
 
             var legend = graph.append('g')
                 .attr('transform', 'translate(' + (x(29)) + ',' + (y(0) - 15) + ')');
@@ -194,5 +194,5 @@ define([
         };
       }
     };
-  }]
+  }];
 });

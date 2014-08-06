@@ -47,7 +47,7 @@ define([
                 var y = d3.scale.linear().range([0, dimensions.height - dimensions.margins.top - dimensions.margins.bottom]);
 
                 scope.$watch('data', function (data) {
-                    if (data != null) scope.render(data);
+                    if (data !== null) scope.render(data);
                 }, true);
 
                 scope.render = function (data) {
@@ -91,7 +91,7 @@ define([
                             .append("svg:circle")
                             .attr("cx", xpos)
                             .attr("cy", function (d) {
-                                return -y(d)
+                                return -y(d);
                             })
                             .attr("r", 2)
                             .style("stroke", "blue")
@@ -117,10 +117,10 @@ define([
 
                         var line = d3.svg.line()
                             .x(function (d) {
-                                return x(d[0])
+                                return x(d[0]);
                             })
                             .y(function (d) {
-                                return -y(d[1])
+                                return -y(d[1]);
                             });
 
                         var path = svg.append("path")
@@ -147,7 +147,7 @@ define([
                                 .append("svg:text")
                                 .attr("x", x(dimensions.margins.right))
                                 .attr("y", function (d) {
-                                    return -y(d)
+                                    return -y(d);
                                 })
                                 .attr("dy", ".35em")
                                 .attr("font-size", "10px")
@@ -160,5 +160,5 @@ define([
                 };
             }
         };
-    }]
+    }];
 });

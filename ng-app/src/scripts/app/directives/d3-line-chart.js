@@ -12,9 +12,9 @@ define([
 
     function yScaleMin(dataMin, baseline) {
       if (!baseline || dataMin < baseline) {
-        return 0
+        return 0;
       } else {
-        return (Math.round(baseline * 10) - 1) / 10.0
+        return (Math.round(baseline * 10) - 1) / 10.0;
       }
     }
 
@@ -33,7 +33,7 @@ define([
         var graph = new Chart(ele[0], dimensions);
 
         scope.$watch('chart', function (newData) {
-          if (newData != null) scope.render(newData.data, newData.baseline);
+          if (newData !== null) scope.render(newData.data, newData.baseline);
         }, true);
 
         scope.render = function (data, baseline) {
@@ -104,7 +104,7 @@ define([
 
             // helpline
             var xValues = data.map(function (d) {
-              return d[0]
+              return d[0];
             });
             angular.forEach(yTicks, function (yValue) {
               var path = graph.append('path')
@@ -142,5 +142,5 @@ define([
         };
       }
     };
-  }]
+  }];
 });

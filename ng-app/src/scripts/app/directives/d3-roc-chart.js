@@ -28,7 +28,7 @@ define([
         var yScale = d3.scale.linear().range([svg.height(), 0]);
 
         scope.$watch('chart', function (newChart) {
-          if (newChart != null) scope.render(newChart.data);
+          if (newChart !== null) scope.render(newChart.data);
         }, true);
 
         scope.render = function (data) {
@@ -38,8 +38,8 @@ define([
           if (renderTimeout) $timeout.cancel(renderTimeout);
 
           renderTimeout = $timeout(function () {
-            xScale.domain(data.map(function (d) { return d[0] + '' }));
-            yScale.domain([0, d3.max(data, function (d) { return d[1] })]);
+            xScale.domain(data.map(function (d) { return d[0] + ''; }));
+            yScale.domain([0, d3.max(data, function (d) { return d[1]; })]);
 
             // create left yAxis
             var yTicks = [0.0, 0.5, 1.0];
@@ -73,7 +73,7 @@ define([
 
 
             // helpline
-            var xValues = data.map(function(d) { return d[0] });
+            var xValues = data.map(function(d) { return d[0]; });
             angular.forEach(yTicks, function(yValue){
               svg.append('path')
                 .attr('d', line([
@@ -95,5 +95,5 @@ define([
         };
       }
     };
-  }]
+  }];
 });

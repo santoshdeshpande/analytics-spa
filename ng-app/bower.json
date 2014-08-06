@@ -1,0 +1,30 @@
+{
+  "name": "ng-app",
+  "version": "0.0.0",
+  "authors": [
+    "Dejalytics"
+  ],
+  "license": "Proprietary",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.1",
+    "requirejs": "~2.1.14",
+    "foundation": "~5.3.3",
+    "angular": "~1.2.21",
+    "angular-animate": "~1.2.21",
+    "angular-resource": "~1.2.21",
+    "angular-ui-router": "~0.2.10",
+    "d3": "~3.4.11",
+    "angular-spinner": "~0.5.0",
+    "lodash": "~2.4.1",
+    "domReady": "~2.0.1",
+    "angular-foundation": "~0.3.0"
+  }
+}

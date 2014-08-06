@@ -6,13 +6,14 @@ define(['d3js'], function (d3) {
   'use strict';
 
   function parentNodes(node, arr) {
-    arr ? arr.push(node) : arr = [node];
+      arr = arr || [];
+      arr.push(node);
 
     if (node.parent) {
-      parentNodes(node.parent, arr)
+      parentNodes(node.parent, arr);
     }
 
-    return arr
+    return arr;
   }
 
   function buildPath(nodes) {
@@ -34,7 +35,7 @@ define(['d3js'], function (d3) {
       }
 
       if (node.simpleSetPredicate) {
-        newPathElement.operation = node.simpleSetPredicate.booleanOperator + '(' + node.simpleSetPredicate.array + ')'
+        newPathElement.operation = node.simpleSetPredicate.booleanOperator + '(' + node.simpleSetPredicate.array + ')';
       }
 
       pathElements.push(newPathElement);
@@ -100,15 +101,15 @@ define(['d3js'], function (d3) {
                 .enter().append("circle")
                 .attr("class", function(d) {
                   if (d.children && d.children.length > 0) {
-                    return 'node'
+                    return 'node';
                   } else {
                     var confidence = d.scoreDistribution && +d.scoreDistribution[1].confidence;
-                    return (confidence >  0.5) ? 'leaf happy' : 'leaf sad'
+                    return (confidence >  0.5) ? 'leaf happy' : 'leaf sad';
                   }
                 })
                 .attr("r", 12)
-                .attr("cx", function (d) { return d.x })
-                .attr("cy", function (d) { return d.y })
+                .attr("cx", function (d) { return d.x; })
+                .attr("cy", function (d) { return d.y; })
                 .on('mouseover', function (d) {
                   var pNodes = parentNodes(d);
                   var tooltipHTML;
@@ -151,7 +152,7 @@ define(['d3js'], function (d3) {
                   ].join('');
                   tooltip.transition()
                     .duration(100)
-                    .style('opacity', .9);
+                    .style('opacity', 0.9);
                   tooltip.html(tooltipHTML)
                     .style('left', (d.x + 50) + 'px')
                     .style('top', (d.y + 30) + 'px');
@@ -165,15 +166,15 @@ define(['d3js'], function (d3) {
 
                   tooltip.transition()
                     .duration(100)
-                    .style('opacity', 0)
+                    .style('opacity', 0);
                 }).on('click', function (d) {
-                    nodes.map(function(node){ node.stickyPath = false });
-                    d.stickyPath = true
+                    nodes.map(function(node){ node.stickyPath = false; });
+                    d.stickyPath = true;
               });
 
           }, 200); // renderTimeout
         };
       }
     };
-  }]
+  }];
 });
