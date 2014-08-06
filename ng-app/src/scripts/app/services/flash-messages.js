@@ -9,7 +9,8 @@ define([], function () {
     var message;
 
     this.setMessage = function (msg) {
-      return message = msg;
+      message = msg;
+      return message;
     };
 
     this.getMessage = function () {
@@ -18,10 +19,10 @@ define([], function () {
       }, 1000);
 
       return message;
-    }
+    };
   }
 
   return ['$timeout', function ( $timeout ) {
-    return new FlashMessages($timeout)
+    return new FlashMessages($timeout);
   }];
 });

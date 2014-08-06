@@ -40,7 +40,7 @@ define([
                 var z = d3.scale.category10();
 
                 scope.$watch('data', function (data) {
-                    if (data != null) scope.render(data);
+                    if (data !== null) scope.render(data);
                 }, true);
 
                 scope.render = function (data) {
@@ -70,10 +70,10 @@ define([
                         var stacked = d3.layout.stack()(headers.map(function (cause) {
                             return datum.map(function (d) {
                                 return {x: 'C1', y: +d[cause], type: cause};
-                            })
+                            });
                         }));
                         x.domain(stacked[0].map(function (d) {
-                            return d.x
+                            return d.x;
                         }));
                         y.domain([0, d3.max(stacked[stacked.length - 1], function (d) {
                             return d.y0 + d.y;
@@ -95,10 +95,10 @@ define([
                             .data(Object)
                             .enter().append('svg:rect')
                             .attr('x', function (d) {
-                                return x(d.x)
+                                return x(d.x);
                             })
                             .attr('y', function (d) {
-                                return -y(d.y0) - y(d.y)
+                                return -y(d.y0) - y(d.y);
                             })
                             .attr("height", function (d) {
                                 return y(d.y);
@@ -107,7 +107,7 @@ define([
                             .on("mouseover", function () {
                                 tooltip.transition()
                                     .duration(100)
-                                    .style('opacity', .9);
+                                    .style('opacity', 0.9);
                             })
                             .on("mousemove", function () {
                                 var position = d3.mouse(this);
@@ -118,7 +118,7 @@ define([
                             .on("mouseout", function () {
                                 tooltip.transition()
                                     .duration(100)
-                                    .style('opacity', 0)
+                                    .style('opacity', 0);
                             });
 
 
@@ -126,5 +126,5 @@ define([
                 };
             }
         };
-    }]
+    }];
 });

@@ -9,7 +9,7 @@ define([], function () {
         $scope.data = {};
 
         $scope.augur.$promise.then(function (augur) {
-            var profile = augur["clustering"]['clusterProfile'];
+            var profile = augur.clustering.clusterProfile;
             $scope.headers = [
                 {name: 'Variable'},
                 {name: 'Total', count: profile.DataDictionary.Population.count},
@@ -21,12 +21,12 @@ define([], function () {
             angular.forEach(profile.DataDictionary.Population.fields, function(field, i){
                 var res = {};
                 if(field.data_type === 'categorical') {
-                    res['data'] = field.instances[0];
+                    res.data = field.instances[0];
                 } else {
-                    res['data'] = {'mean':field.mean,'max':field.maximum,'min':field.minimum}
+                    res.data = {'mean':field.mean,'max':field.maximum,'min':field.minimum};
                 }
-                res['type'] = field.data_type;
-                res['showLegend'] = true;
+                res.type = field.data_type;
+                res.showLegend = true;
 
                 var name = {'type': 'none', data:field.name};
 
@@ -40,12 +40,12 @@ define([], function () {
                     var type = types[i];
                     var res = {};
                     if(type === 'categorical') {
-                        res['data'] = field.instances[0];
+                        res.data = field.instances[0];
                     } else {
-                        res['data'] = {'mean':field.mean,'max':field.maximum,'min':field.minimum}
+                        res.data = {'mean':field.mean,'max':field.maximum,'min':field.minimum};
                     }
-                    res['type'] = type;
-                    res['showLegend'] = false;
+                    res.type = type;
+                    res.showLegend = false;
                     $scope.results[field.key].push(res);
                 });
             });

@@ -8,7 +8,7 @@ define([], function () {
   return  ['$scope', '$stateParams', function ($scope) {
     $scope.charts = {};
     $scope.augur.$promise.then(function (augur) {
-      $scope.charts = augur['learningReport'];
+      $scope.charts = augur.learningReport;
     });
   }];
 });

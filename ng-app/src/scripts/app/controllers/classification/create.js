@@ -154,9 +154,9 @@ define([
         }, function (httpResponse) {
           console.log("There was an error saving the new Augur  ", httpResponse);
         });
-    }
+    };
   }
 
-  return  ['$state', '$scope', 'Augur', 'FactTable', 'FlashMessages', 'Habitat', controller]
+  return  ['$state', '$scope', 'Augur', 'FactTable', 'FlashMessages', 'Habitat', controller];
 });
 

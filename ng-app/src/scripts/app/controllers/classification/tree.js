@@ -9,8 +9,8 @@ define([], function () {
     $scope.data = {};
 
     $scope.augur.$promise.then(function(augur){
-      var tree = augur['learningReport']['tree'];
-      if (tree) $scope.data = tree['data'];
+      var tree = augur.learningReport.tree;
+      if (tree) $scope.data = tree.data;
     });
   }];
 });

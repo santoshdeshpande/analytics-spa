@@ -45,12 +45,12 @@ define([
 
     $scope.$watch('evaluation.activeIndicator', function(value){
       $scope.evaluation.data = $scope.evaluation.allData[camelize(value.key)];
-      $scope.evaluation.driftComparator = value.key && Constants.KEY_PERFORMANCE_INDICATORS_HASH_FULL[value.key]['comparator'];
+      $scope.evaluation.driftComparator = value.key && Constants.KEY_PERFORMANCE_INDICATORS_HASH_FULL[value.key].comparator;
     });
 
     $scope.augur.$promise.then(function(augur){
-      $scope.learning.allData = augur['learningReport']['performanceDrift'];
-      $scope.evaluation.allData = augur['evaluationReport']['performanceDrift'];
+      $scope.learning.allData = augur.learningReport.performanceDrift;
+      $scope.evaluation.allData = augur.evaluationReport.performanceDrift;
 
       $scope.learning.activeIndicator   = { key: augur.learningKpi, label: Constants.KEY_PERFORMANCE_INDICATORS_HASH[augur.learningKpi] };
       $scope.evaluation.activeIndicator = { key: augur.learningKpi, label: Constants.KEY_PERFORMANCE_INDICATORS_HASH[augur.learningKpi] };

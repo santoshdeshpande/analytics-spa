@@ -14,7 +14,7 @@ define([
       $scope.augur.$promise,
       $scope.habitat.$promise
     ]).then(function () {
-      $scope.initialize()
+      $scope.initialize();
     });
 
     $scope.initialize = function () {
@@ -24,7 +24,7 @@ define([
 
       angular.forEach(Constants.KEY_PERFORMANCE_INDICATORS, function (indicator) {
         if (indicator.key === $scope.augur.learningKpi) {
-          $scope.augurSettings.learning.kpi = indicator
+          $scope.augurSettings.learning.kpi = indicator;
         }
       });
     };
@@ -42,7 +42,7 @@ define([
           $scope.success = 'The new settings for the Augur have been saved';
         }, function (httpResponse) {
           $scope.success = null;
-          $scope.error = 'There was an error saving the new Augur: ' + httpResponse.data['error'];
+          $scope.error = 'There was an error saving the new Augur: ' + httpResponse.data.error;
         });
     };
 
@@ -53,10 +53,10 @@ define([
           $state.transitionTo('dashboard');
         }, function (httpResponse) {
           $scope.success = null;
-          $scope.error = 'There was an error deleting the new Augur: ' + httpResponse.data['error'];
-        })
+          $scope.error = 'There was an error deleting the new Augur: ' + httpResponse.data.error;
+        });
     };
   }
 
-  return  ['$state', '$scope', '$stateParams', '$q', 'Augur', 'FlashMessages', controller]
+  return  ['$state', '$scope', '$stateParams', '$q', 'Augur', 'FlashMessages', controller];
 });

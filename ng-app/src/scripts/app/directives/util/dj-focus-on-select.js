@@ -18,10 +18,9 @@ define([
                             element.focus();
                         }, 100);
                     }
-                })
+                });
             }
-
-        }
+        };
     }
 
     return directive;

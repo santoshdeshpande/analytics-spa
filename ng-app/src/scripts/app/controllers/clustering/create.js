@@ -106,5 +106,5 @@ define([
         $scope.$watchCollection('[augur.numberOfClusters, augur.numberOfIterations]', validateStepFour);
     }
 
-    return  ['$state', '$scope', 'Augur', 'FactTable', 'FlashMessages', 'Habitat', controller]
+    return  ['$state', '$scope', 'Augur', 'FactTable', 'FlashMessages', 'Habitat', controller];
 });

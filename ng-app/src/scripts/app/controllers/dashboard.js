@@ -11,7 +11,7 @@ define([
     var arr = [];
 
     for (var i=0; i< 30; i++) {
-      arr.push([i, Math.random()])
+      arr.push([i, Math.random()]);
     }
 
     return arr;
@@ -33,7 +33,7 @@ define([
 
     this.cancel = function () {
       $interval.cancel(timeoutId);
-    }
+    };
   }
 
   function controller ($scope, $stateParams, $timeout, $interval, $q, Augur, DataSource, FactTable, FlashMessages, Habitat) {
@@ -44,8 +44,8 @@ define([
     $scope.pendingAgurus = [];
     $scope.$on('$destroy', function() {
       angular.forEach($scope.pendingAgurus, function ( pendingAugur ) {
-        pendingAugur.cancel()
-      })
+        pendingAugur.cancel();
+      });
     });
 
     $scope.flash = FlashMessages.getMessage();
@@ -61,10 +61,38 @@ define([
       return $scope.selectedArtifactTypes[artifact.type] && queryMatch;
     };
 
+      var createFactTable = function(factTable) {
+          factTable.type = 'factTable';
+          factTable.habitatId = habitat.code;
+          factTable.colorScheme = habitat.colorScheme;
+          $scope.artifacts.push(factTable);
+      };
+
+      var createAugur = function(augur) {
+          augur.type = 'augur';
+          augur.habitatId = habitat.code;
+          augur.colorScheme = habitat.colorScheme;
+          if (!augur.augurType) {
+              augur.augurType = 'classification';
+          }
+
+          augur.learningKpiLabel =
+              Constants.KEY_PERFORMANCE_INDICATORS_HASH[augur.learningKpi] +
+              ' (' + parseFloat(augur.learningThreshold).toFixed(2) + ')';
+
+          if (!augur.dashboardChartData)
+              augur.dashboardChartData = randomDashboardChartData();
+
+          if (augur.learningStatus === 'pending')
+              $scope.pendingAgurus.push(new AugurStatusPoller( Augur, $interval, augur ));
+
+          $scope.artifacts.push(augur);
+      };
+
     Habitat.query(function (habitats) {
       $q.all([
-          $q.all(habitats.map(function(habitat){return FactTable.query({ habitatId: habitat.id }).$promise})),
-          $q.all(habitats.map(function(habitat){return Augur.query({ habitatId: habitat.id }).$promise}))
+          $q.all(habitats.map(function(habitat){return FactTable.query({ habitatId: habitat.id }).$promise;})),
+          $q.all(habitats.map(function(habitat){return Augur.query({ habitatId: habitat.id }).$promise;}))
         ]).then(function (results) {
         var factTables = results[0],
             augurs = results[1];
@@ -76,32 +104,9 @@ define([
           habitat.augurCount = augurs[i].length;
           $scope.artifacts.push(habitat);
 
-          angular.forEach(factTables[i], function(factTable) {
-            factTable.type = 'factTable';
-            factTable.habitatId = habitat.code;
-            factTable.colorScheme = habitat.colorScheme;
-            $scope.artifacts.push(factTable);
-          });
-          angular.forEach(augurs[i], function(augur) {
-            augur.type = 'augur';
-            augur.habitatId = habitat.code;
-            augur.colorScheme = habitat.colorScheme;
-            if (!augur.augurType) {
-              augur.augurType = 'classification';
-            }
+          angular.forEach(factTables[i], createFactTable(factTable));
 
-            augur.learningKpiLabel =
-              Constants.KEY_PERFORMANCE_INDICATORS_HASH[augur.learningKpi]
-              + ' (' + parseFloat(augur.learningThreshold).toFixed(2) + ')';
-
-            if (!augur.dashboardChartData)
-              augur.dashboardChartData = randomDashboardChartData();
-
-            if (augur.learningStatus === 'pending')
-              $scope.pendingAgurus.push(new AugurStatusPoller( Augur, $interval, augur ));
-
-            $scope.artifacts.push(augur);
-          });
+          angular.forEach(augurs[i], createAugur(augur));
         }
       });
     });

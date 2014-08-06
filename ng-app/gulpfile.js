@@ -32,7 +32,7 @@ var livereloadport = 35729,
 //// Default
 //////////////////////////////
 //gulp.task('default', ['dist', 'watch', 'serve']);
-gulp.task('default', ['dist', 'watch', 'serve']);
+gulp.task('default', ['lint','dist', 'watch', 'serve']);
 
 gulp.task('serve', function () {
   var json = '';
@@ -91,9 +91,15 @@ gulp.task('watch', function () {
         pipe(livereload(lrserver));
 
   gulp.watch(['src/styles/**/*'], ['styles']);
-  gulp.watch(['src/scripts/main.js', 'src/scripts/app/**/*.js'], function(){
+  gulp.watch(['src/scripts/main.js', 'src/scripts/app/**/*.js'], ['lint'], function(){
     livereload(lrserver).changed('from-js-watch-task')
   });
+});
+
+gulp.task('lint', function() {
+    return gulp.src('src/scripts/app/**/*.js')
+        .pipe(jshint())
+        .pipe(jshint.reporter('default'));
 });
 
 gulp.task('watch-rails', function () {

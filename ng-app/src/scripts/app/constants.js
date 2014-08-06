@@ -80,7 +80,7 @@ define(['angular'], function (ng) {
     ng.forEach(constants.KEY_PERFORMANCE_INDICATORS, function (kpi) {
       constants.KEY_PERFORMANCE_INDICATORS_HASH[kpi.key] = kpi.label;
       constants.KEY_PERFORMANCE_INDICATORS_HASH_FULL[kpi.key] = kpi;
-    })
+    });
   })();
 
   return constants;

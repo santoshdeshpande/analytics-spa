@@ -22,12 +22,12 @@ define([
 
         var svg = new Chart(ele[0], dimensions);
 
-        var x = d3.scale.ordinal().rangeRoundBands([0, svg.width()], .1);
+        var x = d3.scale.ordinal().rangeRoundBands([0, svg.width()], 0.1);
         var y = d3.scale.linear().range([svg.height(), 0]);
         var yAxis = d3.svg.axis().scale(y).orient('left');
 
         scope.$watch('chart', function (newChart) {
-          if (newChart != null) scope.render(newChart.data);
+          if (newChart !== null) scope.render(newChart.data);
         }, true);
 
         scope.render = function (data) {
@@ -37,8 +37,8 @@ define([
           if (renderTimeout) $timeout.cancel(renderTimeout);
 
           renderTimeout = $timeout(function () {
-            x.domain(data.map(function (d) { return d[0] }));
-            y.domain([0, d3.max(data, function (d) { return d[1] })]);
+            x.domain(data.map(function (d) { return d[0]; }));
+            y.domain([0, d3.max(data, function (d) { return d[1]; })]);
 
             var yTicks = [
               d3.min(y.ticks()),
@@ -81,7 +81,7 @@ define([
               .attr('x', function(d) { return x(d[0]); })
               .attr('width', x.rangeBand())
               .attr('y', function(d) { return y(d[1]); })
-              .attr('height', function(d) { return svg.height() - y(d[1]) });
+              .attr('height', function(d) { return svg.height() - y(d[1]); });
 
             var barValueLabel = svg.append('g')
                 .attr('transform', 'translate(' + svg.width() / 2 + ', 10)')
@@ -90,15 +90,15 @@ define([
                 .style('text-anchor', 'middle');
 
             barContainers.on('mouseover', function (d) {
-                barValueLabel.text(d[0])
+                barValueLabel.text(d[0]);
               })
               .on('mouseout', function (d) {
-                barValueLabel.text('')
+                barValueLabel.text('');
               });
 
           }, 200); // renderTimeout
         };
       }
     };
-  }]
+  }];
 });

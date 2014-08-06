@@ -6,7 +6,7 @@ define(['d3js'], function (d3) {
   'use strict';
 
   function nodeValues (nodes) {
-    return nodes.map(function (node) { return node.importance })
+    return nodes.map(function (node) { return node.importance; });
   }
 
   function colorScale(element) {
@@ -50,10 +50,10 @@ define(['d3js'], function (d3) {
         var radius = d3.scale.linear();
 
         var pack = d3.layout.pack()
-            .value(function(d) { return d.importance })
+            .value(function(d) { return d.importance; })
             .radius(radius)
             .padding(20)
-            .sort(function(a, b) { return Math.log(a.importance * b.importance) })
+            .sort(function(a, b) { return Math.log(a.importance * b.importance); })
             .size([width + 120, height]);
 
         var svg = d3.select(ele[0]).append('svg')
@@ -72,7 +72,7 @@ define(['d3js'], function (d3) {
 
           renderTimeout = $timeout(function () {
             var dataNodes = data.nodes
-              .sort(function (a, b) { return a.importance - b.importance })
+              .sort(function (a, b) { return a.importance - b.importance; })
               .reverse()
               .slice(0, maxNodes - 1)
               .map(function (node) {
@@ -88,7 +88,7 @@ define(['d3js'], function (d3) {
                   node.dy_line2 = '0em';
                   node.dy_value = '.7em';
                 }
-                return node
+                return node;
               });
 
             var rMax = radiusMax(dataNodes.length);
@@ -111,11 +111,11 @@ define(['d3js'], function (d3) {
             });
             
             var nodeEnter = svg.selectAll('.node')
-                 .data(nodes.filter(function(d) { return !!d.feature }))
+                 .data(nodes.filter(function(d) { return !!d.feature; }))
                .enter().append('g')
                  .attr('class', 'node')
                  .attr('transform', function(d) { return 'translate(' + d.x + ',' + d.y + ')'; })
-                 .style('font-size', function(d) { return fontSize(d.r/Math.log(Math.max(Math.min(d.feature.length, variableLengthMax), variableLengthMin))) + '%' });
+                 .style('font-size', function(d) { return fontSize(d.r/Math.log(Math.max(Math.min(d.feature.length, variableLengthMax), variableLengthMin))) + '%'; });
 
             nodeEnter.append('circle')
                 .attr('r', function(d) { return d.r; })
@@ -123,22 +123,22 @@ define(['d3js'], function (d3) {
 
             nodeEnter.append('text')
               .style('text-anchor', 'middle')
-              .attr('dy', function(d) { return d.dy_line1 })
-              .text(function(d) { return d.line1 });
+              .attr('dy', function(d) { return d.dy_line1; })
+              .text(function(d) { return d.line1; });
 
             nodeEnter.append('text')
               .style('text-anchor', 'middle')
-              .attr('dy', function(d) { return d.dy_line2 })
-              .text(function(d) { return d.line2 });
+              .attr('dy', function(d) { return d.dy_line2; })
+              .text(function(d) { return d.line2; });
 
             nodeEnter.append('text')
-              .attr('dy', function(d) { return d.dy_value })
+              .attr('dy', function(d) { return d.dy_value; })
               .style('text-anchor', 'middle')
-              .text(function(d) { return format(d.value * 1000) });
+              .text(function(d) { return format(d.value * 1000); });
 
           }, 200); // renderTimeout
         };
       }
     };
-  }]
+  }];
 });

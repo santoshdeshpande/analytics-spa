@@ -113,7 +113,7 @@ define([
                     url: '/settings',
                     templateUrl: 'partials/classification/settings.html',
                     controller: 'AugurSettingsCtrl'
-                })
+                });
         }]).run(['$rootScope', '$state', function ($rootScope, $state) {
             var root = angular.element(document.documentElement);
 
