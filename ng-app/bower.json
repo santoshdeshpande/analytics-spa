@@ -22,7 +22,7 @@
     "angular-resource": "~1.2.21",
     "angular-ui-router": "~0.2.10",
     "d3": "~3.4.11",
-    "angular-spinner": "~0.5.0",
+    "angular-spinner": "git@github.com:urish/angular-spinner.git#43420855f3af7053ed451445d399d5bb95168dd7",
     "lodash": "~2.4.1",
     "domReady": "~2.0.1",
     "angular-foundation": "~0.3.0"

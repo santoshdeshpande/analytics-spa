@@ -28,7 +28,7 @@ require.config({
     'angular.spinner' : {
       deps : [
         'angular',
-        'spinjs'
+        'spin'
       ]
     },
 
@@ -68,7 +68,7 @@ require.config({
     'domReady'           : '../lib/domReady/domReady',
     'jquery'             : '../lib/jquery/dist/jquery',
     'lodash'             : '../lib/lodash/dist/lodash',
-    'spinjs'             : '../lib/spin.js/spin',
+    'spin'             : '../lib/spin.js/spin',
     'main'               : '../main'
   }
 });

@@ -76,7 +76,7 @@
             .tile.augur{ ng: { attr: { data: { theme: '{{ artifact.colorScheme }}' }}} }
               %h5.title
                 {{ artifact.name }}
-                %span{ spinner: '{ radius: 5, width: 3, length: 4 }', ng: { if: 'artifact.learningStatus === "pending"' } }
+                %span{us: { spinner: '{ radius: 5, width: 3, length: 4 }'}, ng: { if: 'artifact.learningStatus === "pending"' } }
                 %i.icon.icon-telescope
               .artefact-body
                 %dl.description
