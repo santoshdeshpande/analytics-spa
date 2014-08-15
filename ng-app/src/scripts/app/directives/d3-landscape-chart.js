@@ -41,7 +41,6 @@ define([
         var color = d3.scale.ordinal().range(colorCodes());
 
         $rootScope.$on('themeChanged', function () {
-          var codes = colorCodes();
           color = d3.scale.ordinal().range(colorCodes());
         });
 
@@ -90,9 +89,9 @@ define([
 
         var force = d3.layout.force()
           .size([dimensions.width, dimensions.height])
-          .charge(-1500)
+          .charge(-5000)
           .gravity(0.1)
-          .friction(0.5)
+          .friction(0.3)
           .linkDistance(function (d) {
             return radius(d.source.count) + radius(d.target.count) + 100;
           });
@@ -179,7 +178,7 @@ define([
 
           link.exit()
             .transition()
-            .duration(250)
+            .duration(300)
             .remove();
 
           return link;
@@ -202,8 +201,10 @@ define([
             })
             .style("fill", function (d, i) {
               return color(d.count);
+            })
+            .attr("stroke", function(d){
+              return d3.rgb(color(d.count)).brighter();
             });
-
 
           nodeEnter.append("svg:circle")
             .attr("class", "circle")
@@ -215,7 +216,11 @@ define([
             })
             .style("fill", function (d, i) {
               return color(d.count);
+            })
+            .attr("stroke", function(d){
+              return d3.rgb(color(d.count)).brighter();
             });
+
 
           nodeEnter.on("mouseover", function (d) {
             var tooltipHtml = ['<dl>'];
@@ -228,6 +233,15 @@ define([
             tooltip.transition()
               .duration(100)
               .style('visibility', 'visible');
+
+            var x = d3.select(this)
+              .select("circle")
+              .transition()
+              .duration(500)
+              .attr("r", function(n){
+                return radius(n.count) * 1.25;
+              });
+
             d3.selectAll("line.link")
               .transition()
               .duration(250)
@@ -236,17 +250,26 @@ define([
                   return "#26A65B";
                 return baseStrokeColor;
               });
-          })
-            .on("mouseout", function (d) {
-              tooltip.transition()
-                .duration(100)
-                .style('visibility', 'hidden');
-              d3.selectAll("line.link")
-                .transition()
-                .duration(250)
-                .style("stroke", baseStrokeColor);
+          });
+          nodeEnter.on("mouseout", function (d) {
+            tooltip.transition()
+              .duration(100)
+              .style('visibility', 'hidden');
+            d3.selectAll("line.link")
+              .transition()
+              .duration(250)
+              .style("stroke", baseStrokeColor);
 
-            });
+            var x = d3.select(this)
+              .select("circle")
+              .transition()
+              .duration(250)
+              .attr("r", function(n){
+                return radius(d.count);
+              });
+
+
+          });
 
 
           nodeEnter.append("svg:text")

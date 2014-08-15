@@ -10,6 +10,7 @@
     @include themes( $main: border-right-color, $light10: border-top-color);
     @include themes( $light20: border-bottom-color, $light30: border-left-color);
     @include themes( $light40: background-color, $light50: outline-color);
+    cursor: pointer;
   }
 
   .slider-container {
