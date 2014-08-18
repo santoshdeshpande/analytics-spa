@@ -8,6 +8,16 @@ define([
 ], function (d3) {
   'use strict';
 
+  var colorCodes = function (element) {
+    var $element = angular.element(element);
+    return ['border-right-color', 'border-left-color', 'border-top-color', 'border-bottom-color',
+      'background-color', 'outline-color'].
+      map(function (colorElement) {
+        return  $element.css(colorElement);
+      });
+  };
+
+
   return ['$rootScope', '$timeout', function ($rootScope, $timeout) {
     return {
       restrict: 'E',
@@ -25,20 +35,12 @@ define([
 
         var dimensions = {
           margins: { top: 10, right: 10, bottom: 10, left: 10 },
-          width: 800,
-          height: 500
+          width: ele[0].offsetWidth,
+          height: ele[0].offsetHeight
         };
 
-        var colorCodes = function () {
-          var $element = angular.element(ele[0]);
-          return ['border-right-color', 'border-left-color', 'border-top-color', 'border-bottom-color',
-            'background-color', 'outline-color'].
-            map(function (colorElement) {
-              return  $element.css(colorElement);
-            });
-        };
-
-        var color = d3.scale.ordinal().range(colorCodes());
+        console.log(ele[0]);
+        var color = d3.scale.ordinal().range(colorCodes(ele[0]));
 
         $rootScope.$on('themeChanged', function () {
           color = d3.scale.ordinal().range(colorCodes());
