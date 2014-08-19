@@ -10,8 +10,7 @@ define(['d3js'], function (d3) {
 
     $scope.augur.$promise.then(function (augur) {
 
-      var profile = augur.clustering.clusterProfile;
-      $scope.clusters = profile;
+      $scope.clusters = augur.clustering.clusterProfile;
 
       $scope.minSliderValue = 0;
       $scope.maxSliderValue = d3.max($scope.clusters.distances, function(d){
