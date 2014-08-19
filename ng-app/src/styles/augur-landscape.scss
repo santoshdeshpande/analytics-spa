@@ -2,6 +2,10 @@
 
   position: relative;
   height: 500px;
+  .chart-container {
+    height: 500px;
+  }
+
   #landscape-chart {
     border: 1px solid red;
   }
@@ -11,9 +15,13 @@
     @include themes( $light20: border-bottom-color, $light30: border-left-color);
     @include themes( $light40: background-color, $light50: outline-color);
     cursor: pointer;
-    width: 90%;
+    width: 100%;
     height: 100%;
     display: block;
+
+    .landscape-chart-container {
+      background-color: #fff;
+    }
 
   }
 

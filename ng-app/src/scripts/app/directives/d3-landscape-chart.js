@@ -22,16 +22,24 @@ define([
     return {
       restrict: 'E',
       scope: {
-        data: '='
+        data: '=',
+        bondStrength: '='
       },
-      templateUrl: 'partials/directives/landscape-chart.html',
       link: function (scope, ele) {
         var baseStrokeColor = "#22313F";
-        scope.$watch('data', function (data) {
-          if (data) {
-            scope.render(data);
+        scope.$watch('data', function (newVal) {
+          if (newVal) {
+            scope.render(newVal);
           }
-        }, true);
+        }, false);
+
+        scope.$watch('bondStrength', function(value){
+          if(value) {
+            var val = 256 - (+value);
+            console.log(scope.max,+value,val)
+            update(val);
+          }
+        }, false);
 
         var dimensions = {
           margins: { top: 10, right: 10, bottom: 10, left: 10 },
@@ -39,11 +47,10 @@ define([
           height: ele[0].offsetHeight
         };
 
-        console.log(ele[0]);
         var color = d3.scale.ordinal().range(colorCodes(ele[0]));
 
         $rootScope.$on('themeChanged', function () {
-          color = d3.scale.ordinal().range(colorCodes());
+          color = d3.scale.ordinal().range(colorCodes(ele[0]));
         });
 
         var radius = d3.scale.sqrt().range([0, 2]);
@@ -75,12 +82,11 @@ define([
               scope.links.push(link);
             }
           });
-          d3.select("#nRadius-value").text(value);
           doLayout();
         };
 
 
-        var svg = d3.select(".chart-container")
+        var svg = d3.select(ele[0])
           .append("svg:svg")
           .attr('class', 'landscape-chart-container')
           .attr('width', dimensions.width)
@@ -120,27 +126,8 @@ define([
             scope.originalLinks.push({source: scope.originalNodes[src], target: scope.originalNodes[dest], bond: bond});
           });
 
-          max = d3.max(scope.originalLinks, function (d) {
+          scope.max = d3.max(scope.originalLinks, function (d) {
             return d.bond;
-          });
-          min = 0;
-          d3.select(".slider")
-            .attr("min", min)
-            .attr("value", max)
-            .attr("max", max)
-            .on("input", function () {
-              var val = this.max - this.value;
-              d3.select("#slider-value").text(val);
-              update(val);
-            });
-
-          d3.select("#steps").select("*").remove();
-          angular.forEach(distances, function (distance) {
-            var value = max - distance[2];
-            d3.select("#steps")
-              .append("option")
-              .attr("value", value)
-              .text(value);
           });
         };
 
