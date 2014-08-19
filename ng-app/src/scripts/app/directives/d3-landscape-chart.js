@@ -26,6 +26,7 @@ define([
         bondStrength: '='
       },
       link: function (scope, ele) {
+        var $element = ele[0];
         var baseStrokeColor = "#22313F";
         scope.$watch('data', function (newVal) {
           if (newVal) {
@@ -42,19 +43,19 @@ define([
 
         var dimensions = {
           margins: { top: 10, right: 10, bottom: 10, left: 10 },
-          width: ele[0].offsetWidth,
-          height: ele[0].offsetHeight
+          width: $element.offsetWidth,
+          height: $element.offsetHeight
         };
 
-        var color = d3.scale.ordinal().range(colorCodes(ele[0]));
+        var color = d3.scale.ordinal().range(colorCodes($element));
 
         $rootScope.$on('themeChanged', function () {
-          color = d3.scale.ordinal().range(colorCodes(ele[0]));
+          color = d3.scale.ordinal().range(colorCodes($element));
         });
 
         var radius = d3.scale.sqrt().range([0, 2]);
 
-        var tooltip = d3.select(ele[0])
+        var tooltip = d3.select($element)
           .append('div')
           .attr('id', 'tooltip-' + new Date().getTime())
           .attr('class', 'tree-tooltip')
@@ -85,7 +86,7 @@ define([
         };
 
 
-        var svg = d3.select(ele[0])
+        var svg = d3.select($element)
           .append("svg:svg")
           .attr('class', 'landscape-chart-container')
           .attr('width', dimensions.width)
@@ -105,9 +106,6 @@ define([
 
         var linkContainer = svg.append("g")
           .attr("class", "link-container");
-
-
-        var min, max;
 
         var buildLinksAndNodes = function (data) {
           var clusters = data.Clusters;

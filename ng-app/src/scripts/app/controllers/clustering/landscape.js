@@ -7,6 +7,8 @@ define(['d3js'], function (d3) {
 
   return  ['$scope', '$stateParams', '$timeout', function ($scope, $stateParams, $timeout) {
     $scope.data = {};
+    $scope.minSliderValue = 0;
+    $scope.maxSliderValue = 0;
 
     $scope.augur.$promise.then(function (augur) {
 
@@ -22,15 +24,5 @@ define(['d3js'], function (d3) {
 
 
     });
-
-    $scope.$watch('data.bondStrength', function(f){
-      console.log("Changed...",f);
-    });
-
-
-
-
-
-
   }];
 });
