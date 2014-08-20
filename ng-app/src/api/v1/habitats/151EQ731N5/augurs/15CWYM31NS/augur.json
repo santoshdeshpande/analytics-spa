@@ -170,7 +170,7 @@
                 },
                 {
                     "Name": "Cluster_4",
-                    "count": 20,
+                    "count": 389,
                     "fields": [
                         {
                             "key": "field_1",
@@ -202,8 +202,165 @@
                             "variance": 303335987
                         }
                     ]
+                },
+                {
+                    "Name": "Cluster_5",
+                    "count": 745,
+                    "fields": [
+                        {
+                            "key": "field_1",
+                            "instances": [
+                                {
+                                    "red": 1,
+                                    "blue": 2,
+                                    "green": 3,
+                                    "black": 11
+                                }
+                            ]
+                        },
+                        {
+                            "key": "field_2",
+                            "standard_deviation": 21.58,
+                            "median": 35,
+                            "minimum": 39,
+                            "maximum": 92,
+                            "variance": 1256.123,
+                            "mean": 40.3
+                        },
+                        {
+                            "key": "field_3",
+                            "standard_deviation": 66520.48,
+                            "median": 25139.06,
+                            "mean": 45317.18,
+                            "maximum": 87856.19,
+                            "minimum": 12109.38,
+                            "variance": 303335987
+                        }
+                    ]
+                },
+                {
+                    "Name": "Cluster_6",
+                    "count": 820,
+                    "fields": [
+                        {
+                            "key": "field_1",
+                            "instances": [
+                                {
+                                    "red": 150,
+                                    "blue": 321,
+                                    "green": 79,
+                                    "black": 213
+                                }
+                            ]
+                        },
+                        {
+                            "key": "field_2",
+                            "standard_deviation": 21.58,
+                            "median": 69,
+                            "minimum": 39,
+                            "maximum": 92,
+                            "variance": 1256.123,
+                            "mean": 65.9
+                        },
+                        {
+                            "key": "field_3",
+                            "standard_deviation": 66520.48,
+                            "median": 25139.06,
+                            "mean": 45317.18,
+                            "maximum": 87856.19,
+                            "minimum": 12109.38,
+                            "variance": 303335987
+                        }
+                    ]
+                },
+                {
+                    "Name": "Cluster_7",
+                    "count": 654,
+                    "fields": [
+                        {
+                            "key": "field_1",
+                            "instances": [
+                                {
+                                    "red": 98,
+                                    "blue": 122,
+                                    "green": 265,
+                                    "black": 115
+                                }
+                            ]
+                        },
+                        {
+                            "key": "field_2",
+                            "standard_deviation": 21.58,
+                            "median": 35,
+                            "minimum": 39,
+                            "maximum": 92,
+                            "variance": 1256.123,
+                            "mean": 40.3
+                        },
+                        {
+                            "key": "field_3",
+                            "standard_deviation": 66520.48,
+                            "median": 25139.06,
+                            "mean": 45317.18,
+                            "maximum": 87856.19,
+                            "minimum": 12109.38,
+                            "variance": 303335987
+                        }
+                    ]
+                },
+                {
+                    "Name": "Cluster_8",
+                    "count": 439,
+                    "fields": [
+                        {
+                            "key": "field_1",
+                            "instances": [
+                                {
+                                    "red": 120,
+                                    "blue": 120,
+                                    "green": 45,
+                                    "black": 90
+                                }
+                            ]
+                        },
+                        {
+                            "key": "field_2",
+                            "standard_deviation": 21.58,
+                            "median": 35,
+                            "minimum": 39,
+                            "maximum": 92,
+                            "variance": 1256.123,
+                            "mean": 40.3
+                        },
+                        {
+                            "key": "field_3",
+                            "standard_deviation": 66520.48,
+                            "median": 25139.06,
+                            "mean": 45317.18,
+                            "maximum": 87856.19,
+                            "minimum": 12109.38,
+                            "variance": 303335987
+                        }
+                    ]
                 }
-            ]
+            ],
+          "distances" : [
+            ["Cluster_1", "Cluster_2", 123],
+            ["Cluster_1", "Cluster_3", 99],
+            ["Cluster_1", "Cluster_4", 17],
+            ["Cluster_1", "Cluster_5", 198],
+            ["Cluster_1", "Cluster_6", 156],
+            ["Cluster_1", "Cluster_7", 140],
+            ["Cluster_1", "Cluster_8", 231],
+            ["Cluster_2", "Cluster_3", 56],
+            ["Cluster_2", "Cluster_4", 87],
+            ["Cluster_3", "Cluster_5", 36],
+            ["Cluster_3", "Cluster_6", 256],
+            ["Cluster_5", "Cluster_7", 111],
+            ["Cluster_5", "Cluster_6", 222],
+            ["Cluster_7", "Cluster_8", 125]
+
+          ]
         }
     }
 }
