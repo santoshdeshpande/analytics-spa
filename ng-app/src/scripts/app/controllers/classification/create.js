@@ -29,7 +29,6 @@ define([
       factTable: {},
       eventIds: '',
       augurType: 'classification',
-      algorithm: 'decision_tree',
       learning: {
         kpi: { }
       },

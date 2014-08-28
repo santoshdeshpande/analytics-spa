@@ -90,7 +90,7 @@ define([
 
         $scope.submit = function() {
             var augurNewAttributes = _.pick($scope.augur, ['name', 'augurType','missingValueTreatment','fixedValue','normalizationMethod','numberOfClusters','numberOfIterations']);
-            augurNewAttributes.schedule = $scope.augur.schedule;
+            augurNewAttributes.clusteringScheduleAttrs = $scope.augur.schedule;
             console.log(augurNewAttributes);
             Augur.save({habitatId: $scope.augur.habitat.id},{augur: augurNewAttributes}, function(augur){
                 FlashMessages.setMessage('Augur ' + augur.name + ' has been created.');

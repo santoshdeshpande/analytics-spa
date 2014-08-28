@@ -40635,7 +40635,6 @@ define('controllers/classification/create',[
       factTable: {},
       eventIds: '',
       augurType: 'classification',
-      algorithm: 'decision_tree',
       learning: {
         kpi: { }
       },
@@ -40859,7 +40858,7 @@ define('controllers/clustering/create',[
 
         $scope.submit = function() {
             var augurNewAttributes = _.pick($scope.augur, ['name', 'augurType','missingValueTreatment','fixedValue','normalizationMethod','numberOfClusters','numberOfIterations']);
-            augurNewAttributes.schedule = $scope.augur.schedule;
+            augurNewAttributes.clusteringScheduleAttrs = $scope.augur.schedule;
             console.log(augurNewAttributes);
             Augur.save({habitatId: $scope.augur.habitat.id},{augur: augurNewAttributes}, function(augur){
                 FlashMessages.setMessage('Augur ' + augur.name + ' has been created.');
@@ -40877,6 +40876,7 @@ define('controllers/clustering/create',[
 
     return  ['$state', '$scope', 'Augur', 'FactTable', 'FlashMessages', 'Habitat', controller];
 });
+
 /* global
  define: false,
  console: false
@@ -41175,279 +41175,6 @@ define('controllers/clustering/profile',[], function () {
             });
         });
     }];
-});
-
-/* global
- define: false,
- console: false
- */
-define('controllers/dashboard',[
-    '../constants'
-], function (Constants) {
-    
-
-    function randomDashboardChartData() {
-        var arr = [];
-
-        for (var i = 0; i < 30; i++) {
-            arr.push([i, Math.random()]);
-        }
-
-        return arr;
-    }
-
-    function AugurStatusPoller(Augur, $interval, augur) {
-        var timeoutId = $interval(function () {
-            Augur.status({
-                habitatId: augur.habitatId,
-                augurId: augur.id
-            }, function (updatedAugur) {
-                if (updatedAugur.learningStatus === 'complete') {
-                    augur.learningStatus = 'complete';
-                    $interval.cancel(timeoutId);
-                }
-            });
-
-        }, 1000 * 10, 60);
-
-        this.cancel = function () {
-            $interval.cancel(timeoutId);
-        };
-    }
-
-    function controller($scope, $stateParams, $timeout, $interval, $q, Augur, DataSource, FactTable, FlashMessages, Habitat) {
-        $scope.artifacts = [];
-        $scope.selectedArtifactTypes = { augur: true, habitat: true, factTable: true };
-        $scope.artifactsQuery = '';
-
-        $scope.pendingAgurus = [];
-        $scope.$on('$destroy', function () {
-            angular.forEach($scope.pendingAgurus, function (pendingAugur) {
-                pendingAugur.cancel();
-            });
-        });
-
-        $scope.flash = FlashMessages.getMessage();
-        $timeout(function () {
-            $scope.flash = '';
-        }, 1500);
-
-        $scope.artifactsFilter = function (artifact) {
-            var queryMatch = true;
-            if ($scope.artifactsQuery.length > 0) {
-                queryMatch = artifact.name.toLowerCase().indexOf($scope.artifactsQuery.toLowerCase()) > -1;
-            }
-            return $scope.selectedArtifactTypes[artifact.type] && queryMatch;
-        };
-
-        Habitat.query(function (habitats) {
-            $q.all([
-                $q.all(habitats.map(function (habitat) {
-                    return FactTable.query({ habitatId: habitat.id }).$promise;
-                })),
-                $q.all(habitats.map(function (habitat) {
-                    return Augur.query({ habitatId: habitat.id }).$promise;
-                }))
-            ]).then(function (results) {
-                var factTables = results[0],
-                    augurs = results[1];
-
-                var createFactTable = function (factTable) {
-                    factTable.type = 'factTable';
-                    factTable.habitatId = habitat.code;
-                    factTable.colorScheme = habitat.colorScheme;
-                    $scope.artifacts.push(factTable);
-                };
-
-                var createAugur = function (augur) {
-                    augur.type = 'augur';
-                    augur.habitatId = habitat.code;
-                    augur.colorScheme = habitat.colorScheme;
-                    if (!augur.augurType) {
-                        augur.augurType = 'classification';
-                    }
-
-                    augur.learningKpiLabel =
-                        Constants.KEY_PERFORMANCE_INDICATORS_HASH[augur.learningKpi] +
-                        ' (' + parseFloat(augur.learningThreshold).toFixed(2) + ')';
-
-                    if (!augur.dashboardChartData)
-                        augur.dashboardChartData = randomDashboardChartData();
-
-                    if (augur.learningStatus === 'pending')
-                        $scope.pendingAgurus.push(new AugurStatusPoller(Augur, $interval, augur));
-
-                    $scope.artifacts.push(augur);
-                };
-
-
-                for (var i = 0; i < habitats.length; i++) {
-                    var habitat = habitats[i];
-
-                    habitat.type = 'habitat';
-                    habitat.augurCount = augurs[i].length;
-                    $scope.artifacts.push(habitat);
-
-                    angular.forEach(factTables[i], createFactTable);
-
-                    angular.forEach(augurs[i], createAugur);
-                }
-            });
-        });
-    }
-
-    return ['$scope', '$stateParams', '$timeout', '$interval', '$q', 'Augur', 'DataSource', 'FactTable', 'FlashMessages', 'Habitat', controller];
-});
-
-/* global
- define: false,
- console: false
- */
-define('controllers',[
-  'angular',
-  'services',
-  'controllers/classification/create',
-  'controllers/clustering/create',
-  'controllers/classification/augur',
-  'controllers/classification/accuracy',
-  'controllers/classification/accuracy-detail',
-  'controllers/classification/influencers',
-  'controllers/classification/performance',
-  'controllers/classification/settings',
-  'controllers/classification/tree',
-  'controllers/clustering/profile',
-  'controllers/dashboard'
-], function (ng, services, AugurNewCtrl, AugurNewClusteringCtrl, AugurCtrl, AugurAccuracyCtrl, AugurAccuracyDetailCtrl, AugurInfluencersCtrl, AugurPerformanceCtrl, AugurSettingsCtrl, AugurTreeCtrl, AugurProfileCtrl, DashboardCtrl) {
-  
-
-  return ng.module('MainControllers', [ services.name ])
-      .controller('AugurCtrl', AugurCtrl)
-      .controller('AugurNewCtrl', AugurNewCtrl)
-      .controller('AugurNewClusteringCtrl', AugurNewClusteringCtrl)
-      .controller('AugurAccuracyCtrl', AugurAccuracyCtrl)
-      .controller('AugurAccuracyDetailCtrl', AugurAccuracyDetailCtrl)
-      .controller('AugurInfluencersCtrl', AugurInfluencersCtrl)
-      .controller('AugurPerformanceCtrl', AugurPerformanceCtrl)
-      .controller('AugurSettingsCtrl', AugurSettingsCtrl)
-      .controller('AugurTreeCtrl', AugurTreeCtrl)
-      .controller('AugurProfileCtrl', AugurProfileCtrl)
-      .controller('DashboardCtrl', DashboardCtrl);
-});
-
-/* global
- define: false,
- console: false
- */
-
-define('directives/augur-settings',[
-  '../constants'
-], function (Constants) {
-  
-
-  function directive() {
-    return {
-      restrict: 'E',
-      templateUrl: 'partials/directives/augur-settings.html',
-      transclude: true,
-      replace: true,
-      scope: {
-        augur: '=',
-        form: '='
-      },
-      link: function (scope, ele, attrs) {
-        scope.DAYS_IN_MONTH = Constants.DAYS_IN_MONTH;
-        scope.KEY_PERFORMANCE_INDICATORS = Constants.KEY_PERFORMANCE_INDICATORS;
-      }
-    };
-  }
-
-  return directive;
-});
-
-/* global
- define: false,
- console: false
- */
-
-define('directives/augur-scheduler',[
-    '../constants'
-], function (Constants) {
-    
-
-    function directive($compile) {
-        return {
-            restrict: 'E',
-            replace: false,
-            templateUrl: 'partials/directives/augur-scheduler.html',
-            scope: {
-                schedule: "=",
-                form: "=",
-                prefix: "@"
-            },
-            link: function(scope, element, attrs) {
-                scope.DAYS_OF_WEEK = Constants.DAYS_OF_WEEK;
-                scope.SCHEDULE_TYPES = Constants.SCHEDULE_TYPES;
-                scope.DAYS_IN_MONTH = Constants.DAYS_IN_MONTH;
-                scope.name = scope.prefix + "-schedule-frequency";
-                scope.hourlyName = scope.prefix + "HourlyField";
-            }
-        };
-    }
-
-    return directive;
-});
-/* global
- define: false,
- console: false
- */
-define('directives/available-event',[
-  'lodash'
-], function (_) {
-  
-
-  return function () {
-
-    return {
-      restrict: 'A',
-      require: 'ngModel',
-      link: function (scope, element, attrs, ngModel) {
-        function sanitizeInput(input) {
-          var lodashTokens = _(input.replace(/;/g, ',').replace(/, */g, ',').split(','));
-          return lodashTokens.uniq().compact();
-        }
-
-        scope.$on('validate:eventIds', function (event, validIds, stepValidThreeCb) {
-          scope.eventIdsValidated = true;
-          scope.unrecognizedEventIds = [];
-          ngModel.$setValidity('present', true);
-          ngModel.$setValidity('recognized', true);
-          stepValidThreeCb(true);
-
-          scope.candidateIds = sanitizeInput(ngModel.$viewValue);
-
-          if (scope.candidateIds.isEmpty()) {
-            ngModel.$setValidity('present', false);
-            stepValidThreeCb(false);
-            return undefined;
-          }
-
-          scope.candidateIds.forEach(function (candidateId) {
-            if (validIds.indexOf(candidateId) === -1) {
-              scope.unrecognizedEventIds.push(candidateId);
-            }
-          });
-
-          if (_.isEmpty(scope.unrecognizedEventIds)) {
-            return scope.candidateIds;
-          } else {
-            ngModel.$setValidity('recognized', false);
-            stepValidThreeCb(false);
-            return undefined;
-          }
-        });
-      }
-    };
-  };
 });
 
 !function() {
@@ -50687,6 +50414,307 @@ define('directives/available-event',[
  define: false,
  console: false
  */
+define('controllers/clustering/landscape',['d3js'], function (d3) {
+  
+
+  return  ['$scope', '$stateParams', '$timeout', function ($scope, $stateParams, $timeout) {
+    $scope.data = {};
+    $scope.minSliderValue = 0;
+    $scope.maxSliderValue = 0;
+
+    $scope.augur.$promise.then(function (augur) {
+
+      $scope.clusters = augur.clustering.clusterProfile;
+
+      $scope.minSliderValue = 0;
+      $scope.maxSliderValue = d3.max($scope.clusters.distances, function(d){
+        return d[2];
+      });
+      $timeout(function(){
+        $scope.data.bondStrength = $scope.maxSliderValue;
+      }, 100);
+
+
+    });
+  }];
+});
+
+/* global
+ define: false,
+ console: false
+ */
+define('controllers/dashboard',[
+    '../constants'
+], function (Constants) {
+    
+
+    function randomDashboardChartData() {
+        var arr = [];
+
+        for (var i = 0; i < 30; i++) {
+            arr.push([i, Math.random()]);
+        }
+
+        return arr;
+    }
+
+    function AugurStatusPoller(Augur, $interval, augur) {
+        var timeoutId = $interval(function () {
+            Augur.status({
+                habitatId: augur.habitatId,
+                augurId: augur.id
+            }, function (updatedAugur) {
+                if (updatedAugur.learningStatus === 'complete') {
+                    augur.learningStatus = 'complete';
+                    $interval.cancel(timeoutId);
+                }
+            });
+
+        }, 1000 * 10, 60);
+
+        this.cancel = function () {
+            $interval.cancel(timeoutId);
+        };
+    }
+
+    function controller($scope, $stateParams, $timeout, $interval, $q, Augur, DataSource, FactTable, FlashMessages, Habitat) {
+        $scope.artifacts = [];
+        $scope.selectedArtifactTypes = { augur: true, habitat: true, factTable: true };
+        $scope.artifactsQuery = '';
+
+        $scope.pendingAgurus = [];
+        $scope.$on('$destroy', function () {
+            angular.forEach($scope.pendingAgurus, function (pendingAugur) {
+                pendingAugur.cancel();
+            });
+        });
+
+        $scope.flash = FlashMessages.getMessage();
+        $timeout(function () {
+            $scope.flash = '';
+        }, 1500);
+
+        $scope.artifactsFilter = function (artifact) {
+            var queryMatch = true;
+            if ($scope.artifactsQuery.length > 0) {
+                queryMatch = artifact.name.toLowerCase().indexOf($scope.artifactsQuery.toLowerCase()) > -1;
+            }
+            return $scope.selectedArtifactTypes[artifact.type] && queryMatch;
+        };
+
+        Habitat.query(function (habitats) {
+            $q.all([
+                $q.all(habitats.map(function (habitat) {
+                    return FactTable.query({ habitatId: habitat.id }).$promise;
+                })),
+                $q.all(habitats.map(function (habitat) {
+                    return Augur.query({ habitatId: habitat.id }).$promise;
+                }))
+            ]).then(function (results) {
+                var factTables = results[0],
+                    augurs = results[1];
+
+                var createFactTable = function (factTable) {
+                    factTable.type = 'factTable';
+                    factTable.habitatId = habitat.code;
+                    factTable.colorScheme = habitat.colorScheme;
+                    $scope.artifacts.push(factTable);
+                };
+
+                var createAugur = function (augur) {
+                    augur.type = 'augur';
+                    augur.habitatId = habitat.code;
+                    augur.colorScheme = habitat.colorScheme;
+
+                    augur.learningKpiLabel =
+                        Constants.KEY_PERFORMANCE_INDICATORS_HASH[augur.learningKpi] +
+                        ' (' + parseFloat(augur.learningThreshold).toFixed(2) + ')';
+
+                    if (!augur.dashboardChartData)
+                        augur.dashboardChartData = randomDashboardChartData();
+
+                    if (augur.learningStatus === 'pending')
+                        $scope.pendingAgurus.push(new AugurStatusPoller(Augur, $interval, augur));
+
+                    $scope.artifacts.push(augur);
+                };
+
+
+                for (var i = 0; i < habitats.length; i++) {
+                    var habitat = habitats[i];
+
+                    habitat.type = 'habitat';
+                    habitat.augurCount = augurs[i].length;
+                    $scope.artifacts.push(habitat);
+
+                    angular.forEach(factTables[i], createFactTable);
+
+                    angular.forEach(augurs[i], createAugur);
+                }
+            });
+        });
+    }
+
+    return ['$scope', '$stateParams', '$timeout', '$interval', '$q', 'Augur', 'DataSource', 'FactTable', 'FlashMessages', 'Habitat', controller];
+});
+
+/* global
+ define: false,
+ console: false
+ */
+define('controllers',[
+  'angular',
+  'services',
+  'controllers/classification/create',
+  'controllers/clustering/create',
+  'controllers/classification/augur',
+  'controllers/classification/accuracy',
+  'controllers/classification/accuracy-detail',
+  'controllers/classification/influencers',
+  'controllers/classification/performance',
+  'controllers/classification/settings',
+  'controllers/classification/tree',
+  'controllers/clustering/profile',
+  'controllers/clustering/landscape',
+  'controllers/dashboard'
+], function (ng, services, AugurNewCtrl, AugurNewClusteringCtrl, AugurCtrl, AugurAccuracyCtrl, AugurAccuracyDetailCtrl, AugurInfluencersCtrl, AugurPerformanceCtrl, AugurSettingsCtrl, AugurTreeCtrl, AugurProfileCtrl,AugurLandscapeCtrl, DashboardCtrl) {
+  
+
+  return ng.module('MainControllers', [ services.name ])
+      .controller('AugurCtrl', AugurCtrl)
+      .controller('AugurNewCtrl', AugurNewCtrl)
+      .controller('AugurNewClusteringCtrl', AugurNewClusteringCtrl)
+      .controller('AugurAccuracyCtrl', AugurAccuracyCtrl)
+      .controller('AugurAccuracyDetailCtrl', AugurAccuracyDetailCtrl)
+      .controller('AugurInfluencersCtrl', AugurInfluencersCtrl)
+      .controller('AugurPerformanceCtrl', AugurPerformanceCtrl)
+      .controller('AugurSettingsCtrl', AugurSettingsCtrl)
+      .controller('AugurTreeCtrl', AugurTreeCtrl)
+      .controller('AugurProfileCtrl', AugurProfileCtrl)
+      .controller('AugurLandscapeCtrl', AugurLandscapeCtrl)
+      .controller('DashboardCtrl', DashboardCtrl);
+});
+
+/* global
+ define: false,
+ console: false
+ */
+
+define('directives/augur-settings',[
+  '../constants'
+], function (Constants) {
+  
+
+  function directive() {
+    return {
+      restrict: 'E',
+      templateUrl: 'partials/directives/augur-settings.html',
+      transclude: true,
+      replace: true,
+      scope: {
+        augur: '=',
+        form: '='
+      },
+      link: function (scope, ele, attrs) {
+        scope.DAYS_IN_MONTH = Constants.DAYS_IN_MONTH;
+        scope.KEY_PERFORMANCE_INDICATORS = Constants.KEY_PERFORMANCE_INDICATORS;
+      }
+    };
+  }
+
+  return directive;
+});
+
+/* global
+ define: false,
+ console: false
+ */
+
+define('directives/augur-scheduler',[
+    '../constants'
+], function (Constants) {
+    
+
+    function directive($compile) {
+        return {
+            restrict: 'E',
+            replace: false,
+            templateUrl: 'partials/directives/augur-scheduler.html',
+            scope: {
+                schedule: "=",
+                form: "=",
+                prefix: "@"
+            },
+            link: function(scope, element, attrs) {
+                scope.DAYS_OF_WEEK = Constants.DAYS_OF_WEEK;
+                scope.SCHEDULE_TYPES = Constants.SCHEDULE_TYPES;
+                scope.DAYS_IN_MONTH = Constants.DAYS_IN_MONTH;
+                scope.name = scope.prefix + "-schedule-frequency";
+                scope.hourlyName = scope.prefix + "HourlyField";
+            }
+        };
+    }
+
+    return directive;
+});
+/* global
+ define: false,
+ console: false
+ */
+define('directives/available-event',[
+  'lodash'
+], function (_) {
+  
+
+  return function () {
+
+    return {
+      restrict: 'A',
+      require: 'ngModel',
+      link: function (scope, element, attrs, ngModel) {
+        function sanitizeInput(input) {
+          var lodashTokens = _(input.replace(/;/g, ',').replace(/, */g, ',').split(','));
+          return lodashTokens.uniq().compact();
+        }
+
+        scope.$on('validate:eventIds', function (event, validIds, stepValidThreeCb) {
+          scope.eventIdsValidated = true;
+          scope.unrecognizedEventIds = [];
+          ngModel.$setValidity('present', true);
+          ngModel.$setValidity('recognized', true);
+          stepValidThreeCb(true);
+
+          scope.candidateIds = sanitizeInput(ngModel.$viewValue);
+
+          if (scope.candidateIds.isEmpty()) {
+            ngModel.$setValidity('present', false);
+            stepValidThreeCb(false);
+            return undefined;
+          }
+
+          scope.candidateIds.forEach(function (candidateId) {
+            if (validIds.indexOf(candidateId) === -1) {
+              scope.unrecognizedEventIds.push(candidateId);
+            }
+          });
+
+          if (_.isEmpty(scope.unrecognizedEventIds)) {
+            return scope.candidateIds;
+          } else {
+            ngModel.$setValidity('recognized', false);
+            stepValidThreeCb(false);
+            return undefined;
+          }
+        });
+      }
+    };
+  };
+});
+
+/* global
+ define: false,
+ console: false
+ */
 define('directives/chart',['d3js'], function (d3) {
   
 
@@ -50956,6 +50984,340 @@ define('directives/d3-profile-bar-chart',[
             }
         };
     }];
+});
+
+/* global
+ define: false,
+ console: false
+ */
+define('directives/d3-landscape-chart',[
+  'd3js',
+  './chart'
+], function (d3) {
+  
+
+  var colorCodes = function (element) {
+    var $element = angular.element(element);
+    return ['border-right-color', 'border-left-color', 'border-top-color', 'border-bottom-color',
+      'background-color', 'outline-color'].
+      map(function (colorElement) {
+        return  $element.css(colorElement);
+      });
+  };
+
+
+  return ['$rootScope', '$timeout', function ($rootScope, $timeout) {
+    return {
+      restrict: 'E',
+      scope: {
+        data: '=',
+        bondStrength: '='
+      },
+      link: function (scope, ele) {
+        var $element = ele[0];
+        var baseStrokeColor = "#22313F";
+        scope.$watch('data', function (newVal) {
+          if (newVal) {
+            scope.render(newVal);
+          }
+        }, false);
+
+        scope.$watch('bondStrength', function(value){
+          if(value) {
+            var val = 256 - (+value);
+            update(val);
+          }
+        }, false);
+
+        var dimensions = {
+          margins: { top: 10, right: 10, bottom: 10, left: 10 },
+          width: $element.offsetWidth,
+          height: $element.offsetHeight
+        };
+
+        var color = d3.scale.ordinal().range(colorCodes($element));
+
+        $rootScope.$on('themeChanged', function () {
+          color = d3.scale.ordinal().range(colorCodes($element));
+        });
+
+        var radius = d3.scale.sqrt().range([0, 2]);
+
+        var tooltip = d3.select($element)
+          .append('div')
+          .attr('id', 'tooltip-' + new Date().getTime())
+          .attr('class', 'tree-tooltip')
+          .style('background-color', 'rgba(0, 0, 0, 0.70)')
+          .style('position', 'absolute')
+          .style('visibility', "hidden");
+
+
+        var link = null;
+        var update = function (value) {
+          force.stop();
+          scope.nodes = scope.originalNodes;
+          scope.links = [];
+
+          angular.forEach(scope.originalLinks, function (link) {
+            link.source.linkCount = 0;
+            link.target.linkCount = 0;
+          });
+
+          angular.forEach(scope.originalLinks, function (link) {
+            if (link.bond >= value) {
+              link.source.linkCount = 1;
+              link.target.linkCount = 1;
+              scope.links.push(link);
+            }
+          });
+          doLayout();
+        };
+
+
+        var svg = d3.select($element)
+          .append("svg:svg")
+          .attr('class', 'landscape-chart-container')
+          .attr('width', dimensions.width)
+          .attr('height', dimensions.height)
+          .append("svg:g")
+          .attr('id', 'landscape-chart-container');
+
+
+        var force = d3.layout.force()
+          .size([dimensions.width, dimensions.height])
+          .charge(-5000)
+          .gravity(0.1)
+          .friction(0.3)
+          .linkDistance(function (d) {
+            return radius(d.source.count) + radius(d.target.count) + 100;
+          });
+
+        var linkContainer = svg.append("g")
+          .attr("class", "link-container");
+
+        var buildLinksAndNodes = function (data) {
+          var clusters = data.Clusters;
+          var distances = data.distances;
+          scope.originalNodes = {};
+          scope.originalLinks = [];
+          angular.forEach(clusters, function (cluster) {
+            scope.originalNodes[cluster.Name] = cluster;
+          });
+
+          angular.forEach(distances, function (distance) {
+            var src = distance[0];
+            var dest = distance[1];
+            var bond = distance[2];
+            scope.originalLinks.push({source: scope.originalNodes[src], target: scope.originalNodes[dest], bond: bond});
+          });
+
+          scope.max = d3.max(scope.originalLinks, function (d) {
+            return d.bond;
+          });
+        };
+
+        var buildLinks = function () {
+          var link = linkContainer.selectAll("line.link")
+            .data(force.links());
+
+          linkContainer.selectAll("line.link")
+            .style("stroke-width", function (d) {
+              var bond = Math.log(d.bond);
+              if (bond === 0)
+                bond = 0.5;
+              return bond + "px";
+            });
+
+
+          link.enter().append("svg:line")
+            .attr("class", "link")
+            .style('opacity', 0)
+            .style('stroke', baseStrokeColor)
+            .style("stroke-width", function (d) {
+              var bond = Math.log(d.bond);
+              if (bond === 0)
+                bond = 0.5;
+              return bond + "px";
+            })
+            .transition()
+            .duration(300)
+            .style('opacity', 0.8);
+
+
+          link.exit()
+            .select('line')
+            .transition()
+            .duration(300)
+            .style('opacity', 0);
+
+          link.exit()
+            .transition()
+            .duration(300)
+            .remove();
+
+          return link;
+        };
+
+        var buildNodes = function (dataNodes) {
+          var node = svg.selectAll("g.node")
+            .data(dataNodes, function (d) {
+              return d.Name;
+            }).call(force.drag);
+
+          var nodeEnter = node.enter().append("svg:g")
+            .attr("class", "node")
+            .call(force.drag);
+
+          node.selectAll("circle")
+            .attr("class", "circle")
+            .attr("r", function (d) {
+              return radius(d.count);
+            })
+            .style("fill", function (d, i) {
+              return color(d.count);
+            })
+            .attr("stroke", function(d){
+              return d3.rgb(color(d.count)).brighter();
+            });
+
+          nodeEnter.append("svg:circle")
+            .attr("class", "circle")
+            .attr('r', 0)
+            .transition()
+            .duration(300)
+            .attr("r", function (d) {
+              return radius(d.count);
+            })
+            .style("fill", function (d, i) {
+              return color(d.count);
+            })
+            .attr("stroke", function(d){
+              return d3.rgb(color(d.count)).brighter();
+            });
+
+
+          nodeEnter.on("mouseover", function (d) {
+            var tooltipHtml = ['<dl>'];
+            tooltipHtml.push("<dt>" + d.Name + "</dt><dd>" + d.count + "</dd>");
+            tooltipHtml.push("<dl>");
+            tooltipHtml = tooltipHtml.join(' ');
+            tooltip.html(tooltipHtml);
+            tooltip.style("left", (d.px + 30) + "px");
+            tooltip.style("top", (d.py + 10) + "px");
+            tooltip.transition()
+              .duration(100)
+              .style('visibility', 'visible');
+
+            var x = d3.select(this)
+              .select("circle")
+              .transition()
+              .duration(500)
+              .attr("r", function(n){
+                return radius(n.count) * 1.25;
+              });
+
+            d3.selectAll("line.link")
+              .transition()
+              .duration(250)
+              .style("stroke", function (l) {
+                if (l.source == d || l.target == d)
+                  return "#26A65B";
+                return baseStrokeColor;
+              });
+          });
+          nodeEnter.on("mouseout", function (d) {
+            tooltip.transition()
+              .duration(100)
+              .style('visibility', 'hidden');
+            d3.selectAll("line.link")
+              .transition()
+              .duration(250)
+              .style("stroke", baseStrokeColor);
+
+            var x = d3.select(this)
+              .select("circle")
+              .transition()
+              .duration(250)
+              .attr("r", function(n){
+                return radius(d.count);
+              });
+
+
+          });
+
+
+          nodeEnter.append("svg:text")
+            .attr("class", "node-text")
+            .attr("text-anchor", "middle")
+            .attr("dy", ".35em")
+            .text(function (d) {
+              return d.Name;
+            });
+
+          node.exit()
+            .select("text")
+            .transition()
+            .duration(250)
+            .style('opacity', 0);
+
+          node.exit()
+            .select("circle")
+            .transition()
+            .duration(250)
+            .attr('r', 0);
+
+
+          node.exit()
+            .transition()
+            .duration(250)
+            .remove();
+
+          return node;
+        };
+
+
+        var doLayout = function () {
+          force.stop();
+          var dataNodes = d3.values(scope.nodes).filter(function (n) {
+            return n.linkCount > 0;
+          });
+          force.nodes(dataNodes)
+            .links(scope.links)
+            .on("tick", tick);
+          buildNodes(dataNodes);
+          buildLinks();
+          force.start();
+        };
+
+
+        function tick() {
+          var link = linkContainer.selectAll("line.link");
+          var node = svg.selectAll("g.node");
+          node.attr("transform", function (d) {
+            return "translate(" + d.x + "," + d.y + ")";
+          });
+          link.attr("x1", function (d) {
+            return d.source.x;
+          })
+            .attr("y1", function (d) {
+              return d.source.y;
+            })
+            .attr("x2", function (d) {
+              return d.target.x;
+            })
+            .attr("y2", function (d) {
+              return d.target.y;
+            });
+        }
+
+        scope.render = function (data) {
+          buildLinksAndNodes(data);
+          update(0);
+        };
+
+      }
+    };
+  }];
 });
 
 /* global
@@ -56370,6 +56732,7 @@ define('directives',[
   'directives/available-event',
   'directives/d3-bar-chart',
   'directives/d3-profile-bar-chart',
+  'directives/d3-landscape-chart',
   'directives/d3-profile-diamond-chart',
   'directives/d3-decision-tree-chart',
   'directives/d3-influencer-chart',
@@ -56391,6 +56754,7 @@ define('directives',[
               AvailableEvent,
               D3BarChart,
               D3ProfileBarChart,
+              D3LandscapeChart,
               D3ProfileDiamondChart,
               D3DecisionTreeChart,
               D3InfluencerChart,
@@ -56425,6 +56789,7 @@ define('directives',[
     .directive('uniqueAugurName', UniqueAugurName)
     .directive('thresholdInRange', ThresholdInRange)
     .directive('dropdownHover', DropDownHover)
+    .directive('d3LandscapeChart', D3LandscapeChart)
     .directive('djFocusOnSelect', DJFocusOnSelect);
 });
 
@@ -60117,7 +60482,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('partials/clustering/landscape.html',
-    '<h3>Landscape</h3>');
+    '<div class=\'row\'><div class=\'columns small-12\'><h4>Cluster Landscape</h4></div></div><div class=\'row\'><div class=\'columns large-12 augur-landscape\'><div class=\'chart-row\'><div class=\'large-2 columns slider-container\'> Weakest Links <input class=\'slider\' id=\'link-filter\' list=\'steps\' max=\'{{maxSliderValue}}\' min=\'{{minSliderValue}}\' ng-model=\'data.bondStrength\' orient=\'vertical\' type=\'range\' value=\'{{maxSliderValue}}\'> Strongest Links<datalist id=\'steps\'><option ng-repeat=\'distance in clusters.distances\'>{{maxSliderValue - distance[2]}}</option></datalist></div><div class=\'large-10 columns chart-container\'><d3-landscape-chart bond-strength=\'data.bondStrength\' data=\'clusters\'></d3-landscape-chart></div></div></div></div>');
 }]);
 })();
 
@@ -60190,6 +60555,18 @@ try {
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('partials/directives/dropdown.html',
     '<div class=\'dropdown\'> <a class=\'dropdown-trigger\' ng-class=\'{active: toggled }\' ng-click=\'toggle()\' ng-data-count=\'{{ counter }}\'><span>{{ label }}</span></a><div class=\'dropdown-content\' ng-if=\'toggled\' ng-transclude=\'\'></div></div>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('dejalyticsPartials');
+} catch (e) {
+  module = angular.module('dejalyticsPartials', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('partials/directives/landscape-chart.html',
+    '<div class=\'row\'><div class=\'large-2 columns slider-container\'> Weakest Links <input class=\'slider\' id=\'link-filter\' list=\'steps\' orient=\'vertical\' type=\'range\'> Strongest Links<datalist id=\'steps\'></datalist></div><div class=\'large-10 columns chart-container\'></div></div>');
 }]);
 })();
 
@@ -60277,7 +60654,8 @@ define('app',[
                 }).
                 state('augur.clustering.landscape', {
                     url: '/landscape',
-                    templateUrl: 'partials/clustering/landscape.html'
+                    templateUrl: 'partials/clustering/landscape.html',
+                    controller: 'AugurLandscapeCtrl'
                 }).
                 state('augur.clustering.settings', {
                     url: '/settings',

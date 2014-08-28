@@ -6904,3 +6904,66 @@ input[type='number'] {
     .tree-tooltip .summary span {
       display: block;
       margin: -0.3em 0; }
+
+.augur-landscape {
+  position: relative;
+  height: 500px; }
+  .augur-landscape .chart-container {
+    height: 500px; }
+  .augur-landscape #landscape-chart {
+    border: 1px solid red; }
+  .augur-landscape d3-landscape-chart {
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+    display: block; }
+    [data-theme=theme-one] .augur-landscape d3-landscape-chart {
+      border-right-color: #7B30B7;
+      border-top-color: #9559C5; }
+    [data-theme=theme-two] .augur-landscape d3-landscape-chart {
+      border-right-color: #00A1D3;
+      border-top-color: #33B4DC; }
+    [data-theme=theme-three] .augur-landscape d3-landscape-chart {
+      border-right-color: #DD5A26;
+      border-top-color: #E47B51; }
+    [data-theme=theme-four] .augur-landscape d3-landscape-chart {
+      border-right-color: #00A14B;
+      border-top-color: #33B46F; }
+    [data-theme=theme-one] .augur-landscape d3-landscape-chart {
+      border-bottom-color: #B083D4;
+      border-left-color: #CAACE2; }
+    [data-theme=theme-two] .augur-landscape d3-landscape-chart {
+      border-bottom-color: #66C7E5;
+      border-left-color: #99D9ED; }
+    [data-theme=theme-three] .augur-landscape d3-landscape-chart {
+      border-bottom-color: #EB9C7D;
+      border-left-color: #F1BDA8; }
+    [data-theme=theme-four] .augur-landscape d3-landscape-chart {
+      border-bottom-color: #66C793;
+      border-left-color: #99D9B7; }
+    [data-theme=theme-one] .augur-landscape d3-landscape-chart {
+      background-color: #E5D6F1;
+      outline-color: #F2EAF8; }
+    [data-theme=theme-two] .augur-landscape d3-landscape-chart {
+      background-color: #CCECF6;
+      outline-color: #E5F5FB; }
+    [data-theme=theme-three] .augur-landscape d3-landscape-chart {
+      background-color: #F8DED4;
+      outline-color: #FCEEE9; }
+    [data-theme=theme-four] .augur-landscape d3-landscape-chart {
+      background-color: #CCECDB;
+      outline-color: #E5F5ED; }
+    .augur-landscape d3-landscape-chart .landscape-chart-container {
+      background-color: #fff; }
+  .augur-landscape .chart-row {
+    background: #fff;
+    width: 100%;
+    height: 100%; }
+  .augur-landscape .slider-container {
+    height: 450px; }
+    .augur-landscape .slider-container .slider {
+      -webkit-appearance: slider-vertical;
+      orient: vertical;
+      height: 100%; }
+  .augur-landscape .node-text {
+    font-size: 8pt; }
