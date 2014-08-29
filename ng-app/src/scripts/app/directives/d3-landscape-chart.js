@@ -109,11 +109,11 @@ define([
 
         var buildLinksAndNodes = function (data) {
           var clusters = data.Clusters;
-          var distances = data.distances;
+          var distances = data.Distances;
           scope.originalNodes = {};
           scope.originalLinks = [];
           angular.forEach(clusters, function (cluster) {
-            scope.originalNodes[cluster.Name] = cluster;
+            scope.originalNodes[cluster.name] = cluster;
           });
 
           angular.forEach(distances, function (distance) {
@@ -173,7 +173,7 @@ define([
         var buildNodes = function (dataNodes) {
           var node = svg.selectAll("g.node")
             .data(dataNodes, function (d) {
-              return d.Name;
+              return d.name;
             }).call(force.drag);
 
           var nodeEnter = node.enter().append("svg:g")
@@ -210,7 +210,7 @@ define([
 
           nodeEnter.on("mouseover", function (d) {
             var tooltipHtml = ['<dl>'];
-            tooltipHtml.push("<dt>" + d.Name + "</dt><dd>" + d.count + "</dd>");
+            tooltipHtml.push("<dt>" + d.name + "</dt><dd>" + d.count + "</dd>");
             tooltipHtml.push("<dl>");
             tooltipHtml = tooltipHtml.join(' ');
             tooltip.html(tooltipHtml);
@@ -263,7 +263,7 @@ define([
             .attr("text-anchor", "middle")
             .attr("dy", ".35em")
             .text(function (d) {
-              return d.Name;
+              return d.name;
             });
 
           node.exit()

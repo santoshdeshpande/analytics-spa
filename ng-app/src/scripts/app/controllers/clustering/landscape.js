@@ -15,7 +15,7 @@ define(['d3js'], function (d3) {
       $scope.clusters = augur.clustering.clusterProfile;
 
       $scope.minSliderValue = 0;
-      $scope.maxSliderValue = d3.max($scope.clusters.distances, function(d){
+      $scope.maxSliderValue = d3.max($scope.clusters.Distances, function(d){
         return d[2];
       });
       $timeout(function(){

@@ -41144,22 +41144,22 @@ define('controllers/clustering/profile',[], function () {
 
             angular.forEach(profile.DataDictionary.Population.fields, function(field, i){
                 var res = {};
-                if(field.data_type === 'categorical') {
+                if(field.dataType === 'categorical') {
                     res.data = field.instances[0];
                 } else {
                     res.data = {'mean':field.mean,'max':field.maximum,'min':field.minimum};
                 }
-                res.type = field.data_type;
+                res.type = field.dataType;
                 res.showLegend = true;
 
                 var name = {'type': 'none', data:field.name};
 
                 $scope.results[field.key] = [name, res];
-                types.push(field.data_type);
+                types.push(field.dataType);
             });
 
             angular.forEach(profile.Clusters, function(cluster) {
-                $scope.headers.push({name: cluster.Name, count: cluster.count});
+                $scope.headers.push({name: cluster.name, count: cluster.count});
                 angular.forEach(cluster.fields, function(field, i) {
                     var type = types[i];
                     var res = {};
@@ -50427,7 +50427,7 @@ define('controllers/clustering/landscape',['d3js'], function (d3) {
       $scope.clusters = augur.clustering.clusterProfile;
 
       $scope.minSliderValue = 0;
-      $scope.maxSliderValue = d3.max($scope.clusters.distances, function(d){
+      $scope.maxSliderValue = d3.max($scope.clusters.Distances, function(d){
         return d[2];
       });
       $timeout(function(){
@@ -51097,11 +51097,11 @@ define('directives/d3-landscape-chart',[
 
         var buildLinksAndNodes = function (data) {
           var clusters = data.Clusters;
-          var distances = data.distances;
+          var distances = data.Distances;
           scope.originalNodes = {};
           scope.originalLinks = [];
           angular.forEach(clusters, function (cluster) {
-            scope.originalNodes[cluster.Name] = cluster;
+            scope.originalNodes[cluster.name] = cluster;
           });
 
           angular.forEach(distances, function (distance) {
@@ -51161,7 +51161,7 @@ define('directives/d3-landscape-chart',[
         var buildNodes = function (dataNodes) {
           var node = svg.selectAll("g.node")
             .data(dataNodes, function (d) {
-              return d.Name;
+              return d.name;
             }).call(force.drag);
 
           var nodeEnter = node.enter().append("svg:g")
@@ -51198,7 +51198,7 @@ define('directives/d3-landscape-chart',[
 
           nodeEnter.on("mouseover", function (d) {
             var tooltipHtml = ['<dl>'];
-            tooltipHtml.push("<dt>" + d.Name + "</dt><dd>" + d.count + "</dd>");
+            tooltipHtml.push("<dt>" + d.name + "</dt><dd>" + d.count + "</dd>");
             tooltipHtml.push("<dl>");
             tooltipHtml = tooltipHtml.join(' ');
             tooltip.html(tooltipHtml);
@@ -51251,7 +51251,7 @@ define('directives/d3-landscape-chart',[
             .attr("text-anchor", "middle")
             .attr("dy", ".35em")
             .text(function (d) {
-              return d.Name;
+              return d.name;
             });
 
           node.exit()
@@ -60482,7 +60482,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('partials/clustering/landscape.html',
-    '<div class=\'row\'><div class=\'columns small-12\'><h4>Cluster Landscape</h4></div></div><div class=\'row\'><div class=\'columns large-12 augur-landscape\'><div class=\'chart-row\'><div class=\'large-2 columns slider-container\'> Weakest Links <input class=\'slider\' id=\'link-filter\' list=\'steps\' max=\'{{maxSliderValue}}\' min=\'{{minSliderValue}}\' ng-model=\'data.bondStrength\' orient=\'vertical\' type=\'range\' value=\'{{maxSliderValue}}\'> Strongest Links<datalist id=\'steps\'><option ng-repeat=\'distance in clusters.distances\'>{{maxSliderValue - distance[2]}}</option></datalist></div><div class=\'large-10 columns chart-container\'><d3-landscape-chart bond-strength=\'data.bondStrength\' data=\'clusters\'></d3-landscape-chart></div></div></div></div>');
+    '<div class=\'row\'><div class=\'columns small-12\'><h4>Cluster Landscape</h4></div></div><div class=\'row\'><div class=\'columns large-12 augur-landscape\'><div class=\'chart-row\'><div class=\'large-2 columns slider-container\'> Weakest Links <input class=\'slider\' id=\'link-filter\' list=\'steps\' max=\'{{maxSliderValue}}\' min=\'{{minSliderValue}}\' ng-model=\'data.bondStrength\' orient=\'vertical\' type=\'range\' value=\'{{maxSliderValue}}\'> Strongest Links<datalist id=\'steps\'><option ng-repeat=\'distance in clusters.Distances\'>{{maxSliderValue - distance[2]}}</option></datalist></div><div class=\'large-10 columns chart-container\'><d3-landscape-chart bond-strength=\'data.bondStrength\' data=\'clusters\'></d3-landscape-chart></div></div></div></div>');
 }]);
 })();
 

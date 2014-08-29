@@ -9,6 +9,6 @@
         %input.slider#link-filter{min:'{{minSliderValue}}',max:'{{maxSliderValue}}',value:'{{maxSliderValue}}',type:'range', orient:'vertical', list:'steps', ng: {model:'data.bondStrength'}}
         Strongest Links
         %datalist#steps
-          %option{ng:{repeat:'distance in clusters.distances'}} {{maxSliderValue - distance[2]}}
+          %option{ng:{repeat:'distance in clusters.Distances'}} {{maxSliderValue - distance[2]}}
       .large-10.columns.chart-container
         %d3-landscape-chart{data:'clusters', bond: {strength:'data.bondStrength'}}

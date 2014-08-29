@@ -23,7 +23,7 @@
                     "fields": [
                         {
                             "key": "field_1",
-                            "data_type": "categorical",
+                            "dataType": "categorical",
                             "name": "Favorite Color",
                             "missing": 12,
                             "instances": [
@@ -37,7 +37,7 @@
                         },
                         {
                             "key": "field_2",
-                            "data_type": "continuous",
+                            "dataType": "continuous",
                             "name": "Age",
                             "missing": 7,
                             "standard_deviation": 23.58,
@@ -49,7 +49,7 @@
                         },
                         {
                             "key": "field_3",
-                            "data_type": "continuous",
+                            "dataType": "continuous",
                             "name": "Income",
                             "missing": 2,
                             "standard_deviation": 26520.48,
@@ -64,7 +64,7 @@
             },
             "Clusters": [
                 {
-                    "Name": "Cluster_1",
+                    "name": "Cluster_1",
                     "count": 200,
                     "fields": [
                         {
@@ -99,7 +99,7 @@
                     ]
                 },
                 {
-                    "Name": "Cluster_2",
+                    "name": "Cluster_2",
                     "count": 600,
                     "fields": [
                         {
@@ -134,7 +134,7 @@
                     ]
                 },
                 {
-                    "Name": "Cluster_3",
+                    "name": "Cluster_3",
                     "count": 180,
                     "fields": [
                         {
@@ -169,7 +169,7 @@
                     ]
                 },
                 {
-                    "Name": "Cluster_4",
+                    "name": "Cluster_4",
                     "count": 389,
                     "fields": [
                         {
@@ -204,7 +204,7 @@
                     ]
                 },
                 {
-                    "Name": "Cluster_5",
+                    "name": "Cluster_5",
                     "count": 745,
                     "fields": [
                         {
@@ -239,7 +239,7 @@
                     ]
                 },
                 {
-                    "Name": "Cluster_6",
+                    "name": "Cluster_6",
                     "count": 820,
                     "fields": [
                         {
@@ -274,7 +274,7 @@
                     ]
                 },
                 {
-                    "Name": "Cluster_7",
+                    "name": "Cluster_7",
                     "count": 654,
                     "fields": [
                         {
@@ -309,7 +309,7 @@
                     ]
                 },
                 {
-                    "Name": "Cluster_8",
+                    "name": "Cluster_8",
                     "count": 439,
                     "fields": [
                         {
@@ -344,7 +344,7 @@
                     ]
                 }
             ],
-          "distances" : [
+          "Distances" : [
             ["Cluster_1", "Cluster_2", 123],
             ["Cluster_1", "Cluster_3", 99],
             ["Cluster_1", "Cluster_4", 17],
