@@ -53,7 +53,7 @@ define([
           color = d3.scale.ordinal().range(colorCodes($element));
         });
 
-        var radius = d3.scale.sqrt().range([0, 2]);
+        var radius = d3.scale.log().range([10, 70]);
 
         var tooltip = d3.select($element)
           .append('div')
@@ -323,6 +323,8 @@ define([
         }
 
         scope.render = function (data) {
+          radius.domain([1, d3.max(data.Clusters, function (d) { return d.count })]);
+
           buildLinksAndNodes(data);
           update(0);
         };
