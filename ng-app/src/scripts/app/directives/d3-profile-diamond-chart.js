@@ -67,14 +67,14 @@ define([
                         var xpos = middleX;
                         var format = d3.format(".02f");
                         var html = [
-                            "<dl>",
-                            "<dt>Minimum</dt>",
-                                "<dd>" + format(data.min) + "</dd>",
-                            "<dt>Mean</dt>",
-                                "<dd>" + format(data.mean) + "</dd>",
-                            "<dt>Maximum</dt>",
-                                "<dd>" + format(data.max) + "</dd>"
-                        ].join('');
+                                        "<dl>",
+                                        "<dt>Maximum</dt>",
+                                            "<dd>" + format(data.max) + "</dd>",
+                                        "<dt>Mean</dt>",
+                                            "<dd>" + format(data.mean) + "</dd>",
+                                        "<dt>Minimum</dt>",
+                                            "<dd>" + format(data.min) + "</dd>"
+                                    ].join('');
                         tooltip.html(html);
 
                         svg.append("line")
@@ -96,7 +96,6 @@ define([
                             .attr("r", 2)
                             .style("stroke", "blue")
                             .style("fill", "none");
-
 
                         var yMean = y(data.mean);
 
@@ -140,22 +139,24 @@ define([
                             });
 
                         if (scope.legend) {
-
                             var text = svg.selectAll("text")
-                                .data(datum)
-                                .enter()
+                                .data([
+                                  { key: "min", "value": data.min  },
+                                  { key: "mean", "value": data.mean },
+                                  { key: "max", "value": data.max  }
+                                 ])
+                              .enter()
                                 .append("svg:text")
                                 .attr("x", x(dimensions.margins.right))
                                 .attr("y", function (d) {
-                                    return -y(d);
+                                    return (d.key == "mean") ? Math.min(-10, -y(d.value)) : -y(d.value)
                                 })
                                 .attr("dy", ".35em")
                                 .attr("font-size", "10px")
                                 .text(function (d) {
-                                    return format(d);
+                                    return format(d.value);
                                 });
                         }
-
                     }, 200); // renderTimeout
                 };
             }
