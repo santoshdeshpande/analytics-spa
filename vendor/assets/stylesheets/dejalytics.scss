@@ -6864,8 +6864,10 @@ input[type='number'] {
     [data-theme=theme-four] .augur-settings .download-button .download {
       color: #00A14B; }
 
-.augur-clustering-profile .count {
-  font-size: 0.8em; }
+.augur-clustering-profile .table-container {
+  overflow: auto; }
+  .augur-clustering-profile .table-container .count {
+    font-size: 0.8em; }
 
 .chart-container {
   position: relative; }

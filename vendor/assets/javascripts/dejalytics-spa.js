@@ -41126,55 +41126,60 @@ define('controllers/classification/tree',[], function () {
  define: false,
  console: false
  */
-define('controllers/clustering/profile',[], function () {
-    
+define('controllers/clustering/profile',[
+  'lodash'
+], function (_) {
+  
 
-    return  ['$scope', '$stateParams', function ($scope) {
-        $scope.data = {};
+  function controller($scope) {
+    $scope.headers = {};
+    $scope.results = {};
 
-        $scope.augur.$promise.then(function (augur) {
-            var profile = augur.clustering.clusterProfile;
-            $scope.headers = [
-                {name: 'Variable'},
-                {name: 'Total', count: profile.DataDictionary.Population.count},
-            ];
+    $scope.augur.$promise.then(function (augur) {
+      var profile = augur.clustering.clusterProfile;
 
-            $scope.results = {};
-            var types = [];
+      $scope.headers = [
+        { name: 'Variable' },
+        { name: 'Total', count: profile.DataDictionary.Population.count }
+      ];
 
-            angular.forEach(profile.DataDictionary.Population.fields, function(field, i){
-                var res = {};
-                if(field.dataType === 'categorical') {
-                    res.data = field.instances[0];
-                } else {
-                    res.data = {'mean':field.mean,'max':field.maximum,'min':field.minimum};
-                }
-                res.type = field.dataType;
-                res.showLegend = true;
+      var types = [];
 
-                var name = {'type': 'none', data:field.name};
+      angular.forEach(profile.DataDictionary.Population.fields, function (field) {
+        var res = {};
+        if (field.dataType === 'categorical') {
+          res.data = field.instances[0];
+        } else {
+          res.data = {'mean': field.mean, 'max': field.maximum, 'min': field.minimum};
+        }
+        res.type = field.dataType;
+        res.showLegend = true;
 
-                $scope.results[field.key] = [name, res];
-                types.push(field.dataType);
-            });
+        var name = {'type': 'none', data: field.name};
 
-            angular.forEach(profile.Clusters, function(cluster) {
-                $scope.headers.push({name: cluster.name, count: cluster.count});
-                angular.forEach(cluster.fields, function(field, i) {
-                    var type = types[i];
-                    var res = {};
-                    if(type === 'categorical') {
-                        res.data = field.instances[0];
-                    } else {
-                        res.data = {'mean':field.mean,'max':field.maximum,'min':field.minimum};
-                    }
-                    res.type = type;
-                    res.showLegend = false;
-                    $scope.results[field.key].push(res);
-                });
-            });
+        $scope.results[field.key] = [name, res];
+        types.push(field.dataType);
+      });
+
+      angular.forEach(_.sortBy(profile.Clusters, 'count').reverse(), function (cluster) {
+        $scope.headers.push({name: cluster.name, count: cluster.count});
+        angular.forEach(cluster.fields, function (field, i) {
+          var type = types[i];
+          var res = {};
+          if (type === 'categorical') {
+            res.data = field.instances[0];
+          } else {
+            res.data = {'mean': field.mean, 'max': field.maximum, 'min': field.minimum};
+          }
+          res.type = type;
+          res.showLegend = false;
+          $scope.results[field.key].push(res);
         });
-    }];
+      });
+    });
+  }
+
+  return ['$scope', '$stateParams', controller];
 });
 
 !function() {
@@ -51041,7 +51046,7 @@ define('directives/d3-landscape-chart',[
           color = d3.scale.ordinal().range(colorCodes($element));
         });
 
-        var radius = d3.scale.sqrt().range([0, 2]);
+        var radius = d3.scale.log().range([10, 70]);
 
         var tooltip = d3.select($element)
           .append('div')
@@ -51311,6 +51316,8 @@ define('directives/d3-landscape-chart',[
         }
 
         scope.render = function (data) {
+          radius.domain([1, d3.max(data.Clusters, function (d) { return d.count })]);
+
           buildLinksAndNodes(data);
           update(0);
         };
@@ -51389,14 +51396,14 @@ define('directives/d3-profile-diamond-chart',[
                         var xpos = middleX;
                         var format = d3.format(".02f");
                         var html = [
-                            "<dl>",
-                            "<dt>Minimum</dt>",
-                                "<dd>" + format(data.min) + "</dd>",
-                            "<dt>Mean</dt>",
-                                "<dd>" + format(data.mean) + "</dd>",
-                            "<dt>Maximum</dt>",
-                                "<dd>" + format(data.max) + "</dd>"
-                        ].join('');
+                                        "<dl>",
+                                        "<dt>Maximum</dt>",
+                                            "<dd>" + format(data.max) + "</dd>",
+                                        "<dt>Mean</dt>",
+                                            "<dd>" + format(data.mean) + "</dd>",
+                                        "<dt>Minimum</dt>",
+                                            "<dd>" + format(data.min) + "</dd>"
+                                    ].join('');
                         tooltip.html(html);
 
                         svg.append("line")
@@ -51418,7 +51425,6 @@ define('directives/d3-profile-diamond-chart',[
                             .attr("r", 2)
                             .style("stroke", "blue")
                             .style("fill", "none");
-
 
                         var yMean = y(data.mean);
 
@@ -51462,22 +51468,24 @@ define('directives/d3-profile-diamond-chart',[
                             });
 
                         if (scope.legend) {
-
                             var text = svg.selectAll("text")
-                                .data(datum)
-                                .enter()
+                                .data([
+                                  { key: "min", "value": data.min  },
+                                  { key: "mean", "value": data.mean },
+                                  { key: "max", "value": data.max  }
+                                 ])
+                              .enter()
                                 .append("svg:text")
                                 .attr("x", x(dimensions.margins.right))
                                 .attr("y", function (d) {
-                                    return -y(d);
+                                    return (d.key == "mean") ? Math.min(-10, -y(d.value)) : -y(d.value)
                                 })
                                 .attr("dy", ".35em")
                                 .attr("font-size", "10px")
                                 .text(function (d) {
-                                    return format(d);
+                                    return format(d.value);
                                 });
                         }
-
                     }, 200); // renderTimeout
                 };
             }
@@ -60494,7 +60502,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('partials/clustering/profile.html',
-    '<div class=\'row\'><div class=\'columns small-12\'><h4>Cluster Profile</h4></div></div><div class=\'row\'><div class=\'columns large-12 augur-clustering-profile\'><table class=\'large-12\'><thead><tr><th class=\'text-center\' ng-repeat=\'header in headers\'> {{header.name}}<br> <span class=\'count\' ng-if=\'header.count\'>Count: {{header.count}}</span></th></tr></thead><tbody><tr ng-repeat=\'result in results\'><td class=\'text-center\' ng-repeat=\'r in result\'><div ng-switch=\'r.type\'><div ng-switch-when=\'none\'> {{r.data}}</div><div class=\'chart-container\' ng-switch-when=\'categorical\'><d3-profile-bar-chart data=\'r.data\'></d3-profile-bar-chart></div><div class=\'chart-container\' ng-switch-when=\'continuous\'><d3-profile-diamond-chart data=\'r.data\' legend=\'r.showLegend\'></d3-profile-diamond-chart></div></div></td></tr></tbody></table></div></div>');
+    '<div class=\'row\'><div class=\'columns small-12\'><h4>Cluster Profile</h4></div></div><div class=\'row\'><div class=\'columns large-12 augur-clustering-profile\'><div class=\'table-container\'><table><thead><tr><th class=\'text-center\' ng-repeat=\'header in headers\'> {{header.name}}<br><nobr> <span class=\'count\' ng-if=\'header.count\'>Count: {{header.count}}</span></nobr></th></tr></thead><tbody><tr ng-repeat=\'result in results\'><td class=\'text-center\' ng-repeat=\'r in result\'><div ng-switch=\'r.type\'><div ng-switch-when=\'none\'> {{ r.data.length > 10 ? r.data.slice(0,8) + \'…\' : r.data }}</div><div class=\'chart-container\' ng-switch-when=\'categorical\'><d3-profile-bar-chart data=\'r.data\'></d3-profile-bar-chart></div><div class=\'chart-container\' ng-switch-when=\'continuous\'><d3-profile-diamond-chart data=\'r.data\' legend=\'r.showLegend\'></d3-profile-diamond-chart></div></div></td></tr></tbody></table></div></div></div>');
 }]);
 })();
 
