@@ -36,18 +36,15 @@
     },
     {
         "id": "15CXX331NT",
-        "name": "My Augur",
+        "name": "Clustering 10-100",
         "description": null,
         "code": "15CXX331NT",
         "dashboardChartData": null,
-        "learningKpi": "gini_coefficient",
-        "learningThreshold": 1.1,
-        "latestEvaluationTimestamp": " - ",
         "augurType": "clustering"
     },
     {
         "id": "15CWYM31NS",
-        "name": "asdf123",
+        "name": "Clustering w/ categorical",
         "description": null,
         "code": "15CWYM31NS",
         "dashboardChartData": null,
