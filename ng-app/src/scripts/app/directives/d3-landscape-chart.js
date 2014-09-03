@@ -34,9 +34,11 @@ define([
           }
         }, false);
 
+        scope.max = 0;
+        
         scope.$watch('bondStrength', function(value){
           if(value) {
-            var val = 256 - (+value);
+            var val = scope.max - (+value);
             update(val);
           }
         }, false);
