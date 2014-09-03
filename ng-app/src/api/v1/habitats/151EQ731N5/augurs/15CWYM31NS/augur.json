@@ -1,366 +1,1835 @@
-{"id": "15CXX331NT", "name": "Clustering w/ categorical", "description": null, "code": "15CXX331NT",
-    "clustering": {
-        "clusterProfile": {
-            "Header": {
-                "Algorithm": "k-means",
-                "Copyright": "Copyright (c) 2014 Dejalytics Inc.",
-                "Description": "K-Means Cluster Report",
-                "Application": {
-                    "name": "Dejalytics Foundry",
-                    "version": "1.4"
-                },
-                "Timestamp": "2014-07-25 12:07:35"
-            },
-            "DataDictionary": {
-                "FieldTypes": {
-                    "categorical": 1,
-                    "continuous": 2,
-                    "total": 3
-                },
-                "Population": {
-                    "count": 1000,
-                    "count_comment": "fyi- just during draft design: equals sum of counts from all clusters",
-                    "fields": [
-                        {
-                            "key": "field_1",
-                            "dataType": "categorical",
-                            "name": "Favorite Color",
-                            "missing": 12,
-                            "instances": [
-                                {
-                                    "red": 100,
-                                    "blue": 200,
-                                    "green": 200,
-                                    "black": 488
-                                }
-                            ]
-                        },
-                        {
-                            "key": "field_2",
-                            "dataType": "continuous",
-                            "name": "Age",
-                            "missing": 7,
-                            "standard_deviation": 23.58,
-                            "median": 55,
-                            "minimum": 19,
-                            "maximum": 101,
-                            "variance": 556.123,
-                            "mean": 40.3
-                        },
-                        {
-                            "key": "field_3",
-                            "dataType": "continuous",
-                            "name": "Income",
-                            "missing": 2,
-                            "standard_deviation": 26520.48,
-                            "median": 55139.06,
-                            "mean": 55317.18,
-                            "maximum": 97856.19,
-                            "minimum": 12109.38,
-                            "variance": 703335987
-                        }
-                    ]
-                }
-            },
-            "Clusters": [
-                {
-                    "name": "Cluster_1",
-                    "count": 200,
-                    "fields": [
-                        {
-                            "key": "field_1",
-                            "instances": [
-                                {
-                                    "red": 50,
-                                    "blue": 100,
-                                    "green": 30,
-                                    "black": 20
-                                }
-                            ]
-                        },
-                        {
-                            "key": "field_2",
-                            "standard_deviation": 21.58,
-                            "median": 40,
-                            "minimum": 29,
-                            "maximum": 72,
-                            "variance": 856.123,
-                            "mean": 40.3
-                        },
-                        {
-                            "key": "field_3",
-                            "standard_deviation": 26520.48,
-                            "median": 35139.06,
-                            "mean": 25317.18,
-                            "maximum": 67856.19,
-                            "minimum": 22109.38,
-                            "variance": 103335987
-                        }
-                    ]
-                },
-                {
-                    "name": "Cluster_2",
-                    "count": 600,
-                    "fields": [
-                        {
-                            "key": "field_1",
-                            "instances": [
-                                {
-                                    "red": 500,
-                                    "blue": 10,
-                                    "green": 10,
-                                    "black": 80
-                                }
-                            ]
-                        },
-                        {
-                            "key": "field_2",
-                            "standard_deviation": 21.58,
-                            "median": 60,
-                            "minimum": 39,
-                            "maximum": 92,
-                            "variance": 1256.123,
-                            "mean": 40.3
-                        },
-                        {
-                            "key": "field_3",
-                            "standard_deviation": 66520.48,
-                            "median": 25139.06,
-                            "mean": 45317.18,
-                            "maximum": 87856.19,
-                            "minimum": 12109.38,
-                            "variance": 303335987
-                        }
-                    ]
-                },
-                {
-                    "name": "Cluster_3",
-                    "count": 180,
-                    "fields": [
-                        {
-                            "key": "field_1",
-                            "instances": [
-                                {
-                                    "red": 100,
-                                    "blue": 60,
-                                    "green": 10,
-                                    "black": 7
-                                }
-                            ]
-                        },
-                        {
-                            "key": "field_2",
-                            "standard_deviation": 21.58,
-                            "median": 35,
-                            "minimum": 39,
-                            "maximum": 92,
-                            "variance": 1256.123,
-                            "mean": 40.3
-                        },
-                        {
-                            "key": "field_3",
-                            "standard_deviation": 66520.48,
-                            "median": 25139.06,
-                            "mean": 45317.18,
-                            "maximum": 87856.19,
-                            "minimum": 12109.38,
-                            "variance": 303335987
-                        }
-                    ]
-                },
-                {
-                    "name": "Cluster_4",
-                    "count": 389,
-                    "fields": [
-                        {
-                            "key": "field_1",
-                            "instances": [
-                                {
-                                    "red": 1,
-                                    "blue": 2,
-                                    "green": 3,
-                                    "black": 11
-                                }
-                            ]
-                        },
-                        {
-                            "key": "field_2",
-                            "standard_deviation": 21.58,
-                            "median": 35,
-                            "minimum": 39,
-                            "maximum": 92,
-                            "variance": 1256.123,
-                            "mean": 40.3
-                        },
-                        {
-                            "key": "field_3",
-                            "standard_deviation": 66520.48,
-                            "median": 25139.06,
-                            "mean": 45317.18,
-                            "maximum": 87856.19,
-                            "minimum": 12109.38,
-                            "variance": 303335987
-                        }
-                    ]
-                },
-                {
-                    "name": "Cluster_5",
-                    "count": 745,
-                    "fields": [
-                        {
-                            "key": "field_1",
-                            "instances": [
-                                {
-                                    "red": 1,
-                                    "blue": 2,
-                                    "green": 3,
-                                    "black": 11
-                                }
-                            ]
-                        },
-                        {
-                            "key": "field_2",
-                            "standard_deviation": 21.58,
-                            "median": 35,
-                            "minimum": 39,
-                            "maximum": 92,
-                            "variance": 1256.123,
-                            "mean": 40.3
-                        },
-                        {
-                            "key": "field_3",
-                            "standard_deviation": 66520.48,
-                            "median": 25139.06,
-                            "mean": 45317.18,
-                            "maximum": 87856.19,
-                            "minimum": 12109.38,
-                            "variance": 303335987
-                        }
-                    ]
-                },
-                {
-                    "name": "Cluster_6",
-                    "count": 820,
-                    "fields": [
-                        {
-                            "key": "field_1",
-                            "instances": [
-                                {
-                                    "red": 150,
-                                    "blue": 321,
-                                    "green": 79,
-                                    "black": 213
-                                }
-                            ]
-                        },
-                        {
-                            "key": "field_2",
-                            "standard_deviation": 21.58,
-                            "median": 69,
-                            "minimum": 39,
-                            "maximum": 92,
-                            "variance": 1256.123,
-                            "mean": 65.9
-                        },
-                        {
-                            "key": "field_3",
-                            "standard_deviation": 66520.48,
-                            "median": 25139.06,
-                            "mean": 45317.18,
-                            "maximum": 87856.19,
-                            "minimum": 12109.38,
-                            "variance": 303335987
-                        }
-                    ]
-                },
-                {
-                    "name": "Cluster_7",
-                    "count": 654,
-                    "fields": [
-                        {
-                            "key": "field_1",
-                            "instances": [
-                                {
-                                    "red": 98,
-                                    "blue": 122,
-                                    "green": 265,
-                                    "black": 115
-                                }
-                            ]
-                        },
-                        {
-                            "key": "field_2",
-                            "standard_deviation": 21.58,
-                            "median": 35,
-                            "minimum": 39,
-                            "maximum": 92,
-                            "variance": 1256.123,
-                            "mean": 40.3
-                        },
-                        {
-                            "key": "field_3",
-                            "standard_deviation": 66520.48,
-                            "median": 25139.06,
-                            "mean": 45317.18,
-                            "maximum": 87856.19,
-                            "minimum": 12109.38,
-                            "variance": 303335987
-                        }
-                    ]
-                },
-                {
-                    "name": "Cluster_8",
-                    "count": 439,
-                    "fields": [
-                        {
-                            "key": "field_1",
-                            "instances": [
-                                {
-                                    "red": 120,
-                                    "blue": 120,
-                                    "green": 45,
-                                    "black": 90
-                                }
-                            ]
-                        },
-                        {
-                            "key": "field_2",
-                            "standard_deviation": 21.58,
-                            "median": 35,
-                            "minimum": 39,
-                            "maximum": 92,
-                            "variance": 1256.123,
-                            "mean": 40.3
-                        },
-                        {
-                            "key": "field_3",
-                            "standard_deviation": 66520.48,
-                            "median": 25139.06,
-                            "mean": 45317.18,
-                            "maximum": 87856.19,
-                            "minimum": 12109.38,
-                            "variance": 303335987
-                        }
-                    ]
-                }
-            ],
-          "Distances" : [
-            ["Cluster_1", "Cluster_2", 123],
-            ["Cluster_1", "Cluster_3", 99],
-            ["Cluster_1", "Cluster_4", 17],
-            ["Cluster_1", "Cluster_5", 198],
-            ["Cluster_1", "Cluster_6", 156],
-            ["Cluster_1", "Cluster_7", 140],
-            ["Cluster_1", "Cluster_8", 231],
-            ["Cluster_2", "Cluster_3", 56],
-            ["Cluster_2", "Cluster_4", 87],
-            ["Cluster_3", "Cluster_5", 36],
-            ["Cluster_3", "Cluster_6", 256],
-            ["Cluster_5", "Cluster_7", 111],
-            ["Cluster_5", "Cluster_6", 222],
-            ["Cluster_7", "Cluster_8", 125]
-
-          ]
-        }
-    }
-}
+{"id": "1HWR1M327D", "name": "Clustering 10-100", "description": null, "code": "1HWR1M327D", "location": "dejalytics-v1/habitats/smart_meter_clustering/augurs/1HWR1M327D/clustering/1HX4QS3285/1hwr1m327d_clustered_201408292236.csv", "clustering": {
+  "clusterProfile": {
+    "Header": {
+      "Algorithm": "k-means",
+      "Copyright": "Copyright (c) 2014 Dejalytics Inc.",
+      "Description": "K-Means Cluster Report",
+      "Application": {
+        "name": "Dejalytics Foundry",
+        "version": "1.0"
+      },
+      "Timestamp": "2014-08-29 22:36:15"
+    },
+    "DataDictionary": {
+      "FieldTypes": {
+        "categorical": 0,
+        "continuous": 25,
+        "total": 25
+      },
+      "Population": {
+        "count": 38026,
+        "fields": [
+          {
+            "key": "field_0",
+            "name": "0.395",
+            "dataType": "continuous",
+            "mean": 1.0877901698837649,
+            "minimum": 0.0,
+            "maximum": 184.464
+          },
+          {
+            "key": "field_1",
+            "name": "0.40900000000000003",
+            "dataType": "continuous",
+            "mean": 0.9797612423078976,
+            "minimum": 0.0,
+            "maximum": 156.528
+          },
+          {
+            "key": "field_2",
+            "name": "0.404",
+            "dataType": "continuous",
+            "mean": 0.9114562667648439,
+            "minimum": 0.0,
+            "maximum": 143.61599999999999
+          },
+          {
+            "key": "field_3",
+            "name": "0.481",
+            "dataType": "continuous",
+            "mean": 0.8702461210750546,
+            "minimum": 0.0,
+            "maximum": 130.512
+          },
+          {
+            "key": "field_4",
+            "name": "0.422",
+            "dataType": "continuous",
+            "mean": 0.8524936622311037,
+            "minimum": 0.0,
+            "maximum": 121.77600000000001
+          },
+          {
+            "key": "field_5",
+            "name": "0.42",
+            "dataType": "continuous",
+            "mean": 0.8545541997580621,
+            "minimum": 0.0,
+            "maximum": 126.624
+          },
+          {
+            "key": "field_6",
+            "name": "0.431",
+            "dataType": "continuous",
+            "mean": 0.8901221269657607,
+            "minimum": 0.0,
+            "maximum": 132.432
+          },
+          {
+            "key": "field_7",
+            "name": "0.515",
+            "dataType": "continuous",
+            "mean": 0.9786528690895695,
+            "minimum": 0.0,
+            "maximum": 125.37599999999999
+          },
+          {
+            "key": "field_8",
+            "name": "1.12",
+            "dataType": "continuous",
+            "mean": 1.1372869089570206,
+            "minimum": 0.0,
+            "maximum": 146.112
+          },
+          {
+            "key": "field_9",
+            "name": "0.21299999999999997",
+            "dataType": "continuous",
+            "mean": 1.3066879240519644,
+            "minimum": 0.0,
+            "maximum": 173.856
+          },
+          {
+            "key": "field_10",
+            "name": "0.257",
+            "dataType": "continuous",
+            "mean": 1.3827853047914564,
+            "minimum": 0.0,
+            "maximum": 204.96
+          },
+          {
+            "key": "field_11",
+            "name": "0.292",
+            "dataType": "continuous",
+            "mean": 1.390007863041081,
+            "minimum": 0.0,
+            "maximum": 190.128
+          },
+          {
+            "key": "field_12",
+            "name": "0.213",
+            "dataType": "continuous",
+            "mean": 1.377151422710786,
+            "minimum": 0.0,
+            "maximum": 197.37599999999998
+          },
+          {
+            "key": "field_13",
+            "name": "0.208",
+            "dataType": "continuous",
+            "mean": 1.3916580497554274,
+            "minimum": 0.0,
+            "maximum": 216.96
+          },
+          {
+            "key": "field_14",
+            "name": "0.217",
+            "dataType": "continuous",
+            "mean": 1.4235633250933535,
+            "minimum": 0.0,
+            "maximum": 225.168
+          },
+          {
+            "key": "field_15",
+            "name": "0.247",
+            "dataType": "continuous",
+            "mean": 1.446021537895121,
+            "minimum": 0.0,
+            "maximum": 232.84799999999998
+          },
+          {
+            "key": "field_16",
+            "name": "1.8010000000000002",
+            "dataType": "continuous",
+            "mean": 1.4784064850365572,
+            "minimum": 0.0,
+            "maximum": 244.32
+          },
+          {
+            "key": "field_17",
+            "name": "1.532",
+            "dataType": "continuous",
+            "mean": 1.5064172145374186,
+            "minimum": 0.0,
+            "maximum": 250.416
+          },
+          {
+            "key": "field_18",
+            "name": "0.886",
+            "dataType": "continuous",
+            "mean": 1.6180252195865967,
+            "minimum": 0.0,
+            "maximum": 253.48800000000003
+          },
+          {
+            "key": "field_19",
+            "name": "2.6020000000000003",
+            "dataType": "continuous",
+            "mean": 1.7871540787881959,
+            "minimum": 0.0,
+            "maximum": 244.848
+          },
+          {
+            "key": "field_20",
+            "name": "2.924",
+            "dataType": "continuous",
+            "mean": 1.7856475043391473,
+            "minimum": 0.0,
+            "maximum": 250.224
+          },
+          {
+            "key": "field_21",
+            "name": "1.9809999999999999",
+            "dataType": "continuous",
+            "mean": 1.7178293273023655,
+            "minimum": 0.0,
+            "maximum": 243.84
+          },
+          {
+            "key": "field_22",
+            "name": "1.988",
+            "dataType": "continuous",
+            "mean": 1.5786192079103738,
+            "minimum": 0.0,
+            "maximum": 227.56799999999998
+          },
+          {
+            "key": "field_23",
+            "name": "1.3820000000000001",
+            "dataType": "continuous",
+            "mean": 1.366359411981276,
+            "minimum": 0.0,
+            "maximum": 201.35999999999999
+          },
+          {
+            "key": "field_24",
+            "name": "0.613",
+            "dataType": "continuous",
+            "mean": 1.1455809709146398,
+            "minimum": 0.0,
+            "maximum": 173.904
+          }
+        ]
+      }
+    },
+    "Clusters": [
+      {
+        "name": "Cluster_5",
+        "count": 247,
+        "fields": [
+          {
+            "key": "field_0",
+            "mean": 8.3102955465587,
+            "minimum": 0.412,
+            "maximum": 19.084
+          },
+          {
+            "key": "field_1",
+            "mean": 7.841971659919034,
+            "minimum": 0.411,
+            "maximum": 18.873
+          },
+          {
+            "key": "field_2",
+            "mean": 7.671396761133605,
+            "minimum": 0.006,
+            "maximum": 18.854999999999997
+          },
+          {
+            "key": "field_3",
+            "mean": 7.4679433198380565,
+            "minimum": 0.006,
+            "maximum": 18.778
+          },
+          {
+            "key": "field_4",
+            "mean": 7.437914979757089,
+            "minimum": 0.006,
+            "maximum": 18.836
+          },
+          {
+            "key": "field_5",
+            "mean": 7.3796032388663955,
+            "minimum": 0.006,
+            "maximum": 18.738999999999997
+          },
+          {
+            "key": "field_6",
+            "mean": 7.393210526315792,
+            "minimum": 0.006,
+            "maximum": 18.604
+          },
+          {
+            "key": "field_7",
+            "mean": 7.425546558704454,
+            "minimum": 0.309,
+            "maximum": 18.701
+          },
+          {
+            "key": "field_8",
+            "mean": 7.450068825910928,
+            "minimum": 0.008,
+            "maximum": 22.781000000000006
+          },
+          {
+            "key": "field_9",
+            "mean": 7.980263157894731,
+            "minimum": 0.008,
+            "maximum": 24.009
+          },
+          {
+            "key": "field_10",
+            "mean": 8.29531983805668,
+            "minimum": 0.008,
+            "maximum": 29.1
+          },
+          {
+            "key": "field_11",
+            "mean": 8.267060728744937,
+            "minimum": 0.008,
+            "maximum": 31.133000000000003
+          },
+          {
+            "key": "field_12",
+            "mean": 8.15755465587044,
+            "minimum": 0.008,
+            "maximum": 20.932000000000002
+          },
+          {
+            "key": "field_13",
+            "mean": 8.096562753036437,
+            "minimum": 0.008,
+            "maximum": 23.416999999999998
+          },
+          {
+            "key": "field_14",
+            "mean": 8.223186234817817,
+            "minimum": 0.008,
+            "maximum": 20.748
+          },
+          {
+            "key": "field_15",
+            "mean": 8.173789473684208,
+            "minimum": 0.008,
+            "maximum": 18.774
+          },
+          {
+            "key": "field_16",
+            "mean": 8.317850202429158,
+            "minimum": 0.008,
+            "maximum": 27.088
+          },
+          {
+            "key": "field_17",
+            "mean": 8.463753036437248,
+            "minimum": 0.008,
+            "maximum": 27.625
+          },
+          {
+            "key": "field_18",
+            "mean": 9.56930769230769,
+            "minimum": 0.919,
+            "maximum": 25.5
+          },
+          {
+            "key": "field_19",
+            "mean": 10.504554655870441,
+            "minimum": 3.814,
+            "maximum": 23.604
+          },
+          {
+            "key": "field_20",
+            "mean": 10.428174089068836,
+            "minimum": 3.044,
+            "maximum": 20.514
+          },
+          {
+            "key": "field_21",
+            "mean": 10.136935222672063,
+            "minimum": 3.093,
+            "maximum": 20.906
+          },
+          {
+            "key": "field_22",
+            "mean": 9.774246963562758,
+            "minimum": 1.159,
+            "maximum": 19.817999999999998
+          },
+          {
+            "key": "field_23",
+            "mean": 8.95531578947369,
+            "minimum": 0.202,
+            "maximum": 19.104
+          },
+          {
+            "key": "field_24",
+            "mean": 8.229485829959515,
+            "minimum": 0.412,
+            "maximum": 23.483999999999998
+          }
+        ]
+      },
+      {
+        "name": "Cluster_1",
+        "count": 12622,
+        "fields": [
+          {
+            "key": "field_0",
+            "mean": 1.0371926794485857,
+            "minimum": 0.0,
+            "maximum": 10.535
+          },
+          {
+            "key": "field_1",
+            "mean": 0.9122385517350664,
+            "minimum": 0.0,
+            "maximum": 9.947000000000001
+          },
+          {
+            "key": "field_2",
+            "mean": 0.8364261606718447,
+            "minimum": 0.0,
+            "maximum": 8.354000000000001
+          },
+          {
+            "key": "field_3",
+            "mean": 0.7846681191570284,
+            "minimum": 0.0,
+            "maximum": 6.604
+          },
+          {
+            "key": "field_4",
+            "mean": 0.7612279353509745,
+            "minimum": 0.0,
+            "maximum": 7.5600000000000005
+          },
+          {
+            "key": "field_5",
+            "mean": 0.7561469656155904,
+            "minimum": 0.0,
+            "maximum": 9.230999999999998
+          },
+          {
+            "key": "field_6",
+            "mean": 0.7848476469656137,
+            "minimum": 0.0,
+            "maximum": 9.065999999999999
+          },
+          {
+            "key": "field_7",
+            "mean": 0.8709034225954684,
+            "minimum": 0.0,
+            "maximum": 9.934999999999999
+          },
+          {
+            "key": "field_8",
+            "mean": 1.0562684202186692,
+            "minimum": 0.0,
+            "maximum": 12.530000000000001
+          },
+          {
+            "key": "field_9",
+            "mean": 1.2563733164316258,
+            "minimum": 0.0,
+            "maximum": 14.501999999999999
+          },
+          {
+            "key": "field_10",
+            "mean": 1.3399020757407665,
+            "minimum": 0.0,
+            "maximum": 17.896
+          },
+          {
+            "key": "field_11",
+            "mean": 1.3423330692441733,
+            "minimum": 0.0,
+            "maximum": 13.033
+          },
+          {
+            "key": "field_12",
+            "mean": 1.3199944541277078,
+            "minimum": 0.0,
+            "maximum": 9.589
+          },
+          {
+            "key": "field_13",
+            "mean": 1.3377771351608314,
+            "minimum": 0.0,
+            "maximum": 8.623000000000001
+          },
+          {
+            "key": "field_14",
+            "mean": 1.3820241641578201,
+            "minimum": 0.0,
+            "maximum": 10.234
+          },
+          {
+            "key": "field_15",
+            "mean": 1.4147841071145684,
+            "minimum": 0.0,
+            "maximum": 7.537000000000001
+          },
+          {
+            "key": "field_16",
+            "mean": 1.4614617334812232,
+            "minimum": 0.0,
+            "maximum": 8.689
+          },
+          {
+            "key": "field_17",
+            "mean": 1.5143638884487438,
+            "minimum": 0.0,
+            "maximum": 8.462
+          },
+          {
+            "key": "field_18",
+            "mean": 1.6481454603074017,
+            "minimum": 0.0,
+            "maximum": 12.318999999999999
+          },
+          {
+            "key": "field_19",
+            "mean": 1.8552249247345896,
+            "minimum": 0.0,
+            "maximum": 10.695
+          },
+          {
+            "key": "field_20",
+            "mean": 1.8667742829979388,
+            "minimum": 0.0,
+            "maximum": 10.456
+          },
+          {
+            "key": "field_21",
+            "mean": 1.796981064807477,
+            "minimum": 0.043,
+            "maximum": 10.689
+          },
+          {
+            "key": "field_22",
+            "mean": 1.6416859451750947,
+            "minimum": 0.043,
+            "maximum": 10.568999999999999
+          },
+          {
+            "key": "field_23",
+            "mean": 1.3982349073047076,
+            "minimum": 0.073,
+            "maximum": 11.814
+          },
+          {
+            "key": "field_24",
+            "mean": 1.1344366186024382,
+            "minimum": 0.0,
+            "maximum": 10.443999999999999
+          }
+        ]
+      },
+      {
+        "name": "Cluster_7",
+        "count": 1377,
+        "fields": [
+          {
+            "key": "field_0",
+            "mean": 2.8938511256354382,
+            "minimum": 0.009000000000000001,
+            "maximum": 18.587
+          },
+          {
+            "key": "field_1",
+            "mean": 2.9725548293391433,
+            "minimum": 0.007,
+            "maximum": 18.807
+          },
+          {
+            "key": "field_2",
+            "mean": 3.0111779230210622,
+            "minimum": 0.016,
+            "maximum": 15.431
+          },
+          {
+            "key": "field_3",
+            "mean": 2.9945257806826433,
+            "minimum": 0.007,
+            "maximum": 15.667000000000002
+          },
+          {
+            "key": "field_4",
+            "mean": 3.0913689179375483,
+            "minimum": 0.006,
+            "maximum": 15.408999999999999
+          },
+          {
+            "key": "field_5",
+            "mean": 3.2080479302832217,
+            "minimum": 0.007,
+            "maximum": 18.81
+          },
+          {
+            "key": "field_6",
+            "mean": 3.4986172839506184,
+            "minimum": 0.07500000000000001,
+            "maximum": 18.653
+          },
+          {
+            "key": "field_7",
+            "mean": 3.8394037763253466,
+            "minimum": 0.10800000000000001,
+            "maximum": 19.942
+          },
+          {
+            "key": "field_8",
+            "mean": 3.8422992011619486,
+            "minimum": 0.006,
+            "maximum": 20.161
+          },
+          {
+            "key": "field_9",
+            "mean": 3.3497225853304298,
+            "minimum": 0.004,
+            "maximum": 17.464
+          },
+          {
+            "key": "field_10",
+            "mean": 2.6802977487291204,
+            "minimum": 0.006,
+            "maximum": 15.484000000000002
+          },
+          {
+            "key": "field_11",
+            "mean": 2.1865497458242587,
+            "minimum": 0.006,
+            "maximum": 12.847999999999999
+          },
+          {
+            "key": "field_12",
+            "mean": 1.9407124183006528,
+            "minimum": 0.004,
+            "maximum": 8.870000000000001
+          },
+          {
+            "key": "field_13",
+            "mean": 1.8382933914306483,
+            "minimum": 0.006,
+            "maximum": 8.845
+          },
+          {
+            "key": "field_14",
+            "mean": 1.8017719680464759,
+            "minimum": 0.004,
+            "maximum": 8.825000000000001
+          },
+          {
+            "key": "field_15",
+            "mean": 1.785254901960785,
+            "minimum": 0.006,
+            "maximum": 7.819000000000001
+          },
+          {
+            "key": "field_16",
+            "mean": 1.7851873638344213,
+            "minimum": 0.006,
+            "maximum": 8.786
+          },
+          {
+            "key": "field_17",
+            "mean": 1.83605519244735,
+            "minimum": 0.004,
+            "maximum": 7.142
+          },
+          {
+            "key": "field_18",
+            "mean": 2.1771503267973813,
+            "minimum": 0.044,
+            "maximum": 11.665
+          },
+          {
+            "key": "field_19",
+            "mean": 2.634757443718228,
+            "minimum": 0.0,
+            "maximum": 9.469000000000001
+          },
+          {
+            "key": "field_20",
+            "mean": 2.7930108932461892,
+            "minimum": 0.0,
+            "maximum": 10.212
+          },
+          {
+            "key": "field_21",
+            "mean": 2.7924124909222963,
+            "minimum": 0.025,
+            "maximum": 10.995999999999999
+          },
+          {
+            "key": "field_22",
+            "mean": 2.802265795206971,
+            "minimum": 0.039,
+            "maximum": 10.69
+          },
+          {
+            "key": "field_23",
+            "mean": 2.712129992737836,
+            "minimum": 0.076,
+            "maximum": 14.866999999999999
+          },
+          {
+            "key": "field_24",
+            "mean": 2.5554284676833703,
+            "minimum": 0.0,
+            "maximum": 16.133
+          }
+        ]
+      },
+      {
+        "name": "Cluster_9",
+        "count": 4834,
+        "fields": [
+          {
+            "key": "field_0",
+            "mean": 1.5491367397600317,
+            "minimum": 0.0,
+            "maximum": 9.432
+          },
+          {
+            "key": "field_1",
+            "mean": 1.3247476210177938,
+            "minimum": 0.0,
+            "maximum": 8.627
+          },
+          {
+            "key": "field_2",
+            "mean": 1.1957991311543232,
+            "minimum": 0.0,
+            "maximum": 8.677999999999999
+          },
+          {
+            "key": "field_3",
+            "mean": 1.1183047165908147,
+            "minimum": 0.0,
+            "maximum": 8.589
+          },
+          {
+            "key": "field_4",
+            "mean": 1.075650186181216,
+            "minimum": 0.0,
+            "maximum": 7.449000000000001
+          },
+          {
+            "key": "field_5",
+            "mean": 1.0677263136119142,
+            "minimum": 0.0,
+            "maximum": 6.099
+          },
+          {
+            "key": "field_6",
+            "mean": 1.110298096814233,
+            "minimum": 0.0,
+            "maximum": 10.232000000000001
+          },
+          {
+            "key": "field_7",
+            "mean": 1.284102813405048,
+            "minimum": 0.0,
+            "maximum": 11.982000000000001
+          },
+          {
+            "key": "field_8",
+            "mean": 1.687088332643774,
+            "minimum": 0.0,
+            "maximum": 12.851
+          },
+          {
+            "key": "field_9",
+            "mean": 2.216807405875053,
+            "minimum": 0.0,
+            "maximum": 17.783
+          },
+          {
+            "key": "field_10",
+            "mean": 2.585863260239969,
+            "minimum": 0.0,
+            "maximum": 16.578
+          },
+          {
+            "key": "field_11",
+            "mean": 2.772775548200245,
+            "minimum": 0.0,
+            "maximum": 13.788
+          },
+          {
+            "key": "field_12",
+            "mean": 2.8630974348365714,
+            "minimum": 0.112,
+            "maximum": 12.296
+          },
+          {
+            "key": "field_13",
+            "mean": 2.950239553165078,
+            "minimum": 0.062,
+            "maximum": 14.591
+          },
+          {
+            "key": "field_14",
+            "mean": 3.0509255275134506,
+            "minimum": 0.057,
+            "maximum": 12.399000000000001
+          },
+          {
+            "key": "field_15",
+            "mean": 3.071118328506413,
+            "minimum": 0.044,
+            "maximum": 11.670000000000002
+          },
+          {
+            "key": "field_16",
+            "mean": 3.1011892842366535,
+            "minimum": 0.05,
+            "maximum": 11.262
+          },
+          {
+            "key": "field_17",
+            "mean": 3.095229209764174,
+            "minimum": 0.05399999999999999,
+            "maximum": 15.15
+          },
+          {
+            "key": "field_18",
+            "mean": 3.1932132809267655,
+            "minimum": 0.151,
+            "maximum": 12.856
+          },
+          {
+            "key": "field_19",
+            "mean": 3.350731899048404,
+            "minimum": 0.15,
+            "maximum": 14.143000000000002
+          },
+          {
+            "key": "field_20",
+            "mean": 3.2092190732312758,
+            "minimum": 0.18,
+            "maximum": 13.616999999999999
+          },
+          {
+            "key": "field_21",
+            "mean": 2.9960624741414965,
+            "minimum": 0.173,
+            "maximum": 12.145000000000001
+          },
+          {
+            "key": "field_22",
+            "mean": 2.6244629706247387,
+            "minimum": 0.161,
+            "maximum": 12.229
+          },
+          {
+            "key": "field_23",
+            "mean": 2.152505792304512,
+            "minimum": 0.003,
+            "maximum": 12.474
+          },
+          {
+            "key": "field_24",
+            "mean": 1.6995852296235014,
+            "minimum": 0.0,
+            "maximum": 12.064
+          }
+        ]
+      },
+      {
+        "name": "Cluster_3",
+        "count": 17512,
+        "fields": [
+          {
+            "key": "field_0",
+            "mean": 0.4832659319323891,
+            "minimum": 0.0,
+            "maximum": 6.433
+          },
+          {
+            "key": "field_1",
+            "mean": 0.43203883051621833,
+            "minimum": 0.0,
+            "maximum": 5.87
+          },
+          {
+            "key": "field_2",
+            "mean": 0.40010632708999594,
+            "minimum": 0.0,
+            "maximum": 7.652
+          },
+          {
+            "key": "field_3",
+            "mean": 0.38405430561900383,
+            "minimum": 0.0,
+            "maximum": 7.817
+          },
+          {
+            "key": "field_4",
+            "mean": 0.37481949520328967,
+            "minimum": 0.0,
+            "maximum": 5.395
+          },
+          {
+            "key": "field_5",
+            "mean": 0.3750029122887162,
+            "minimum": 0.0,
+            "maximum": 6.575
+          },
+          {
+            "key": "field_6",
+            "mean": 0.3885877112836909,
+            "minimum": 0.0,
+            "maximum": 6.452999999999999
+          },
+          {
+            "key": "field_7",
+            "mean": 0.4242058017359532,
+            "minimum": 0.0,
+            "maximum": 8.792
+          },
+          {
+            "key": "field_8",
+            "mean": 0.4802850616719977,
+            "minimum": 0.0,
+            "maximum": 8.341000000000001
+          },
+          {
+            "key": "field_9",
+            "mean": 0.5296524668798529,
+            "minimum": 0.0,
+            "maximum": 9.198
+          },
+          {
+            "key": "field_10",
+            "mean": 0.5414232526267659,
+            "minimum": 0.0,
+            "maximum": 6.696
+          },
+          {
+            "key": "field_11",
+            "mean": 0.5356654865235257,
+            "minimum": 0.0,
+            "maximum": 8.699
+          },
+          {
+            "key": "field_12",
+            "mean": 0.5152020899954299,
+            "minimum": 0.0,
+            "maximum": 8.139000000000001
+          },
+          {
+            "key": "field_13",
+            "mean": 0.508691697121974,
+            "minimum": 0.0,
+            "maximum": 5.77
+          },
+          {
+            "key": "field_14",
+            "mean": 0.5113527295568752,
+            "minimum": 0.0,
+            "maximum": 6.582
+          },
+          {
+            "key": "field_15",
+            "mean": 0.5199781863864777,
+            "minimum": 0.0,
+            "maximum": 5.322
+          },
+          {
+            "key": "field_16",
+            "mean": 0.5368369689355852,
+            "minimum": 0.0,
+            "maximum": 5.334
+          },
+          {
+            "key": "field_17",
+            "mean": 0.5510668684330738,
+            "minimum": 0.0,
+            "maximum": 5.7509999999999994
+          },
+          {
+            "key": "field_18",
+            "mean": 0.6074848675194143,
+            "minimum": 0.0,
+            "maximum": 6.314
+          },
+          {
+            "key": "field_19",
+            "mean": 0.6877275582457754,
+            "minimum": 0.0,
+            "maximum": 7.368
+          },
+          {
+            "key": "field_20",
+            "mean": 0.7091704545454558,
+            "minimum": 0.0,
+            "maximum": 6.5889999999999995
+          },
+          {
+            "key": "field_21",
+            "mean": 0.703650239835542,
+            "minimum": 0.0,
+            "maximum": 8.555
+          },
+          {
+            "key": "field_22",
+            "mean": 0.6676662288716316,
+            "minimum": 0.0,
+            "maximum": 6.251
+          },
+          {
+            "key": "field_23",
+            "mean": 0.5891218592964821,
+            "minimum": 0.0,
+            "maximum": 6.3149999999999995
+          },
+          {
+            "key": "field_24",
+            "mean": 0.5090288944723614,
+            "minimum": 0.0,
+            "maximum": 8.558
+          }
+        ]
+      },
+      {
+        "name": "Cluster_2",
+        "count": 1,
+        "fields": [
+          {
+            "key": "field_0",
+            "mean": 184.464,
+            "minimum": 184.464,
+            "maximum": 184.464
+          },
+          {
+            "key": "field_1",
+            "mean": 156.528,
+            "minimum": 156.528,
+            "maximum": 156.528
+          },
+          {
+            "key": "field_2",
+            "mean": 143.61599999999999,
+            "minimum": 143.61599999999999,
+            "maximum": 143.61599999999999
+          },
+          {
+            "key": "field_3",
+            "mean": 130.512,
+            "minimum": 130.512,
+            "maximum": 130.512
+          },
+          {
+            "key": "field_4",
+            "mean": 121.77600000000001,
+            "minimum": 121.77600000000001,
+            "maximum": 121.77600000000001
+          },
+          {
+            "key": "field_5",
+            "mean": 126.624,
+            "minimum": 126.624,
+            "maximum": 126.624
+          },
+          {
+            "key": "field_6",
+            "mean": 132.432,
+            "minimum": 132.432,
+            "maximum": 132.432
+          },
+          {
+            "key": "field_7",
+            "mean": 125.37599999999999,
+            "minimum": 125.37599999999999,
+            "maximum": 125.37599999999999
+          },
+          {
+            "key": "field_8",
+            "mean": 146.112,
+            "minimum": 146.112,
+            "maximum": 146.112
+          },
+          {
+            "key": "field_9",
+            "mean": 173.856,
+            "minimum": 173.856,
+            "maximum": 173.856
+          },
+          {
+            "key": "field_10",
+            "mean": 204.96,
+            "minimum": 204.96,
+            "maximum": 204.96
+          },
+          {
+            "key": "field_11",
+            "mean": 190.128,
+            "minimum": 190.128,
+            "maximum": 190.128
+          },
+          {
+            "key": "field_12",
+            "mean": 197.37599999999998,
+            "minimum": 197.37599999999998,
+            "maximum": 197.37599999999998
+          },
+          {
+            "key": "field_13",
+            "mean": 216.96,
+            "minimum": 216.96,
+            "maximum": 216.96
+          },
+          {
+            "key": "field_14",
+            "mean": 225.168,
+            "minimum": 225.168,
+            "maximum": 225.168
+          },
+          {
+            "key": "field_15",
+            "mean": 232.84799999999998,
+            "minimum": 232.84799999999998,
+            "maximum": 232.84799999999998
+          },
+          {
+            "key": "field_16",
+            "mean": 244.32,
+            "minimum": 244.32,
+            "maximum": 244.32
+          },
+          {
+            "key": "field_17",
+            "mean": 250.416,
+            "minimum": 250.416,
+            "maximum": 250.416
+          },
+          {
+            "key": "field_18",
+            "mean": 253.48800000000003,
+            "minimum": 253.48800000000003,
+            "maximum": 253.48800000000003
+          },
+          {
+            "key": "field_19",
+            "mean": 244.848,
+            "minimum": 244.848,
+            "maximum": 244.848
+          },
+          {
+            "key": "field_20",
+            "mean": 250.224,
+            "minimum": 250.224,
+            "maximum": 250.224
+          },
+          {
+            "key": "field_21",
+            "mean": 243.84,
+            "minimum": 243.84,
+            "maximum": 243.84
+          },
+          {
+            "key": "field_22",
+            "mean": 227.56799999999998,
+            "minimum": 227.56799999999998,
+            "maximum": 227.56799999999998
+          },
+          {
+            "key": "field_23",
+            "mean": 201.35999999999999,
+            "minimum": 201.35999999999999,
+            "maximum": 201.35999999999999
+          },
+          {
+            "key": "field_24",
+            "mean": 173.904,
+            "minimum": 173.904,
+            "maximum": 173.904
+          }
+        ]
+      },
+      {
+        "name": "Cluster_4",
+        "count": 41,
+        "fields": [
+          {
+            "key": "field_0",
+            "mean": 19.98712195121951,
+            "minimum": 10.982,
+            "maximum": 58.765
+          },
+          {
+            "key": "field_1",
+            "mean": 19.43656097560976,
+            "minimum": 10.883999999999999,
+            "maximum": 59.587
+          },
+          {
+            "key": "field_2",
+            "mean": 18.416658536585366,
+            "minimum": 6.9990000000000006,
+            "maximum": 55.343
+          },
+          {
+            "key": "field_3",
+            "mean": 18.01851219512195,
+            "minimum": 6.382999999999999,
+            "maximum": 40.49999999999999
+          },
+          {
+            "key": "field_4",
+            "mean": 17.77021951219512,
+            "minimum": 5.864,
+            "maximum": 34.047000000000004
+          },
+          {
+            "key": "field_5",
+            "mean": 17.36292682926829,
+            "minimum": 5.558,
+            "maximum": 30.701
+          },
+          {
+            "key": "field_6",
+            "mean": 17.62348780487805,
+            "minimum": 6.837,
+            "maximum": 31.066000000000003
+          },
+          {
+            "key": "field_7",
+            "mean": 17.256463414634148,
+            "minimum": 6.258,
+            "maximum": 31.297
+          },
+          {
+            "key": "field_8",
+            "mean": 16.387902439024387,
+            "minimum": 5.35,
+            "maximum": 29.798
+          },
+          {
+            "key": "field_9",
+            "mean": 17.349414634146342,
+            "minimum": 7.3420000000000005,
+            "maximum": 30.414
+          },
+          {
+            "key": "field_10",
+            "mean": 19.05882926829268,
+            "minimum": 10.222000000000001,
+            "maximum": 29.529999999999998
+          },
+          {
+            "key": "field_11",
+            "mean": 19.137999999999995,
+            "minimum": 9.815,
+            "maximum": 32.120999999999995
+          },
+          {
+            "key": "field_12",
+            "mean": 20.9970243902439,
+            "minimum": 9.358999999999998,
+            "maximum": 39.708
+          },
+          {
+            "key": "field_13",
+            "mean": 20.838804878048784,
+            "minimum": 9.353,
+            "maximum": 34.13
+          },
+          {
+            "key": "field_14",
+            "mean": 21.048585365853658,
+            "minimum": 9.373999999999999,
+            "maximum": 32.076
+          },
+          {
+            "key": "field_15",
+            "mean": 21.26143902439024,
+            "minimum": 9.331,
+            "maximum": 36.859
+          },
+          {
+            "key": "field_16",
+            "mean": 21.5920243902439,
+            "minimum": 9.414,
+            "maximum": 35.308
+          },
+          {
+            "key": "field_17",
+            "mean": 22.151658536585362,
+            "minimum": 9.532,
+            "maximum": 32.699
+          },
+          {
+            "key": "field_18",
+            "mean": 21.86756097560976,
+            "minimum": 11.93,
+            "maximum": 33.727
+          },
+          {
+            "key": "field_19",
+            "mean": 22.96309756097561,
+            "minimum": 14.902999999999999,
+            "maximum": 39.106
+          },
+          {
+            "key": "field_20",
+            "mean": 22.44675609756097,
+            "minimum": 13.093000000000002,
+            "maximum": 41.445
+          },
+          {
+            "key": "field_21",
+            "mean": 22.508902439024386,
+            "minimum": 13.324000000000002,
+            "maximum": 41.348000000000006
+          },
+          {
+            "key": "field_22",
+            "mean": 21.4229756097561,
+            "minimum": 9.251999999999999,
+            "maximum": 39.622
+          },
+          {
+            "key": "field_23",
+            "mean": 20.092439024390245,
+            "minimum": 6.364000000000001,
+            "maximum": 30.854
+          },
+          {
+            "key": "field_24",
+            "mean": 19.07951219512195,
+            "minimum": 0.0,
+            "maximum": 34.218
+          }
+        ]
+      },
+      {
+        "name": "Cluster_8",
+        "count": 7,
+        "fields": [
+          {
+            "key": "field_0",
+            "mean": 51.412142857142854,
+            "minimum": 32.87,
+            "maximum": 95.328
+          },
+          {
+            "key": "field_1",
+            "mean": 47.26557142857143,
+            "minimum": 32.611,
+            "maximum": 82.536
+          },
+          {
+            "key": "field_2",
+            "mean": 44.163999999999994,
+            "minimum": 30.922,
+            "maximum": 74.652
+          },
+          {
+            "key": "field_3",
+            "mean": 42.51571428571429,
+            "minimum": 31.024,
+            "maximum": 61.836
+          },
+          {
+            "key": "field_4",
+            "mean": 41.114285714285714,
+            "minimum": 30.499,
+            "maximum": 61.620000000000005
+          },
+          {
+            "key": "field_5",
+            "mean": 39.61900000000001,
+            "minimum": 27.84,
+            "maximum": 55.884
+          },
+          {
+            "key": "field_6",
+            "mean": 39.37428571428571,
+            "minimum": 29.654000000000003,
+            "maximum": 53.352000000000004
+          },
+          {
+            "key": "field_7",
+            "mean": 38.18514285714286,
+            "minimum": 26.432,
+            "maximum": 54.611999999999995
+          },
+          {
+            "key": "field_8",
+            "mean": 43.031285714285715,
+            "minimum": 29.983999999999998,
+            "maximum": 72.024
+          },
+          {
+            "key": "field_9",
+            "mean": 45.16514285714286,
+            "minimum": 29.584,
+            "maximum": 69.696
+          },
+          {
+            "key": "field_10",
+            "mean": 46.06285714285714,
+            "minimum": 34.38399999999999,
+            "maximum": 65.172
+          },
+          {
+            "key": "field_11",
+            "mean": 52.65242857142857,
+            "minimum": 37.92,
+            "maximum": 67.296
+          },
+          {
+            "key": "field_12",
+            "mean": 52.863714285714295,
+            "minimum": 40.742000000000004,
+            "maximum": 72.36
+          },
+          {
+            "key": "field_13",
+            "mean": 54.093,
+            "minimum": 37.921,
+            "maximum": 71.928
+          },
+          {
+            "key": "field_14",
+            "mean": 54.24185714285714,
+            "minimum": 38.573,
+            "maximum": 76.0
+          },
+          {
+            "key": "field_15",
+            "mean": 59.64142857142857,
+            "minimum": 37.517,
+            "maximum": 88.428
+          },
+          {
+            "key": "field_16",
+            "mean": 59.91314285714285,
+            "minimum": 38.477000000000004,
+            "maximum": 91.27199999999999
+          },
+          {
+            "key": "field_17",
+            "mean": 60.63371428571429,
+            "minimum": 39.168,
+            "maximum": 88.956
+          },
+          {
+            "key": "field_18",
+            "mean": 58.613571428571426,
+            "minimum": 39.542,
+            "maximum": 88.152
+          },
+          {
+            "key": "field_19",
+            "mean": 61.788428571428575,
+            "minimum": 43.564,
+            "maximum": 107.17200000000001
+          },
+          {
+            "key": "field_20",
+            "mean": 61.32071428571429,
+            "minimum": 41.116,
+            "maximum": 110.49600000000001
+          },
+          {
+            "key": "field_21",
+            "mean": 60.65642857142857,
+            "minimum": 39.071,
+            "maximum": 112.19999999999999
+          },
+          {
+            "key": "field_22",
+            "mean": 58.31742857142857,
+            "minimum": 35.472,
+            "maximum": 100.032
+          },
+          {
+            "key": "field_23",
+            "mean": 55.750857142857136,
+            "minimum": 34.781,
+            "maximum": 98.03999999999999
+          },
+          {
+            "key": "field_24",
+            "mean": 53.50928571428572,
+            "minimum": 33.581,
+            "maximum": 89.004
+          }
+        ]
+      },
+      {
+        "name": "Cluster_10",
+        "count": 1383,
+        "fields": [
+          {
+            "key": "field_0",
+            "mean": 3.3915307302964566,
+            "minimum": 0.09999999999999999,
+            "maximum": 12.892
+          },
+          {
+            "key": "field_1",
+            "mean": 3.058361532899494,
+            "minimum": 0.092,
+            "maximum": 12.87
+          },
+          {
+            "key": "field_2",
+            "mean": 2.779044830079539,
+            "minimum": 0.003,
+            "maximum": 10.116
+          },
+          {
+            "key": "field_3",
+            "mean": 2.6727946493130905,
+            "minimum": 0.003,
+            "maximum": 11.367
+          },
+          {
+            "key": "field_4",
+            "mean": 2.5965314533622577,
+            "minimum": 0.003,
+            "maximum": 10.701
+          },
+          {
+            "key": "field_5",
+            "mean": 2.6364859002169188,
+            "minimum": 0.003,
+            "maximum": 16.817
+          },
+          {
+            "key": "field_6",
+            "mean": 2.728109906001451,
+            "minimum": 0.003,
+            "maximum": 16.368
+          },
+          {
+            "key": "field_7",
+            "mean": 2.999532899493854,
+            "minimum": 0.002,
+            "maximum": 16.2
+          },
+          {
+            "key": "field_8",
+            "mean": 3.5328749096167753,
+            "minimum": 0.328,
+            "maximum": 18.702
+          },
+          {
+            "key": "field_9",
+            "mean": 4.221056399132322,
+            "minimum": 0.28600000000000003,
+            "maximum": 19.839000000000002
+          },
+          {
+            "key": "field_10",
+            "mean": 4.64395516992046,
+            "minimum": 0.30800000000000005,
+            "maximum": 21.85
+          },
+          {
+            "key": "field_11",
+            "mean": 4.707900939985542,
+            "minimum": 0.4670000000000001,
+            "maximum": 18.306
+          },
+          {
+            "key": "field_12",
+            "mean": 4.703098336948661,
+            "minimum": 0.467,
+            "maximum": 15.924
+          },
+          {
+            "key": "field_13",
+            "mean": 4.817394793926247,
+            "minimum": 0.35300000000000004,
+            "maximum": 15.979000000000001
+          },
+          {
+            "key": "field_14",
+            "mean": 4.903443962400577,
+            "minimum": 0.34600000000000003,
+            "maximum": 18.295
+          },
+          {
+            "key": "field_15",
+            "mean": 5.02647722342733,
+            "minimum": 0.1,
+            "maximum": 15.484999999999998
+          },
+          {
+            "key": "field_16",
+            "mean": 5.125117136659428,
+            "minimum": 0.32000000000000006,
+            "maximum": 18.332
+          },
+          {
+            "key": "field_17",
+            "mean": 5.154767895878522,
+            "minimum": 0.11200000000000002,
+            "maximum": 17.394000000000002
+          },
+          {
+            "key": "field_18",
+            "mean": 5.420145336225591,
+            "minimum": 0.184,
+            "maximum": 20.006999999999998
+          },
+          {
+            "key": "field_19",
+            "mean": 5.943300072306579,
+            "minimum": 0.5990000000000001,
+            "maximum": 19.489
+          },
+          {
+            "key": "field_20",
+            "mean": 5.888535791757041,
+            "minimum": 0.109,
+            "maximum": 17.68
+          },
+          {
+            "key": "field_21",
+            "mean": 5.536250180766447,
+            "minimum": 0.14200000000000002,
+            "maximum": 14.777
+          },
+          {
+            "key": "field_22",
+            "mean": 4.998362979031094,
+            "minimum": 0.30200000000000005,
+            "maximum": 23.286
+          },
+          {
+            "key": "field_23",
+            "mean": 4.335342010122928,
+            "minimum": 0.20400000000000001,
+            "maximum": 13.203
+          },
+          {
+            "key": "field_24",
+            "mean": 3.6165018076644975,
+            "minimum": 0.0,
+            "maximum": 14.441
+          }
+        ]
+      },
+      {
+        "name": "Cluster_6",
+        "count": 2,
+        "fields": [
+          {
+            "key": "field_0",
+            "mean": 114.7995,
+            "minimum": 104.712,
+            "maximum": 124.887
+          },
+          {
+            "key": "field_1",
+            "mean": 114.1285,
+            "minimum": 106.12599999999999,
+            "maximum": 122.131
+          },
+          {
+            "key": "field_2",
+            "mean": 111.0085,
+            "minimum": 100.903,
+            "maximum": 121.114
+          },
+          {
+            "key": "field_3",
+            "mean": 112.527,
+            "minimum": 103.76700000000001,
+            "maximum": 121.28699999999999
+          },
+          {
+            "key": "field_4",
+            "mean": 111.0175,
+            "minimum": 101.18,
+            "maximum": 120.85499999999999
+          },
+          {
+            "key": "field_5",
+            "mean": 110.20500000000001,
+            "minimum": 101.88900000000001,
+            "maximum": 118.52100000000002
+          },
+          {
+            "key": "field_6",
+            "mean": 110.999,
+            "minimum": 102.13199999999999,
+            "maximum": 119.86599999999999
+          },
+          {
+            "key": "field_7",
+            "mean": 108.078,
+            "minimum": 101.071,
+            "maximum": 115.08500000000001
+          },
+          {
+            "key": "field_8",
+            "mean": 105.9505,
+            "minimum": 101.185,
+            "maximum": 110.71600000000001
+          },
+          {
+            "key": "field_9",
+            "mean": 108.049,
+            "minimum": 100.27400000000002,
+            "maximum": 115.824
+          },
+          {
+            "key": "field_10",
+            "mean": 108.48349999999999,
+            "minimum": 101.02799999999999,
+            "maximum": 115.93900000000001
+          },
+          {
+            "key": "field_11",
+            "mean": 111.0585,
+            "minimum": 104.24799999999999,
+            "maximum": 117.869
+          },
+          {
+            "key": "field_12",
+            "mean": 112.09799999999998,
+            "minimum": 107.03899999999999,
+            "maximum": 117.15699999999998
+          },
+          {
+            "key": "field_13",
+            "mean": 110.2295,
+            "minimum": 105.211,
+            "maximum": 115.248
+          },
+          {
+            "key": "field_14",
+            "mean": 112.022,
+            "minimum": 105.426,
+            "maximum": 118.61800000000001
+          },
+          {
+            "key": "field_15",
+            "mean": 113.2345,
+            "minimum": 107.487,
+            "maximum": 118.982
+          },
+          {
+            "key": "field_16",
+            "mean": 114.67150000000001,
+            "minimum": 108.316,
+            "maximum": 121.027
+          },
+          {
+            "key": "field_17",
+            "mean": 112.595,
+            "minimum": 104.634,
+            "maximum": 120.55599999999998
+          },
+          {
+            "key": "field_18",
+            "mean": 115.94900000000001,
+            "minimum": 108.355,
+            "maximum": 123.543
+          },
+          {
+            "key": "field_19",
+            "mean": 119.8125,
+            "minimum": 109.171,
+            "maximum": 130.45399999999998
+          },
+          {
+            "key": "field_20",
+            "mean": 120.4415,
+            "minimum": 109.727,
+            "maximum": 131.156
+          },
+          {
+            "key": "field_21",
+            "mean": 119.24249999999999,
+            "minimum": 108.453,
+            "maximum": 130.03199999999998
+          },
+          {
+            "key": "field_22",
+            "mean": 114.281,
+            "minimum": 104.357,
+            "maximum": 124.205
+          },
+          {
+            "key": "field_23",
+            "mean": 114.4985,
+            "minimum": 104.34100000000001,
+            "maximum": 124.65599999999999
+          },
+          {
+            "key": "field_24",
+            "mean": 114.6175,
+            "minimum": 103.705,
+            "maximum": 125.53000000000002
+          }
+        ]
+      }
+    ],
+    "Distances": [
+      ["Cluster_1", "Cluster_2", 1],
+      ["Cluster_1", "Cluster_3", 500],
+      ["Cluster_1", "Cluster_4", 38],
+      ["Cluster_1", "Cluster_5", 106],
+      ["Cluster_1", "Cluster_6", 3],
+      ["Cluster_1", "Cluster_7", 471],
+      ["Cluster_1", "Cluster_8", 12],
+      ["Cluster_1", "Cluster_9", 697],
+      ["Cluster_1", "Cluster_10", 254],
+      ["Cluster_2", "Cluster_3", 1],
+      ["Cluster_2", "Cluster_4", 1],
+      ["Cluster_2", "Cluster_5", 1],
+      ["Cluster_2", "Cluster_6", 5],
+      ["Cluster_2", "Cluster_7", 1],
+      ["Cluster_2", "Cluster_8", 1],
+      ["Cluster_2", "Cluster_9", 1],
+      ["Cluster_2", "Cluster_10", 1],
+      ["Cluster_3", "Cluster_4", 37],
+      ["Cluster_3", "Cluster_5", 95],
+      ["Cluster_3", "Cluster_6", 3],
+      ["Cluster_3", "Cluster_7", 344],
+      ["Cluster_3", "Cluster_8", 11],
+      ["Cluster_3", "Cluster_9", 412],
+      ["Cluster_3", "Cluster_10", 201],
+      ["Cluster_4", "Cluster_5", 64],
+      ["Cluster_4", "Cluster_6", 4],
+      ["Cluster_4", "Cluster_7", 41],
+      ["Cluster_4", "Cluster_8", 21],
+      ["Cluster_4", "Cluster_9", 41],
+      ["Cluster_4", "Cluster_10", 46],
+      ["Cluster_5", "Cluster_6", 4],
+      ["Cluster_5", "Cluster_7", 130],
+      ["Cluster_5", "Cluster_8", 14],
+      ["Cluster_5", "Cluster_9", 123],
+      ["Cluster_5", "Cluster_10", 182],
+      ["Cluster_6", "Cluster_7", 3],
+      ["Cluster_6", "Cluster_8", 9],
+      ["Cluster_6", "Cluster_9", 3],
+      ["Cluster_6", "Cluster_10", 3],
+      ["Cluster_7", "Cluster_8", 12],
+      ["Cluster_7", "Cluster_9", 552],
+      ["Cluster_7", "Cluster_10", 356],
+      ["Cluster_8", "Cluster_9", 12],
+      ["Cluster_8", "Cluster_10", 13],
+      ["Cluster_9", "Cluster_10", 391]
+    ]
+  }
+}}
